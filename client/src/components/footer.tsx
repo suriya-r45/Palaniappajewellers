@@ -1,4 +1,3 @@
-import { openWhatsAppGeneral } from '@/lib/whatsapp';
 import { MessageCircle, Phone, Mail, MapPin } from 'lucide-react';
 import logoPath from '@assets/1000284180_1755240849891.jpg';
 

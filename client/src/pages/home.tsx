@@ -6,7 +6,6 @@ import ProductCard from '@/components/product-card';
 import ProductFilters from '@/components/product-filters';
 import WhatsAppFloat from '@/components/whatsapp-float';
 import CategoryNavigation from '@/components/category-navigation';
-import { MetalRatesDisplay } from '@/components/metal-rates';
 import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
 import { Currency } from '@/lib/currency';
@@ -172,19 +171,6 @@ export default function Home() {
       {/* Category Navigation */}
       <CategoryNavigation />
 
-      {/* Live Metal Rates Section */}
-      <section className="py-16 bg-gradient-to-br from-purple-50 to-amber-50 dark:from-purple-950 dark:to-amber-950 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(75,0,130,0.1)_0%,transparent_70%)]"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gradient mb-4">Today's Metal Rates</h2>
-            <p className="text-lg text-muted-foreground">Live gold and silver prices updated every 6 hours</p>
-          </div>
-          <div className="max-w-6xl mx-auto">
-            <MetalRatesDisplay />
-          </div>
-        </div>
-      </section>
 
       {/* Gold Section */}
       <section className="py-28 surface-gradient relative overflow-hidden" data-testid="section-gold">
