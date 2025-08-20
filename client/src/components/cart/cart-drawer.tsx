@@ -36,33 +36,37 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   if (!isOpen) return null;
 
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0"
-        style={{ 
-          zIndex: 99998,
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          background: 'rgba(0, 0, 0, 0.8) !important'
-        }}
-        onClick={onClose}
-        data-testid="cart-backdrop"
-      />
-      
+    <div 
+      className="fixed inset-0"
+      style={{ 
+        zIndex: 999999,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh'
+      }}
+      onClick={onClose}
+      data-testid="cart-backdrop"
+    >
       {/* Drawer */}
       <div 
-        className="fixed top-0 right-0 h-full w-96 max-w-full shadow-2xl flex flex-col border-l-2 border-gray-300 cart-drawer" 
+        className="absolute top-0 right-0 h-full w-96 max-w-full shadow-2xl flex flex-col border-l-2 border-gray-300" 
         style={{ 
           backgroundColor: '#ffffff',
           background: '#ffffff',
-          zIndex: 999999,
-          opacity: 1,
           backgroundImage: 'none',
-          backgroundBlendMode: 'normal',
-          isolation: 'isolate',
-          transform: 'translateZ(0)',
-          willChange: 'transform'
+          width: window.innerWidth <= 768 ? '100vw' : '384px',
+          height: '100vh',
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          zIndex: 1000000
         }}
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div 
@@ -205,6 +209,6 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
