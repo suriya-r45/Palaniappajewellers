@@ -47,6 +47,23 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
       {/* Drawer Content */}
       <div 
         className="cart-drawer-content"
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          height: '100vh',
+          width: window.innerWidth <= 768 ? '100vw' : '384px',
+          maxWidth: '100vw',
+          zIndex: 10000,
+          background: '#ffffff',
+          backgroundColor: '#ffffff',
+          backgroundImage: 'none',
+          display: 'flex',
+          flexDirection: 'column',
+          opacity: 1,
+          backdropFilter: 'none',
+          WebkitBackdropFilter: 'none'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -55,7 +72,10 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           style={{ 
             backgroundColor: '#ffffff',
             background: '#ffffff',
-            backgroundImage: 'none'
+            backgroundImage: 'none',
+            opacity: 1,
+            backdropFilter: 'none',
+            WebkitBackdropFilter: 'none'
           }}
         >
           <h2 className="text-lg font-semibold flex items-center gap-2">
@@ -78,7 +98,10 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           style={{ 
             backgroundColor: '#ffffff',
             background: '#ffffff',
-            backgroundImage: 'none'
+            backgroundImage: 'none',
+            opacity: 1,
+            backdropFilter: 'none',
+            WebkitBackdropFilter: 'none'
           }}
         >
           {items.length === 0 ? (
@@ -89,11 +112,25 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div 
+              className="space-y-4"
+              style={{
+                backgroundColor: '#ffffff',
+                background: '#ffffff',
+                backgroundImage: 'none',
+                opacity: 1
+              }}
+            >
               {items.map((item) => (
                 <div
                   key={item.product.id}
                   className="flex items-center gap-3 p-3 border rounded-lg"
+                  style={{
+                    backgroundColor: '#ffffff',
+                    background: '#ffffff',
+                    backgroundImage: 'none',
+                    opacity: 1
+                  }}
                   data-testid={`cart-item-${item.product.id}`}
                 >
                   <img
@@ -158,7 +195,10 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             style={{ 
               backgroundColor: '#ffffff',
               background: '#ffffff',
-              backgroundImage: 'none'
+              backgroundImage: 'none',
+              opacity: 1,
+              backdropFilter: 'none',
+              WebkitBackdropFilter: 'none'
             }}
           >
             <div className="flex justify-between items-center text-lg font-semibold">

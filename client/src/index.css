@@ -114,6 +114,21 @@
     left: 0 !important;
     right: 0 !important;
     border-left: none !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    opacity: 1 !important;
+  }
+  
+  /* Force mobile cart drawer visibility */
+  .cart-drawer-content,
+  .cart-drawer-content *,
+  .cart-drawer-content > *,
+  .cart-drawer-content > * > * {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    opacity: 1 !important;
   }
 }
 
@@ -268,6 +283,43 @@ div.md\:hidden.absolute.top-16.left-0.right-0.bg-white button {
   background: #ffffff !important;
   background-color: #ffffff !important;
   opacity: 1 !important;
+}
+
+/* Ultra-aggressive mobile cart drawer fix */
+@media (max-width: 768px) {
+  div[class*="cart-drawer-content"],
+  .cart-drawer-content {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Target all possible children */
+  div[class*="cart-drawer-content"] *,
+  .cart-drawer-content * {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Target specific elements that might be transparent */
+  .cart-drawer-content div,
+  .cart-drawer-content section,
+  .cart-drawer-content article,
+  .cart-drawer-content header,
+  .cart-drawer-content main,
+  .cart-drawer-content footer {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    opacity: 1 !important;
+  }
 }
 
 body {
