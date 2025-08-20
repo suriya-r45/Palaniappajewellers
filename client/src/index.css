@@ -147,27 +147,22 @@ body {
   background-color: #ffffff !important;
 }
 
-/* Supreme Royal Jewelry Palace Theme */
+/* Elegant Black & White Royal Theme */
 body {
   background: 
-    radial-gradient(ellipse at 20% 30%, rgba(72, 61, 139, 0.5) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 70%, rgba(138, 43, 226, 0.4) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 20%, rgba(255, 215, 0, 0.3) 0%, transparent 45%),
-    radial-gradient(ellipse at center, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 25% 25%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 75%, rgba(0, 0, 0, 0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
     linear-gradient(135deg, 
-      #0A0A0A 0%, 
-      #1A0F1A 10%,
-      #2D1B69 20%,
-      #4B0082 30%,
-      #483D8B 40%,
-      #8B4513 50%,
-      #CD853F 60%,
-      #DAA520 70%,
-      #FFD700 80%,
-      #FFF8DC 90%,
-      #FFFACD 100%) !important;
+      #000000 0%, 
+      #0a0a0a 15%,
+      #1a1a1a 30%,
+      #2a2a2a 45%,
+      #1a1a1a 60%,
+      #0a0a0a 75%,
+      #000000 100%) !important;
   background-attachment: fixed !important;
-  background-size: 180% 180%, 150% 150%, 120% 120%, 100% 100%, 100% 100% !important;
+  background-size: 150% 150%, 120% 120%, 100% 100%, 100% 100% !important;
   color: #FFFFFF !important;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   min-height: 100vh !important;
@@ -183,41 +178,31 @@ body::before {
   width: 100% !important;
   height: 100% !important;
   background: 
-    radial-gradient(circle at 25% 35%, rgba(255, 215, 0, 0.2) 0%, transparent 40%),
-    radial-gradient(circle at 75% 25%, rgba(138, 43, 226, 0.15) 0%, transparent 45%),
-    radial-gradient(circle at 15% 75%, rgba(72, 61, 139, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 85% 85%, rgba(255, 165, 0, 0.1) 0%, transparent 55%),
-    radial-gradient(circle at 60% 50%, rgba(205, 133, 63, 0.08) 0%, transparent 35%) !important;
+    radial-gradient(circle at 20% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 35%) !important;
   pointer-events: none !important;
   z-index: 0 !important;
-  animation: royal-shimmer 25s ease-in-out infinite !important;
+  animation: elegant-shimmer 30s ease-in-out infinite !important;
 }
 
-@keyframes royal-shimmer {
+@keyframes elegant-shimmer {
   0%, 100% { 
     opacity: 1 !important; 
-    transform: translateX(0) translateY(0) rotate(0deg) !important; 
-    filter: hue-rotate(0deg) !important;
+    transform: translateX(0) translateY(0) !important; 
   }
-  20% { 
-    opacity: 0.9 !important; 
-    transform: translateX(3px) translateY(-2px) rotate(0.5deg) !important; 
-    filter: hue-rotate(5deg) !important;
-  }
-  40% { 
+  25% { 
     opacity: 0.95 !important; 
-    transform: translateX(-2px) translateY(3px) rotate(-0.3deg) !important; 
-    filter: hue-rotate(-3deg) !important;
+    transform: translateX(1px) translateY(-1px) !important; 
   }
-  60% { 
-    opacity: 0.85 !important; 
-    transform: translateX(2px) translateY(-3px) rotate(0.4deg) !important; 
-    filter: hue-rotate(8deg) !important;
+  50% { 
+    opacity: 0.98 !important; 
+    transform: translateX(-1px) translateY(1px) !important; 
   }
-  80% { 
+  75% { 
     opacity: 0.92 !important; 
-    transform: translateX(-3px) translateY(1px) rotate(-0.2deg) !important; 
-    filter: hue-rotate(-2deg) !important;
+    transform: translateX(1px) translateY(1px) !important; 
   }
 }
 
@@ -304,36 +289,27 @@ nav {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Supreme Royal Glass Morphism Cards */
+/* Elegant Black & White Glass Morphism Cards */
 .card,
 .bg-card,
 .border,
 [class*="card"] {
   background: 
     linear-gradient(145deg, 
-      rgba(255, 255, 255, 0.45) 0%, 
-      rgba(255, 248, 220, 0.35) 15%,
-      rgba(138, 43, 226, 0.05) 30%,
-      rgba(255, 235, 205, 0.25) 50%,
-      rgba(72, 61, 139, 0.08) 70%,
-      rgba(255, 215, 0, 0.15) 85%,
-      rgba(255, 255, 255, 0.2) 100%) !important;
-  border: 3px solid transparent !important;
-  border-image: linear-gradient(45deg, 
-    rgba(255, 215, 0, 0.8) 0%,
-    rgba(138, 43, 226, 0.6) 25%,
-    rgba(255, 215, 0, 0.8) 50%,
-    rgba(72, 61, 139, 0.6) 75%,
-    rgba(255, 215, 0, 0.8) 100%) 1 !important;
-  border-radius: 28px !important;
-  backdrop-filter: blur(50px) saturate(200%) brightness(130%) contrast(110%) !important;
+      rgba(255, 255, 255, 0.15) 0%, 
+      rgba(255, 255, 255, 0.12) 25%,
+      rgba(0, 0, 0, 0.05) 50%,
+      rgba(255, 255, 255, 0.08) 75%,
+      rgba(255, 255, 255, 0.1) 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(30px) saturate(180%) brightness(110%) !important;
   box-shadow: 
-    0 35px 120px rgba(0, 0, 0, 0.6),
-    inset 0 3px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -2px 0 rgba(255, 215, 0, 0.3),
-    0 0 100px rgba(255, 215, 0, 0.25),
-    0 0 150px rgba(138, 43, 226, 0.15) !important;
-  transition: all 1s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    0 25px 80px rgba(0, 0, 0, 0.7),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    0 0 60px rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative !important;
   overflow: hidden !important;
 }
@@ -343,42 +319,33 @@ nav {
 [class*="card"]::before {
   content: '' !important;
   position: absolute !important;
-  top: -3px !important;
-  left: -3px !important;
-  right: -3px !important;
-  bottom: -3px !important;
+  top: -2px !important;
+  left: -2px !important;
+  right: -2px !important;
+  bottom: -2px !important;
   background: linear-gradient(135deg, 
-    rgba(255, 215, 0, 0.25) 0%, 
-    rgba(138, 43, 226, 0.2) 15%,
-    rgba(72, 61, 139, 0.15) 30%,
+    rgba(255, 255, 255, 0.15) 0%, 
+    rgba(255, 255, 255, 0.08) 25%,
     transparent 50%, 
-    rgba(205, 133, 63, 0.15) 70%,
-    rgba(255, 165, 0, 0.2) 85%,
-    rgba(255, 215, 0, 0.25) 100%) !important;
-  border-radius: 31px !important;
+    rgba(255, 255, 255, 0.08) 75%,
+    rgba(255, 255, 255, 0.15) 100%) !important;
+  border-radius: 22px !important;
   pointer-events: none !important;
   z-index: 1 !important;
-  animation: royal-golden-flow 20s linear infinite !important;
+  animation: elegant-flow 25s linear infinite !important;
 }
 
-@keyframes royal-golden-flow {
+@keyframes elegant-flow {
   0% { 
-    transform: translateX(-120%) rotate(-2deg) !important; 
-    opacity: 0.8 !important;
-  }
-  25% {
-    opacity: 1 !important;
+    transform: translateX(-100%) !important; 
+    opacity: 0.6 !important;
   }
   50% { 
-    transform: translateX(0%) rotate(0deg) !important; 
-    opacity: 0.9 !important;
-  }
-  75% {
     opacity: 1 !important;
   }
   100% { 
-    transform: translateX(120%) rotate(2deg) !important; 
-    opacity: 0.8 !important;
+    transform: translateX(100%) !important; 
+    opacity: 0.6 !important;
   }
 }
 
@@ -406,34 +373,28 @@ p, span, div, .text-sm, .text-base, .text-lg {
   font-weight: 400 !important;
 }
 
-/* Royal Majestic Card Text Styling */
+/* Elegant Black & White Card Text */
 .card p, .card span, .card div,
 .bg-card p, .bg-card span, .bg-card div,
 [class*="card"] p, [class*="card"] span, [class*="card"] div {
-  color: #0d0500 !important;
+  color: #000000 !important;
   text-shadow: 
-    0 2px 4px rgba(255, 255, 255, 0.95),
-    0 1px 8px rgba(255, 215, 0, 0.5),
-    0 0 15px rgba(138, 43, 226, 0.3) !important;
-  font-weight: 600 !important;
-  font-size: 1.05em !important;
-  letter-spacing: 0.3px !important;
+    0 1px 3px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.3) !important;
+  font-weight: 500 !important;
+  font-size: 1em !important;
+  letter-spacing: 0.2px !important;
 }
 
 .card h1, .card h2, .card h3, .card h4, .card h5, .card h6,
 .bg-card h1, .bg-card h2, .bg-card h3, .bg-card h4, .bg-card h5, .bg-card h6,
 [class*="card"] h1, [class*="card"] h2, [class*="card"] h3, [class*="card"] h4, [class*="card"] h5, [class*="card"] h6 {
-  color: #0d0500 !important;
+  color: #000000 !important;
   text-shadow: 
-    0 3px 6px rgba(255, 255, 255, 0.95),
-    0 2px 12px rgba(255, 215, 0, 0.6),
-    0 0 20px rgba(138, 43, 226, 0.4),
-    0 0 30px rgba(72, 61, 139, 0.3) !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.8px !important;
-  background: linear-gradient(45deg, #0d0500, #1a0b00, #2d1800) !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
+    0 2px 4px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 255, 255, 0.4) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
 }
 
 /* Primary buttons - Halo Style Rose Gold */
