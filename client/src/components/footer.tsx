@@ -18,10 +18,10 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-lg font-bold text-white">PALANIAPPA JEWELLERS</h3>
-                <p className="text-xs text-gray-300">Since 2025</p>
+                <p className="text-xs text-white">Since 2025</p>
               </div>
             </div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-white text-sm">
               Premium jewelry crafted with precision and elegance for discerning customers worldwide.
             </p>
           </div>
@@ -29,26 +29,26 @@ export default function Footer() {
           {/* <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-footer-home">Home</a></li>
-              <li><a href="#products" className="text-gray-400 hover:text-white transition-colors" data-testid="link-footer-products">Products</a></li>
-              <li><a href="#about" className="text-gray-400 hover:text-white transition-colors" data-testid="link-footer-about">About Us</a></li>
-              <li><a href="#contact" className="text-gray-400 hover:text-white transition-colors" data-testid="link-footer-contact">Contact</a></li>
+              <li><a href="#" className="text-white hover:text-gold transition-colors" data-testid="link-footer-home">Home</a></li>
+              <li><a href="#products" className="text-white hover:text-gold transition-colors" data-testid="link-footer-products">Products</a></li>
+              <li><a href="#about" className="text-white hover:text-gold transition-colors" data-testid="link-footer-about">About Us</a></li>
+              <li><a href="#contact" className="text-white hover:text-gold transition-colors" data-testid="link-footer-contact">Contact</a></li>
             </ul>
           </div> */}
 
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Categories</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-gold">Gold Jewelry</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-diamond">Diamond Jewelry</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-silver">Silver Jewelry</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-custom">Custom Designs</a></li>
+              <li><a href="#" className="text-white hover:text-gold transition-colors" data-testid="link-category-gold">Gold Jewelry</a></li>
+              <li><a href="#" className="text-white hover:text-gold transition-colors" data-testid="link-category-diamond">Diamond Jewelry</a></li>
+              <li><a href="#" className="text-white hover:text-gold transition-colors" data-testid="link-category-silver">Silver Jewelry</a></li>
+              <li><a href="#" className="text-white hover:text-gold transition-colors" data-testid="link-category-custom">Custom Designs</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Contact Info</h4>
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-2 text-sm text-white">
               <p className="flex items-center space-x-2" data-testid="text-phone">
                 <Phone className="h-4 w-4" />
                 <span>+919597201554</span>
@@ -77,18 +77,18 @@ export default function Footer() {
             <div className="space-y-4">
               <div>
                 <h4 className="text-white font-medium">India</h4>
-                <p className="text-gray-300 text-sm">Salem, Tamil Nadu</p>
+                <p className="text-white text-sm">Salem, Tamil Nadu</p>
               </div>
               <div>
                 <h4 className="text-white font-medium">Bahrain</h4>
-                <p className="text-gray-300 text-sm">Gold City, Manama</p>
+                <p className="text-white text-sm">Gold City, Manama</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p className="text-gray-300">&copy; 2025 Palaniappa Jewellers. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-white">
+          <p className="text-white">&copy; 2025 Palaniappa Jewellers. All rights reserved.</p>
         </div>
       </div>
     </footer>
