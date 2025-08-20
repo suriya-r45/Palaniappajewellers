@@ -55,11 +55,13 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
         style={{ 
           backgroundColor: '#ffffff',
           background: '#ffffff',
-          zIndex: 99999,
+          zIndex: 999999,
           opacity: 1,
           backgroundImage: 'none',
           backgroundBlendMode: 'normal',
-          isolation: 'isolate'
+          isolation: 'isolate',
+          transform: 'translateZ(0)',
+          willChange: 'transform'
         }}
       >
         {/* Header */}
@@ -166,7 +168,14 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t p-4 space-y-4 bg-white" style={{ backgroundColor: '#ffffff' }}>
+          <div 
+            className="border-t p-4 space-y-4"
+            style={{ 
+              backgroundColor: '#ffffff',
+              background: '#ffffff',
+              backgroundImage: 'none'
+            }}
+          >
             <div className="flex justify-between items-center text-lg font-semibold">
               <span>Total:</span>
               <span data-testid="cart-total">
