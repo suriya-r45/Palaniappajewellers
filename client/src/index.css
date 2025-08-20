@@ -147,29 +147,53 @@ body {
   background-color: #ffffff !important;
 }
 
-/* Halo Inspired Rose Gold Theme Implementation */
+/* Luxurious Royal Jewelry Theme */
 body {
-  background: linear-gradient(135deg, #8B5A3C 0%, #D4A574 50%, #F4E4D6 100%) !important;
+  background: 
+    radial-gradient(ellipse at top, rgba(139, 69, 19, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(218, 165, 32, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #2C1810 0%, #4A2C17 25%, #6B3E07 50%, #8B4513 75%, #A0522D 100%) !important;
   background-attachment: fixed !important;
+  background-size: 100% 100%, 100% 100%, 100% 100% !important;
   color: #FFFFFF !important;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   min-height: 100vh !important;
+  position: relative !important;
 }
 
-/* Main containers with enhanced contrast */
+body::before {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(184, 134, 11, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(139, 69, 19, 0.04) 0%, transparent 50%) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* Main containers with royal elegant styling */
 .container,
 .max-w-7xl,
 .mx-auto,
 main {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(10px) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(244, 228, 214, 0.05)) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(212, 165, 116, 0.15) !important;
 }
 
-/* Content sections need better contrast */
+/* Premium Section Styling */
 section {
   position: relative !important;
+  margin: 3rem 0 !important;
+  padding: 4rem 2rem !important;
+  border-radius: 32px !important;
 }
 
 section::before {
@@ -179,7 +203,18 @@ section::before {
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  background: rgba(0, 0, 0, 0.1) !important;
+  background: 
+    linear-gradient(145deg, 
+      rgba(255, 255, 255, 0.1) 0%, 
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(0, 0, 0, 0.05) 100%) !important;
+  backdrop-filter: blur(25px) saturate(150%) !important;
+  border-radius: 32px !important;
+  border: 2px solid rgba(255, 215, 0, 0.15) !important;
+  box-shadow: 
+    inset 0 2px 0 rgba(255, 255, 255, 0.2), 
+    0 15px 50px rgba(0, 0, 0, 0.2),
+    0 0 100px rgba(255, 215, 0, 0.05) !important;
   pointer-events: none !important;
   z-index: 1 !important;
 }
@@ -187,6 +222,31 @@ section::before {
 section > * {
   position: relative !important;
   z-index: 2 !important;
+}
+
+/* Special styling for Silver section */
+.silver-section,
+[data-testid*="silver"] {
+  background: linear-gradient(145deg, rgba(192, 192, 192, 0.15), rgba(169, 169, 169, 0.08)) !important;
+}
+
+.silver-section::before,
+[data-testid*="silver"]::before {
+  background: linear-gradient(145deg, rgba(192, 192, 192, 0.1), rgba(105, 105, 105, 0.05)) !important;
+  border: 1px solid rgba(192, 192, 192, 0.3) !important;
+}
+
+/* Special styling for New Arrivals section */
+.new-arrivals-section,
+[data-testid*="new-arrivals"] {
+  background: linear-gradient(145deg, rgba(75, 0, 130, 0.12), rgba(138, 43, 226, 0.08)) !important;
+}
+
+.new-arrivals-section::before,
+[data-testid*="new-arrivals"]::before {
+  background: linear-gradient(145deg, rgba(75, 0, 130, 0.08), rgba(138, 43, 226, 0.05)) !important;
+  border: 1px solid rgba(138, 43, 226, 0.3) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 30px rgba(75, 0, 130, 0.2) !important;
 }
 
 /* Header styling - Inspired by Halo design */
@@ -199,16 +259,47 @@ nav {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Card components with warm theme */
+/* Luxurious Glass Morphism Cards */
 .card,
 .bg-card,
 .border,
 [class*="card"] {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(192, 140, 106, 0.3) !important;
-  border-radius: 12px !important;
-  backdrop-filter: blur(10px) !important;
-  box-shadow: 0 4px 20px rgba(192, 140, 106, 0.1) !important;
+  background: 
+    linear-gradient(145deg, 
+      rgba(255, 255, 255, 0.25) 0%, 
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.05) 100%) !important;
+  border: 2px solid rgba(255, 215, 0, 0.2) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(30px) saturate(150%) !important;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 1px 0 rgba(255, 215, 0, 0.2) !important;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.card::before,
+.bg-card::before,
+[class*="card"]::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 50%, rgba(184, 134, 11, 0.05) 100%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+.card > *,
+.bg-card > *,
+[class*="card"] > * {
+  position: relative !important;
+  z-index: 2 !important;
 }
 
 /* Typography - Headings (Enhanced Visibility) */
@@ -228,12 +319,27 @@ p, span, div, .text-sm, .text-base, .text-lg {
   font-weight: 400 !important;
 }
 
-/* Dark background text for cards */
+/* Premium Card Text Styling */
 .card p, .card span, .card div,
 .bg-card p, .bg-card span, .bg-card div,
 [class*="card"] p, [class*="card"] span, [class*="card"] div {
-  color: #333333 !important;
-  text-shadow: none !important;
+  color: #1a0d00 !important;
+  text-shadow: 
+    0 1px 2px rgba(255, 255, 255, 0.9),
+    0 0 10px rgba(255, 215, 0, 0.3) !important;
+  font-weight: 500 !important;
+  font-size: 1em !important;
+}
+
+.card h1, .card h2, .card h3, .card h4, .card h5, .card h6,
+.bg-card h1, .bg-card h2, .bg-card h3, .bg-card h4, .bg-card h5, .bg-card h6,
+[class*="card"] h1, [class*="card"] h2, [class*="card"] h3, [class*="card"] h4, [class*="card"] h5, [class*="card"] h6 {
+  color: #1a0d00 !important;
+  text-shadow: 
+    0 2px 4px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 215, 0, 0.4) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
 }
 
 /* Primary buttons - Halo Style Rose Gold */
@@ -290,12 +396,15 @@ button[class*="primary"]:hover,
   box-shadow: 0 6px 25px rgba(212, 165, 116, 0.4) !important;
 }
 
-/* Form inputs */
+/* Form inputs - Enhanced visibility */
 input, textarea, select {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 2px solid rgba(192, 140, 106, 0.3) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid rgba(139, 90, 60, 0.4) !important;
   border-radius: 8px !important;
-  color: #333333 !important;
+  color: #1a1a1a !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+  padding: 12px 16px !important;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -304,21 +413,59 @@ input:focus, textarea:focus, select:focus {
   outline: none !important;
 }
 
-/* Product cards */
+/* Exquisite Product Cards */
 .product-card,
 [data-testid*="product"] {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(192, 140, 106, 0.3) !important;
-  border-radius: 16px !important;
-  backdrop-filter: blur(10px) !important;
-  transition: all 0.3s ease !important;
+  background: 
+    linear-gradient(145deg, 
+      rgba(255, 255, 255, 0.3) 0%, 
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.1) 100%) !important;
+  border: 2px solid rgba(255, 215, 0, 0.3) !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(40px) saturate(180%) !important;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.3),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    0 0 50px rgba(255, 215, 0, 0.1) !important;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.product-card::before,
+[data-testid*="product"]::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -2px !important;
+  left: -2px !important;
+  right: -2px !important;
+  bottom: -2px !important;
+  background: linear-gradient(45deg, 
+    rgba(255, 215, 0, 0.6) 0%, 
+    rgba(255, 215, 0, 0.2) 25%,
+    rgba(184, 134, 11, 0.2) 50%,
+    rgba(255, 215, 0, 0.2) 75%,
+    rgba(255, 215, 0, 0.6) 100%) !important;
+  border-radius: 24px !important;
+  opacity: 0 !important;
+  transition: opacity 0.6s ease !important;
+  z-index: -1 !important;
+}
+
+.product-card:hover::before,
+[data-testid*="product"]:hover::before {
+  opacity: 1 !important;
 }
 
 .product-card:hover,
 [data-testid*="product"]:hover {
-  transform: translateY(-5px) !important;
-  box-shadow: 0 8px 30px rgba(192, 140, 106, 0.2) !important;
-  border-color: #C98A6B !important;
+  transform: translateY(-12px) scale(1.03) !important;
+  box-shadow: 
+    0 40px 120px rgba(0, 0, 0, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    0 0 80px rgba(255, 215, 0, 0.2) !important;
+  border-color: rgba(255, 215, 0, 0.6) !important;
 }
 
 /* Navigation links - Enhanced visibility */
@@ -335,15 +482,54 @@ a:hover, .link:hover {
   transform: translateY(-1px) !important;
 }
 
-/* Card links should be dark */
+/* Card links should be dark with better contrast */
 .card a, .bg-card a, [class*="card"] a {
   color: #8B5A3C !important;
-  text-shadow: none !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+  font-weight: 600 !important;
 }
 
 .card a:hover, .bg-card a:hover, [class*="card"] a:hover {
-  color: #D4A574 !important;
-  text-shadow: none !important;
+  color: #5D3A26 !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+  transform: none !important;
+}
+
+/* Luxury Product Card Text */
+.product-card *,
+[data-testid*="product"] * {
+  color: #1a0d00 !important;
+  text-shadow: 
+    0 2px 4px rgba(255, 255, 255, 0.95),
+    0 0 20px rgba(255, 215, 0, 0.4) !important;
+  font-weight: 500 !important;
+}
+
+.product-card h1, .product-card h2, .product-card h3, 
+.product-card h4, .product-card h5, .product-card h6,
+[data-testid*="product"] h1, [data-testid*="product"] h2, [data-testid*="product"] h3, 
+[data-testid*="product"] h4, [data-testid*="product"] h5, [data-testid*="product"] h6 {
+  color: #1a0d00 !important;
+  font-weight: 800 !important;
+  text-shadow: 
+    0 3px 6px rgba(255, 255, 255, 0.95),
+    0 0 25px rgba(255, 215, 0, 0.5) !important;
+  letter-spacing: 0.8px !important;
+}
+
+.product-card a, [data-testid*="product"] a {
+  color: #8B4513 !important;
+  font-weight: 700 !important;
+  text-shadow: 
+    0 2px 4px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 215, 0, 0.3) !important;
+}
+
+.product-card a:hover, [data-testid*="product"] a:hover {
+  color: #654321 !important;
+  text-shadow: 
+    0 2px 6px rgba(255, 255, 255, 0.95),
+    0 0 20px rgba(255, 215, 0, 0.5) !important;
 }
 
 /* Price display */
@@ -447,31 +633,62 @@ footer {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Admin Dashboard specific styling */
+/* Admin Dashboard specific styling - Enhanced readability */
 .admin-card, .dashboard-card {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(192, 140, 106, 0.3) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(139, 90, 60, 0.3) !important;
   backdrop-filter: blur(10px) !important;
 }
 
-/* Table styling for admin */
-.table, table {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(192, 140, 106, 0.2) !important;
+.admin-card *, .dashboard-card * {
+  color: #1a1a1a !important;
+  text-shadow: none !important;
 }
 
-.table th, table th {
-  background: rgba(192, 140, 106, 0.1) !important;
-  color: #C98A6B !important;
+.admin-card h1, .admin-card h2, .admin-card h3, .admin-card h4, .admin-card h5, .admin-card h6,
+.dashboard-card h1, .dashboard-card h2, .dashboard-card h3, .dashboard-card h4, .dashboard-card h5, .dashboard-card h6 {
+  color: #1a1a1a !important;
   font-weight: 700 !important;
 }
 
-/* Modal/Dialog styling */
+/* Table styling for admin - Better contrast */
+.table, table {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid rgba(139, 90, 60, 0.3) !important;
+}
+
+.table th, table th {
+  background: rgba(139, 90, 60, 0.15) !important;
+  color: #1a1a1a !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+.table td, table td,
+.table tr, table tr {
+  color: #1a1a1a !important;
+  text-shadow: none !important;
+  font-weight: 500 !important;
+}
+
+/* Modal/Dialog styling - Enhanced text visibility */
 .modal, .dialog, [role="dialog"] {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
   backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(192, 140, 106, 0.3) !important;
+  border: 1px solid rgba(139, 90, 60, 0.3) !important;
   border-radius: 16px !important;
+}
+
+.modal *, .dialog *, [role="dialog"] * {
+  color: #1a1a1a !important;
+  text-shadow: none !important;
+}
+
+.modal h1, .modal h2, .modal h3, .modal h4, .modal h5, .modal h6,
+.dialog h1, .dialog h2, .dialog h3, .dialog h4, .dialog h5, .dialog h6,
+[role="dialog"] h1, [role="dialog"] h2, [role="dialog"] h3, [role="dialog"] h4, [role="dialog"] h5, [role="dialog"] h6 {
+  color: #1a1a1a !important;
+  font-weight: 700 !important;
 }
 
 /* Toast notifications */
