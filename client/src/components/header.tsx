@@ -48,23 +48,43 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </div>
 
               <div>
-                <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#FFFFFF', textShadow: '1px 1px 3px rgba(0, 0, 0, 0.3)'}}>PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs" style={{color: '#DDDDDD'}}>Since 2025</p>
+                <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#FFFFFF', textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7)', fontWeight: '700'}}>PALANIAPPA JEWELLERS</h1>
+                <p className="text-xs" style={{color: '#FFFFFF', textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)', opacity: '0.95'}}>Since 2025</p>
               </div>
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'font-semibold' : 'hover:text-white hover:text-shadow'}`} style={{color: location === '/' ? '#FFFFFF' : '#C98A6B'}} data-testid="nav-home">
+            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'font-semibold' : 'hover:text-white'}`} style={{
+              color: location === '/' ? '#FFFFFF' : '#FFFFFF', 
+              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+              fontWeight: location === '/' ? '700' : '500',
+              opacity: location === '/' ? '1' : '0.9'
+            }} data-testid="nav-home">
               Home
             </Link>
-            <a href="#products" className="transition-colors font-medium hover:text-white hover:text-shadow" style={{color: '#C98A6B'}} data-testid="nav-products">
+            <a href="#products" className="transition-colors font-medium hover:opacity-100" style={{
+              color: '#FFFFFF', 
+              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+              fontWeight: '500',
+              opacity: '0.9'
+            }} data-testid="nav-products">
               Products
             </a>
-            <a href="#about" className="transition-colors font-medium hover:text-white hover:text-shadow" style={{color: '#C98A6B'}} data-testid="nav-about">
+            <a href="#about" className="transition-colors font-medium hover:opacity-100" style={{
+              color: '#FFFFFF', 
+              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+              fontWeight: '500',
+              opacity: '0.9'
+            }} data-testid="nav-about">
               About
             </a>
-            <a href="#contact" className="transition-colors font-medium hover:text-white hover:text-shadow" style={{color: '#C98A6B'}} data-testid="nav-contact">
+            <a href="#contact" className="transition-colors font-medium hover:opacity-100" style={{
+              color: '#FFFFFF', 
+              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+              fontWeight: '500',
+              opacity: '0.9'
+            }} data-testid="nav-contact">
               Contact
             </a>
           </nav>
