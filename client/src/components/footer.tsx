@@ -4,7 +4,7 @@ import logoPath from '@assets/1000284180_1755240849891.jpg';
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white py-12" data-testid="footer-main" style={{color: 'white'}}>
+    <footer className="bg-black text-white py-12" data-testid="footer-main" style={{backgroundColor: 'black', color: 'white'}}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
