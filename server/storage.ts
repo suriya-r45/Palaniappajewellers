@@ -1,6 +1,6 @@
 import { users, products, bills, cartItems, orders, estimates, type User, type InsertUser, type Product, type InsertProduct, type Bill, type InsertBill, type CartItemRow, type InsertCartItem, type Order, type InsertOrder, type CartItem, type Estimate, type InsertEstimate } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, like, and } from "drizzle-orm";
+import { eq, desc, like, and, gte, lte } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
 export interface IStorage {
@@ -244,8 +244,27 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createEstimate(insertEstimate: InsertEstimate): Promise<Estimate> {
-    // Generate quotation number
-    const quotationNo = `Q-${Date.now()}`;
+    // Generate quotation number in format: PJ-QTN-YYYY-MM-NNN
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    
+    // Count estimates created in current month to get sequential number
+    const startOfMonth = new Date(year, now.getMonth(), 1);
+    const endOfMonth = new Date(year, now.getMonth() + 1, 0, 23, 59, 59, 999);
+    
+    const monthlyEstimates = await db
+      .select()
+      .from(estimates)
+      .where(
+        and(
+          gte(estimates.createdAt, startOfMonth),
+          lte(estimates.createdAt, endOfMonth)
+        )
+      );
+    
+    const sequentialNumber = String(monthlyEstimates.length + 1).padStart(3, '0');
+    const quotationNo = `PJ-QTN-${year}-${month}-${sequentialNumber}`;
     
     // Ensure validUntil is a proper Date object
     const estimateData = {
