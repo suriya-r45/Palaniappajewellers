@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { User, LogOut } from 'lucide-react';
+import { User, LogOut, Menu, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { Currency, CURRENCY_NAMES } from '@/lib/currency';
 import CartButton from '@/components/cart/cart-button';
@@ -21,6 +21,7 @@ interface HeaderProps {
 export default function Header({ selectedCurrency, onCurrencyChange, filters = {}, onFiltersChange }: HeaderProps) {
   const [location] = useLocation();
   const { user, logout, isAdmin } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -32,7 +33,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
       <GoldRatesTicker />
       <header className="luxury-bg shadow-lg border-b border-gold-accent sticky top-0 z-50" data-testid="header-main">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 relative">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
               <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold">
@@ -65,7 +66,18 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </a>
           </nav>
 
-          <div className="flex items-center space-x-4">
+          {/* Mobile Menu Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
             {/* Advanced Filters - Only show on home page */}
             {location === '/' && onFiltersChange && (
               <AdvancedFilters 
@@ -97,7 +109,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </Button>
             <CartButton />
             <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
-              <SelectTrigger className="w-32 flex items-center" data-testid="trigger-currency">
+              <SelectTrigger className="w-24 sm:w-32 flex items-center" data-testid="trigger-currency">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -109,7 +121,8 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                       <rect y="16" width="24" height="8" fill="#138808"/>
                       <circle cx="12" cy="12" r="3" fill="#000080"/>
                     </svg>
-                    <span>₹ INR</span>
+                    <span className="hidden sm:inline">₹ INR</span>
+                    <span className="sm:hidden">₹</span>
                   </div>
                 </SelectItem>
                 <SelectItem value="BHD" data-testid="option-bhd">
@@ -119,7 +132,8 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                       <rect y="12" width="24" height="12" fill="#CE1126"/>
                       <path d="M0 0 L8 6 L0 12 V8 L4 6 L0 4 Z" fill="#CE1126"/>
                     </svg>
-                    <span>BD BHD</span>
+                    <span className="hidden sm:inline">BD BHD</span>
+                    <span className="sm:hidden">BD</span>
                   </div>
                 </SelectItem>
               </SelectContent>
@@ -130,8 +144,11 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 <div className="flex items-center space-x-2">
                   {isAdmin && (
                     <Link href="/admin">
-                      <Button variant="outline" size="sm" className="border-yellow-400 text-black hover:bg-yellow-50" data-testid="button-admin-dashboard">
+                      <Button variant="outline" size="sm" className="border-yellow-400 text-black hover:bg-yellow-50 hidden lg:flex" data-testid="button-admin-dashboard">
                         Dashboard
+                      </Button>
+                      <Button variant="outline" size="sm" className="border-yellow-400 text-black hover:bg-yellow-50 lg:hidden" data-testid="button-admin-dashboard-mobile">
+                        Admin
                       </Button>
                     </Link>
                   )}
@@ -143,12 +160,74 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                     data-testid="button-logout"
                   >
                     <LogOut className="h-4 w-4" />
-                    <span>{user.name}</span>
+                    <span className="hidden sm:inline">{user.name}</span>
                   </Button>
                 </div>
               ) : (
                 <Link href="/login">
                   <Button className="bg-yellow-600 hover:bg-yellow-700 text-white" data-testid="button-login">
+                    <User className="h-4 w-4 mr-2" />
+                    <span className="hidden sm:inline">Login</span>
+                  </Button>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg z-40">
+            <div className="px-4 py-4 space-y-4">
+              <nav className="flex flex-col space-y-2">
+                <Link href="/" className={`py-2 px-3 rounded transition-colors ${location === '/' ? 'bg-yellow-50 text-yellow-600 font-semibold' : 'text-gray-700 hover:bg-gray-50'}`} data-testid="nav-home-mobile">
+                  Home
+                </Link>
+                <a href="#products" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors" data-testid="nav-products-mobile">
+                  Products
+                </a>
+                <a href="#about" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors" data-testid="nav-about-mobile">
+                  About
+                </a>
+                <a href="#contact" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors" data-testid="nav-contact-mobile">
+                  Contact
+                </a>
+              </nav>
+              
+              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <CartButton />
+                <Select value={selectedCurrency} onValueChange={onCurrencyChange}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="INR">₹ INR</SelectItem>
+                    <SelectItem value="BHD">BD BHD</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {user ? (
+                <div className="flex flex-col space-y-2 pt-2">
+                  {isAdmin && (
+                    <Link href="/admin">
+                      <Button variant="outline" className="w-full border-yellow-400 text-black hover:bg-yellow-50">
+                        Admin Dashboard
+                      </Button>
+                    </Link>
+                  )}
+                  <Button
+                    variant="outline"
+                    onClick={handleLogout}
+                    className="w-full flex items-center justify-center space-x-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span>Logout ({user.name})</span>
+                  </Button>
+                </div>
+              ) : (
+                <Link href="/login">
+                  <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white">
                     <User className="h-4 w-4 mr-2" />
                     Login
                   </Button>
@@ -156,7 +235,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
               )}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
     </>

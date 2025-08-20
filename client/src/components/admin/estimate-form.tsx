@@ -182,7 +182,7 @@ export function EstimateForm() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6">
       <Card className="border-2 border-yellow-400 bg-gradient-to-r from-gray-50 to-yellow-50">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2 text-gray-800">
@@ -195,7 +195,7 @@ export function EstimateForm() {
             {/* Customer Information */}
             <div className="bg-white p-4 rounded-lg border">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Customer Information</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="customerName">Customer Name *</Label>
                   <Input
@@ -216,7 +216,7 @@ export function EstimateForm() {
                     required
                   />
                 </div>
-                <div className="md:col-span-2">
+                <div className="sm:col-span-2">
                   <Label htmlFor="customerEmail">Customer Email</Label>
                   <Input
                     id="customerEmail"
@@ -232,7 +232,7 @@ export function EstimateForm() {
             {/* Product Information */}
             <div className="bg-white p-4 rounded-lg border">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Product Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="productName">Product Name *</Label>
                   <Input
@@ -316,7 +316,7 @@ export function EstimateForm() {
                 <DollarSign className="h-5 w-5 mr-2 text-yellow-600" />
                 Pricing Calculation
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="metalValue">Metal Value (₹)</Label>
                   <Input
@@ -417,7 +417,7 @@ export function EstimateForm() {
               {formData.totalAmount && (
                 <div className="mt-4 p-4 bg-white rounded-lg border">
                   <h4 className="font-semibold text-gray-800 mb-2">Calculated Pricing</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                     <div>
                       <span className="text-gray-600">Making Charges:</span>
                       <div className="font-semibold">₹{formData.makingCharges}</div>
@@ -442,7 +442,7 @@ export function EstimateForm() {
                       <span className="text-gray-600">Subtotal:</span>
                       <div className="font-semibold">₹{formData.subtotal}</div>
                     </div>
-                    <div className="md:col-span-4 border-t pt-2">
+                    <div className="sm:col-span-2 lg:col-span-4 border-t pt-2">
                       <span className="text-gray-600">Total Amount:</span>
                       <div className="text-xl font-bold text-yellow-600">₹{formData.totalAmount}</div>
                     </div>
@@ -453,7 +453,7 @@ export function EstimateForm() {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-gray-800 to-black hover:from-black hover:to-gray-900 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 border border-yellow-400"
+              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 border border-yellow-400"
               disabled={createEstimateMutation.isPending}
             >
               {createEstimateMutation.isPending ? "Creating Estimate..." : "Create Estimate"}
