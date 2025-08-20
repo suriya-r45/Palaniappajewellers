@@ -644,7 +644,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
 
             <div>
               <Label htmlFor="images">Product Images</Label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400">
                 <input
                   id="images"
                   type="file"
@@ -686,7 +686,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
 
             <Button
               type="submit"
-              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 border border-yellow-400"
+              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg shadow-lg border border-yellow-400"
               disabled={addProductMutation.isPending}
               data-testid="button-add-product"
             >

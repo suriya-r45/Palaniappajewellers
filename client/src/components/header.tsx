@@ -48,37 +48,33 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
               <div>
                 <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#000000', fontWeight: '700'}}>PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs" style={{color: '#000000', opacity: '0.8'}}>Since 2025</p>
+                <p className="text-xs" style={{color: '#000000'}}>Since 2025</p>
               </div>
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'font-semibold' : 'hover:text-gray-600'}`} style={{
-              color: location === '/' ? '#000000' : '#000000', 
-              fontWeight: location === '/' ? '700' : '500',
-              opacity: location === '/' ? '1' : '0.8'
+            <Link href="/" className={`font-medium ${location === '/' ? 'font-semibold' : ''}`} style={{
+              color: '#000000', 
+              fontWeight: location === '/' ? '700' : '500'
             }} data-testid="nav-home">
               Home
             </Link>
-            <a href="#products" className="transition-colors font-medium hover:opacity-100" style={{
+            <a href="#products" className="font-medium" style={{
               color: '#000000', 
-              fontWeight: '500',
-              opacity: '0.8'
+              fontWeight: '500'
             }} data-testid="nav-products">
               Products
             </a>
-            <a href="#about" className="transition-colors font-medium hover:opacity-100" style={{
+            <a href="#about" className="font-medium" style={{
               color: '#000000', 
-              fontWeight: '500',
-              opacity: '0.8'
+              fontWeight: '500'
             }} data-testid="nav-about">
               About
             </a>
-            <a href="#contact" className="transition-colors font-medium hover:opacity-100" style={{
+            <a href="#contact" className="font-medium" style={{
               color: '#000000', 
-              fontWeight: '500',
-              opacity: '0.8'
+              fontWeight: '500'
             }} data-testid="nav-contact">
               Contact
             </a>

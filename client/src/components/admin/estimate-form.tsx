@@ -462,7 +462,7 @@ export function EstimateForm() {
 
             <Button
               type="submit"
-              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 border border-yellow-400"
+              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg shadow-lg border border-yellow-400"
               disabled={createEstimateMutation.isPending}
             >
               {createEstimateMutation.isPending ? "Creating Estimate..." : "Create Estimate"}
