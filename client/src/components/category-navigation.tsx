@@ -176,7 +176,7 @@ export default function CategoryNavigation() {
         <div className="text-center mb-16">
           <h2 className="text-6xl font-bold text-gradient mb-6">Explore Our Collections</h2>
           <div className="w-24 h-1 premium-gradient mx-auto mb-8 rounded-full"></div>
-          <p className="text-2xl text-gray-700 font-light">Discover jewelry for every occasion and style</p>
+          <p className="text-2xl text-gray-700 font-light">Browse our exquisite collection</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">

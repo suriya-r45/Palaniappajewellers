@@ -30,7 +30,6 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
   return (
     <>
-      <GoldRatesTicker />
       <header className="luxury-bg shadow-lg border-b border-gold-accent sticky top-0 z-50" data-testid="header-main">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 relative">
@@ -177,8 +176,8 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg z-40">
-            <div className="px-4 py-4 space-y-4">
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg z-40" style={{ backgroundColor: 'rgba(255, 255, 255, 0.98)', backdropFilter: 'blur(10px)' }}>
+            <div className="px-4 py-4 space-y-4 bg-white">
               <nav className="flex flex-col space-y-2">
                 <Link href="/" className={`py-2 px-3 rounded transition-colors ${location === '/' ? 'bg-yellow-50 text-yellow-600 font-semibold' : 'text-gray-700 hover:bg-gray-50'}`} data-testid="nav-home-mobile">
                   Home

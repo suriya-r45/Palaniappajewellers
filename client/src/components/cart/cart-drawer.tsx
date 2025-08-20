@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/currency";
 import { useLocation } from "wouter";
+import { useAuth } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -12,8 +14,21 @@ interface CartDrawerProps {
 export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { items, totalItems, totalAmount, updateQuantity, removeFromCart, clearCart } = useCart();
   const [, setLocation] = useLocation();
+  const { user } = useAuth();
+  const { toast } = useToast();
 
   const handleCheckout = () => {
+    if (!user) {
+      toast({
+        title: "Login Required",
+        description: "Please login or register to proceed to checkout",
+        variant: "destructive",
+      });
+      onClose();
+      setLocation("/login");
+      return;
+    }
+    
     onClose();
     setLocation("/checkout");
   };
