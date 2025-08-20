@@ -286,8 +286,8 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="glass-effect border-2 border-gray-300 text-gray-800 hover:text-black px-12 py-4 text-lg rounded-full elegant-shadow-lg transition-all duration-500 hover:scale-110 hover:border-gray-400">
-              View All New Arrivals <ArrowRight className="ml-4 h-5 w-5" />
+            <Button variant="outline" className="gold-button gold-hover border-2 px-8 md:px-12 py-3 md:py-4 text-base md:text-lg rounded-full transition-all duration-500 hover:scale-110">
+              View All New Arrivals <ArrowRight className="ml-2 md:ml-4 h-4 md:h-5 w-4 md:w-5" />
             </Button>
           </div>
         </div>
@@ -298,9 +298,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.01)_0px,transparent_2px,transparent_10px,rgba(0,0,0,0.01)_12px)]"></div>
         <div className="container mx-auto px-4 relative">
           <div className="text-center mb-20">
-            <h2 className="text-7xl font-bold text-gradient mb-6">Complete Collection</h2>
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gradient mb-6">Complete Collection</h2>
             <div className="w-40 h-1 premium-gradient mx-auto mb-10 rounded-full"></div>
-            <p className="text-3xl text-gray-700 font-light">Browse our entire jewelry catalog</p>
           </div>
 
           <div className="lg:flex lg:gap-8">

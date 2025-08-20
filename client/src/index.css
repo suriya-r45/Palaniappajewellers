@@ -223,11 +223,11 @@ body {
 
 .text-gradient {
   background: linear-gradient(135deg, 
-    var(--gold) 0%, 
-    var(--rich-gold) 25%,
-    var(--gold) 50%, 
-    #8A2BE2 75%,
-    var(--royal-purple) 100%);
+    #B8860B 0%, 
+    #FFD700 25%,
+    #FFA500 50%, 
+    #B8860B 75%,
+    #CD853F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -240,6 +240,68 @@ body {
 @keyframes shimmer {
   0%, 100% { filter: brightness(1); }
   50% { filter: brightness(1.2); }
+}
+
+/* Enhanced Gold Theme Classes */
+.gold-accent {
+  border-color: #FFD700 !important;
+  color: #B8860B !important;
+}
+
+.gold-hover:hover {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 165, 0, 0.05) 100%) !important;
+  border-color: #FFD700 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2) !important;
+}
+
+.gold-button {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+  color: #000 !important;
+  border: 1px solid #B8860B !important;
+  transition: all 0.3s ease !important;
+}
+
+.gold-button:hover {
+  background: linear-gradient(135deg, #FFA500 0%, #B8860B 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Mobile Responsive Font and Image Sizes */
+@media (max-width: 640px) {
+  /* Reduce hero text sizes */
+  .text-6xl { font-size: 2.5rem !important; line-height: 1.1 !important; }
+  .text-5xl { font-size: 2rem !important; line-height: 1.1 !important; }
+  .text-4xl { font-size: 1.75rem !important; line-height: 1.2 !important; }
+  .text-3xl { font-size: 1.5rem !important; line-height: 1.2 !important; }
+  .text-2xl { font-size: 1.25rem !important; line-height: 1.3 !important; }
+  .text-xl { font-size: 1.125rem !important; line-height: 1.4 !important; }
+  
+  /* Reduce logo and image sizes */
+  .w-12.h-12 { width: 2.5rem !important; height: 2.5rem !important; }
+  .w-16.h-16 { width: 3.5rem !important; height: 3.5rem !important; }
+  .w-20.h-20 { width: 4rem !important; height: 4rem !important; }
+  
+  /* Optimize button sizes */
+  .px-12 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+  .py-4 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+  
+  /* Reduce section padding */
+  .py-32 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+  .py-24 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+  .py-20 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+}
+
+@media (max-width: 480px) {
+  /* Extra small mobile optimization */
+  .text-7xl { font-size: 2.25rem !important; line-height: 1 !important; }
+  .text-6xl { font-size: 2rem !important; line-height: 1 !important; }
+  .text-5xl { font-size: 1.75rem !important; line-height: 1.1 !important; }
+  
+  /* Very small images for iPhone */
+  .w-12.h-12 { width: 2rem !important; height: 2rem !important; }
+  .w-16.h-16 { width: 3rem !important; height: 3rem !important; }
 }
 
 .premium-gradient {

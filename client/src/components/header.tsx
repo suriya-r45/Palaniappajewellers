@@ -35,7 +35,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
         <div className="flex items-center justify-between h-16 relative">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gold">
               <img 
                 src={logoPath} 
                 alt="Palaniappa Jewellers Logo" 
@@ -44,7 +44,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </div>
 
               <div>
-                <h1 className="text-xl font-display font-bold text-black">PALANIAPPA JEWELLERS</h1>
+                <h1 className="text-lg md:text-xl font-display font-bold text-black">PALANIAPPA JEWELLERS</h1>
                 <p className="text-xs text-gray-600">Since 2025</p>
               </div>
             </Link>
@@ -143,10 +143,10 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 <div className="flex items-center space-x-2">
                   {isAdmin && (
                     <Link href="/admin">
-                      <Button variant="outline" size="sm" className="border-yellow-400 text-black hover:bg-yellow-50 hidden lg:flex" data-testid="button-admin-dashboard">
+                      <Button variant="outline" size="sm" className="gold-accent gold-hover hidden lg:flex" data-testid="button-admin-dashboard">
                         Dashboard
                       </Button>
-                      <Button variant="outline" size="sm" className="border-yellow-400 text-black hover:bg-yellow-50 lg:hidden" data-testid="button-admin-dashboard-mobile">
+                      <Button variant="outline" size="sm" className="gold-accent gold-hover lg:hidden" data-testid="button-admin-dashboard-mobile">
                         Admin
                       </Button>
                     </Link>
@@ -164,7 +164,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 </div>
               ) : (
                 <Link href="/login">
-                  <Button className="bg-yellow-600 hover:bg-yellow-700 text-white" data-testid="button-login">
+                  <Button className="gold-button gold-hover text-black" data-testid="button-login">
                     <User className="h-4 w-4 mr-2" />
                     <span className="hidden sm:inline">Login</span>
                   </Button>
@@ -179,16 +179,16 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
           <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg mobile-menu-solid" style={{ backgroundColor: '#ffffff !important', zIndex: 99999, background: '#ffffff', opacity: 1 }}>
             <div className="px-4 py-4 space-y-4 bg-white mobile-menu-solid" style={{ backgroundColor: '#ffffff !important', background: '#ffffff' }}>
               <nav className="flex flex-col space-y-2">
-                <Link href="/" className={`py-2 px-3 rounded transition-colors ${location === '/' ? 'bg-yellow-50 text-yellow-600 font-semibold' : 'text-gray-700 hover:bg-gray-50'}`} data-testid="nav-home-mobile">
+                <Link href="/" className={`py-2 px-3 rounded transition-colors ${location === '/' ? 'bg-yellow-50 text-yellow-600 font-semibold gold-accent' : 'text-gray-700 hover:bg-gray-50 gold-hover'}`} data-testid="nav-home-mobile">
                   Home
                 </Link>
-                <a href="#products" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors" data-testid="nav-products-mobile">
+                <a href="#products" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors gold-hover" data-testid="nav-products-mobile">
                   Products
                 </a>
-                <a href="#about" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors" data-testid="nav-about-mobile">
+                <a href="#about" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors gold-hover" data-testid="nav-about-mobile">
                   About
                 </a>
-                <a href="#contact" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors" data-testid="nav-contact-mobile">
+                <a href="#contact" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors gold-hover" data-testid="nav-contact-mobile">
                   Contact
                 </a>
               </nav>
@@ -210,7 +210,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 <div className="flex flex-col space-y-2 pt-2">
                   {isAdmin && (
                     <Link href="/admin">
-                      <Button variant="outline" className="w-full border-yellow-400 text-black hover:bg-yellow-50">
+                      <Button variant="outline" className="w-full gold-accent gold-hover">
                         Admin Dashboard
                       </Button>
                     </Link>
