@@ -4,58 +4,57 @@
 @tailwind utilities;
 
 :root {
-  /* White, Black & Gold Color Palette */
+  /* Pure White & Black Color Palette */
   --background: 0 0% 100%;              /* Pure White #FFFFFF */
   --foreground: 0 0% 0%;                /* Pure Black #000000 for headings */
   --card: 0 0% 100%;                    /* Pure White for cards */
   --card-foreground: 0 0% 0%;           /* Pure Black #000000 for body text */
   --popover: 0 0% 100%;                 /* Pure White */
   --popover-foreground: 0 0% 0%;        /* Pure Black #000000 */
-  --primary: 45 100% 50%;               /* Pure Gold #FFD700 */
-  --primary-foreground: 0 0% 0%;        /* Pure Black */
-  --secondary: 0 0% 0%;                 /* Black background for CTA */
-  --secondary-foreground: 0 0% 100%;    /* White text for CTA */
+  --primary: 0 0% 0%;                   /* Pure Black #000000 */
+  --primary-foreground: 0 0% 100%;      /* Pure White */
+  --secondary: 0 0% 100%;               /* White background for CTA */
+  --secondary-foreground: 0 0% 0%;      /* Black text for CTA */
   --muted: 0 0% 96%;                    /* Light Gray #F5F5F5 */
   --muted-foreground: 0 0% 0%;          /* Pure Black #000000 */
-  --accent: 45 100% 50%;                /* Pure Gold #FFD700 */
-  --accent-foreground: 0 0% 0%;         /* Pure Black */
+  --accent: 0 0% 0%;                    /* Pure Black #000000 */
+  --accent-foreground: 0 0% 100%;       /* Pure White */
   --destructive: 0 72% 51%;             /* #EF4444 - Red */
   --destructive-foreground: 0 0% 100%;  /* Pure White */
   --border: 0 0% 90%;                   /* Light Gray #E5E5E5 borders */
   --input: 0 0% 100%;                   /* Pure White */
-  --ring: 45 100% 50%;                  /* Pure Gold focus rings */
+  --ring: 0 0% 0%;                      /* Pure Black focus rings */
   --radius: 0.5rem;
 
-  /* White, Black & Gold Palette */
+  /* Pure White & Black Palette */
   --pure-white: #FFFFFF;                /* Pure White */
   --pure-black: #000000;                /* Pure Black */
-  --pure-gold: #FFD700;                 /* Pure Gold */
   --light-gray: #F5F5F5;                /* Light Gray */
   --dark-gray: #333333;                 /* Dark Gray */
   --medium-gray: #666666;               /* Medium Gray */
 }
 
 .dark {
-  /* Dark mode - pure black with white text and gold accents */
+  /* Dark mode - pure black with white text */
   --background: 0 0% 0%;                /* Pure Black #000000 */
   --foreground: 0 0% 100%;              /* Pure White #FFFFFF */
   --card: 0 0% 5%;                      /* Very Dark Gray #0D0D0D */
   --card-foreground: 0 0% 100%;         /* Pure White #FFFFFF */
   --popover: 0 0% 0%;                   /* Pure Black #000000 */
   --popover-foreground: 0 0% 100%;      /* Pure White #FFFFFF */
-  --primary: 45 100% 50%;               /* Pure Gold #FFD700 */
+  --primary: 0 0% 100%;                 /* Pure White #FFFFFF */
   --primary-foreground: 0 0% 0%;        /* Pure Black */
-  --secondary: 0 0% 100%;               /* Pure White */
-  --secondary-foreground: 0 0% 0%;      /* Pure Black */
+  --secondary: 0 0% 0%;                 /* Pure Black */
+  --secondary-foreground: 0 0% 100%;    /* Pure White */
   --muted: 0 0% 10%;                    /* Very Dark Gray #1A1A1A */
   --muted-foreground: 0 0% 80%;         /* Light Gray #CCCCCC */
-  --accent: 45 100% 50%;                /* Pure Gold #FFD700 */
+  --accent: 0 0% 100%;                  /* Pure White #FFFFFF */
   --accent-foreground: 0 0% 0%;         /* Pure Black */
   --destructive: 0 72% 51%;             /* #EF4444 - Red */
   --destructive-foreground: 0 0% 100%;  /* Pure White */
   --border: 0 0% 20%;                   /* Dark Gray #333333 */
   --input: 0 0% 5%;                     /* Very Dark Gray #0D0D0D */
-  --ring: 45 100% 50%;                  /* Pure Gold #FFD700 */
+  --ring: 0 0% 100%;                    /* Pure White */
 }
 
 * {
@@ -142,12 +141,12 @@ body {
   background-color: #ffffff !important;
 }
 
-/* White, Black & Gold Royal Theme */
+/* Pure White & Black Theme */
 body {
   background: 
-    radial-gradient(ellipse at 25% 25%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 25% 25%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
     radial-gradient(ellipse at 75% 75%, rgba(0, 0, 0, 0.1) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 10%, rgba(255, 215, 0, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 10%, rgba(0, 0, 0, 0.03) 0%, transparent 40%),
     linear-gradient(135deg, 
       #FFFFFF 0%, 
       #FAFAFA 15%,
@@ -173,10 +172,10 @@ body::before {
   width: 100% !important;
   height: 100% !important;
   background: 
-    radial-gradient(circle at 20% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 80% 30%, rgba(255, 215, 0, 0.06) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.07) 0%, transparent 55%),
-    radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.05) 0%, transparent 35%) !important;
+    radial-gradient(circle at 20% 40%, rgba(0, 0, 0, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(0, 0, 0, 0.07) 0%, transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 35%) !important;
   pointer-events: none !important;
   z-index: 0 !important;
   animation: elegant-shimmer 30s ease-in-out infinite !important;
@@ -201,7 +200,7 @@ body::before {
   }
 }
 
-/* Main containers with white, black & gold styling */
+/* Main containers with pure white & black styling */
 .container,
 .max-w-7xl,
 .mx-auto,
@@ -209,8 +208,8 @@ main {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(250, 250, 250, 0.9)) !important;
   backdrop-filter: blur(20px) !important;
   border-radius: 24px !important;
-  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 215, 0, 0.2) !important;
-  border: 2px solid rgba(255, 215, 0, 0.3) !important;
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(0, 0, 0, 0.1) !important;
+  border: 2px solid rgba(0, 0, 0, 0.2) !important;
 }
 
 /* Premium Section Styling */
@@ -235,11 +234,11 @@ section::before {
       rgba(245, 245, 245, 0.9) 100%) !important;
   backdrop-filter: blur(25px) saturate(150%) !important;
   border-radius: 32px !important;
-  border: 2px solid rgba(255, 215, 0, 0.4) !important;
+  border: 2px solid rgba(0, 0, 0, 0.2) !important;
   box-shadow: 
-    inset 0 2px 0 rgba(255, 215, 0, 0.3), 
+    inset 0 2px 0 rgba(255, 255, 255, 0.3), 
     0 15px 50px rgba(0, 0, 0, 0.1),
-    0 0 100px rgba(255, 215, 0, 0.2) !important;
+    0 0 100px rgba(0, 0, 0, 0.05) !important;
   pointer-events: none !important;
   z-index: 1 !important;
 }
@@ -284,7 +283,7 @@ nav {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* White, Black & Gold Glass Morphism Cards */
+/* Pure White & Black Glass Morphism Cards */
 .card,
 .bg-card,
 .border,
@@ -296,14 +295,14 @@ nav {
       rgba(245, 245, 245, 0.85) 50%,
       rgba(250, 250, 250, 0.9) 75%,
       rgba(255, 255, 255, 0.95) 100%) !important;
-  border: 2px solid rgba(255, 215, 0, 0.4) !important;
+  border: 2px solid rgba(0, 0, 0, 0.2) !important;
   border-radius: 20px !important;
   backdrop-filter: blur(30px) saturate(180%) brightness(110%) !important;
   box-shadow: 
     0 25px 80px rgba(0, 0, 0, 0.1),
-    inset 0 2px 0 rgba(255, 215, 0, 0.3),
-    inset 0 -1px 0 rgba(255, 215, 0, 0.2),
-    0 0 60px rgba(255, 215, 0, 0.15) !important;
+    inset 0 2px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+    0 0 60px rgba(0, 0, 0, 0.05) !important;
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative !important;
   overflow: hidden !important;
@@ -351,12 +350,12 @@ nav {
   z-index: 2 !important;
 }
 
-/* Typography - Headings (Black text with gold accents) */
+/* Typography - Headings (Pure black text) */
 h1, h2, h3, h4, h5, h6,
 .text-2xl, .text-3xl, .text-4xl, .text-5xl,
 .font-bold, .font-semibold {
   color: #000000 !important;
-  text-shadow: 1px 1px 3px rgba(255, 215, 0, 0.3) !important;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.3) !important;
   font-weight: 600 !important;
   letter-spacing: 0.5px !important;
 }
@@ -392,20 +391,20 @@ p, span, div, .text-sm, .text-base, .text-lg {
   letter-spacing: 0.5px !important;
 }
 
-/* Primary buttons - Gold Style */
+/* Primary buttons - Black Style */
 .btn-primary,
 .bg-primary,
 button[class*="primary"],
 .button-primary {
-  background: linear-gradient(45deg, #FFD700 0%, #FFC107 100%) !important;
-  color: #000000 !important;
-  border: 2px solid #FFD700 !important;
+  background: linear-gradient(45deg, #000000 0%, #333333 100%) !important;
+  color: #FFFFFF !important;
+  border: 2px solid #000000 !important;
   border-radius: 8px !important;
   padding: 12px 32px !important;
   font-weight: 600 !important;
   letter-spacing: 1px !important;
   text-transform: uppercase !important;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
   transition: all 0.3s ease !important;
 }
 
@@ -413,22 +412,22 @@ button[class*="primary"],
 .bg-primary:hover,
 button[class*="primary"]:hover,
 .button-primary:hover {
-  background: linear-gradient(45deg, #FFC107 0%, #FFD700 100%) !important;
+  background: linear-gradient(45deg, #333333 0%, #000000 100%) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* CTA Buttons - Halo Style White with Rose Gold border */
+/* CTA Buttons - White Style with Black border */
 .btn-secondary,
 .bg-secondary,
 .cta-button,
 .button-cta {
   background: rgba(255, 255, 255, 0.95) !important;
-  color: #8B5A3C !important;
-  border: 1px solid rgba(212, 165, 116, 0.6) !important;
-  border-radius: 0px !important;
+  color: #000000 !important;
+  border: 2px solid rgba(0, 0, 0, 0.6) !important;
+  border-radius: 8px !important;
   padding: 12px 32px !important;
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   letter-spacing: 1px !important;
   text-transform: uppercase !important;
   backdrop-filter: blur(10px) !important;
@@ -439,11 +438,11 @@ button[class*="primary"]:hover,
 .bg-secondary:hover,
 .cta-button:hover,
 .button-cta:hover {
-  background: linear-gradient(45deg, #D4A574 0%, #F4D19B 100%) !important;
+  background: linear-gradient(45deg, #000000 0%, #333333 100%) !important;
   color: #FFFFFF !important;
-  border-color: transparent !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 6px 25px rgba(212, 165, 116, 0.4) !important;
+  border-color: #000000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Form inputs - Enhanced visibility */
