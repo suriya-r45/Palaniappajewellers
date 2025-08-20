@@ -118,9 +118,20 @@
 }
 
 /* Ensure all children have solid backgrounds */
-.cart-drawer-content > * {
+.cart-drawer-content > *,
+.cart-drawer-content > * > *,
+.cart-drawer-content * {
   background: #ffffff !important;
   background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Force solid cart item backgrounds */
+.cart-drawer-content .space-y-4 > div,
+.cart-drawer-content [data-testid*="cart-item"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
 }
 
 body {
@@ -206,6 +217,56 @@ div.md\:hidden.absolute.top-16.left-0.right-0.bg-white button {
 .mobile-menu-solid {
   background-color: #ffffff !important;
   background: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Fix all modal/popup transparency issues */
+/* Dialog Components */
+[data-radix-popper-content-wrapper],
+[data-radix-dialog-content],
+[data-radix-alert-dialog-content],
+[data-radix-sheet-content],
+[data-radix-popover-content],
+[data-radix-dropdown-menu-content],
+[data-radix-select-content],
+[data-radix-toast-root] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
+
+/* Drawer/Sheet Components */
+[data-vaul-drawer],
+[data-vaul-drawer-wrapper] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Command Dialog */
+[cmdk-root],
+[cmdk-dialog] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* All popup overlays should have proper dark backdrop */
+[data-radix-dialog-overlay],
+[data-radix-alert-dialog-overlay],
+[data-radix-sheet-overlay],
+[data-vaul-overlay] {
+  background: rgba(0, 0, 0, 0.8) !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  opacity: 1 !important;
+}
+
+/* Ensure all popups have solid white backgrounds */
+.fixed.z-50.bg-background,
+.fixed.z-50[data-state="open"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
   opacity: 1 !important;
 }
 
