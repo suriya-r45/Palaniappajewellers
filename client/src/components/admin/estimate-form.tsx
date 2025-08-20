@@ -135,14 +135,14 @@ export function EstimateForm() {
 
   const calculatePricing = () => {
     const metalVal = parseFloat(formData.metalValue) || 0;
-    // Removed making charges calculation
+    const makingPercent = parseFloat(formData.makingChargesPercentage) || 0;
     const stonePercent = parseFloat(formData.stoneDiamondChargesPercentage) || 0;
     const wastagePercent = parseFloat(formData.wastagePercentage) || 0;
     const hallmarking = parseFloat(formData.hallmarkingCharges) || 0;
     const gstPercent = parseFloat(formData.gstPercentage) || 0;
     const vatPercent = parseFloat(formData.vatPercentage) || 0;
 
-    const makingCharges = 0; // Removed making charges
+    const makingCharges = (metalVal * makingPercent) / 100;
     const stoneCharges = (metalVal * stonePercent) / 100;
     const wastageCharges = (metalVal * wastagePercent) / 100;
     const subtotal = metalVal + makingCharges + stoneCharges + wastageCharges + hallmarking;
@@ -340,6 +340,17 @@ export function EstimateForm() {
                   />
                 </div>
 
+                <div>
+                  <Label htmlFor="makingChargesPercentage">Making Charges (%)</Label>
+                  <Input
+                    id="makingChargesPercentage"
+                    type="number"
+                    step="0.01"
+                    value={formData.makingChargesPercentage}
+                    onChange={(e) => handleInputChange("makingChargesPercentage", e.target.value)}
+                    placeholder="Making charges percentage"
+                  />
+                </div>
                 <div>
                   <Label htmlFor="stoneDiamondChargesPercentage">Stone/Diamond Charges (%)</Label>
                   <Input

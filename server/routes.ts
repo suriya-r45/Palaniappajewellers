@@ -808,6 +808,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 *Stone/Diamond Charges (${estimate.stoneDiamondChargesPercentage}%):* ₹${parseFloat(estimate.stoneDiamondCharges || '0').toLocaleString('en-IN')}
 *Wastage (${estimate.wastagePercentage}%):* ₹${parseFloat(estimate.wastageCharges).toLocaleString('en-IN')}
 *Hallmarking:* ₹${parseFloat(estimate.hallmarkingCharges || '450').toLocaleString('en-IN')}
+*Subtotal:* ₹${parseFloat(estimate.subtotal).toLocaleString('en-IN')}
+
+*TAX DETAILS*
+*GST (3%):* ₹${Math.round((parseFloat(estimate.subtotal) * 3) / 100).toLocaleString('en-IN')}
+*VAT (0%):* ₹0
 
 *TOTAL AMOUNT: ₹${parseFloat(estimate.totalAmount).toLocaleString('en-IN')}*
 

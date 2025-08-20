@@ -64,7 +64,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" data-testid="page-admin-dashboard">
+    <div className="min-h-screen bg-white" data-testid="page-admin-dashboard" style={{ backgroundColor: '#ffffff' }}>
       <Header 
         selectedCurrency={selectedCurrency} 
         onCurrencyChange={setSelectedCurrency} 

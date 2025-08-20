@@ -74,6 +74,37 @@
 }
 
 body {
+  background-color: #ffffff !important;
+}
+
+/* Ensure all backgrounds are solid white */
+.bg-gray-50,
+.surface-gradient,
+.bg-gradient-to-br,
+.bg-gradient-to-r,
+[class*="gradient"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+/* Override any transparent backgrounds */
+.bg-transparent {
+  background-color: #ffffff !important;
+}
+
+/* Ensure drawer and modal backgrounds are solid */
+.fixed,
+.absolute {
+  background-color: inherit;
+}
+
+/* Specific cart drawer fix */
+.cart-drawer {
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+body {
   background: linear-gradient(to bottom, var(--pearl-white), var(--cream));
   color: var(--luxury-black);
   font-family: 'Inter', sans-serif;

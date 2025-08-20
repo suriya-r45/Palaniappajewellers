@@ -170,7 +170,7 @@ export default function CategoryNavigation() {
   };
 
   return (
-    <section className="py-24 surface-gradient relative overflow-hidden" data-testid="section-category-navigation">
+    <section className="py-24 bg-white relative overflow-hidden" data-testid="section-category-navigation" style={{ backgroundColor: '#ffffff' }}>
       <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(0,0,0,0.02)_25%,transparent_25%),linear-gradient(-45deg,rgba(0,0,0,0.02)_25%,transparent_25%)] bg-[size:60px_60px]"></div>
       <div className="container mx-auto px-4 relative">
         <div className="text-center mb-16">
