@@ -174,17 +174,15 @@ export default function Home() {
 
 
       {/* Gold Section */}
-      <section className="py-28 surface-gradient relative overflow-hidden" data-testid="section-gold">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.03)_0%,transparent_70%)]"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center mb-8">
-              <Crown className="h-12 w-12 text-gray-700 mr-6" />
-              <h2 className="text-6xl font-bold text-gradient">Gold Collection</h2>
-              <Crown className="h-12 w-12 text-gray-700 ml-6" />
+      <section className="py-16 bg-white" data-testid="section-gold">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-6">
+              <Crown className="h-8 w-8 text-black mr-4" />
+              <h2 className="text-4xl font-bold text-black">Gold Collection</h2>
+              <Crown className="h-8 w-8 text-black ml-4" />
             </div>
-            <div className="w-32 h-1 premium-gradient mx-auto mb-8 rounded-full"></div>
-            <p className="text-3xl text-gray-700 font-light">22K & 18K gold jewelry with intricate designs</p>
+            <p className="text-xl text-black">22K & 18K gold jewelry with intricate designs</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {goldProducts.map((product) => (
@@ -196,25 +194,23 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="glass-effect border-2 border-gray-300 text-gray-800 hover:text-black px-12 py-4 text-lg rounded-full elegant-shadow-lg transition-all duration-500 hover:scale-110 hover:border-gray-400">
-              View All Gold Jewelry <ArrowRight className="ml-4 h-5 w-5" />
+            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+              View All Gold Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* Silver Section */}
-      <section className="py-28 silver-gradient relative overflow-hidden" data-testid="section-silver">
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.1)_0%,transparent_50%,rgba(0,0,0,0.02)_100%)]"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center mb-8">
-              <Star className="h-12 w-12 text-gray-700 mr-6" />
-              <h2 className="text-6xl font-bold text-gradient">Silver Collection</h2>
-              <Star className="h-12 w-12 text-gray-700 ml-6" />
+      <section className="py-16 bg-gray-50" data-testid="section-silver">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-6">
+              <Star className="h-8 w-8 text-black mr-4" />
+              <h2 className="text-4xl font-bold text-black">Silver Collection</h2>
+              <Star className="h-8 w-8 text-black ml-4" />
             </div>
-            <div className="w-32 h-1 premium-gradient mx-auto mb-8 rounded-full"></div>
-            <p className="text-3xl text-gray-700 font-light">Sterling silver jewelry with contemporary elegance</p>
+            <p className="text-xl text-black">Sterling silver jewelry with contemporary elegance</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {silverProducts.map((product) => (
@@ -226,25 +222,23 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="glass-effect border-2 border-gray-300 text-gray-800 hover:text-black px-12 py-4 text-lg rounded-full elegant-shadow-lg transition-all duration-500 hover:scale-110 hover:border-gray-400">
-              View All Silver Jewelry <ArrowRight className="ml-4 h-5 w-5" />
+            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+              View All Silver Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* Diamond Section */}
-      <section className="py-28 surface-gradient relative overflow-hidden" data-testid="section-diamond">
-        <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,rgba(0,0,0,0.01)_0deg,transparent_60deg,rgba(0,0,0,0.02)_120deg,transparent_180deg)]"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center mb-8">
-              <Gem className="h-12 w-12 text-gray-700 mr-6" />
-              <h2 className="text-6xl font-bold text-gradient">Diamond Collection</h2>
-              <Gem className="h-12 w-12 text-gray-700 ml-6" />
+      <section className="py-16 bg-white" data-testid="section-diamond">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-6">
+              <Gem className="h-8 w-8 text-black mr-4" />
+              <h2 className="text-4xl font-bold text-black">Diamond Collection</h2>
+              <Gem className="h-8 w-8 text-black ml-4" />
             </div>
-            <div className="w-32 h-1 premium-gradient mx-auto mb-8 rounded-full"></div>
-            <p className="text-3xl text-gray-700 font-light">Brilliant diamonds for life's precious moments</p>
+            <p className="text-xl text-black">Brilliant diamonds for life's precious moments</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {diamondProducts.map((product) => (
@@ -256,25 +250,23 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="glass-effect border-2 border-gray-300 text-gray-800 hover:text-black px-12 py-4 text-lg rounded-full elegant-shadow-lg transition-all duration-500 hover:scale-110 hover:border-gray-400">
-              View All Diamond Jewelry <ArrowRight className="ml-4 h-5 w-5" />
+            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+              View All Diamond Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* New Arrivals Section */}
-      <section className="py-28 silver-gradient relative overflow-hidden" data-testid="section-new-arrivals">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.1)_0%,transparent_50%)]"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center mb-8">
-              <Sparkles className="h-12 w-12 text-gray-700 mr-6" />
-              <h2 className="text-6xl font-bold text-gradient">New Arrivals</h2>
-              <Sparkles className="h-12 w-12 text-gray-700 ml-6" />
+      <section className="py-16 bg-gray-50" data-testid="section-new-arrivals">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-6">
+              <Sparkles className="h-8 w-8 text-black mr-4" />
+              <h2 className="text-4xl font-bold text-black">New Arrivals</h2>
+              <Sparkles className="h-8 w-8 text-black ml-4" />
             </div>
-            <div className="w-32 h-1 premium-gradient mx-auto mb-8 rounded-full"></div>
-            <p className="text-3xl text-gray-700 font-light">Latest additions to our exclusive collection</p>
+            <p className="text-xl text-black">Latest additions to our exclusive collection</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {newArrivals.map((product) => (
@@ -286,20 +278,18 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="gold-button gold-hover border-2 px-8 md:px-12 py-3 md:py-4 text-base md:text-lg rounded-full transition-all duration-500 hover:scale-110">
-              View All New Arrivals <ArrowRight className="ml-2 md:ml-4 h-4 md:h-5 w-4 md:w-5" />
+            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+              View All New Arrivals <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* All Products Section with Filters */}
-      <section className="py-32 surface-gradient relative overflow-hidden" id="products" data-testid="section-products">
-        <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.01)_0px,transparent_2px,transparent_10px,rgba(0,0,0,0.01)_12px)]"></div>
-        <div className="container mx-auto px-4 relative">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gradient mb-6">Complete Collection</h2>
-            <div className="w-40 h-1 premium-gradient mx-auto mb-10 rounded-full"></div>
+      <section className="py-16 bg-white" id="products" data-testid="section-products">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-black mb-6">Complete Collection</h2>
           </div>
 
           <div className="lg:flex lg:gap-8">

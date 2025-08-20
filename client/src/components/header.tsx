@@ -30,16 +30,15 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
   return (
     <>
-      <header className="bg-white/95 backdrop-blur-xl shadow-lg border-b border-rose-gold/20 sticky top-0 z-50" data-testid="header-main" style={{
-        background: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(201, 138, 107, 0.2)'
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-md" data-testid="header-main" style={{
+        background: '#FFFFFF',
+        borderBottom: '2px solid #000000'
       }}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 relative">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2" style={{borderColor: '#C98A6B'}}>
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2" style={{borderColor: '#000000'}}>
               <img 
                 src={logoPath} 
                 alt="Palaniappa Jewellers Logo" 
@@ -48,42 +47,38 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </div>
 
               <div>
-                <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#FFFFFF', textShadow: '2px 2px 6px rgba(0, 0, 0, 0.7)', fontWeight: '700'}}>PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs" style={{color: '#FFFFFF', textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)', opacity: '0.95'}}>Since 2025</p>
+                <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#000000', fontWeight: '700'}}>PALANIAPPA JEWELLERS</h1>
+                <p className="text-xs" style={{color: '#000000', opacity: '0.8'}}>Since 2025</p>
               </div>
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'font-semibold' : 'hover:text-white'}`} style={{
-              color: location === '/' ? '#FFFFFF' : '#FFFFFF', 
-              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'font-semibold' : 'hover:text-gray-600'}`} style={{
+              color: location === '/' ? '#000000' : '#000000', 
               fontWeight: location === '/' ? '700' : '500',
-              opacity: location === '/' ? '1' : '0.9'
+              opacity: location === '/' ? '1' : '0.8'
             }} data-testid="nav-home">
               Home
             </Link>
             <a href="#products" className="transition-colors font-medium hover:opacity-100" style={{
-              color: '#FFFFFF', 
-              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+              color: '#000000', 
               fontWeight: '500',
-              opacity: '0.9'
+              opacity: '0.8'
             }} data-testid="nav-products">
               Products
             </a>
             <a href="#about" className="transition-colors font-medium hover:opacity-100" style={{
-              color: '#FFFFFF', 
-              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+              color: '#000000', 
               fontWeight: '500',
-              opacity: '0.9'
+              opacity: '0.8'
             }} data-testid="nav-about">
               About
             </a>
             <a href="#contact" className="transition-colors font-medium hover:opacity-100" style={{
-              color: '#FFFFFF', 
-              textShadow: '1px 1px 3px rgba(0, 0, 0, 0.6)',
+              color: '#000000', 
               fontWeight: '500',
-              opacity: '0.9'
+              opacity: '0.8'
             }} data-testid="nav-contact">
               Contact
             </a>

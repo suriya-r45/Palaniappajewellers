@@ -149,7 +149,7 @@ export default function Login() {
             <div className="flex space-x-3 pt-4">
               <Button
                 type="submit"
-                className="flex-1 bg-black text-white hover:bg-gray-800"
+                className="flex-1 bg-white text-black border-2 border-black hover:bg-gray-100"
                 disabled={isLoading}
                 data-testid="button-submit-login"
               >
