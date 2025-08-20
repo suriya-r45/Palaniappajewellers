@@ -89,7 +89,10 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             <Button
               variant="ghost"
               size="sm"
-              className="text-green-600 hover:bg-green-50 hover:text-green-700 transition-colors"
+              className="hover:bg-green-50 transition-colors"
+              style={{ color: '#25D366' }}
+              onMouseEnter={(e) => e.currentTarget.style.color = '#128C7E'}
+              onMouseLeave={(e) => e.currentTarget.style.color = '#25D366'}
               onClick={() => {
                 const message = `Hi! I'm interested in your jewelry collection. Could you please help me with more information?`;
                 const whatsappUrl = `https://wa.me/919597201554?text=${encodeURIComponent(message)}`;

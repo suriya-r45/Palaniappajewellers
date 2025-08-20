@@ -226,7 +226,16 @@ Could you please provide more details?`;
             <Button
               variant="outline"
               size="sm"
-              className="flex-1 bg-green-50 border-green-200 text-green-700 hover:bg-green-100"
+              className="flex-1 text-white transition-colors"
+              style={{ backgroundColor: '#25D366', borderColor: '#25D366', color: 'white' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#128C7E';
+                e.currentTarget.style.borderColor = '#128C7E';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#25D366';
+                e.currentTarget.style.borderColor = '#25D366';
+              }}
               onClick={handleWhatsAppInquiry}
               data-testid={`button-whatsapp-enquiry-${product.id}`}
             >

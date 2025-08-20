@@ -10,7 +10,10 @@ export default function WhatsAppFloat() {
   return (
     <button
       onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110 animate-bounce"
+      className="fixed bottom-6 right-6 z-50 text-white rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110 animate-bounce"
+      style={{ backgroundColor: '#25D366' }}
+      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#128C7E'}
+      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#25D366'}
       data-testid="button-whatsapp-float"
       aria-label="Contact us on WhatsApp"
     >
