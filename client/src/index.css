@@ -4,46 +4,40 @@
 @tailwind utilities;
 
 :root {
-  /* Elegant White-Black-Grey with Gold Accents */
-  --background: 0 0% 100%;              /* Pure White */
-  --foreground: 0 0% 9%;                /* #171717 - Almost Black */
+  /* Warm Champagne/Rose Gold Color Palette */
+  --background: 35 28% 82%;             /* Light Nude #E3C7AF */
+  --foreground: 0 0% 100%;              /* Pure White #FFFFFF for headings */
   --card: 0 0% 100%;                    /* Pure White for cards */
-  --card-foreground: 0 0% 9%;           /* #171717 - Almost Black */
+  --card-foreground: 0 0% 87%;          /* Soft Warm Gray #DDDDDD for body text */
   --popover: 0 0% 100%;                 /* Pure White */
-  --popover-foreground: 0 0% 9%;        /* #171717 - Almost Black */
-  --primary: 0 0% 9%;                   /* #171717 - Black */
+  --popover-foreground: 0 0% 87%;       /* Soft Warm Gray #DDDDDD */
+  --primary: 21 37% 59%;                /* Rose Gold #C98A6B */
   --primary-foreground: 0 0% 100%;      /* Pure White */
-  --secondary: 45 100% 51%;             /* #FFD700 - Gold */
-  --secondary-foreground: 0 0% 9%;      /* #171717 - Almost Black */
-  --muted: 0 0% 96%;                    /* #F5F5F5 - Light Grey */
-  --muted-foreground: 0 0% 45%;         /* #737373 - Medium Grey */
-  --accent: 45 100% 51%;                /* #FFD700 - Gold */
-  --accent-foreground: 0 0% 9%;         /* #171717 - Almost Black */
+  --secondary: 0 0% 100%;               /* White background for CTA */
+  --secondary-foreground: 21 37% 59%;   /* Rose Gold text for CTA */
+  --muted: 35 28% 82%;                  /* Light Nude #E3C7AF */
+  --muted-foreground: 0 0% 87%;         /* Soft Warm Gray #DDDDDD */
+  --accent: 21 37% 59%;                 /* Rose Gold #C98A6B */
+  --accent-foreground: 0 0% 100%;       /* Pure White */
   --destructive: 0 72% 51%;             /* #EF4444 - Red */
   --destructive-foreground: 0 0% 100%;  /* Pure White */
-  --border: 0 0% 90%;                   /* #E5E5E5 - Light Grey Border */
+  --border: 0 0% 87%;                   /* Soft Warm Gray #DDDDDD borders */
   --input: 0 0% 100%;                   /* Pure White */
-  --ring: 45 100% 51%;                  /* #FFD700 - Gold */
+  --ring: 21 37% 59%;                   /* Rose Gold focus rings */
   --radius: 0.5rem;
 
-  /* Luxury Color Palette */
-  --pure-white: #FFFFFF;
-  --pearl-white: #FEFEFE;
-  --cream: #FFFBF0;
-  --almost-black: #0F0F0F;
-  --charcoal: #2C2C2C;
-  --slate: #1A1A1A;
-  --light-grey: #F8F8F8;
-  --medium-grey: #6B6B6B;
-  --dark-grey: #404040;
-  --platinum: #E5E4E2;
-  --gold: #D4AF37;
-  --rich-gold: #B8860B;
-  --rose-gold: #E8B4A0;
-  --champagne: #F7E7CE;
-  --bronze: #CD7F32;
-  --luxury-black: #1C1C1C;
-  --luxury-grey: #2F2F2F;
+  /* Warm Champagne/Rose Gold Palette */
+  --champagne-beige: #C08C6A;          /* Main background gradient start */
+  --light-nude: #E3C7AF;               /* Main background gradient end */
+  --rose-gold: #C98A6B;                /* Primary accent color */
+  --pure-white: #FFFFFF;               /* Typography headings */
+  --soft-warm-gray: #DDDDDD;           /* Body text color */
+  
+  /* Additional warm tones */
+  --warm-cream: #F5F1EA;
+  --dusty-rose: #D4A085;
+  --warm-beige: #E6D5C7;
+  --soft-bronze: #B8845A;
 }
 
 .dark {
