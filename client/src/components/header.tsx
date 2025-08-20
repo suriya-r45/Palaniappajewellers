@@ -78,13 +78,13 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
-            {/* Advanced Filters - Only show on home page */}
+            {/* Advanced Filters - Only show on home page
             {location === '/' && onFiltersChange && (
               <AdvancedFilters 
                 filters={filters}
                 onFiltersChange={onFiltersChange}
               />
-            )}
+            )} */}
             
             {/* WhatsApp Icon */}
             <Button
