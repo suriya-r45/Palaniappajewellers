@@ -73,6 +73,39 @@
   border-color: hsl(var(--border));
 }
 
+/* Cart Drawer Transparency Fix */
+.cart-drawer {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  mix-blend-mode: normal !important;
+  isolation: isolate !important;
+}
+
+.cart-drawer * {
+  background-color: inherit !important;
+  backdrop-filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Ensure cart drawer is above everything in mobile */
+@media (max-width: 768px) {
+  .cart-drawer {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    z-index: 999999 !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    height: 100vh !important;
+    opacity: 1 !important;
+  }
+}
+
 body {
   background-color: #ffffff !important;
 }

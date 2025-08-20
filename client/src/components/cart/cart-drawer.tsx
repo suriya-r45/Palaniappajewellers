@@ -39,25 +39,38 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50"
-        style={{ zIndex: 9998 }}
+        className="fixed inset-0"
+        style={{ 
+          zIndex: 99998,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          background: 'rgba(0, 0, 0, 0.8) !important'
+        }}
         onClick={onClose}
         data-testid="cart-backdrop"
       />
       
       {/* Drawer */}
       <div 
-        className="fixed top-0 right-0 h-full w-96 shadow-2xl flex flex-col border-l-2 border-gray-300 cart-drawer" 
+        className="fixed top-0 right-0 h-full w-96 max-w-full shadow-2xl flex flex-col border-l-2 border-gray-300 cart-drawer" 
         style={{ 
-          backgroundColor: '#ffffff !important', 
+          backgroundColor: '#ffffff',
+          background: '#ffffff',
           zIndex: 99999,
-          background: '#ffffff !important',
           opacity: 1,
-          backgroundImage: 'none'
+          backgroundImage: 'none',
+          backgroundBlendMode: 'normal',
+          isolation: 'isolate'
         }}
       >
         {/* Header */}
-<div className="flex items-center justify-between p-4 border-b bg-white" style={{ backgroundColor: '#ffffff' }}>
+        <div 
+          className="flex items-center justify-between p-4 border-b"
+          style={{ 
+            backgroundColor: '#ffffff',
+            background: '#ffffff',
+            backgroundImage: 'none'
+          }}
+        >
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />
             Shopping Cart ({totalItems})
@@ -73,7 +86,14 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
         </div>
 
         {/* Cart Items */}
-        <div className="flex-1 overflow-y-auto p-4 bg-white" style={{ backgroundColor: '#ffffff' }}>
+        <div 
+          className="flex-1 overflow-y-auto p-4"
+          style={{ 
+            backgroundColor: '#ffffff',
+            background: '#ffffff',
+            backgroundImage: 'none'
+          }}
+        >
           {items.length === 0 ? (
             <div className="text-center py-8">
               <ShoppingBag className="h-12 w-12 text-gray-400 mx-auto mb-4" />
