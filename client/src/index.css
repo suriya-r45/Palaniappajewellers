@@ -132,6 +132,19 @@ body {
   z-index: 99999 !important;
 }
 
+/* Fix mobile navigation transparency */
+.md\:hidden.absolute {
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+}
+
+/* Ensure all mobile menu elements are solid */
+.md\:hidden.absolute *,
+.md\:hidden.absolute div {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
 body {
   background: linear-gradient(to bottom, var(--pearl-white), var(--cream));
   color: var(--luxury-black);
