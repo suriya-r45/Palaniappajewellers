@@ -93,7 +93,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
               className="text-green-600 hover:bg-green-50 hover:text-green-700 transition-colors"
               onClick={() => {
                 const message = `Hi! I'm interested in your jewelry collection. Could you please help me with more information?`;
-                const whatsappUrl = `https://wa.me/97333444088?text=${encodeURIComponent(message)}`;
+                const whatsappUrl = `https://wa.me/919597201554?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
               }}
               data-testid="button-whatsapp-global"

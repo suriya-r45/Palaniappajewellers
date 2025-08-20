@@ -134,7 +134,7 @@ export default function ProductDetails() {
                 className="absolute top-4 right-4 bg-green-600 hover:bg-green-700 text-white rounded-full p-3 shadow-lg transition-all transform hover:scale-110 opacity-0 group-hover:opacity-100"
                 onClick={() => {
                   const message = `Hi! I'm interested in this beautiful piece: *${product.name}*\n\nPrice: ${selectedCurrency === 'INR' ? '₹' + product.priceInr : 'BD ' + product.priceBhd}\nCategory: ${product.category.replace(/_/g, ' ')}\n\nCould you provide more details about this jewelry piece?`;
-                  const whatsappUrl = `https://wa.me/97333444088?text=${encodeURIComponent(message)}`;
+                  const whatsappUrl = `https://wa.me/919597201554?text=${encodeURIComponent(message)}`;
                   window.open(whatsappUrl, '_blank');
                 }}
                 data-testid="button-whatsapp-main-image"
@@ -174,7 +174,7 @@ export default function ProductDetails() {
                       className="absolute -top-2 -right-2 bg-green-600 hover:bg-green-700 text-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-all transform hover:scale-110"
                       onClick={() => {
                         const message = `Hi! I'd like to inquire about this specific view of *${product.name}* (Image ${index + 1})\n\nPrice: ${selectedCurrency === 'INR' ? '₹' + product.priceInr : 'BD ' + product.priceBhd}\nCategory: ${product.category.replace(/_/g, ' ')}\n\nCould you tell me more about this angle/detail of the jewelry?`;
-                        const whatsappUrl = `https://wa.me/97333444088?text=${encodeURIComponent(message)}`;
+                        const whatsappUrl = `https://wa.me/919597201554?text=${encodeURIComponent(message)}`;
                         window.open(whatsappUrl, '_blank');
                       }}
                       data-testid={`button-whatsapp-thumbnail-${index}`}
