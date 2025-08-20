@@ -81,7 +81,7 @@ export default function AdminDashboard() {
             className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold"
           >
             <Calculator className="h-4 w-4 mr-2" />
-            Customer Estimates
+            Create Customer Estimate
           </Button>
         </div>
 
