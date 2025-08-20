@@ -8,7 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { FileText, Eye } from 'lucide-react';
+import { FileText, Eye, ArrowLeft } from 'lucide-react';
+import { useLocation } from 'wouter';
 import { Product, BillItem } from '@shared/schema';
 import { Currency, formatPrice } from '@/lib/currency';
 import { useAuth } from '@/lib/auth';
@@ -24,6 +25,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
   const { token } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
 
   const [customerData, setCustomerData] = useState({
     customerName: '',
@@ -195,8 +197,18 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
   const totals = calculateBillTotals();
 
   return (
-    <Card data-testid="card-billing-form">
-      <CardHeader>
+    <div>
+      <Button
+        variant="ghost"
+        onClick={() => setLocation('/admin')}
+        className="mb-4 text-luxury-black hover:bg-champagne/20 border border-gold/30"
+        data-testid="button-back-to-dashboard-billing"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Back to Admin Dashboard
+      </Button>
+      <Card className="border-2 border-gold bg-gradient-to-r from-cream to-champagne/30 shadow-xl" data-testid="card-billing-form">
+        <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <FileText className="h-5 w-5" />
           <span>Create New Bill</span>
@@ -436,5 +448,6 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
         </form>
       </CardContent>
     </Card>
+    </div>
   );
 }

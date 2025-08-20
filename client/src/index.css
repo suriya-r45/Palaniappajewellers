@@ -26,16 +26,24 @@
   --ring: 45 100% 51%;                  /* #FFD700 - Gold */
   --radius: 0.5rem;
 
-  /* Elegant Color Palette */
+  /* Luxury Color Palette */
   --pure-white: #FFFFFF;
-  --almost-black: #171717;
-  --charcoal: #404040;
-  --light-grey: #F5F5F5;
-  --medium-grey: #737373;
-  --dark-grey: #525252;
-  --gold: #FFD700;
-  --dark-gold: #B8860B;
+  --pearl-white: #FEFEFE;
+  --cream: #FFFBF0;
+  --almost-black: #0F0F0F;
+  --charcoal: #2C2C2C;
+  --slate: #1A1A1A;
+  --light-grey: #F8F8F8;
+  --medium-grey: #6B6B6B;
+  --dark-grey: #404040;
+  --platinum: #E5E4E2;
+  --gold: #D4AF37;
+  --rich-gold: #B8860B;
+  --rose-gold: #E8B4A0;
   --champagne: #F7E7CE;
+  --bronze: #CD7F32;
+  --luxury-black: #1C1C1C;
+  --luxury-grey: #2F2F2F;
 }
 
 .dark {
@@ -66,20 +74,24 @@
 }
 
 body {
-  background-color: var(--pure-white);
-  color: var(--almost-black);
+  background: linear-gradient(to bottom, var(--pearl-white), var(--cream));
+  color: var(--luxury-black);
   font-family: 'Inter', sans-serif;
+  min-height: 100vh;
 }
 
-/* Enhanced Royal Purple & Gold (Majestic Elegance) Theme Classes */
+/* Luxury Gold & Platinum Theme Classes */
 .luxury-bg {
   background: linear-gradient(135deg, 
     var(--pearl-white) 0%, 
-    #ffffff 25%, 
-    rgba(255, 215, 0, 0.05) 50%, 
-    #ffffff 75%, 
+    #ffffff 15%, 
+    rgba(212, 175, 55, 0.08) 35%,
+    rgba(184, 134, 11, 0.05) 50%, 
+    #ffffff 65%, 
+    var(--cream) 85%,
     var(--pearl-white) 100%);
   position: relative;
+  box-shadow: 0 1px 3px rgba(212, 175, 55, 0.1);
 }
 
 .luxury-bg::before {
@@ -89,22 +101,25 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 30% 40%, rgba(75, 0, 130, 0.03) 0%, transparent 70%),
-              radial-gradient(circle at 70% 80%, rgba(255, 215, 0, 0.02) 0%, transparent 70%);
+  background: radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+              radial-gradient(circle at 75% 75%, rgba(184, 134, 11, 0.04) 0%, transparent 60%),
+              radial-gradient(circle at 50% 10%, rgba(232, 180, 160, 0.03) 0%, transparent 40%);
   pointer-events: none;
 }
 
-.royal-purple-gradient {
+.luxury-gold-gradient {
   background: linear-gradient(135deg, 
-    var(--royal-purple) 0%, 
-    var(--deep-violet) 30%,
-    #6B0FA0 50%, 
-    var(--deep-violet) 70%,
-    var(--royal-purple) 100%);
+    var(--gold) 0%, 
+    var(--rich-gold) 20%,
+    #FFD700 40%, 
+    var(--rose-gold) 60%,
+    var(--champagne) 80%,
+    var(--gold) 100%);
   position: relative;
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
 }
 
-.royal-purple-gradient::before {
+.luxury-gold-gradient::before {
   content: '';
   position: absolute;
   top: 0;
@@ -112,17 +127,18 @@ body {
   right: 0;
   bottom: 0;
   background: linear-gradient(45deg, 
-    rgba(255, 215, 0, 0.1) 0%, 
+    rgba(255, 255, 255, 0.3) 0%, 
     transparent 25%, 
-    rgba(255, 215, 0, 0.05) 50%, 
-    transparent 75%);
+    rgba(232, 180, 160, 0.2) 50%, 
+    transparent 75%,
+    rgba(255, 255, 255, 0.1) 100%);
   pointer-events: none;
 }
 
 .text-gradient {
   background: linear-gradient(135deg, 
-    var(--royal-purple) 0%, 
-    #8A2BE2 25%,
+    var(--gold) 0%, 
+    var(--rich-gold) 25%,
     var(--gold) 50%, 
     #8A2BE2 75%,
     var(--royal-purple) 100%);
@@ -684,6 +700,68 @@ td {
 .shadow-md,
 .shadow-lg {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(255, 215, 0, 0.1) !important;
+}
+
+/* Additional luxury styling classes */
+.luxury-card {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95) 0%, 
+    rgba(247, 231, 206, 0.3) 50%, 
+    rgba(255, 255, 255, 0.95) 100%);
+  border: 2px solid var(--gold);
+  box-shadow: 0 16px 32px rgba(212, 175, 55, 0.2),
+              0 8px 16px rgba(184, 134, 11, 0.15),
+              0 2px 8px rgba(28, 28, 28, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.luxury-button {
+  background: linear-gradient(135deg, 
+    var(--gold) 0%, 
+    var(--rich-gold) 50%,
+    var(--gold) 100%);
+  color: var(--luxury-black);
+  border: 1px solid var(--rich-gold);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.luxury-button:hover {
+  background: linear-gradient(135deg, 
+    var(--rich-gold) 0%, 
+    var(--bronze) 50%,
+    var(--rich-gold) 100%);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 /* Select dropdown styling */

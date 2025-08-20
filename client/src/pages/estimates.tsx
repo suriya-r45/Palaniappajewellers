@@ -3,17 +3,31 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EstimateForm } from "@/components/admin/estimate-form";
 import { EstimatesList } from "@/components/admin/estimates-list";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, FileText, Plus, List } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calculator, FileText, Plus, List, ArrowLeft } from "lucide-react";
+import { useLocation } from "wouter";
 
 export function EstimatesPage() {
   const [activeTab, setActiveTab] = useState("list");
+  const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen luxury-bg py-8">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Customer Estimates</h1>
-          <p className="text-gray-600">Create and manage jewelry estimates for your customers</p>
+        <div className="mb-8">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation('/admin')}
+            className="mb-4 text-luxury-black hover:bg-champagne/20 border border-gold/30"
+            data-testid="button-back-to-dashboard"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Admin Dashboard
+          </Button>
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-luxury-black mb-2">Customer Estimates</h1>
+            <p className="text-medium-grey">Create and manage jewelry estimates for your customers</p>
+          </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

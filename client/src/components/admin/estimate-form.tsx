@@ -4,10 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, Clock, DollarSign } from "lucide-react";
+import { Calculator, Clock, DollarSign, ArrowLeft } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useLocation } from "wouter";
 
 interface EstimateFormData {
   customerName: string;
@@ -40,6 +41,7 @@ interface EstimateFormData {
 export function EstimateForm() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
 
   const [formData, setFormData] = useState<EstimateFormData>({
     customerName: "",
@@ -183,7 +185,16 @@ export function EstimateForm() {
 
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6">
-      <Card className="border-2 border-yellow-400 bg-gradient-to-r from-gray-50 to-yellow-50">
+      <Button
+        variant="ghost"
+        onClick={() => setLocation('/admin')}
+        className="mb-4 text-luxury-black hover:bg-champagne/20 border border-gold/30"
+        data-testid="button-back-to-dashboard-form"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Back to Admin Dashboard
+      </Button>
+      <Card className="border-2 border-gold bg-gradient-to-r from-cream to-champagne/30 shadow-xl">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2 text-gray-800">
             <Calculator className="h-6 w-6 text-yellow-600" />

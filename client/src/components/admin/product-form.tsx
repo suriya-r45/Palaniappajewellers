@@ -8,7 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Plus, Edit, Trash2, Upload, Calculator } from 'lucide-react';
+import { Plus, Edit, Trash2, Upload, Calculator, ArrowLeft } from 'lucide-react';
+import { useLocation } from 'wouter';
 import { Product, MetalRate } from '@shared/schema';
 
 // Categories from home page
@@ -128,6 +129,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
   const { token } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [, setLocation] = useLocation();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -339,7 +341,17 @@ export default function ProductForm({ currency }: ProductFormProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div>
+      <Button
+        variant="ghost"
+        onClick={() => setLocation('/admin')}
+        className="mb-4 text-luxury-black hover:bg-champagne/20 border border-gold/30"
+        data-testid="button-back-to-dashboard-product"
+      >
+        <ArrowLeft className="h-4 w-4 mr-2" />
+        Back to Admin Dashboard
+      </Button>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Add Product Form */}
       <Card data-testid="card-add-product">
         <CardHeader>
@@ -755,6 +767,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
