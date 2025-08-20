@@ -102,6 +102,21 @@ body {
 .cart-drawer {
   background-color: #ffffff !important;
   opacity: 1 !important;
+  z-index: 9999 !important;
+}
+
+/* Fix for cart drawer transparency */
+[class*="cart-drawer"],
+.fixed.z-50 {
+  background-color: #ffffff !important;
+  backdrop-filter: none !important;
+}
+
+/* Ensure cart drawer is above everything */
+.cart-drawer {
+  z-index: 9999 !important;
+  background: #ffffff !important;
+  position: fixed !important;
 }
 
 body {

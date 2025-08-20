@@ -39,13 +39,14 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        className="fixed inset-0 bg-black bg-opacity-50"
+        style={{ zIndex: 9998 }}
         onClick={onClose}
         data-testid="cart-backdrop"
       />
       
       {/* Drawer */}
-      <div className="fixed top-0 right-0 h-full w-96 bg-white shadow-lg z-50 flex flex-col border-l border-gray-200" style={{ backgroundColor: '#ffffff', opacity: 1 }}>
+      <div className="fixed top-0 right-0 h-full w-96 bg-white shadow-lg flex flex-col border-l border-gray-200 cart-drawer" style={{ backgroundColor: '#ffffff', opacity: 1, zIndex: 9999 }}>
         {/* Header */}
 <div className="flex items-center justify-between p-4 border-b bg-white" style={{ backgroundColor: '#ffffff' }}>
           <h2 className="text-lg font-semibold flex items-center gap-2">

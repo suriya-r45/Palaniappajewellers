@@ -245,20 +245,7 @@ export default function CategoryNavigation() {
           })}
         </div>
 
-        <div className="mt-8 text-center">
-          <Button 
-            className="premium-button px-16 py-5 text-xl rounded-full elegant-shadow-lg transition-all duration-500"
-            data-testid="button-browse-all"
-            onClick={() => {
-              const productsSection = document.getElementById('products');
-              if (productsSection) {
-                productsSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            Browse All Categories
-          </Button>
-        </div>
+
       </div>
     </section>
   );

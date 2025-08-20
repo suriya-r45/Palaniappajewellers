@@ -168,7 +168,7 @@ export default function Home() {
         onFiltersChange={setFilters}
       />
 
-      {/* Category Navigation */}
+      {/* Category Navigation - Moved to top */}
       <CategoryNavigation />
 
 
