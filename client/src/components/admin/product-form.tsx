@@ -169,7 +169,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
   // Calculate prices based on metal rates
   const calculateMetalBasedPrice = () => {
     const weight = parseFloat(formData.netWeight);
-    const makingCharges = parseFloat(formData.makingChargesPercentage);
+    // Removed making charges calculation
     
     if (!weight || weight <= 0) return { inr: 0, bhd: 0 };
 
@@ -203,8 +203,8 @@ export default function ProductForm({ currency }: ProductFormProps) {
     }
 
     // Add making charges
-    const finalPriceInr = basePrice * (1 + makingCharges / 100);
-    const finalPriceBhd = basePriceBhd * (1 + makingCharges / 100);
+    const finalPriceInr = basePrice;
+    const finalPriceBhd = basePriceBhd;
 
     return {
       inr: Math.round(finalPriceInr * 100) / 100,
@@ -214,7 +214,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
 
   // Auto-calculate prices when metal selection or weight changes
   useEffect(() => {
-    if ((isGoldSelected || isSilverSelected) && formData.netWeight && formData.makingChargesPercentage) {
+    if ((isGoldSelected || isSilverSelected) && formData.netWeight) {
       const calculatedPrices = calculateMetalBasedPrice();
       setFormData(prev => ({
         ...prev,
@@ -230,7 +230,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
         metalType: 'OTHER'
       }));
     }
-  }, [isGoldSelected, isSilverSelected, isOtherSelected, formData.netWeight, formData.makingChargesPercentage, formData.purity, metalRates]);
+  }, [isGoldSelected, isSilverSelected, isOtherSelected, formData.netWeight, formData.purity, metalRates]);
 
   const addProductMutation = useMutation({
     mutationFn: async (data: FormData) => {
@@ -563,18 +563,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
                       </div>
                     )}
                     
-                    <div>
-                      <Label htmlFor="makingCharges">Making Charges (%)</Label>
-                      <Input
-                        id="makingCharges"
-                        type="number"
-                        step="0.1"
-                        value={formData.makingChargesPercentage}
-                        onChange={(e) => setFormData({ ...formData, makingChargesPercentage: e.target.value })}
-                        placeholder="15"
-                        className="bg-white"
-                      />
-                    </div>
+
                   </div>
                 )}
 

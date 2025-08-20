@@ -135,14 +135,14 @@ export function EstimateForm() {
 
   const calculatePricing = () => {
     const metalVal = parseFloat(formData.metalValue) || 0;
-    const makingPercent = parseFloat(formData.makingChargesPercentage) || 0;
+    // Removed making charges calculation
     const stonePercent = parseFloat(formData.stoneDiamondChargesPercentage) || 0;
     const wastagePercent = parseFloat(formData.wastagePercentage) || 0;
     const hallmarking = parseFloat(formData.hallmarkingCharges) || 0;
     const gstPercent = parseFloat(formData.gstPercentage) || 0;
     const vatPercent = parseFloat(formData.vatPercentage) || 0;
 
-    const makingCharges = (metalVal * makingPercent) / 100;
+    const makingCharges = 0; // Removed making charges
     const stoneCharges = (metalVal * stonePercent) / 100;
     const wastageCharges = (metalVal * wastagePercent) / 100;
     const subtotal = metalVal + makingCharges + stoneCharges + wastageCharges + hallmarking;
@@ -339,17 +339,7 @@ export function EstimateForm() {
                     placeholder="Enter metal value"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="makingChargesPercentage">Making Charges (%)</Label>
-                  <Input
-                    id="makingChargesPercentage"
-                    type="number"
-                    step="0.01"
-                    value={formData.makingChargesPercentage}
-                    onChange={(e) => handleInputChange("makingChargesPercentage", e.target.value)}
-                    placeholder="Making charges percentage"
-                  />
-                </div>
+
                 <div>
                   <Label htmlFor="stoneDiamondChargesPercentage">Stone/Diamond Charges (%)</Label>
                   <Input
@@ -429,10 +419,7 @@ export function EstimateForm() {
                 <div className="mt-4 p-4 bg-white rounded-lg border">
                   <h4 className="font-semibold text-gray-800 mb-2">Calculated Pricing</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <span className="text-gray-600">Making Charges:</span>
-                      <div className="font-semibold">₹{formData.makingCharges}</div>
-                    </div>
+
                     <div>
                       <span className="text-gray-600">Stone Charges:</span>
                       <div className="font-semibold">₹{formData.stoneDiamondCharges}</div>

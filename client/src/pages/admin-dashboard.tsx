@@ -140,12 +140,11 @@ export default function AdminDashboard() {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6" data-testid="tabs-admin">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2">
             <TabsTrigger value="products" data-testid="tab-products" className="text-xs md:text-sm">Products</TabsTrigger>
             <TabsTrigger value="billing" data-testid="tab-billing" className="text-xs md:text-sm">Billing</TabsTrigger>
             <TabsTrigger value="bills" data-testid="tab-bills" className="text-xs md:text-sm">Bills History</TabsTrigger>
             <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-xs md:text-sm">Customer Estimates</TabsTrigger>
-            <TabsTrigger value="analytics" data-testid="tab-analytics" className="text-xs md:text-sm">Analytics</TabsTrigger>
           </TabsList>
 
           <TabsContent value="products" className="space-y-6">
@@ -237,19 +236,7 @@ export default function AdminDashboard() {
             <EstimatesList />
           </TabsContent>
 
-          <TabsContent value="analytics" className="space-y-6">
-            <Card data-testid="card-analytics">
-              <CardHeader>
-                <CardTitle>Analytics Dashboard</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">Analytics dashboard coming soon...</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+
         </Tabs>
       </div>
 
