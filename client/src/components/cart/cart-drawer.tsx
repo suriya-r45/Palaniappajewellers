@@ -36,36 +36,17 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   if (!isOpen) return null;
 
   return (
-    <div 
-      className="fixed inset-0"
-      style={{ 
-        zIndex: 999999,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100vw',
-        height: '100vh'
-      }}
-      onClick={onClose}
-      data-testid="cart-backdrop"
-    >
-      {/* Drawer */}
+    <>
+      {/* Full Screen Overlay */}
       <div 
-        className="absolute top-0 right-0 h-full w-96 max-w-full shadow-2xl flex flex-col border-l-2 border-gray-300" 
-        style={{ 
-          backgroundColor: '#ffffff',
-          background: '#ffffff',
-          backgroundImage: 'none',
-          width: window.innerWidth <= 768 ? '100vw' : '384px',
-          height: '100vh',
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          zIndex: 1000000
-        }}
+        className="cart-overlay-backdrop"
+        onClick={onClose}
+        data-testid="cart-backdrop"
+      />
+      
+      {/* Drawer Content */}
+      <div 
+        className="cart-drawer-content"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -209,6 +190,6 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }
