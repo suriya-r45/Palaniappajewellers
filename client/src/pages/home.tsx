@@ -168,9 +168,23 @@ export default function Home() {
         onFiltersChange={setFilters}
       />
 
-      {/* Category Navigation - Moved to top */}
+      {/* Category Navigation - Moved to top above hero section */}
       <CategoryNavigation />
 
+      {/* Hero Section */}
+      <section className="py-20 bg-white" style={{ backgroundColor: '#ffffff' }}>
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
+            Discover jewelry for every
+          </h1>
+          <h2 className="text-3xl md:text-5xl font-light text-gray-700 mb-8">
+            occasion and style
+          </h2>
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+            Exquisite handcrafted jewelry with traditional artistry and modern elegance
+          </p>
+        </div>
+      </section>
 
       {/* Gold Section */}
       <section className="py-28 surface-gradient relative overflow-hidden" data-testid="section-gold">

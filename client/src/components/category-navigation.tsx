@@ -170,13 +170,12 @@ export default function CategoryNavigation() {
   };
 
   return (
-    <section className="py-24 bg-white relative overflow-hidden" data-testid="section-category-navigation" style={{ backgroundColor: '#ffffff' }}>
-      <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(0,0,0,0.02)_25%,transparent_25%),linear-gradient(-45deg,rgba(0,0,0,0.02)_25%,transparent_25%)] bg-[size:60px_60px]"></div>
+    <section className="py-8 md:py-12 bg-white relative" data-testid="section-category-navigation" style={{ backgroundColor: '#ffffff' }}>
       <div className="container mx-auto px-4 relative">
-        <div className="text-center mb-16">
-          <h2 className="text-6xl font-bold text-gradient mb-6">Explore Our Collections</h2>
-          <div className="w-24 h-1 premium-gradient mx-auto mb-8 rounded-full"></div>
-          <p className="text-2xl text-gray-700 font-light">Browse our exquisite collection</p>
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-6">Explore Our Collections</h2>
+          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-yellow-600 to-yellow-400 mx-auto mb-4 md:mb-8 rounded-full"></div>
+          <p className="text-sm md:text-lg text-gray-600 font-light">Browse our exquisite collection</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">

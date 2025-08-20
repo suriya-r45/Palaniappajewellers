@@ -46,7 +46,15 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
       />
       
       {/* Drawer */}
-      <div className="fixed top-0 right-0 h-full w-96 bg-white shadow-lg flex flex-col border-l border-gray-200 cart-drawer" style={{ backgroundColor: '#ffffff', opacity: 1, zIndex: 9999 }}>
+      <div 
+        className="fixed top-0 right-0 h-full w-96 shadow-2xl flex flex-col border-l-2 border-gray-300" 
+        style={{ 
+          backgroundColor: '#ffffff', 
+          zIndex: 9999,
+          background: 'white',
+          opacity: 1
+        }}
+      >
         {/* Header */}
 <div className="flex items-center justify-between p-4 border-b bg-white" style={{ backgroundColor: '#ffffff' }}>
           <h2 className="text-lg font-semibold flex items-center gap-2">
