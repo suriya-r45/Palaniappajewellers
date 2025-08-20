@@ -147,14 +147,333 @@ body {
   background-color: #ffffff !important;
 }
 
-/* Ensure all backgrounds are solid white */
-.bg-gray-50,
-.surface-gradient,
-.bg-gradient-to-br,
-.bg-gradient-to-r,
-[class*="gradient"] {
-  background-color: #ffffff !important;
-  background-image: none !important;
+/* Halo Inspired Rose Gold Theme Implementation */
+body {
+  background: linear-gradient(135deg, #8B5A3C 0%, #D4A574 50%, #F4E4D6 100%) !important;
+  background-attachment: fixed !important;
+  color: #FFFFFF !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  min-height: 100vh !important;
+}
+
+/* Main containers with warm background */
+.container,
+.max-w-7xl,
+.mx-auto,
+main {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Header styling - Inspired by Halo design */
+header,
+.header,
+nav {
+  background: rgba(139, 90, 60, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(212, 165, 116, 0.3) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Card components with warm theme */
+.card,
+.bg-card,
+.border,
+[class*="card"] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(192, 140, 106, 0.3) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 4px 20px rgba(192, 140, 106, 0.1) !important;
+}
+
+/* Typography - Headings (Halo Style) */
+h1, h2, h3, h4, h5, h6,
+.text-2xl, .text-3xl, .text-4xl, .text-5xl,
+.font-bold, .font-semibold {
+  color: #FFFFFF !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Body text */
+p, span, div, .text-sm, .text-base, .text-lg {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 300 !important;
+}
+
+/* Primary buttons - Halo Style Rose Gold */
+.btn-primary,
+.bg-primary,
+button[class*="primary"],
+.button-primary {
+  background: linear-gradient(45deg, #D4A574 0%, #F4D19B 100%) !important;
+  color: #8B5A3C !important;
+  border: none !important;
+  border-radius: 0px !important;
+  padding: 12px 32px !important;
+  font-weight: 400 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover,
+.bg-primary:hover,
+button[class*="primary"]:hover,
+.button-primary:hover {
+  background: linear-gradient(45deg, #F4D19B 0%, #D4A574 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 25px rgba(212, 165, 116, 0.4) !important;
+}
+
+/* CTA Buttons - Halo Style White with Rose Gold border */
+.btn-secondary,
+.bg-secondary,
+.cta-button,
+.button-cta {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #8B5A3C !important;
+  border: 1px solid rgba(212, 165, 116, 0.6) !important;
+  border-radius: 0px !important;
+  padding: 12px 32px !important;
+  font-weight: 400 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-secondary:hover,
+.bg-secondary:hover,
+.cta-button:hover,
+.button-cta:hover {
+  background: linear-gradient(45deg, #D4A574 0%, #F4D19B 100%) !important;
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 25px rgba(212, 165, 116, 0.4) !important;
+}
+
+/* Form inputs */
+input, textarea, select {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid rgba(192, 140, 106, 0.3) !important;
+  border-radius: 8px !important;
+  color: #333333 !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #C98A6B !important;
+  box-shadow: 0 0 0 3px rgba(201, 138, 107, 0.1) !important;
+  outline: none !important;
+}
+
+/* Product cards */
+.product-card,
+[data-testid*="product"] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(192, 140, 106, 0.3) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.product-card:hover,
+[data-testid*="product"]:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 30px rgba(192, 140, 106, 0.2) !important;
+  border-color: #C98A6B !important;
+}
+
+/* Navigation links */
+a, .link {
+  color: #C98A6B !important;
+  transition: color 0.3s ease !important;
+}
+
+a:hover, .link:hover {
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Price display */
+.price, [class*="price"] {
+  color: #C98A6B !important;
+  font-weight: 700 !important;
+  font-size: 1.2em !important;
+}
+
+/* Hero section - Halo inspired */
+.hero, .hero-section {
+  background: linear-gradient(135deg, rgba(139, 90, 60, 0.3) 0%, rgba(212, 165, 116, 0.2) 50%, rgba(244, 228, 214, 0.1) 100%) !important;
+  color: #FFFFFF !important;
+  text-align: center !important;
+  padding: 6rem 2rem !important;
+  border-radius: 0px !important;
+  backdrop-filter: blur(20px) !important;
+  position: relative !important;
+}
+
+.hero::before, .hero-section::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') !important;
+  pointer-events: none !important;
+}
+
+/* Footer */
+footer {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: #DDDDDD !important;
+  border-top: 1px solid rgba(192, 140, 106, 0.3) !important;
+}
+
+/* Specific component overrides */
+/* Shadcn Button overrides */
+.btn, button {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-default, button[variant="default"] {
+  background: #C98A6B !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+.btn-default:hover, button[variant="default"]:hover {
+  background: #B8795A !important;
+  transform: translateY(-2px) !important;
+}
+
+.btn-outline, button[variant="outline"] {
+  background: #FFFFFF !important;
+  color: #C98A6B !important;
+  border: 2px solid #C98A6B !important;
+}
+
+.btn-outline:hover, button[variant="outline"]:hover {
+  background: #C98A6B !important;
+  color: #FFFFFF !important;
+}
+
+/* Shopping Cart Button */
+.cart-button, [data-testid*="cart"] button {
+  background: #FFFFFF !important;
+  color: #C98A6B !important;
+  border: 2px solid #C98A6B !important;
+  border-radius: 8px !important;
+}
+
+.cart-button:hover, [data-testid*="cart"] button:hover {
+  background: #C98A6B !important;
+  color: #FFFFFF !important;
+}
+
+/* WhatsApp Button */
+.whatsapp-button, [href*="whatsapp"] {
+  background: #25D366 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 8px !important;
+}
+
+/* Navigation styling */
+.navigation, .nav {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* Product price styling */
+.product-price, [data-testid*="price"] {
+  color: #C98A6B !important;
+  font-weight: 700 !important;
+  font-size: 1.1em !important;
+}
+
+/* Admin Dashboard specific styling */
+.admin-card, .dashboard-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(192, 140, 106, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Table styling for admin */
+.table, table {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(192, 140, 106, 0.2) !important;
+}
+
+.table th, table th {
+  background: rgba(192, 140, 106, 0.1) !important;
+  color: #C98A6B !important;
+  font-weight: 700 !important;
+}
+
+/* Modal/Dialog styling */
+.modal, .dialog, [role="dialog"] {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(192, 140, 106, 0.3) !important;
+  border-radius: 16px !important;
+}
+
+/* Toast notifications */
+.toast, .notification {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(192, 140, 106, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  color: #333333 !important;
+}
+
+/* Search input */
+.search-input, input[type="search"] {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid rgba(192, 140, 106, 0.3) !important;
+  color: #333333 !important;
+}
+
+.search-input:focus, input[type="search"]:focus {
+  border-color: #C98A6B !important;
+  box-shadow: 0 0 0 3px rgba(201, 138, 107, 0.1) !important;
+}
+
+/* Filter buttons */
+.filter-button, .sort-button {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #C98A6B !important;
+  border: 1px solid rgba(192, 140, 106, 0.4) !important;
+  border-radius: 6px !important;
+}
+
+.filter-button.active, .sort-button.active {
+  background: #C98A6B !important;
+  color: #FFFFFF !important;
+}
+
+/* Loading states */
+.loading, .spinner {
+  color: #C98A6B !important;
+}
+
+/* Success states */
+.success {
+  color: #10B981 !important;
+}
+
+/* Error states */
+.error {
+  color: #EF4444 !important;
 }
 
 /* Override any transparent backgrounds */

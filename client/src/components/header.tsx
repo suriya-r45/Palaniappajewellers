@@ -30,12 +30,16 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
   return (
     <>
-      <header className="luxury-bg shadow-lg border-b border-gold-accent sticky top-0 z-50" data-testid="header-main">
+      <header className="bg-white/95 backdrop-blur-xl shadow-lg border-b border-rose-gold/20 sticky top-0 z-50" data-testid="header-main" style={{
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(201, 138, 107, 0.2)'
+      }}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 relative">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gold">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2" style={{borderColor: '#C98A6B'}}>
               <img 
                 src={logoPath} 
                 alt="Palaniappa Jewellers Logo" 
@@ -44,23 +48,23 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </div>
 
               <div>
-                <h1 className="text-lg md:text-xl font-display font-bold text-black">PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs text-gray-600">Since 2025</p>
+                <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#FFFFFF', textShadow: '1px 1px 3px rgba(0, 0, 0, 0.3)'}}>PALANIAPPA JEWELLERS</h1>
+                <p className="text-xs" style={{color: '#DDDDDD'}}>Since 2025</p>
               </div>
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'text-yellow-600 font-semibold' : 'text-gray-700 hover:text-yellow-600'}`} data-testid="nav-home">
+            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'font-semibold' : 'hover:text-white hover:text-shadow'}`} style={{color: location === '/' ? '#FFFFFF' : '#C98A6B'}} data-testid="nav-home">
               Home
             </Link>
-            <a href="#products" className="text-gray-700 hover:text-yellow-600 transition-colors font-medium" data-testid="nav-products">
+            <a href="#products" className="transition-colors font-medium hover:text-white hover:text-shadow" style={{color: '#C98A6B'}} data-testid="nav-products">
               Products
             </a>
-            <a href="#about" className="text-gray-700 hover:text-yellow-600 transition-colors font-medium" data-testid="nav-about">
+            <a href="#about" className="transition-colors font-medium hover:text-white hover:text-shadow" style={{color: '#C98A6B'}} data-testid="nav-about">
               About
             </a>
-            <a href="#contact" className="text-gray-700 hover:text-yellow-600 transition-colors font-medium" data-testid="nav-contact">
+            <a href="#contact" className="transition-colors font-medium hover:text-white hover:text-shadow" style={{color: '#C98A6B'}} data-testid="nav-contact">
               Contact
             </a>
           </nav>
