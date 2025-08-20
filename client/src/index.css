@@ -1330,6 +1330,14 @@ body {
 .glow {
 }
 
+/* Header Navigation - Force Black Text */
+header nav a,
+header nav [data-testid^="nav-"] {
+  color: #000000 !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+}
+
 /* Typography */
 .font-display {
   font-family: 'Playfair Display', serif;
@@ -1350,8 +1358,10 @@ body {
   background: linear-gradient(135deg, var(--pure-black) 0%, var(--charcoal-black) 25%, var(--pure-black) 50%, var(--charcoal-black) 75%, var(--pure-black) 100%) !important;
 }
 
-.text-black {
-  color: var(--classic-gold) !important;
+header .text-black,
+header h1,
+header p {
+  color: #000000 !important;
 }
 
 .text-gray-700,
@@ -1374,9 +1384,15 @@ body {
 
 /* Header and navigation styling */
 header {
-  background: linear-gradient(135deg, var(--pure-black) 0%, var(--charcoal-black) 100%) !important;
-  border-bottom: 2px solid var(--muted-gold) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  background: #FFFFFF !important;
+  border-bottom: 2px solid #000000 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+header nav a {
+  color: #000000 !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
 }
 
 /* Product cards styling */

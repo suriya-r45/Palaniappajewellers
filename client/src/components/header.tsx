@@ -55,26 +55,34 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className={`font-medium ${location === '/' ? 'font-semibold' : ''}`} style={{
-              color: '#000000', 
-              fontWeight: location === '/' ? '700' : '500'
+              color: '#000000 !important', 
+              fontWeight: location === '/' ? '700' : '600',
+              textDecoration: 'none',
+              opacity: '1'
             }} data-testid="nav-home">
               Home
             </Link>
             <a href="#products" className="font-medium" style={{
-              color: '#000000', 
-              fontWeight: '500'
+              color: '#000000 !important', 
+              fontWeight: '600',
+              textDecoration: 'none',
+              opacity: '1'
             }} data-testid="nav-products">
               Products
             </a>
             <a href="#about" className="font-medium" style={{
-              color: '#000000', 
-              fontWeight: '500'
+              color: '#000000 !important', 
+              fontWeight: '600',
+              textDecoration: 'none',
+              opacity: '1'
             }} data-testid="nav-about">
               About
             </a>
             <a href="#contact" className="font-medium" style={{
-              color: '#000000', 
-              fontWeight: '500'
+              color: '#000000 !important', 
+              fontWeight: '600',
+              textDecoration: 'none',
+              opacity: '1'
             }} data-testid="nav-contact">
               Contact
             </a>
