@@ -44,23 +44,23 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </div>
 
               <div>
-                <h1 className="text-xl font-display font-bold text-gradient">PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs muted-gold">Since 2025</p>
+                <h1 className="text-xl font-display font-bold text-black">PALANIAPPA JEWELLERS</h1>
+                <p className="text-xs text-gray-600">Since 2025</p>
               </div>
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'gold-accent font-semibold' : 'muted-gold hover:gold-accent'}`} data-testid="nav-home">
+            <Link href="/" className={`transition-colors font-medium ${location === '/' ? 'text-yellow-600 font-semibold' : 'text-gray-700 hover:text-yellow-600'}`} data-testid="nav-home">
               Home
             </Link>
-            <a href="#products" className="muted-gold hover:gold-accent transition-colors font-medium" data-testid="nav-products">
+            <a href="#products" className="text-gray-700 hover:text-yellow-600 transition-colors font-medium" data-testid="nav-products">
               Products
             </a>
-            <a href="#about" className="muted-gold hover:gold-accent transition-colors font-medium" data-testid="nav-about">
+            <a href="#about" className="text-gray-700 hover:text-yellow-600 transition-colors font-medium" data-testid="nav-about">
               About
             </a>
-            <a href="#contact" className="muted-gold hover:gold-accent transition-colors font-medium" data-testid="nav-contact">
+            <a href="#contact" className="text-gray-700 hover:text-yellow-600 transition-colors font-medium" data-testid="nav-contact">
               Contact
             </a>
           </nav>
@@ -130,7 +130,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 <div className="flex items-center space-x-2">
                   {isAdmin && (
                     <Link href="/admin">
-                      <Button variant="outline" size="sm" className="premium-button" data-testid="button-admin-dashboard">
+                      <Button variant="outline" size="sm" className="border-yellow-400 text-black hover:bg-yellow-50" data-testid="button-admin-dashboard">
                         Dashboard
                       </Button>
                     </Link>
@@ -148,7 +148,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 </div>
               ) : (
                 <Link href="/login">
-                  <Button className="premium-button" data-testid="button-login">
+                  <Button className="bg-yellow-600 hover:bg-yellow-700 text-white" data-testid="button-login">
                     <User className="h-4 w-4 mr-2" />
                     Login
                   </Button>

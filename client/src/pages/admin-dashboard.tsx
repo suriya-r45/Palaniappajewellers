@@ -78,7 +78,7 @@ export default function AdminDashboard() {
           </div>
           <Button
             onClick={() => setLocation('/estimates')}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white"
+            className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold"
           >
             <Calculator className="h-4 w-4 mr-2" />
             Customer Estimates
