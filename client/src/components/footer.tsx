@@ -5,12 +5,12 @@ import logoPath from '@assets/1000284180_1755240849891.jpg';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-100 py-12 border-t border-gray-700" data-testid="footer-main">
+    <footer className="bg-white text-black py-12 border-t-2 border-black" data-testid="footer-main">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-black">
                 <img
                   src={logoPath}
                   alt="Palaniappa Jewellers Logo"
@@ -18,11 +18,11 @@ export default function Footer() {
                 />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-100">PALANIAPPA JEWELLERS</h3>
-                <p className="text-xs text-gray-300">Since 2025</p>
+                <h3 className="text-lg font-bold text-black">PALANIAPPA JEWELLERS</h3>
+                <p className="text-xs text-black opacity-70">Since 2025</p>
               </div>
             </div>
-            <p className="text-sm text-gray-200">
+            <p className="text-sm text-black opacity-80">
               Premium jewelry crafted with precision and elegance for discerning customers worldwide.
             </p>
           </div>
@@ -38,24 +38,24 @@ export default function Footer() {
           </div> */}
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-100">Categories</h4>
+            <h4 className="text-lg font-semibold mb-4 text-black">Categories</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-gray-200 hover:text-gray-100 transition-colors" data-testid="link-category-gold">Gold Jewelry</a></li>
-              <li><a href="#" className="text-gray-200 hover:text-gray-100 transition-colors" data-testid="link-category-diamond">Diamond Jewelry</a></li>
-              <li><a href="#" className="text-gray-200 hover:text-gray-100 transition-colors" data-testid="link-category-silver">Silver Jewelry</a></li>
-              <li><a href="#" className="text-gray-200 hover:text-gray-100 transition-colors" data-testid="link-category-custom">Custom Designs</a></li>
+              <li><a href="#" className="text-black opacity-80 hover:opacity-100 transition-opacity" data-testid="link-category-gold">Gold Jewelry</a></li>
+              <li><a href="#" className="text-black opacity-80 hover:opacity-100 transition-opacity" data-testid="link-category-diamond">Diamond Jewelry</a></li>
+              <li><a href="#" className="text-black opacity-80 hover:opacity-100 transition-opacity" data-testid="link-category-silver">Silver Jewelry</a></li>
+              <li><a href="#" className="text-black opacity-80 hover:opacity-100 transition-opacity" data-testid="link-category-custom">Custom Designs</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-100">Contact Info</h4>
-            <div className="space-y-2 text-sm text-gray-200">
+            <h4 className="text-lg font-semibold mb-4 text-black">Contact Info</h4>
+            <div className="space-y-2 text-sm text-black">
               <p className="flex items-center space-x-2" data-testid="text-phone">
-                <Phone className="h-4 w-4 text-gray-200" />
+                <Phone className="h-4 w-4 text-black" />
                 <span>+919597201554</span>
               </p>
               <p className="flex items-center space-x-2" data-testid="text-email">
-                <Mail className="h-4 w-4 text-gray-200" />
+                <Mail className="h-4 w-4 text-black" />
                 <span>jewelerypalaniappa@gmail.com</span>
               </p>
               {/* <p className="flex items-center space-x-2" data-testid="text-address">
@@ -74,21 +74,21 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4" style={{ color: '#FFD700' }}>Locations</h4>
+            <h4 className="text-lg font-semibold mb-4 text-black">Locations</h4>
             <div className="space-y-4">
               <div>
-                <h4 className="font-medium" style={{ color: '#FFFFFF' }}>India</h4>
-                <p className="text-sm" style={{ color: '#CCCCCC' }}>Salem, Tamil Nadu</p>
+                <h4 className="font-medium text-black">India</h4>
+                <p className="text-sm text-black opacity-80">Salem, Tamil Nadu</p>
               </div>
               <div>
-                <h4 className="font-medium" style={{ color: '#FFFFFF' }}>Bahrain</h4>
-                <p className="text-sm" style={{ color: '#CCCCCC' }}>Gold City, Manama</p>
+                <h4 className="font-medium text-black">Bahrain</h4>
+                <p className="text-sm text-black opacity-80">Gold City, Manama</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 text-center text-sm" style={{ borderTop: '1px solid #FFD700', color: '#CCCCCC' }}>
+        <div className="mt-8 pt-8 text-center text-sm border-t-2 border-black text-black">
           <p>&copy; 2025 Palaniappa Jewellers. All rights reserved.</p>
         </div>
       </div>

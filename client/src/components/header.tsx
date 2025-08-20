@@ -165,10 +165,10 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 <div className="flex items-center space-x-2">
                   {isAdmin && (
                     <Link href="/admin">
-                      <Button variant="outline" size="sm" className="gold-accent gold-hover hidden lg:flex" data-testid="button-admin-dashboard">
+                      <Button variant="outline" size="sm" className="border-black text-black hover:bg-black hover:text-white hidden lg:flex" data-testid="button-admin-dashboard">
                         Dashboard
                       </Button>
-                      <Button variant="outline" size="sm" className="gold-accent gold-hover lg:hidden" data-testid="button-admin-dashboard-mobile">
+                      <Button variant="outline" size="sm" className="border-black text-black hover:bg-black hover:text-white lg:hidden" data-testid="button-admin-dashboard-mobile">
                         Admin
                       </Button>
                     </Link>
@@ -186,7 +186,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 </div>
               ) : (
                 <Link href="/login">
-                  <Button className="gold-button gold-hover text-black" data-testid="button-login">
+                  <Button className="bg-white text-black border-2 border-black hover:bg-black hover:text-white" data-testid="button-login">
                     <User className="h-4 w-4 mr-2" />
                     <span className="hidden sm:inline">Login</span>
                   </Button>
@@ -201,16 +201,16 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
           <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg mobile-menu-solid" style={{ backgroundColor: '#ffffff !important', zIndex: 99999, background: '#ffffff', opacity: 1 }}>
             <div className="px-4 py-4 space-y-4 bg-white mobile-menu-solid" style={{ backgroundColor: '#ffffff !important', background: '#ffffff' }}>
               <nav className="flex flex-col space-y-2">
-                <Link href="/" className={`py-2 px-3 rounded transition-colors ${location === '/' ? 'bg-yellow-50 text-yellow-600 font-semibold gold-accent' : 'text-gray-700 hover:bg-gray-50 gold-hover'}`} data-testid="nav-home-mobile">
+                <Link href="/" className={`py-2 px-3 rounded transition-colors ${location === '/' ? 'bg-gray-50 text-black font-semibold' : 'text-black hover:bg-gray-50'}`} data-testid="nav-home-mobile">
                   Home
                 </Link>
-                <a href="#products" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors gold-hover" data-testid="nav-products-mobile">
+                <a href="#products" className="py-2 px-3 rounded text-black hover:bg-gray-50 transition-colors" data-testid="nav-products-mobile">
                   Products
                 </a>
-                <a href="#about" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors gold-hover" data-testid="nav-about-mobile">
+                <a href="#about" className="py-2 px-3 rounded text-black hover:bg-gray-50 transition-colors" data-testid="nav-about-mobile">
                   About
                 </a>
-                <a href="#contact" className="py-2 px-3 rounded text-gray-700 hover:bg-gray-50 transition-colors gold-hover" data-testid="nav-contact-mobile">
+                <a href="#contact" className="py-2 px-3 rounded text-black hover:bg-gray-50 transition-colors" data-testid="nav-contact-mobile">
                   Contact
                 </a>
               </nav>
@@ -232,7 +232,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 <div className="flex flex-col space-y-2 pt-2">
                   {isAdmin && (
                     <Link href="/admin">
-                      <Button variant="outline" className="w-full gold-accent gold-hover">
+                      <Button variant="outline" className="w-full border-black text-black hover:bg-black hover:text-white">
                         Admin Dashboard
                       </Button>
                     </Link>
@@ -248,7 +248,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
                 </div>
               ) : (
                 <Link href="/login">
-                  <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-white">
+                  <Button className="w-full bg-white text-black border-2 border-black hover:bg-black hover:text-white">
                     <User className="h-4 w-4 mr-2" />
                     Login
                   </Button>
