@@ -176,8 +176,8 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg" style={{ backgroundColor: '#ffffff', zIndex: 99999 }}>
-            <div className="px-4 py-4 space-y-4 bg-white" style={{ backgroundColor: '#ffffff' }}>
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-lg mobile-menu-solid" style={{ backgroundColor: '#ffffff !important', zIndex: 99999, background: '#ffffff', opacity: 1 }}>
+            <div className="px-4 py-4 space-y-4 bg-white mobile-menu-solid" style={{ backgroundColor: '#ffffff !important', background: '#ffffff' }}>
               <nav className="flex flex-col space-y-2">
                 <Link href="/" className={`py-2 px-3 rounded transition-colors ${location === '/' ? 'bg-yellow-50 text-yellow-600 font-semibold' : 'text-gray-700 hover:bg-gray-50'}`} data-testid="nav-home-mobile">
                   Home

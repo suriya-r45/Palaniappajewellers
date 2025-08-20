@@ -132,17 +132,31 @@ body {
   z-index: 99999 !important;
 }
 
-/* Fix mobile navigation transparency */
-.md\:hidden.absolute {
+/* Fix mobile navigation transparency - Maximum specificity */
+div.md\:hidden.absolute.top-16.left-0.right-0.bg-white {
   background-color: #ffffff !important;
+  background: #ffffff !important;
   backdrop-filter: none !important;
+  opacity: 1 !important;
+  z-index: 99999 !important;
 }
 
-/* Ensure all mobile menu elements are solid */
-.md\:hidden.absolute *,
-.md\:hidden.absolute div {
+/* Ensure all mobile menu elements are solid - Maximum specificity */
+div.md\:hidden.absolute.top-16.left-0.right-0.bg-white *,
+div.md\:hidden.absolute.top-16.left-0.right-0.bg-white div,
+div.md\:hidden.absolute.top-16.left-0.right-0.bg-white nav,
+div.md\:hidden.absolute.top-16.left-0.right-0.bg-white a,
+div.md\:hidden.absolute.top-16.left-0.right-0.bg-white button {
   background-color: #ffffff !important;
   background-image: none !important;
+  background: #ffffff !important;
+}
+
+/* Override any inherited transparency */
+.mobile-menu-solid {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  opacity: 1 !important;
 }
 
 body {
