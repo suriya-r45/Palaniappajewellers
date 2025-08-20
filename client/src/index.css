@@ -116,7 +116,20 @@ body {
 .cart-drawer {
   z-index: 9999 !important;
   background: #ffffff !important;
+  background-color: #ffffff !important;
   position: fixed !important;
+}
+
+/* Force white background for cart drawer and all children */
+.cart-drawer,
+.cart-drawer * {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+/* Override any z-index issues */
+.cart-drawer {
+  z-index: 99999 !important;
 }
 
 body {

@@ -172,13 +172,9 @@ export default function CategoryNavigation() {
   return (
     <section className="py-8 md:py-12 bg-white relative" data-testid="section-category-navigation" style={{ backgroundColor: '#ffffff' }}>
       <div className="container mx-auto px-4 relative">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-6">Explore Our Collections</h2>
-          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-yellow-600 to-yellow-400 mx-auto mb-4 md:mb-8 rounded-full"></div>
-          <p className="text-sm md:text-lg text-gray-600 font-light">Browse our exquisite collection</p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
           {categories.map((category, index) => {
             const IconComponent = categoryIcons[category.id as keyof typeof categoryIcons] || Crown;
             const isExpanded = expandedCategory === category.id;
@@ -189,7 +185,7 @@ export default function CategoryNavigation() {
                 className="card-hover glass-effect border-0"
                 data-testid={`category-card-${category.id}`}
               >
-                <CardContent className="p-4">
+                <CardContent className="p-2 md:p-4">
                   <Button
                     variant="ghost"
                     className="w-full p-0 h-auto justify-start hover:bg-transparent"
@@ -198,22 +194,22 @@ export default function CategoryNavigation() {
                   >
                     <div className="flex items-center justify-between w-full">
                       <div className="flex items-center">
-                        <IconComponent className="h-5 w-5 mr-3 text-gray-600" />
+                        <IconComponent className="h-4 w-4 md:h-5 md:w-5 mr-2 md:mr-3 text-gray-600" />
                         <div className="text-left">
-                          <h3 className="font-semibold text-black text-sm">{category.name}</h3>
+                          <h3 className="font-semibold text-black text-xs md:text-sm">{category.name}</h3>
                           <p className="text-xs text-gray-500">{category.subcategories.length} types</p>
                         </div>
                       </div>
                       {isExpanded ? (
-                        <ChevronDown className="h-4 w-4 text-gray-400" />
+                        <ChevronDown className="h-3 w-3 md:h-4 md:w-4 text-gray-400" />
                       ) : (
-                        <ChevronRight className="h-4 w-4 text-gray-400" />
+                        <ChevronRight className="h-3 w-3 md:h-4 md:w-4 text-gray-400" />
                       )}
                     </div>
                   </Button>
 
                   {isExpanded && (
-                    <div className="mt-4 pl-8 space-y-2 animate-in slide-in-from-top-2 duration-200">
+                    <div className="mt-2 md:mt-4 pl-4 md:pl-8 space-y-1 md:space-y-2 animate-in slide-in-from-top-2 duration-200">
                       {category.subcategories.map((subcategory, subIndex) => (
                         <Button
                           key={subIndex}
@@ -230,7 +226,7 @@ export default function CategoryNavigation() {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="w-full mt-3 text-xs border-gray-200 text-gray-700 hover:bg-gray-50"
+                        className="w-full mt-2 md:mt-3 text-xs border-gray-200 text-gray-700 hover:bg-gray-50"
                         onClick={() => handleCategoryClick(category.name)}
                         data-testid={`button-view-all-${category.id}`}
                       >
