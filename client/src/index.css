@@ -1330,15 +1330,20 @@ body {
 .glow {
 }
 
-/* Header Navigation - Force Dark Black Text */
+/* Header Navigation - Force White Text on Black Background */
 header nav a,
 header nav [data-testid^="nav-"],
 header a,
-header button {
-  color: #000000 !important;
+header button,
+header h1,
+header p,
+header span,
+header div {
+  color: #FFFFFF !important;
   opacity: 1 !important;
   font-weight: 700 !important;
   text-shadow: none !important;
+  background-color: transparent !important;
 }
 
 /* Typography */
@@ -1363,8 +1368,12 @@ header button {
 
 header .text-black,
 header h1,
-header p {
-  color: #000000 !important;
+header p,
+header span,
+header div,
+header a {
+  color: #FFFFFF !important;
+  background-color: transparent !important;
 }
 
 .text-gray-700,
@@ -1385,17 +1394,59 @@ header p {
   opacity: 0.5;
 }
 
-/* Header and navigation styling */
-header {
-  background: #FFFFFF !important;
-  border-bottom: 2px solid #000000 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+/* Header Styling - Force Pure Black Background with White Text */
+header,
+header *,
+header::before,
+header::after,
+header *::before,
+header *::after {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  opacity: 1 !important;
 }
 
-header nav a {
-  color: #000000 !important;
+header .container,
+header nav,
+header div,
+header a,
+header button,
+header h1,
+header h2,
+header h3,
+header p,
+header span {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+/* Header and navigation styling */
+header {
+  background: #000000 !important;
+  border-bottom: 2px solid #FFFFFF !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+header nav a,
+header h1,
+header h2,
+header h3,
+header p,
+header span,
+header div,
+header button,
+[data-testid^="nav-"],
+[data-testid="link-home"] *,
+header .font-display,
+header .text-lg,
+header .text-xl,
+header .text-xs {
+  color: #FFFFFF !important;
   opacity: 1 !important;
   font-weight: 700 !important;
+  background-color: transparent !important;
+  text-shadow: none !important;
 }
 
 /* Admin Dashboard Tabs - Force Black and White */
@@ -1442,11 +1493,34 @@ footer .container {
   color: #000000 !important;
 }
 
-/* Form elements */
-input, select, textarea {
-  background: var(--charcoal-black) !important;
-  border: 1px solid var(--muted-gold) !important;
-  color: var(--classic-gold) !important;
+/* Form elements - Force Black and White */
+input, select, textarea, option {
+  background: #FFFFFF !important;
+  border: 1px solid #000000 !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* Dropdown and Select Styling */
+select option,
+[role="option"],
+[data-state="open"] *,
+.select-content,
+.select-item {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* Dropdown Menu Items */
+[role="menuitem"],
+[role="listbox"] *,
+.dropdown-menu-item,
+.select-dropdown-item {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  font-weight: 500 !important;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -1621,10 +1695,39 @@ td {
 }
 
 
-/* Select dropdown styling */
-[data-state="open"] {
-  background: var(--charcoal-black) !important;
-  border-color: var(--classic-gold) !important;
+/* Select dropdown styling - Force Visibility */
+[data-state="open"],
+[data-state="open"] *,
+.select-content,
+.select-viewport,
+.select-item {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+  opacity: 1 !important;
+}
+
+/* Currency Dropdown and All Dropdowns */
+.dropdown-content,
+.dropdown-menu,
+.popover-content,
+[role="listbox"],
+[role="menu"],
+[role="combobox"] {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+.dropdown-content *,
+.dropdown-menu *,
+.popover-content *,
+[role="listbox"] *,
+[role="menu"] *,
+[role="combobox"] * {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  opacity: 1 !important;
 }
 
 /* Hover effects */

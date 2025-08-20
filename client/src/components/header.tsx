@@ -30,15 +30,16 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-md" data-testid="header-main" style={{
-        background: '#FFFFFF',
-        borderBottom: '2px solid #000000'
+      <header className="sticky top-0 z-50 shadow-md" data-testid="header-main" style={{
+        backgroundColor: '#000000',
+        borderBottom: '2px solid #FFFFFF',
+        color: '#FFFFFF'
       }}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 relative">
+      <div className="container mx-auto px-4" style={{backgroundColor: '#000000'}}>
+        <div className="flex items-center justify-between h-16 relative" style={{backgroundColor: '#000000'}}>
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2" style={{borderColor: '#000000'}}>
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2" style={{borderColor: '#FFFFFF'}}>
               <img 
                 src={logoPath} 
                 alt="Palaniappa Jewellers Logo" 
@@ -47,15 +48,15 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
             </div>
 
               <div>
-                <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#000000', fontWeight: '700'}}>PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs" style={{color: '#000000'}}>Since 2025</p>
+                <h1 className="text-lg md:text-xl font-display font-bold" style={{color: '#FFFFFF', fontWeight: '700'}}>PALANIAPPA JEWELLERS</h1>
+                <p className="text-xs" style={{color: '#FFFFFF'}}>Since 2025</p>
               </div>
             </Link>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className={`font-medium ${location === '/' ? 'font-semibold' : ''}`} style={{
-              color: '#000000 !important', 
+              color: '#FFFFFF', 
               fontWeight: location === '/' ? '700' : '600',
               textDecoration: 'none',
               opacity: '1'
@@ -63,7 +64,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
               Home
             </Link>
             <a href="#products" className="font-medium" style={{
-              color: '#000000 !important', 
+              color: '#FFFFFF', 
               fontWeight: '600',
               textDecoration: 'none',
               opacity: '1'
@@ -71,7 +72,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
               Products
             </a>
             <a href="#about" className="font-medium" style={{
-              color: '#000000 !important', 
+              color: '#FFFFFF', 
               fontWeight: '600',
               textDecoration: 'none',
               opacity: '1'
@@ -79,7 +80,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
               About
             </a>
             <a href="#contact" className="font-medium" style={{
-              color: '#000000 !important', 
+              color: '#FFFFFF', 
               fontWeight: '600',
               textDecoration: 'none',
               opacity: '1'
@@ -99,7 +100,7 @@ export default function Header({ selectedCurrency, onCurrencyChange, filters = {
           </Button>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+          <div className="hidden md:flex items-center space-x-2 lg:space-x-4" style={{backgroundColor: '#000000'}}>
             {/* Advanced Filters - Only show on home page
             {location === '/' && onFiltersChange && (
               <AdvancedFilters 
