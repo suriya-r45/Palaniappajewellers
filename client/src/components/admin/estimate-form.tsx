@@ -27,6 +27,10 @@ interface EstimateFormData {
   wastagePercentage: string;
   wastageCharges: string;
   hallmarkingCharges: string;
+  gstPercentage: string;
+  gstAmount: string;
+  vatPercentage: string;
+  vatAmount: string;
   subtotal: string;
   totalAmount: string;
   validUntil: string;
@@ -55,6 +59,10 @@ export function EstimateForm() {
     wastagePercentage: "2",
     wastageCharges: "",
     hallmarkingCharges: "450",
+    gstPercentage: "3",
+    gstAmount: "",
+    vatPercentage: "1",
+    vatAmount: "",
     subtotal: "",
     totalAmount: "",
     validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 days from now
@@ -104,6 +112,10 @@ export function EstimateForm() {
         wastagePercentage: "2",
         wastageCharges: "",
         hallmarkingCharges: "450",
+        gstPercentage: "3",
+        gstAmount: "",
+        vatPercentage: "1",
+        vatAmount: "",
         subtotal: "",
         totalAmount: "",
         validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -125,19 +137,27 @@ export function EstimateForm() {
     const stonePercent = parseFloat(formData.stoneDiamondChargesPercentage) || 0;
     const wastagePercent = parseFloat(formData.wastagePercentage) || 0;
     const hallmarking = parseFloat(formData.hallmarkingCharges) || 0;
+    const gstPercent = parseFloat(formData.gstPercentage) || 0;
+    const vatPercent = parseFloat(formData.vatPercentage) || 0;
 
     const makingCharges = (metalVal * makingPercent) / 100;
     const stoneCharges = (metalVal * stonePercent) / 100;
     const wastageCharges = (metalVal * wastagePercent) / 100;
     const subtotal = metalVal + makingCharges + stoneCharges + wastageCharges + hallmarking;
+    
+    const gstAmount = (subtotal * gstPercent) / 100;
+    const vatAmount = (subtotal * vatPercent) / 100;
+    const totalAmount = subtotal + gstAmount + vatAmount;
 
     setFormData(prev => ({
       ...prev,
       makingCharges: makingCharges.toFixed(2),
       stoneDiamondCharges: stoneCharges.toFixed(2),
       wastageCharges: wastageCharges.toFixed(2),
+      gstAmount: gstAmount.toFixed(2),
+      vatAmount: vatAmount.toFixed(2),
       subtotal: subtotal.toFixed(2),
-      totalAmount: subtotal.toFixed(2)
+      totalAmount: totalAmount.toFixed(2)
     }));
   };
 
@@ -353,6 +373,28 @@ export function EstimateForm() {
                   />
                 </div>
                 <div>
+                  <Label htmlFor="gstPercentage">GST (%)</Label>
+                  <Input
+                    id="gstPercentage"
+                    type="number"
+                    step="0.01"
+                    value={formData.gstPercentage}
+                    onChange={(e) => handleInputChange("gstPercentage", e.target.value)}
+                    placeholder="GST percentage"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="vatPercentage">VAT (%)</Label>
+                  <Input
+                    id="vatPercentage"
+                    type="number"
+                    step="0.01"
+                    value={formData.vatPercentage}
+                    onChange={(e) => handleInputChange("vatPercentage", e.target.value)}
+                    placeholder="VAT percentage"
+                  />
+                </div>
+                <div>
                   <Label htmlFor="validUntil">Valid Until</Label>
                   <Input
                     id="validUntil"
@@ -387,6 +429,18 @@ export function EstimateForm() {
                     <div>
                       <span className="text-gray-600">Wastage:</span>
                       <div className="font-semibold">₹{formData.wastageCharges}</div>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">GST:</span>
+                      <div className="font-semibold">₹{formData.gstAmount}</div>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">VAT:</span>
+                      <div className="font-semibold">₹{formData.vatAmount}</div>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">Subtotal:</span>
+                      <div className="font-semibold">₹{formData.subtotal}</div>
                     </div>
                     <div className="md:col-span-4 border-t pt-2">
                       <span className="text-gray-600">Total Amount:</span>

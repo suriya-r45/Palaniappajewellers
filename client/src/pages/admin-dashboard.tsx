@@ -8,7 +8,7 @@ import Header from '@/components/header';
 import ProductForm from '@/components/admin/product-form';
 import BillingForm from '@/components/admin/billing-form';
 import BillPreview from '@/components/admin/bill-preview';
-import { MetalRatesAdmin } from '@/components/admin/metal-rates-admin';
+import { EstimatesList } from '@/components/admin/estimates-list';
 import { useQuery } from '@tanstack/react-query';
 import { Product, Bill } from '@shared/schema';
 import { Currency } from '@/lib/currency';
@@ -144,7 +144,7 @@ export default function AdminDashboard() {
             <TabsTrigger value="products" data-testid="tab-products">Products</TabsTrigger>
             <TabsTrigger value="billing" data-testid="tab-billing">Billing</TabsTrigger>
             <TabsTrigger value="bills" data-testid="tab-bills">Bills History</TabsTrigger>
-            <TabsTrigger value="rates" data-testid="tab-rates">Metal Rates</TabsTrigger>
+            <TabsTrigger value="estimates" data-testid="tab-estimates">Customer Estimates</TabsTrigger>
             <TabsTrigger value="analytics" data-testid="tab-analytics">Analytics</TabsTrigger>
           </TabsList>
 
@@ -233,8 +233,8 @@ export default function AdminDashboard() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="rates" className="space-y-6">
-            <MetalRatesAdmin />
+          <TabsContent value="estimates" className="space-y-6">
+            <EstimatesList />
           </TabsContent>
 
           <TabsContent value="analytics" className="space-y-6">

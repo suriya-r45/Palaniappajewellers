@@ -4,7 +4,7 @@ import logoPath from '@assets/1000284180_1755240849891.jpg';
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white py-12" data-testid="footer-main">
+    <footer className="bg-black text-white py-12" data-testid="footer-main" style={{color: 'white'}}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -17,11 +17,11 @@ export default function Footer() {
                 />
               </div>
               <div>
-                <h3 className="text-lg font-bold">PALANIAPPA JEWELLERS</h3>
-                <p className="text-xs text-gray-400">Since 2025</p>
+                <h3 className="text-lg font-bold text-white">PALANIAPPA JEWELLERS</h3>
+                <p className="text-xs text-gray-300">Since 2025</p>
               </div>
             </div>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-300 text-sm">
               Premium jewelry crafted with precision and elegance for discerning customers worldwide.
             </p>
           </div>
@@ -37,18 +37,18 @@ export default function Footer() {
           </div> */}
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Categories</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white">Categories</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-category-gold">Gold Jewelry</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-category-diamond">Diamond Jewelry</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-category-silver">Silver Jewelry</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-category-custom">Custom Designs</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-gold">Gold Jewelry</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-diamond">Diamond Jewelry</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-silver">Silver Jewelry</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="link-category-custom">Custom Designs</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-            <div className="space-y-2 text-sm text-gray-400">
+            <h4 className="text-lg font-semibold mb-4 text-white">Contact Info</h4>
+            <div className="space-y-2 text-sm text-gray-300">
               <p className="flex items-center space-x-2" data-testid="text-phone">
                 <Phone className="h-4 w-4" />
                 <span>+919597201554</span>
@@ -73,7 +73,7 @@ export default function Footer() {
             </div>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Locations</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white">Locations</h4>
             <div className="space-y-4">
               <div>
                 <h4 className="text-white font-medium">India</h4>
@@ -88,7 +88,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; 2025 Palaniappa Jewellers. All rights reserved.</p>
+          <p className="text-gray-300">&copy; 2025 Palaniappa Jewellers. All rights reserved.</p>
         </div>
       </div>
     </footer>
