@@ -1330,12 +1330,15 @@ body {
 .glow {
 }
 
-/* Header Navigation - Force Black Text */
+/* Header Navigation - Force Dark Black Text */
 header nav a,
-header nav [data-testid^="nav-"] {
+header nav [data-testid^="nav-"],
+header a,
+header button {
   color: #000000 !important;
   opacity: 1 !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
 }
 
 /* Typography */
@@ -1392,14 +1395,51 @@ header {
 header nav a {
   color: #000000 !important;
   opacity: 1 !important;
+  font-weight: 700 !important;
+}
+
+/* Admin Dashboard Tabs - Force Black and White */
+[data-testid^="tab-"],
+.tabs-trigger,
+[role="tab"] {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1px solid #E5E5E5 !important;
   font-weight: 600 !important;
+}
+
+[data-testid^="tab-"]:hover,
+.tabs-trigger:hover,
+[role="tab"]:hover {
+  background: #F5F5F5 !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+[data-testid^="tab-"][data-state="active"],
+.tabs-trigger[data-state="active"],
+[role="tab"][aria-selected="true"] {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #000000 !important;
+}
+
+/* Footer Styling - Force Pure Black Background */
+footer,
+footer * {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+footer .container {
+  background-color: #000000 !important;
 }
 
 /* Product cards styling */
 .product-card {
-  background: linear-gradient(145deg, var(--pure-black) 0%, var(--charcoal-black) 50%, var(--pure-black) 100%);
-  border: 1px solid var(--muted-gold);
-  color: var(--classic-gold);
+  background: #FFFFFF !important;
+  border: 1px solid #E5E5E5 !important;
+  color: #000000 !important;
 }
 
 /* Form elements */
