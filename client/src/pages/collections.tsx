@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 import { Currency } from '@/lib/currency';
@@ -24,7 +24,35 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
     material: material // Set initial filter based on material
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; // 3x3 grid = 9 items per page
+  
+  // Dynamic items per page based on screen size
+  const getItemsPerPage = () => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 1280 ? 15 : 6; // Desktop: 5x3=15, Mobile: 3x2=6
+    }
+    return 15;
+  };
+  
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
+
+  // Update items per page on window resize
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        const newItemsPerPage = getItemsPerPage();
+        if (newItemsPerPage !== itemsPerPage) {
+          setItemsPerPage(newItemsPerPage);
+          setCurrentPage(1); // Reset to first page when changing layout
+        }
+      };
+      
+      // Set initial value
+      setItemsPerPage(getItemsPerPage());
+      
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [itemsPerPage]);
 
   const { data: allProducts = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
@@ -216,8 +244,8 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
             {/* Products Section */}
             <div>
               {isLoading ? (
-                <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6">
-                  {[...Array(9)].map((_, i) => (
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5 xl:gap-6">
+                  {[...Array(itemsPerPage)].map((_, i) => (
                     <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
                       <div className="h-64 bg-gray-300"></div>
                       <div className="p-4">
@@ -239,7 +267,7 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6" data-testid="grid-products">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5 xl:gap-6" data-testid="grid-products">
                     {paginatedProducts.map((product) => (
                       <ProductCard
                         key={product.id}
