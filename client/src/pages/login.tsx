@@ -157,10 +157,20 @@ export default function Login() {
       }
 
       const data = await response.json();
-      toast({
-        title: "OTP Sent",
-        description: "We've sent a 6-digit OTP to your phone number via SMS.",
-      });
+      
+      // Debug: Show OTP in console for development
+      if (data.debug?.otp) {
+        console.log('DEBUG: OTP Code =', data.debug.otp);
+        toast({
+          title: "OTP Sent (Debug Mode)",
+          description: `SMS sent to ${phoneNumber}. Check browser console for OTP code.`,
+        });
+      } else {
+        toast({
+          title: "OTP Sent",
+          description: "We've sent a 6-digit OTP to your phone number via SMS.",
+        });
+      }
       setForgotPasswordStep('otp');
     } catch (error: any) {
       toast({

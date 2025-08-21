@@ -255,7 +255,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ 
         success: true, 
         message: "OTP sent to your phone number via SMS",
-        phone: phone 
+        phone: phone,
+        // Temporary debug info - remove in production
+        debug: process.env.NODE_ENV === 'development' ? { otp: otpCode } : undefined
       });
     } catch (error) {
       console.error("Error sending OTP:", error);
