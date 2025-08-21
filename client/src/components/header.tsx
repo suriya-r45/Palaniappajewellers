@@ -27,21 +27,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
   return (
     <>
-      {/* Top Contact Bar */}
-      <div className="bg-gradient-to-r from-rose-900 to-red-900 text-white text-xs py-1">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-1 md:space-x-4">
-            <span className="text-xs hidden md:block">For Store and Scheme Queries - +919442131883</span>
-          </div>
-          <div className="flex items-center space-x-1 md:space-x-4">
-            <span className="flex items-center">
-              <Phone className="h-3 w-3 mr-1" />
-              +91 9442131883
-            </span>
-            <span>+91 9167789918</span>
-          </div>
-        </div>
-      </div>
+
 
       {/* Main Header */}
       <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
