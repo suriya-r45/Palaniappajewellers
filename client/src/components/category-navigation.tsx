@@ -14,17 +14,7 @@ import {
   Sparkles,
   Star,
   Palette,
-  Wrench,
-  Circle,
-  Diamond,
-  Hexagon,
-  Square,
-  Infinity,
-  Target,
-  Zap,
-  Flower,
-  Shield,
-  Compass
+  Wrench
 } from 'lucide-react';
 
 const categoryIcons = {
@@ -45,13 +35,12 @@ const categories = [
     id: 'rings',
     name: 'Rings',
     subcategories: [
-      { name: 'Bands', icon: Circle, description: 'Classic wedding & engagement bands' },
-      { name: 'Single Stone', icon: Diamond, description: 'Elegant solitaire rings' },
-      { name: 'Two Headed', icon: Hexagon, description: 'Double stone designs' },
-      { name: 'Eternity', icon: Infinity, description: 'Continuous stone bands' },
-      { name: 'Casual', icon: Target, description: 'Everyday fashion rings' },
-      { name: 'Cocktail', icon: Zap, description: 'Statement party rings' },
-      { name: 'Broad Rings', icon: Square, description: 'Wide band designs' }
+      'Engagement Rings',
+      'Wedding Bands', 
+      'Fashion Rings',
+      'Cocktail Rings',
+      'Promise Rings',
+      'Birthstone Rings'
     ]
   },
   {
@@ -221,31 +210,18 @@ export default function CategoryNavigation() {
 
                   {isExpanded && (
                     <div className="mt-2 md:mt-4 pl-4 md:pl-8 space-y-1 md:space-y-2 animate-in slide-in-from-top-2 duration-200">
-                      {category.subcategories.map((subcategory, subIndex) => {
-                        // Handle both old string format and new object format
-                        const subcatName = typeof subcategory === 'string' ? subcategory : subcategory.name;
-                        const SubcatIcon = typeof subcategory === 'object' && subcategory.icon ? subcategory.icon : null;
-                        const subcatDesc = typeof subcategory === 'object' ? subcategory.description : '';
-                        
-                        return (
-                          <Button
-                            key={subIndex}
-                            variant="ghost"
-                            size="sm"
-                            className="w-full justify-start p-2 h-auto text-xs text-gray-600 hover:text-black hover:bg-gray-50"
-                            onClick={() => handleSubcategoryClick(subcatName)}
-                            data-testid={`button-subcategory-${category.id}-${subIndex}`}
-                          >
-                            <div className="flex items-center w-full">
-                              {SubcatIcon && <SubcatIcon className="h-3 w-3 mr-2 text-rose-600" />}
-                              <div className="flex-1 text-left">
-                                <div className="font-medium">{subcatName}</div>
-                                {subcatDesc && <div className="text-[10px] text-gray-400 mt-0.5">{subcatDesc}</div>}
-                              </div>
-                            </div>
-                          </Button>
-                        );
-                      })}
+                      {category.subcategories.map((subcategory, subIndex) => (
+                        <Button
+                          key={subIndex}
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start p-1 h-auto text-xs text-gray-600 hover:text-black hover:bg-gray-50"
+                          onClick={() => handleSubcategoryClick(subcategory)}
+                          data-testid={`button-subcategory-${category.id}-${subIndex}`}
+                        >
+                          • {subcategory}
+                        </Button>
+                      ))}
                       
                       <Button
                         size="sm"

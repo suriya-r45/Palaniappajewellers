@@ -6,7 +6,6 @@ import ProductCard from '@/components/product-card';
 import ProductFilters from '@/components/product-filters';
 import WhatsAppFloat from '@/components/whatsapp-float';
 import CategoryNavigation from '@/components/category-navigation';
-import RingsShowcase from '@/components/rings-showcase';
 import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
 import { Currency } from '@/lib/currency';
@@ -205,9 +204,6 @@ export default function Home() {
 
       {/* Category Navigation - Moved to top above hero section */}
       <CategoryNavigation />
-
-      {/* Rings Showcase - Visual ring categories with images */}
-      <RingsShowcase />
 
       {/* New Arrivals Section */}
       {newArrivalProducts.length > 0 && (
