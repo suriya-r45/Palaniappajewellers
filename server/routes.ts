@@ -471,76 +471,81 @@ Premium quality, timeless beauty.`;
 
       currentY += 20;
 
-      // TAX INVOICE header with border
+      // TAX INVOICE header with border - matching preview style
       const headerY = currentY;
-      doc.rect(margin, headerY, pageWidth - (margin * 2), 25)
+      doc.rect(margin, headerY, pageWidth - (margin * 2), 30)
+         .fill('#F5F5F5')
          .stroke('#000000')
          .lineWidth(1);
 
-      doc.fontSize(14)
-         .font('Helvetica-Bold')
-         .fillColor('#FF0000')
-         .text('TAX INVOICE', margin + 5, headerY + 8);
-
-      currentY += 35;
-
-      // Company and Customer details section
-      const detailsY = currentY;
-      const leftColumnWidth = (pageWidth - margin * 2) / 2 - 10;
-      
-      // Left side - Company details
-      doc.fontSize(10)
+      doc.fontSize(16)
          .font('Helvetica-Bold')
          .fillColor('#000000')
-         .text('PALANIAPPA JEWELLERS', margin + 5, detailsY);
+         .text('TAX INVOICE', margin + 8, headerY + 8);
+
+      currentY += 40;
+
+      // Company and Customer details section with border - matching preview
+      const detailsY = currentY;
+      const detailsHeight = 140;
+      const leftColumnWidth = (pageWidth - margin * 2) / 2 - 10;
+      
+      // Draw border around details section
+      doc.rect(margin, detailsY, pageWidth - (margin * 2), detailsHeight)
+         .stroke('#000000')
+         .lineWidth(1);
+      
+      // Left side - Company details
+      doc.fontSize(11)
+         .font('Helvetica-Bold')
+         .fillColor('#000000')
+         .text('PALANIAPPA JEWELLERS', margin + 8, detailsY + 10);
       
       doc.fontSize(9)
          .font('Helvetica')
          .fillColor('#000000')
-         .text('AVK ARCADE 315 C', margin + 5, detailsY + 15)
-         .text('HOSUR MAIN ROAD OPP NEW BUS STAND', margin + 5, detailsY + 28)
-         .text('SALEM, TAMIL NADU', margin + 5, detailsY + 41)
-         .text('PINCODE : 636003', margin + 5, detailsY + 54)
-         .text(`Phone: +91 427-2333324`, margin + 5, detailsY + 67)
-         .text('GSTIN: 33AAACT5712A1Z4', margin + 5, detailsY + 80)
-         .text('State Code: 33 (Tamil Nadu)', margin + 5, detailsY + 93)
-         .text('Email: jewelerypalaniappa@gmail.com', margin + 5, detailsY + 106);
+         .text('Premium Jewelry Store', margin + 8, detailsY + 25)
+         .text('123 Jewelry Street', margin + 8, detailsY + 38)
+         .text('Chennai, Tamil Nadu', margin + 8, detailsY + 51)
+         .text('PINCODE: 600001', margin + 8, detailsY + 64)
+         .text('Phone Number: +919597201554', margin + 8, detailsY + 77)
+         .text('GSTIN: 33AAACT5712A124', margin + 8, detailsY + 90)
+         .text('Email: jewelerypalaniappa@gmail.com', margin + 8, detailsY + 103);
 
       // Right side - Customer details
       const rightX = margin + leftColumnWidth + 20;
-      doc.fontSize(10)
+      doc.fontSize(11)
          .font('Helvetica-Bold')
          .fillColor('#000000')
-         .text('CUSTOMER DETAILS:', rightX, detailsY);
+         .text('CUSTOMER DETAILS:', rightX, detailsY + 10);
       
       doc.fontSize(9)
          .font('Helvetica')
          .fillColor('#000000')
-         .text(`Name: ${bill.customerName || 'N/A'}`, rightX, detailsY + 15)
-         .text(`Phone: ${bill.customerPhone || 'N/A'}`, rightX, detailsY + 28)
-         .text(`Email: ${bill.customerEmail || 'N/A'}`, rightX, detailsY + 41)
-         .text('Address:', rightX, detailsY + 54)
-         .text(bill.customerAddress || 'N/A', rightX, detailsY + 67, { width: leftColumnWidth - 10 });
+         .text(`${bill.customerName || 'N/A'}`, rightX, detailsY + 25)
+         .text(`${bill.customerPhone || 'N/A'}`, rightX, detailsY + 38)
+         .text(`${bill.customerEmail || 'N/A'}`, rightX, detailsY + 51)
+         .text(`${bill.customerAddress || 'N/A'}`, rightX, detailsY + 64, { width: leftColumnWidth - 10 });
 
-      currentY = detailsY + 120;
+      currentY = detailsY + detailsHeight + 20;
 
       // Removed standard rates section as requested by user
 
-      // Enhanced Items table with better spacing and design
+      // Items table matching preview layout exactly
       const tableY = currentY;
-      const taxHeader = bill.currency === 'INR' ? 'GST (3%)' : 'VAT (10%)';
-      const tableHeaders = ['Product Description', 'Purity', 'Net Weight (g)', 'Gross Weight (g)', 'Product Price', 'Making Charges', 'Discount', taxHeader, 'Total Amount'];
-      const colWidths = [85, 45, 55, 55, 60, 55, 50, 40, 85];
+      const vatHeader = bill.currency === 'INR' ? 'GST (3%)' : 'VAT\n(5%)';
+      const tableHeaders = ['Product\nDescription', 'Qty', 'Gross\nWeight(gms)', 'Net\nWeight(gms)', 'Product\nPrice', 'Making\nCharges', 'Discount', vatHeader, 'Value'];
+      const colWidths = [80, 30, 60, 60, 60, 60, 60, 50, 60];
       
-      // Enhanced Table header with better styling
+      // Table header with gray background like preview
       doc.rect(margin, tableY, pageWidth - (margin * 2), 35)
-         .fill('#FF0000')
+         .fill('#E5E5E5')
          .stroke('#000000');
 
-      let headerX = margin + 3;
+      let headerX = margin + 2;
       doc.fontSize(8)
          .font('Helvetica-Bold')
-         .fillColor('#FFFFFF');
+         .fillColor('#000000');
       
       tableHeaders.forEach((header, i) => {
         doc.text(header, headerX, tableY + 8, { width: colWidths[i] - 2, align: 'center' });
@@ -632,118 +637,126 @@ Premium quality, timeless beauty.`;
 
       currentY = totalRowY + 30;
 
-      // Enhanced Payment details and totals section with proper spacing
+      // Payment Details and Bill Summary - Two column layout like preview
       const summaryY = currentY + 10;
+      const leftBoxWidth = (pageWidth - (margin * 2)) / 2 - 10;
+      const rightBoxWidth = leftBoxWidth;
+      const boxHeight = 100;
       
-      // Create summary table with proper structure
-      doc.fontSize(9)
+      // Left box - Payment Details
+      doc.rect(margin, summaryY, leftBoxWidth, boxHeight)
+         .stroke('#000000');
+      
+      doc.fontSize(10)
          .font('Helvetica-Bold')
          .fillColor('#000000')
-         .text('PAYMENT & BILLING SUMMARY', margin, summaryY, { width: pageWidth - (margin * 2), align: 'center' });
-
-      currentY = summaryY + 25;
-
-      // Left side - Payment details in structured format
+         .text('Payment Details', margin + 5, summaryY + 5);
+      
+      // Payment details table
       doc.fontSize(8)
          .font('Helvetica-Bold')
-         .fillColor('#000000')
-         .text('Total Qty Purchased:', margin + 5, currentY)
-         .text('Payment Mode:', margin + 5, currentY + 15)
-         .text('Total Amount Paid:', margin + 5, currentY + 30);
-
-      // Values for payment details
+         .text('Payment Mode', margin + 5, summaryY + 25)
+         .text('Amount (BHD)', margin + 120, summaryY + 25);
+      
       doc.font('Helvetica')
-         .fillColor('#000000')
-         .text(bill.items.length.toString(), margin + 150, currentY)
-         .text(bill.paymentMethod || 'CASH', margin + 150, currentY + 15)
-         .text(`${currency} ${parseFloat(bill.paidAmount).toFixed(2)}`, margin + 150, currentY + 30);
-
-      // Right side - Financial breakdown
-      const rightSummaryX = margin + 300;
-      doc.fontSize(8)
+         .text(bill.paymentMethod || 'CASH', margin + 5, summaryY + 40)
+         .text(`${currency}${parseFloat(bill.paidAmount).toFixed(2)}`, margin + 120, summaryY + 40);
+      
+      doc.font('Helvetica-Bold')
+         .text('Total Amount Paid', margin + 5, summaryY + 60)
+         .text(`${currency}${parseFloat(bill.paidAmount).toFixed(2)}`, margin + 120, summaryY + 60);
+      
+      // Right box - Bill Summary
+      const rightBoxX = margin + leftBoxWidth + 20;
+      doc.rect(rightBoxX, summaryY, rightBoxWidth, boxHeight)
+         .stroke('#000000');
+      
+      doc.fontSize(10)
          .font('Helvetica-Bold')
-         .fillColor('#000000')
-         .text('Product Total Value:', rightSummaryX, currentY)
-         .text('Making Charges:', rightSummaryX, currentY + 15)
-         .text('Discount Applied:', rightSummaryX, currentY + 30)
-         .text('Tax Amount:', rightSummaryX, currentY + 45)
-         .text('Net Invoice Value:', rightSummaryX, currentY + 60);
-
-      // Values for financial breakdown
+         .text('Bill Summary', rightBoxX + 5, summaryY + 5);
+      
+      // Bill summary details
       const subtotal = parseFloat(bill.subtotal);
       const makingCharges = parseFloat(bill.makingCharges);
       const discount = parseFloat(bill.discount) || 0;
       const gst = parseFloat(bill.gst) || 0;
       const vat = parseFloat(bill.vat) || 0;
       const taxAmount = bill.currency === 'INR' ? gst : vat;
+      
+      doc.fontSize(8)
+         .font('Helvetica')
+         .text('Subtotal:', rightBoxX + 5, summaryY + 25)
+         .text(`${currency}${subtotal.toFixed(2)}`, rightBoxX + rightBoxWidth - 60, summaryY + 25, { align: 'right' })
+         .text('Making Charges:', rightBoxX + 5, summaryY + 38)
+         .text(`${currency}${makingCharges.toFixed(2)}`, rightBoxX + rightBoxWidth - 60, summaryY + 38, { align: 'right' })
+         .text(bill.currency === 'BHD' ? 'VAT:' : 'GST:', rightBoxX + 5, summaryY + 51)
+         .text(`${currency}${taxAmount.toFixed(2)}`, rightBoxX + rightBoxWidth - 60, summaryY + 51, { align: 'right' })
+         .text('Discount:', rightBoxX + 5, summaryY + 64)
+         .text(`${currency}${discount.toFixed(2)}`, rightBoxX + rightBoxWidth - 60, summaryY + 64, { align: 'right' });
+      
+      doc.font('Helvetica-Bold')
+         .text('Total Amount:', rightBoxX + 5, summaryY + 77)
+         .text(`${currency}${parseFloat(bill.total).toFixed(2)}`, rightBoxX + rightBoxWidth - 60, summaryY + 77, { align: 'right' });
 
-      doc.font('Helvetica')
-         .fillColor('#000000')
-         .text(`${currency} ${subtotal.toFixed(2)}`, rightSummaryX + 120, currentY)
-         .text(`${currency} ${makingCharges.toFixed(2)}`, rightSummaryX + 120, currentY + 15)
-         .text(`${currency} ${discount.toFixed(2)}`, rightSummaryX + 120, currentY + 30)
-         .text(`${currency} ${taxAmount.toFixed(2)}`, rightSummaryX + 120, currentY + 45)
-         .text(`${currency} ${parseFloat(bill.total).toFixed(2)}`, rightSummaryX + 120, currentY + 60);
+      currentY = summaryY + boxHeight + 10;
 
-      currentY += 90;
-
-      // Amount in words with proper formatting
+      // Amount in words section - matching preview
       doc.fontSize(8)
          .font('Helvetica-Bold')
          .fillColor('#000000')
-         .text('Amount in Words: ', margin + 5, currentY);
+         .text('Amount in Words:', margin + 5, currentY + 10);
       
-      // Convert number to words (simplified version)
       const total = parseFloat(bill.total);
       const amountInWords = bill.currency === 'INR' 
         ? `Rupees ${Math.floor(total)} and ${Math.round((total - Math.floor(total)) * 100)} Paise Only`
-        : `Bahraini Dinars ${Math.floor(total)} and ${Math.round((total - Math.floor(total)) * 1000)} Fils Only`;
+        : `Bahrain Dinars ${Math.floor(total)} and ${Math.round((total - Math.floor(total)) * 1000)} Fils Only`;
       
       doc.font('Helvetica')
-         .fillColor('#000000')
-         .text(amountInWords, margin + 100, currentY);
+         .text(amountInWords, margin + 90, currentY + 10);
 
-      currentY += 30;
+      currentY += 40;
 
-      // Final totals box with proper alignment - contained within margins
+      // Final total amount section - exactly matching preview style
+      const totalSectionY = currentY;
       const totalBoxWidth = pageWidth - (margin * 2);
-      const totalBoxHeight = 35;
+      const totalBoxHeight = 30;
       
-      doc.rect(margin, currentY, totalBoxWidth, totalBoxHeight)
+      // Black background box with yellow text - matching preview
+      doc.rect(margin, totalSectionY, totalBoxWidth, totalBoxHeight)
          .fill('#000000')
-         .stroke('#D4AF37')
-         .lineWidth(2);
+         .stroke('#000000');
 
-      // Calculate text positioning to ensure it fits within the box
-      const leftTextX = margin + 15;
-      const rightTextX = margin + totalBoxWidth - 15;
-      const textY = currentY + 12;
-
-      // Left side text
+      // Left side - "TOTAL AMOUNT TO BE PAID:"
       doc.fontSize(11)
          .font('Helvetica-Bold')
-         .fillColor('#D4AF37')
-         .text('TOTAL AMOUNT TO BE PAID:', leftTextX, textY);
+         .fillColor('#FFD700')
+         .text('TOTAL AMOUNT TO BE PAID:', margin + 10, totalSectionY + 8);
       
-      // Right side amount - properly positioned within margins
-      doc.fontSize(12)
-         .fillColor('#D4AF37')
-         .text(`${currency} ${parseFloat(bill.total).toFixed(2)}`, rightTextX - 100, textY, { 
-           width: 100, 
-           align: 'right' 
+      // Right side - Amount
+      doc.fontSize(11)
+         .font('Helvetica-Bold')
+         .fillColor('#FFD700')
+         .text(`${currency} ${parseFloat(bill.total).toFixed(2)}`, pageWidth - 120, totalSectionY + 8, { 
+           align: 'right',
+           width: 100
          });
 
-      currentY += 45;
+      currentY = totalSectionY + totalBoxHeight + 20;
 
-      // Company footer with proper spacing
-      const footerY = Math.max(currentY + 20, pageHeight - 100);
-      doc.fontSize(7)
+      currentY += 20;
+
+      // Footer text - matching preview exactly
+      doc.fontSize(8)
          .font('Helvetica')
-         .fillColor('#000000')
-         .text('PALANIAPPA JEWELLERS', margin, footerY, { width: pageWidth - (margin * 2), align: 'center' })
-         .text('HOSUR MAIN ROAD OPP NEW BUS STAND, SALEM, TAMIL NADU - 636003', margin, footerY + 12, { width: pageWidth - (margin * 2), align: 'center' })
-         .text('Phone: +91 427-2333324 | Email: jewelerypalaniappa@gmail.com | GSTIN: 33AAACT5712A1Z4', margin, footerY + 24, { width: pageWidth - (margin * 2), align: 'center' })
-         .text('Thank you for your business!', margin, footerY + 40, { width: pageWidth - (margin * 2), align: 'center' });
+         .fillColor('#666666')
+         .text('This is a computer-generated bill.No signature required', 0, currentY, { 
+           align: 'center', 
+           width: pageWidth 
+         })
+         .text('Thank you for shopping with Palaniappa Jewellery!', 0, currentY + 15, { 
+           align: 'center', 
+           width: pageWidth 
+         });
 
       doc.end();
     } catch (error) {
