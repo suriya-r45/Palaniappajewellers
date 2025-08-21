@@ -68,8 +68,8 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
   }
 
   // Initialize metal rates service
-  await MetalRatesService.initializeRates();
-  MetalRatesService.startScheduledUpdates();
+  //await MetalRatesService.initializeRates();
+  //MetalRatesService.startScheduledUpdates();
 
   // Start server
   const port = parseInt(process.env.PORT || '5000', 10);

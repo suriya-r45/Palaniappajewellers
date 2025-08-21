@@ -288,9 +288,9 @@ export default function Home() {
       {/* All Products Section with Filters */}
       <section className="py-16 bg-white" id="products" data-testid="section-products">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          {/* <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-black mb-6">Complete Collection</h2>
-          </div>
+          </div> */}
 
           <div className="lg:flex lg:gap-8">
             <aside className="lg:w-1/4 mb-8 lg:mb-0">
