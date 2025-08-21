@@ -15,7 +15,7 @@ import { Currency } from '@/lib/currency';
 import { Package, FileText, TrendingUp, Users, Calculator } from 'lucide-react';
 
 export default function AdminDashboard() {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const { isAdmin, token } = useAuth();
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('INR');
   const [activeTab, setActiveTab] = useState('products');
@@ -26,6 +26,15 @@ export default function AdminDashboard() {
       window.location.href = '/login';
     }
   }, [isAdmin, token]);
+
+  // Handle URL tab parameter
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const tabParam = url.searchParams.get('tab');
+    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates') {
+      setActiveTab(tabParam);
+    }
+  }, [location]);
 
   const { data: products = [] } = useQuery<Product[]>({
     queryKey: ['/api/products'],

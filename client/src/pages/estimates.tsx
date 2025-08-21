@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EstimateForm } from "@/components/admin/estimate-form";
 import { EstimatesList } from "@/components/admin/estimates-list";
@@ -9,7 +9,16 @@ import { useLocation } from "wouter";
 
 export function EstimatesPage() {
   const [activeTab, setActiveTab] = useState("list");
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
+  
+  // Handle URL tab parameter
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const tabParam = url.searchParams.get('tab');
+    if (tabParam === 'list' || tabParam === 'create') {
+      setActiveTab(tabParam);
+    }
+  }, [location]);
 
   return (
     <div className="min-h-screen luxury-bg py-8">
