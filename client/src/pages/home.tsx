@@ -168,9 +168,13 @@ export default function Home() {
   );
 
   const newArrivals = useMemo(() => 
-    [...allProducts].sort((a, b) => 
-      new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
-    ).slice(0, 8), [allProducts]
+    allProducts.filter(product => {
+      // Only show products specifically categorized as "New Arrivals"
+      const isNewArrivalCategory = product.category === 'new_arrivals';
+      const isNewArrivalSubCategory = product.subCategory && ['Latest Products', 'Featured Items', 'Trending Now', 'Exclusive Pieces'].includes(product.subCategory);
+      
+      return isNewArrivalCategory || isNewArrivalSubCategory;
+    }).slice(0, 8), [allProducts]
   );
 
   return (
