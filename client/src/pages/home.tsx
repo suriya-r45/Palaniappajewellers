@@ -190,23 +190,6 @@ export default function Home() {
       {/* Category Navigation - Moved to top above hero section */}
       <CategoryNavigation />
 
-      {/* Filters Section - Available on main home page */}
-      <section className="py-8 bg-gray-50" data-testid="section-main-filters">
-        <div className="container mx-auto px-4">
-          <ProductFilters
-            filters={filters}
-            onFiltersChange={setFilters}
-          />
-          
-          {/* Show filtered products count */}
-          <div className="mt-4 text-center">
-            <p className="text-gray-600">
-              Showing {filteredProducts.length} of {allProducts.length} products
-            </p>
-          </div>
-        </div>
-      </section>
-
 
 
       {/* Gold Section */}
