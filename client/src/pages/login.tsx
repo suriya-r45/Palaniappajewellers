@@ -303,28 +303,28 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4" data-testid="page-login">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4" data-testid="page-login">
       <Card className="w-full max-w-md" data-testid="card-login">
-        <CardHeader className="text-center">
+        <CardHeader className="text-center bg-gradient-to-r from-rose-900 to-red-900 rounded-t-lg">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-12 h-12 logo-gradient rounded-full flex items-center justify-center">
-              <span className="text-red-600 font-bold text-xl">P</span>
+            <div className="w-12 h-12 bg-gradient-to-br from-rose-800 to-red-900 rounded-full flex items-center justify-center shadow-lg">
+              <span className="text-rose-100 font-bold text-xl">P</span>
             </div>
             <div>
-              <h1 className="text-lg font-bold text-black">PALANIAPPA JEWELLERS</h1>
-              <p className="text-xs text-gray-500">Since 2025</p>
+              <h1 className="text-lg font-bold text-white">PALANIAPPA JEWELLERS</h1>
+              <p className="text-xs text-rose-100">Since 2025</p>
             </div>
           </div>
-          <CardTitle className="text-2xl">Login</CardTitle>
-          <p className="text-gray-600">Choose your account type</p>
+          <CardTitle className="text-2xl text-white">Login</CardTitle>
+          <p className="text-rose-100">Choose your account type</p>
         </CardHeader>
         
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="login">Login</TabsTrigger>
-              <TabsTrigger value="register">Register</TabsTrigger>
-              <TabsTrigger value="forgot-password">
+            <TabsList className="grid w-full grid-cols-3 bg-rose-100">
+              <TabsTrigger value="login" className="data-[state=active]:bg-rose-800 data-[state=active]:text-rose-100 text-rose-700">Login</TabsTrigger>
+              <TabsTrigger value="register" className="data-[state=active]:bg-rose-800 data-[state=active]:text-rose-100 text-rose-700">Register</TabsTrigger>
+              <TabsTrigger value="forgot-password" className="data-[state=active]:bg-rose-800 data-[state=active]:text-rose-100 text-rose-700">
                 <Smartphone className="w-4 h-4 mr-1" />
                 Forgot Password
               </TabsTrigger>
@@ -333,13 +333,13 @@ export default function Login() {
             <TabsContent value="login" className="space-y-4">
               {/* Login Type Selector */}
               <div className="mb-6">
-                <div className="flex rounded-lg bg-gray-100 p-1">
+                <div className="flex rounded-lg bg-rose-50 p-1">
                   <button
                     type="button"
                     className={`flex-1 py-2 px-4 rounded-md font-medium transition-all ${
                       loginType === 'guest' 
-                        ? 'bg-white shadow-sm text-black' 
-                        : 'text-gray-600 hover:text-black'
+                        ? 'bg-rose-800 shadow-sm text-rose-100' 
+                        : 'text-rose-700 hover:text-rose-900'
                     }`}
                     onClick={() => setLoginType('guest')}
                     data-testid="button-guest-login"
@@ -350,8 +350,8 @@ export default function Login() {
                     type="button"
                     className={`flex-1 py-2 px-4 rounded-md font-medium transition-all ${
                       loginType === 'admin' 
-                        ? 'bg-white shadow-sm text-black' 
-                        : 'text-gray-600 hover:text-black'
+                        ? 'bg-rose-800 shadow-sm text-rose-100' 
+                        : 'text-rose-700 hover:text-rose-900'
                     }`}
                     onClick={() => setLoginType('admin')}
                     data-testid="button-admin-login"
@@ -405,7 +405,7 @@ export default function Login() {
                 <div className="flex space-x-3 pt-4">
                   <Button
                     type="submit"
-                    className="flex-1 bg-white text-black border-2 border-black hover:bg-gray-100"
+                    className="flex-1 bg-rose-800 text-rose-100 border-2 border-rose-800 hover:bg-rose-700 hover:border-rose-700 transition-all"
                     disabled={isLoading}
                     data-testid="button-submit-login"
                   >
@@ -414,7 +414,7 @@ export default function Login() {
                   <Button
                     type="button"
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 border-rose-800 text-rose-800 hover:bg-rose-100"
                     onClick={() => setLocation('/')}
                     data-testid="button-cancel-login"
                   >
