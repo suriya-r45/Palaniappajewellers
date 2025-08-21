@@ -235,15 +235,6 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
 
   return (
     <div>
-      <Button
-        variant="ghost"
-        onClick={() => setLocation('/admin')}
-        className="mb-4 text-luxury-black hover:bg-champagne/20 border border-gold/30"
-        data-testid="button-back-to-dashboard-billing"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Admin Dashboard
-      </Button>
       <Card className="border-2 border-gold bg-gradient-to-r from-cream to-champagne/30 shadow-xl" data-testid="card-billing-form">
         <CardHeader>
         <CardTitle className="flex items-center space-x-2">

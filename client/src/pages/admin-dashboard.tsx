@@ -216,12 +216,14 @@ export default function AdminDashboard() {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6" data-testid="tabs-admin">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-1 md:gap-2 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-sm p-1">
-            <TabsTrigger value="products" data-testid="tab-products" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-2 py-2 rounded-md">Products</TabsTrigger>
-            <TabsTrigger value="billing" data-testid="tab-billing" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-2 py-2 rounded-md">Billing</TabsTrigger>
-            <TabsTrigger value="bills" data-testid="tab-bills" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-2 py-2 rounded-md">Bills History</TabsTrigger>
-            <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-2 py-2 rounded-md">Customer Estimates</TabsTrigger>
-          </TabsList>
+          <div className="relative">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-sm h-auto p-1">
+              <TabsTrigger value="products" data-testid="tab-products" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Products</TabsTrigger>
+              <TabsTrigger value="billing" data-testid="tab-billing" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Billing</TabsTrigger>
+              <TabsTrigger value="bills" data-testid="tab-bills" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Bills History</TabsTrigger>
+              <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Customer Estimates</TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="products" className="space-y-6">
             <ProductForm currency={selectedCurrency} />
