@@ -71,10 +71,11 @@ export default function Footer() {
                   href="https://instagram.com/palaniappa.bh"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-pink-500 hover:text-pink-400 transition-colors"
+                  className="flex items-center space-x-2 text-pink-500 hover:text-pink-400 transition-colors"
                   data-testid="link-instagram"
                 >
                   <Instagram className="h-5 w-5" />
+                  <span>Instagram</span>
                 </a>
                 {/* <button 
                   onClick={openWhatsAppGeneral}
