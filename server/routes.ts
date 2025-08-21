@@ -199,14 +199,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Send welcome email to new user
+      console.log(`[Debug] Attempting to send welcome email to ${userData.name} (${userData.email})`);
       try {
-        await EmailService.sendWelcomeEmail({
+        const emailResult = await EmailService.sendWelcomeEmail({
           customerName: userData.name,
           customerEmail: userData.email
         });
-        console.log(`[Welcome Email] Sent to ${userData.name} (${userData.email})`);
+        console.log(`[Welcome Email] Result: ${emailResult} - Sent to ${userData.name} (${userData.email})`);
       } catch (error) {
-        console.error('Failed to send welcome email:', error);
+        console.error('[Welcome Email Error] Failed to send welcome email:', error);
         // Continue with registration even if email fails
       }
 
@@ -531,20 +532,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } as any);
 
       // Send bill confirmation email
+      console.log(`[Debug] Attempting to send bill email to ${bill.customerName} (${bill.customerEmail})`);
       try {
-        await EmailService.sendBillConfirmation({
-          customerName: bill.customerName,
-          customerEmail: bill.customerEmail,
-          billNumber: bill.billNumber,
-          total: bill.total,
-          currency: bill.currency,
-          items: typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items,
-          customerPhone: bill.customerPhone,
-          customerAddress: bill.customerAddress
+        const emailResult = await EmailService.sendBillConfirmation({
+          customerName: bill.customerName || '',
+          customerEmail: bill.customerEmail || '',
+          billNumber: bill.billNumber || '',
+          total: bill.total || '0',
+          currency: bill.currency || 'INR',
+          items: typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items || [],
+          customerPhone: bill.customerPhone || '',
+          customerAddress: bill.customerAddress || ''
         });
-        console.log(`[Bill Email] Sent to ${bill.customerName} (${bill.customerEmail})`);
+        console.log(`[Bill Email] Result: ${emailResult} - Sent to ${bill.customerName} (${bill.customerEmail})`);
       } catch (error) {
-        console.error('Failed to send bill confirmation email:', error);
+        console.error('[Bill Email Error] Failed to send bill confirmation email:', error);
         // Continue even if email fails
       }
 
