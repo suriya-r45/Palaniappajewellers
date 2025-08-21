@@ -88,13 +88,19 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-white">Locations</h4>
             <div className="space-y-4">
-              <div>
-                <h4 className="font-medium text-white">India</h4>
-                <p className="text-sm text-white">Salem, Tamil Nadu</p>
+              <div className="flex items-start space-x-2">
+                <MapPin className="h-4 w-4 text-white mt-1" />
+                <div>
+                  <h4 className="font-medium text-white">India</h4>
+                  <p className="text-sm text-white">Salem, Tamil Nadu</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-medium text-white">Bahrain</h4>
-                <p className="text-sm text-white">Gold City, Manama</p>
+              <div className="flex items-start space-x-2">
+                <MapPin className="h-4 w-4 text-white mt-1" />
+                <div>
+                  <h4 className="font-medium text-white">Bahrain</h4>
+                  <p className="text-sm text-white">Gold City, Manama</p>
+                </div>
               </div>
             </div>
           </div>
