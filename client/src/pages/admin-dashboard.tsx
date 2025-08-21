@@ -150,12 +150,12 @@ export default function AdminDashboard() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-black">Admin Dashboard</h1>
-            <p className="text-gray-600 mt-2">Manage your jewelry store efficiently</p>
+            <h1 className="text-3xl font-bold text-rose-900">Admin Dashboard</h1>
+            <p className="text-rose-700 mt-2">Manage your jewelry store efficiently</p>
           </div>
           <Button
             onClick={() => setLocation('/estimates')}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold"
+            className="bg-gradient-to-r from-rose-800 to-red-800 hover:from-rose-900 hover:to-red-900 text-white font-semibold shadow-md"
           >
             <Calculator className="h-4 w-4 mr-2" />
             Create Customer Estimate
@@ -217,11 +217,11 @@ export default function AdminDashboard() {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6" data-testid="tabs-admin">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2">
-            <TabsTrigger value="products" data-testid="tab-products" className="text-xs md:text-sm">Products</TabsTrigger>
-            <TabsTrigger value="billing" data-testid="tab-billing" className="text-xs md:text-sm">Billing</TabsTrigger>
-            <TabsTrigger value="bills" data-testid="tab-bills" className="text-xs md:text-sm">Bills History</TabsTrigger>
-            <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-xs md:text-sm">Customer Estimates</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-sm">
+            <TabsTrigger value="products" data-testid="tab-products" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200">Products</TabsTrigger>
+            <TabsTrigger value="billing" data-testid="tab-billing" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200">Billing</TabsTrigger>
+            <TabsTrigger value="bills" data-testid="tab-bills" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200">Bills History</TabsTrigger>
+            <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200">Customer Estimates</TabsTrigger>
           </TabsList>
 
           <TabsContent value="products" className="space-y-6">
