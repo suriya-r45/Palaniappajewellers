@@ -11,6 +11,7 @@ import PDFDocument from "pdfkit";
 import Stripe from "stripe";
 import { MetalRatesService } from "./services/testmetalRatesService.js";
 import twilio from "twilio";
+import { EmailService } from "./services/emailService.js";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -196,6 +197,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...userData,
         role: "guest"
       });
+
+      // Send welcome email to new user
+      try {
+        await EmailService.sendWelcomeEmail({
+          customerName: userData.name,
+          customerEmail: userData.email
+        });
+        console.log(`[Welcome Email] Sent to ${userData.name} (${userData.email})`);
+      } catch (error) {
+        console.error('Failed to send welcome email:', error);
+        // Continue with registration even if email fails
+      }
 
       // Send WhatsApp welcome message if phone number is provided
       if (userData.phone) {
@@ -516,6 +529,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...billData,
         billNumber: billNumber
       } as any);
+
+      // Send bill confirmation email
+      try {
+        await EmailService.sendBillConfirmation({
+          customerName: bill.customerName,
+          customerEmail: bill.customerEmail,
+          billNumber: bill.billNumber,
+          total: bill.total,
+          currency: bill.currency,
+          items: typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items,
+          customerPhone: bill.customerPhone,
+          customerAddress: bill.customerAddress
+        });
+        console.log(`[Bill Email] Sent to ${bill.customerName} (${bill.customerEmail})`);
+      } catch (error) {
+        console.error('Failed to send bill confirmation email:', error);
+        // Continue even if email fails
+      }
 
       res.status(201).json(bill);
     } catch (error: any) {
