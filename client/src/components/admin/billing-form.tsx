@@ -36,6 +36,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
     makingCharges: '12.0',
     gst: '3.0',
     vat: '10.0', // Bahrain VAT - 10% standard rate
+    amountInr: '0.00',
+    amountBhd: '0.00',
   });
 
   const [selectedProducts, setSelectedProducts] = useState<Map<string, { product: Product; quantity: number }>>(new Map());
@@ -76,6 +78,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
     }
     
     setSelectedProducts(newSelection);
+    updateAmountFields(newSelection);
   };
 
   const handleQuantityChange = (productId: string, quantity: number) => {
@@ -85,7 +88,24 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
     if (item) {
       newSelection.set(productId, { ...item, quantity: Math.max(1, quantity) });
       setSelectedProducts(newSelection);
+      updateAmountFields(newSelection);
     }
+  };
+
+  const updateAmountFields = (selectedProductsMap: Map<string, { product: Product; quantity: number }>) => {
+    let totalInr = 0;
+    let totalBhd = 0;
+    
+    selectedProductsMap.forEach(({ product, quantity }) => {
+      totalInr += parseFloat(product.priceInr) * quantity;
+      totalBhd += parseFloat(product.priceBhd) * quantity;
+    });
+    
+    setCustomerData(prev => ({
+      ...prev,
+      amountInr: totalInr.toFixed(2),
+      amountBhd: totalBhd.toFixed(3)
+    }));
   };
 
   const calculateBillTotals = () => {
@@ -192,6 +212,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       makingCharges: '12.0',
       gst: '3.0',
       vat: '10.0',
+      amountInr: '0.00',
+      amountBhd: '0.00',
     });
     setSelectedProducts(new Map());
   };
@@ -341,6 +363,38 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
                   />
                 </div>
               )}
+
+              {/* Amount Fields */}
+              <div className="space-y-4 border-t pt-4">
+                <h5 className="font-medium text-black">Product Amounts (Editable)</h5>
+                <p className="text-xs text-gray-600">These amounts are auto-populated from selected products but can be edited manually.</p>
+                
+                <div>
+                  <Label htmlFor="amountInr">Amount (INR)</Label>
+                  <Input
+                    id="amountInr"
+                    type="number"
+                    step="0.01"
+                    value={customerData.amountInr}
+                    onChange={(e) => setCustomerData({ ...customerData, amountInr: e.target.value })}
+                    placeholder="0.00"
+                    data-testid="input-amount-inr"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="amountBhd">Amount (BHD)</Label>
+                  <Input
+                    id="amountBhd"
+                    type="number"
+                    step="0.001"
+                    value={customerData.amountBhd}
+                    onChange={(e) => setCustomerData({ ...customerData, amountBhd: e.target.value })}
+                    placeholder="0.000"
+                    data-testid="input-amount-bhd"
+                  />
+                </div>
+              </div>
 
               {/* Bill Summary */}
               {selectedProducts.size > 0 && (
