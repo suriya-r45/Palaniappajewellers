@@ -10,6 +10,7 @@ import { useAuth } from '@/lib/auth';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { Smartphone, KeyRound, ArrowLeft } from 'lucide-react';
+import logoImage from '@assets/1000284180_1755240849891_1755796658877.jpg';
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -306,10 +307,12 @@ export default function Login() {
     <div className="min-h-screen bg-white flex items-center justify-center px-4" data-testid="page-login">
       <Card className="w-full max-w-md" data-testid="card-login">
         <CardHeader className="text-center bg-gradient-to-r from-rose-900 to-red-900 rounded-t-lg">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-rose-800 to-red-900 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-rose-100 font-bold text-xl">P</span>
-            </div>
+          <div className="flex flex-col items-center justify-center space-y-4 mb-4">
+            <img 
+              src={logoImage} 
+              alt="Palaniappa Jewellers Logo" 
+              className="w-20 h-20 object-contain bg-white rounded-full p-2 shadow-lg"
+            />
             <div>
               <h1 className="text-lg font-bold text-white">PALANIAPPA JEWELLERS</h1>
               <p className="text-xs text-rose-100">Since 2025</p>
