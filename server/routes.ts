@@ -350,41 +350,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const currencySymbol = bill.currency === 'INR' ? '₹' : 'BD';
       const pdfUrl = `${req.protocol}://${req.get('host')}/api/bills/${bill.id}/pdf`;
       
-      const message = `🧾 *BILL GENERATED* 🧾
+      const message = `*BILL GENERATED*
 
-*Palaniappa Jewellers since 2025*
+*Palaniappa Jewellers Since 2025*
 
 ━━━━━━━━━━━━━━━━━━━━━
-📋 *Bill Details*
+*Bill Details*
 ━━━━━━━━━━━━━━━━━━━━━
 
-🔢 Bill Number: *${bill.billNumber}*
-👤 Customer: *${bill.customerName}*
-📧 Email: ${bill.customerEmail}
-📱 Phone: ${bill.customerPhone}
-🏠 Address: ${bill.customerAddress}
+Bill Number: *${bill.billNumber}*
+Customer: *${bill.customerName}*
+Email: ${bill.customerEmail}
+Phone: ${bill.customerPhone}
+Address: ${bill.customerAddress}
 
-💰 *Total Amount: ${currencySymbol} ${parseFloat(bill.total).toLocaleString()}*
+*Total Amount: ${currencySymbol} ${parseFloat(bill.total).toLocaleString()}*
 
-💎 *Items:*
+*Items:*
 ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((item: any, index: number) => 
   `${index + 1}. ${item.productName} - ${currencySymbol}${parseFloat(item.price).toLocaleString()} × ${item.quantity}`
 ).join('\n')}
 
 ━━━━━━━━━━━━━━━━━━━━━
-💳 *Payment Summary*
+*Payment Summary*
 ━━━━━━━━━━━━━━━━━━━━━
-💎 Subtotal: ${currencySymbol}${parseFloat(bill.subtotal).toLocaleString()}
-🔨 Making Charges: ${currencySymbol}${parseFloat(bill.makingCharges).toLocaleString()}
-📊 GST: ${currencySymbol}${parseFloat(bill.gst).toLocaleString()}
-🏛️ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
-💰 *Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
+Subtotal: ${currencySymbol}${parseFloat(bill.subtotal).toLocaleString()}
+Making Charges: ${currencySymbol}${parseFloat(bill.makingCharges).toLocaleString()}
+GST: ${currencySymbol}${parseFloat(bill.gst).toLocaleString()}
+VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
+*Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
 
-🙏 Thank you for choosing Palaniappa Jewellers!
-✨ Where every jewel is crafted for elegance that lasts generations.
+Thank you for choosing Palaniappa Jewellers!
+Where every jewel is crafted for elegance that lasts generations.
 
-📞 Contact us: +919442131883
-🌐 Premium quality, timeless beauty.`;
+Contact us: +919442131883
+Premium quality, timeless beauty.`;
 
       // Create WhatsApp URL
       const phoneNumber = bill.customerPhone.replace(/[^\d]/g, '');
