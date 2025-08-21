@@ -151,7 +151,7 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-rose-900">Admin Dashboard</h1>
-            <p className="text-rose-700 mt-2">Manage your jewelry store efficiently</p>
+
           </div>
           <Button
             onClick={() => setLocation('/estimates')}

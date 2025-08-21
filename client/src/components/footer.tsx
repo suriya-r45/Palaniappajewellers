@@ -1,5 +1,5 @@
 // import { openWhatsAppGeneral } from '@/lib/whatsapp';
-import { MessageCircle, Phone, Mail, MapPin } from 'lucide-react';
+import { MessageCircle, Phone, Mail, MapPin, Instagram } from 'lucide-react';
 import logoPath from '@assets/1000284180_1755240849891.jpg';
 
 
@@ -66,15 +66,24 @@ export default function Footer() {
                 <MapPin className="h-4 w-4" />
                 <span>123 Jewelry Street, Chennai</span>
               </p> */}
-              {/* <div className="flex space-x-4 mt-4">
-                <button 
+              <div className="flex space-x-4 mt-4">
+                <a
+                  href="https://instagram.com/palaniappa.bh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-pink-500 hover:text-pink-400 transition-colors"
+                  data-testid="link-instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+                {/* <button 
                   onClick={openWhatsAppGeneral}
                   className="text-green-500 hover:text-green-400 transition-colors"
                   data-testid="button-whatsapp-footer"
                 >
                   <MessageCircle className="h-5 w-5" />
-                </button>
-              </div> */}
+                </button> */}
+              </div>
             </div>
           </div>
           <div>
