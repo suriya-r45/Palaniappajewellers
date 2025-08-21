@@ -124,6 +124,19 @@ const HOME_CATEGORIES = {
     ]
   }
 };
+
+const MATERIAL_OPTIONS = [
+  { value: 'GOLD_22K', label: 'Gold 22K' },
+  { value: 'GOLD_18K', label: 'Gold 18K' },
+  { value: 'SILVER_925', label: 'Silver 925' },
+  { value: 'PLATINUM', label: 'Platinum' },
+  { value: 'DIAMOND', label: 'Diamond' },
+  { value: 'GEMSTONE', label: 'Gemstone' },
+  { value: 'PEARL', label: 'Pearl' },
+  { value: 'new_arrivals', label: 'New Arrivals' },
+  { value: 'OTHER', label: 'Other' }
+];
+
 import { Currency } from '@/lib/currency';
 import { useAuth } from '@/lib/auth';
 import { useToast } from '@/hooks/use-toast';
@@ -144,6 +157,7 @@ function ProductForm({ currency }: ProductFormProps) {
     description: '',
     category: '',
     subCategory: '',
+    material: 'GOLD_22K',
     priceInr: '',
     priceBhd: '',
     grossWeight: '',
@@ -243,6 +257,7 @@ function ProductForm({ currency }: ProductFormProps) {
       description: '',
       category: '',
       subCategory: '',
+      material: 'GOLD_22K',
       priceInr: '',
       priceBhd: '',
       grossWeight: '',
@@ -317,6 +332,25 @@ function ProductForm({ currency }: ProductFormProps) {
                     {formData.category && HOME_CATEGORIES[formData.category as keyof typeof HOME_CATEGORIES]?.subcategories.map((subCat) => (
                       <SelectItem key={subCat} value={subCat}>
                         {subCat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="material">Material</Label>
+                <Select 
+                  value={formData.material} 
+                  onValueChange={(value) => setFormData({ ...formData, material: value })}
+                >
+                  <SelectTrigger data-testid="select-material">
+                    <SelectValue placeholder="Select Material" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {MATERIAL_OPTIONS.map((material) => (
+                      <SelectItem key={material.value} value={material.value}>
+                        {material.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
