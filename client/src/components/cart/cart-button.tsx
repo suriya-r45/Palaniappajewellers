@@ -18,7 +18,7 @@ export default function CartButton() {
         data-testid="button-cart"
       >
         <ShoppingCart className="h-7 w-7 md:h-5 md:w-5" />
-        <span className="text-sm md:text-xs font-medium">Cart</span>
+        <span className="hidden md:block text-sm md:text-xs font-medium">Cart</span>
         {totalItems > 0 && (
           <Badge
             variant="destructive"
