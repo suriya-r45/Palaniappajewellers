@@ -73,16 +73,30 @@ export function EstimateForm() {
 
   const createEstimateMutation = useMutation({
     mutationFn: async (data: EstimateFormData) => {
+      // Ensure all numeric fields are properly formatted (convert empty strings to "0")
+      const cleanedData = {
+        ...data,
+        grossWeight: data.grossWeight || "0",
+        netWeight: data.netWeight || "0",
+        metalValue: data.metalValue || "0",
+        makingCharges: data.makingCharges || "0",
+        stoneDiamondCharges: data.stoneDiamondCharges || "0",
+        wastageCharges: data.wastageCharges || "0",
+        hallmarkingCharges: data.hallmarkingCharges || "0",
+        gstAmount: data.gstAmount || "0",
+        vatAmount: data.vatAmount || "0",
+        subtotal: data.subtotal || "0",
+        totalAmount: data.totalAmount || "0",
+        validUntil: data.validUntil,
+      };
+      
       const response = await fetch("/api/estimates", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({
-          ...data,
-          validUntil: data.validUntil,
-        }),
+        body: JSON.stringify(cleanedData),
       });
       if (!response.ok) {
         throw new Error("Failed to create estimate");
@@ -123,8 +137,8 @@ export function EstimateForm() {
         validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         currency: "INR"
       });
-      // Redirect to view estimates page
-      setLocation('/estimates?tab=list');
+      // Redirect to estimates section in admin dashboard
+      setLocation('/admin?tab=estimates');
     },
     onError: (error) => {
       toast({
