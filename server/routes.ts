@@ -338,6 +338,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Send bill to WhatsApp
+  app.post("/api/bills/:id/send-whatsapp", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const bill = await storage.getBill(req.params.id);
+      if (!bill) {
+        return res.status(404).json({ message: "Bill not found" });
+      }
+
+      // Format the bill for WhatsApp message
+      const currencySymbol = bill.currency === 'INR' ? '₹' : 'BD';
+      const message = `🧾 *BILL GENERATED* 🧾
+
+*Palaniappa Jewellers*
+📍 Premium Jewelry Collection
+
+━━━━━━━━━━━━━━━━━━━━━
+📋 *Bill Details*
+━━━━━━━━━━━━━━━━━━━━━
+
+🔢 Bill Number: *${bill.billNumber}*
+👤 Customer: *${bill.customerName}*
+📧 Email: ${bill.customerEmail}
+📱 Phone: ${bill.customerPhone}
+🏠 Address: ${bill.customerAddress}
+
+💰 *Total Amount: ${currencySymbol} ${parseFloat(bill.total).toLocaleString()}*
+
+💎 *Items:*
+${JSON.parse(bill.items).map((item: any, index: number) => 
+  `${index + 1}. ${item.productName} - ${currencySymbol}${parseFloat(item.price).toLocaleString()} × ${item.quantity}`
+).join('\n')}
+
+━━━━━━━━━━━━━━━━━━━━━
+💳 *Payment Summary*
+━━━━━━━━━━━━━━━━━━━━━
+💎 Subtotal: ${currencySymbol}${parseFloat(bill.subtotal).toLocaleString()}
+🔨 Making Charges: ${currencySymbol}${parseFloat(bill.makingCharges).toLocaleString()}
+📊 GST: ${currencySymbol}${parseFloat(bill.gst).toLocaleString()}
+🏛️ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
+💰 *Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
+
+🙏 Thank you for choosing Palaniappa Jewellers!
+✨ Where every jewel is crafted for elegance that lasts generations.
+
+📞 Contact us: +919597201554
+🌐 Premium quality, timeless beauty.`;
+
+      // Create WhatsApp URL
+      const phoneNumber = bill.customerPhone.replace(/[^\d]/g, '');
+      const whatsappUrl = `https://wa.me/${phoneNumber.startsWith('91') ? phoneNumber : '91' + phoneNumber}?text=${encodeURIComponent(message)}`;
+
+      // Log for production integration
+      console.log(`[WhatsApp Bill] Sending bill ${bill.billNumber} to ${bill.customerName} (${bill.customerPhone})`);
+      console.log(`[WhatsApp URL] ${whatsappUrl}`);
+
+      res.json({
+        success: true,
+        message: "Bill prepared for WhatsApp",
+        whatsappUrl: whatsappUrl,
+        messagePreview: message
+      });
+    } catch (error) {
+      console.error("Error preparing bill for WhatsApp:", error);
+      res.status(500).json({ message: "Failed to prepare bill for WhatsApp" });
+    }
+  });
+
 
 
   // Professional Bill PDF generation - Exact replica of sample bill

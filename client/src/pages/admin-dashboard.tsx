@@ -9,14 +9,17 @@ import ProductForm from '@/components/admin/product-form';
 import BillingForm from '@/components/admin/billing-form';
 import BillPreview from '@/components/admin/bill-preview';
 import { EstimatesList } from '@/components/admin/estimates-list';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product, Bill } from '@shared/schema';
 import { Currency } from '@/lib/currency';
 import { Package, FileText, TrendingUp, Users, Calculator } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function AdminDashboard() {
   const [location, setLocation] = useLocation();
   const { isAdmin, token } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('INR');
   const [activeTab, setActiveTab] = useState('products');
   const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
@@ -67,6 +70,41 @@ export default function AdminDashboard() {
   const totalRevenue = bills.reduce((sum, bill) => sum + parseFloat(bill.total), 0);
   const totalProducts = products.length;
   const lowStockProducts = products.filter(p => p.stock < 5).length;
+
+  // WhatsApp send mutation for bills
+  const sendBillToWhatsAppMutation = useMutation({
+    mutationFn: async (billId: string) => {
+      const response = await fetch(`/api/bills/${billId}/send-whatsapp`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to send bill to WhatsApp");
+      }
+      return response.json();
+    },
+    onSuccess: (data: { whatsappUrl: string; message: string }) => {
+      toast({
+        title: "Success",
+        description: "Bill sent to WhatsApp successfully!",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/bills"] });
+      
+      // Open WhatsApp URL
+      if (data.whatsappUrl) {
+        window.open(data.whatsappUrl, '_blank');
+      }
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to send bill to WhatsApp.",
+        variant: "destructive",
+      });
+    },
+  });
 
   if (!isAdmin) {
     return null;
@@ -227,6 +265,16 @@ export default function AdminDashboard() {
                                     data-testid={`button-download-${bill.id}`}
                                   >
                                     Download
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => sendBillToWhatsAppMutation.mutate(bill.id)}
+                                    disabled={sendBillToWhatsAppMutation.isPending}
+                                    className="bg-green-50 hover:bg-green-100 text-green-700 border-green-200"
+                                    data-testid={`button-whatsapp-${bill.id}`}
+                                  >
+                                    {sendBillToWhatsAppMutation.isPending ? "Sending..." : "Send to WhatsApp"}
                                   </Button>
                                 </div>
                               </td>
