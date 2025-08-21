@@ -17,7 +17,7 @@ export default function CartButton() {
         className="relative flex flex-col items-center text-white hover:text-rose-100 hover:bg-rose-800 p-1 transition-all duration-200"
         data-testid="button-cart"
       >
-        <ShoppingCart className="h-3 w-3 md:h-5 md:w-5" />
+        <ShoppingCart className="h-5 w-5 md:h-5 md:w-5" />
         <span className="text-xs">Cart</span>
         {totalItems > 0 && (
           <Badge
