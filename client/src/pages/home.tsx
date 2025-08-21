@@ -144,7 +144,7 @@ export default function Home() {
       return isGoldMaterial || isGoldSubCategory ||
         (product.category === 'rings' && isGoldMaterial) ||
         (product.category === 'necklaces' && isGoldMaterial);
-    }).slice(0, 8), [allProducts]
+    }).slice(0, 4), [allProducts]
   );
 
   const silverProducts = useMemo(() => 
@@ -153,7 +153,7 @@ export default function Home() {
       const isSilverSubCategory = product.subCategory === 'Silver Jewellery';
       
       return isSilverMaterial || isSilverSubCategory;
-    }).slice(0, 8), [allProducts]
+    }).slice(0, 4), [allProducts]
   );
 
   const diamondProducts = useMemo(() => 
@@ -164,7 +164,7 @@ export default function Home() {
       const isBridalCollection = product.subCategory === 'Bridal Collection';
       
       return isDiamondMaterial || isDiamondSubCategory || isBridalCollection;
-    }).slice(0, 8), [allProducts]
+    }).slice(0, 4), [allProducts]
   );
 
   const newArrivals = useMemo(() => 
@@ -174,7 +174,7 @@ export default function Home() {
       const isNewArrivalSubCategory = product.subCategory && ['Latest Products', 'Featured Items', 'Trending Now', 'Exclusive Pieces'].includes(product.subCategory);
       
       return isNewArrivalCategory || isNewArrivalSubCategory;
-    }).slice(0, 8), [allProducts]
+    }).slice(0, 4), [allProducts]
   );
 
   return (
