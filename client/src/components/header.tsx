@@ -59,7 +59,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                 </div>
                 <div>
                   <h1 className="text-xs md:text-2xl font-bold text-white tracking-wide drop-shadow-sm">PALANIAPPA JEWELLERS</h1>
-                  <p className="text-xs text-rose-100 hidden md:block font-medium">Since 2025</p>
+                  <p className="text-xs text-rose-100 font-medium">Since 2025</p>
                 </div>
               </Link>
             </div>
