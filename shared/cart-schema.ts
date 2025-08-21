@@ -120,15 +120,6 @@ export const JEWELRY_CATEGORIES = {
       diamond: 'Diamond Jewelry',
       gemstone: 'Gemstone Jewelry'
     }
-  },
-  new_arrivals: {
-    name: 'New Arrivals',
-    subCategories: {
-      latest: 'Latest Products',
-      featured: 'Featured Items',
-      trending: 'Trending Now',
-      exclusive: 'Exclusive Pieces'
-    }
   }
 } as const;
 
