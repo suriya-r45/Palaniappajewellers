@@ -142,12 +142,13 @@ export default function Login() {
     setIsOtpLoading(true);
 
     try {
+      console.log('Sending OTP for phone:', phoneNumber); // Debug log
       const response = await fetch('/api/auth/send-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ phone: phoneNumber }),
+        body: JSON.stringify({ phone: phoneNumber.trim() }),
       });
 
       if (!response.ok) {
@@ -521,7 +522,7 @@ export default function Login() {
                         type="tel"
                         placeholder="Enter your phone number (e.g., +919442131883)"
                         value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChange={(e) => setPhoneNumber(e.target.value.trim())}
                         required
                       />
                       <p className="text-xs text-gray-500 mt-1">
