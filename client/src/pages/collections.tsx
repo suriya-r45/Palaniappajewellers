@@ -24,7 +24,7 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
     material: material // Set initial filter based on material
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15; // 5x3 grid = 15 items per page
+  const itemsPerPage = 9; // 3x3 grid = 9 items per page
 
   const { data: allProducts = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
@@ -216,8 +216,8 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
             {/* Products Section */}
             <div>
               {isLoading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                  {[...Array(15)].map((_, i) => (
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6">
+                  {[...Array(9)].map((_, i) => (
                     <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
                       <div className="h-64 bg-gray-300"></div>
                       <div className="p-4">
@@ -239,7 +239,7 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" data-testid="grid-products">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6" data-testid="grid-products">
                     {paginatedProducts.map((product) => (
                       <ProductCard
                         key={product.id}
