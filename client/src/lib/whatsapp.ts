@@ -1,6 +1,6 @@
 export function sendWhatsAppMessage(message: string, phone?: string) {
   // Default WhatsApp number for Palaniappa Jewellers (Bahrain)
-  const defaultPhone = "+919597201554"; // Actual WhatsApp business number
+  const defaultPhone = "+919442131883"; // Actual WhatsApp business number
   const whatsappPhone = phone || defaultPhone;
   
   // Clean phone number (remove non-digits except +)
