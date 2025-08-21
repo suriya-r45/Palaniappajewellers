@@ -183,13 +183,34 @@ export default function Home() {
     }).slice(0, 4), [allProducts]
   );
 
-  // New Arrivals - Products added in the last 30 days
+  // New Arrivals - Products added in the last 30 days (excluding those already shown in material sections)
   const newArrivalProducts = useMemo(() => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     
     return allProducts
-      .filter(product => product.createdAt && new Date(product.createdAt) > thirtyDaysAgo)
+      .filter(product => {
+        // Must be created in last 30 days
+        const isRecent = product.createdAt && new Date(product.createdAt) > thirtyDaysAgo;
+        if (!isRecent) return false;
+        
+        // Exclude products that already appear in material-specific sections
+        const isGoldMaterial = product.material?.includes('GOLD');
+        const isGoldSubCategory = product.subCategory === 'Gold Jewellery';
+        const isSilverMaterial = product.material?.includes('SILVER');
+        const isSilverSubCategory = product.subCategory === 'Silver Jewellery';
+        const isDiamondMaterial = product.material?.includes('DIAMOND');
+        const isDiamondSubCategory = product.subCategory === 'Diamond Jewellery';
+        const isBridalCollection = product.subCategory === 'Bridal Collection';
+        
+        // Exclude if it belongs to any material-specific section
+        const belongsToGoldSection = isGoldMaterial || isGoldSubCategory;
+        const belongsToSilverSection = isSilverMaterial || isSilverSubCategory;
+        const belongsToDiamondSection = isDiamondMaterial || isDiamondSubCategory || isBridalCollection;
+        
+        // Only include if it doesn't belong to any specific material section
+        return !belongsToGoldSection && !belongsToSilverSection && !belongsToDiamondSection;
+      })
       .sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime())
       .slice(0, 4);
   }, [allProducts]);
