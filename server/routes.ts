@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken";
 import PDFDocument from "pdfkit";
 import Stripe from "stripe";
 import { MetalRatesService } from "./services/testmetalRatesService.js";
+import twilio from "twilio";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
@@ -20,6 +21,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 // JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
+
+// Twilio configuration
+const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 // Admin credentials
 const ADMIN_CREDENTIALS = {
@@ -45,31 +49,41 @@ async function sendWelcomeWhatsAppMessage(name: string, phone: string) {
   return whatsappUrl;
 }
 
-async function sendOtpWhatsAppMessage(name: string, phone: string, otp: string) {
-  const message = `🔐 *Palaniappa Jewellers - Password Reset OTP*
+async function sendOtpSMS(name: string, phone: string, otp: string) {
+  const message = `🔐 Palaniappa Jewellers - Password Reset OTP
 
 Hello ${name}!
 
-Your One-Time Password (OTP) for account verification is:
+Your One-Time Password (OTP) for account verification is: ${otp}
 
-*${otp}*
-
-⏰ This OTP is valid for 10 minutes only.
-🔒 Please do not share this OTP with anyone.
+This OTP is valid for 10 minutes only.
+Please do not share this OTP with anyone.
 
 If you didn't request this, please ignore this message.
 
-*Palaniappa Jewellers*
+Palaniappa Jewellers
 Contact: +919597201554`;
-  
-  // Format phone number for WhatsApp
-  const formattedPhone = phone.replace(/[^\d+]/g, '');
-  const whatsappUrl = `https://wa.me/${formattedPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
-  
-  console.log(`[OTP WhatsApp] Sending OTP ${otp} to ${name} (${phone})`);
-  console.log(`[WhatsApp URL] ${whatsappUrl}`);
-  
-  return whatsappUrl;
+
+  try {
+    // Format phone number (ensure it starts with +)
+    let formattedPhone = phone.replace(/[^\d+]/g, '');
+    if (!formattedPhone.startsWith('+')) {
+      // Add +91 for Indian numbers if no country code
+      formattedPhone = '+91' + formattedPhone;
+    }
+
+    const twilioMessage = await twilioClient.messages.create({
+      body: message,
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: formattedPhone
+    });
+
+    console.log(`[SMS Sent] OTP ${otp} sent to ${name} (${phone}) - Message SID: ${twilioMessage.sid}`);
+    return { success: true, messageSid: twilioMessage.sid };
+  } catch (error) {
+    console.error(`[SMS Error] Failed to send OTP to ${phone}:`, error);
+    return { success: false, error: error instanceof Error ? error.message : 'Unknown error occurred' };
+  }
 }
 
 // Multer configuration for file uploads
@@ -215,12 +229,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Update user with OTP
       await storage.updateUserOtp(user.id, otpCode, otpExpiry);
 
-      // Send OTP via WhatsApp
-      await sendOtpWhatsAppMessage(user.name, phone, otpCode);
+      // Send OTP via SMS
+      const smsResult = await sendOtpSMS(user.name, phone, otpCode);
+      if (!smsResult.success) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "Failed to send OTP. Please try again." 
+        });
+      }
 
       res.json({ 
         success: true, 
-        message: "OTP sent to your WhatsApp number",
+        message: "OTP sent to your phone number via SMS",
         phone: phone 
       });
     } catch (error) {
