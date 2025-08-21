@@ -506,12 +506,14 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
           <div className="flex space-x-4">
             <Button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 hover:from-pink-400 hover:via-rose-400 hover:to-red-400 text-white font-bold shadow-xl border-2 border-pink-200 hover:border-pink-100 transform hover:scale-110 hover:shadow-2xl transition-all duration-300 py-4 text-lg animate-pulse hover:animate-none glow-effect"
+              className="flex-1 text-white font-bold shadow-2xl border-2 transform hover:scale-105 transition-all duration-300 py-4 text-lg"
               disabled={createBillMutation.isPending || selectedProducts.size === 0}
               data-testid="button-create-bill"
               style={{
-                boxShadow: '0 0 20px rgba(236, 72, 153, 0.6), 0 0 40px rgba(236, 72, 153, 0.4)',
-                background: 'linear-gradient(45deg, #ec4899, #f43f5e, #ef4444)',
+                background: 'linear-gradient(135deg, #ff1493, #ff6b35, #dc2626)',
+                boxShadow: '0 8px 32px rgba(255, 20, 147, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.3)',
+                border: '2px solid rgba(255, 255, 255, 0.4)',
+                animation: 'glow 2s ease-in-out infinite alternate',
               }}
             >
               <FileText className="h-6 w-6 mr-2" />
