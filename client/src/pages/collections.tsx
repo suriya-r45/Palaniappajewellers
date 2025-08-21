@@ -48,7 +48,16 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
 
     // Apply material filter
     if (filters.material) {
-      filtered = filtered.filter(product => product.material === filters.material);
+      filtered = filtered.filter(product => {
+        if (filters.material === 'GOLD') {
+          return product.material?.includes('GOLD');
+        } else if (filters.material === 'SILVER') {
+          return product.material?.includes('SILVER');
+        } else if (filters.material === 'DIAMOND') {
+          return product.material?.includes('DIAMOND');
+        }
+        return product.material === filters.material;
+      });
     }
 
     // Apply price range filter
