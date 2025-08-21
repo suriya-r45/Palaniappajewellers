@@ -707,23 +707,28 @@ Premium quality, timeless beauty.`;
 
       // Final totals box with proper alignment - contained within margins
       const totalBoxWidth = pageWidth - (margin * 2);
-      const totalBoxHeight = 30;
+      const totalBoxHeight = 35;
       
       doc.rect(margin, currentY, totalBoxWidth, totalBoxHeight)
          .fill('#000000')
          .stroke('#D4AF37')
          .lineWidth(2);
 
+      // Calculate text positioning to ensure it fits within the box
+      const leftTextX = margin + 15;
+      const rightTextX = margin + totalBoxWidth - 15;
+      const textY = currentY + 12;
+
       // Left side text
       doc.fontSize(11)
          .font('Helvetica-Bold')
          .fillColor('#D4AF37')
-         .text('TOTAL AMOUNT TO BE PAID:', margin + 15, currentY + 9);
+         .text('TOTAL AMOUNT TO BE PAID:', leftTextX, textY);
       
-      // Right side amount - properly aligned within the box
+      // Right side amount - properly positioned within margins
       doc.fontSize(12)
          .fillColor('#D4AF37')
-         .text(`${currency} ${parseFloat(bill.total).toFixed(2)}`, margin + totalBoxWidth - 120, currentY + 9, { 
+         .text(`${currency} ${parseFloat(bill.total).toFixed(2)}`, rightTextX - 100, textY, { 
            width: 100, 
            align: 'right' 
          });
