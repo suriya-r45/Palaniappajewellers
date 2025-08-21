@@ -732,13 +732,14 @@ Premium quality, timeless beauty.`;
          .fillColor('#FFD700')
          .text('TOTAL AMOUNT TO BE PAID:', margin + 10, totalSectionY + 8);
       
-      // Right side - Amount
+      // Right side - Amount with proper alignment
+      const amountText = `${currency} ${parseFloat(bill.total).toFixed(2)}`;
       doc.fontSize(11)
          .font('Helvetica-Bold')
          .fillColor('#FFD700')
-         .text(`${currency} ${parseFloat(bill.total).toFixed(2)}`, pageWidth - 120, totalSectionY + 8, { 
+         .text(amountText, margin + totalBoxWidth - 150, totalSectionY + 8, { 
            align: 'right',
-           width: 100
+           width: 140
          });
 
       currentY = totalSectionY + totalBoxHeight + 20;
