@@ -53,8 +53,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
         description: "Bill created successfully!",
       });
       resetForm();
-      // Redirect to bills history in admin dashboard
-      setLocation('/admin?tab=bills');
+      // Force navigation to bills history tab
+      window.location.href = '/admin?tab=bills';
     },
     onError: () => {
       toast({
