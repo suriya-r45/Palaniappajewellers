@@ -64,6 +64,16 @@ export default function Footer() {
                 <Phone className="h-4 w-4" />
                 <span>+919597201554</span>
               </a>
+              <a
+                href="https://instagram.com/palaniappa.bh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-pink-500 hover:text-pink-400 transition-colors"
+                data-testid="link-instagram"
+              >
+                <Instagram className="h-4 w-4" />
+                <span>Instagram</span>
+              </a>
               <p className="flex items-center space-x-2" data-testid="text-email">
                 <Mail className="h-4 w-4 text-white" />
                 <span>jewelerypalaniappa@gmail.com</span>
@@ -72,25 +82,6 @@ export default function Footer() {
                 <MapPin className="h-4 w-4" />
                 <span>123 Jewelry Street, Chennai</span>
               </p> */}
-              <div className="flex space-x-4 mt-4">
-                <a
-                  href="https://instagram.com/palaniappa.bh"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-pink-500 hover:text-pink-400 transition-colors"
-                  data-testid="link-instagram"
-                >
-                  <Instagram className="h-5 w-5" />
-                  <span>Instagram</span>
-                </a>
-                {/* <button 
-                  onClick={openWhatsAppGeneral}
-                  className="text-green-500 hover:text-green-400 transition-colors"
-                  data-testid="button-whatsapp-footer"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                </button> */}
-              </div>
             </div>
           </div>
           <div>
