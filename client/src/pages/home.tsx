@@ -15,16 +15,10 @@ import { ArrowRight, Star, Sparkles, Crown, Gem } from "lucide-react";
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
 
-  // Handle "View All" button clicks
+  // Handle "View All" button clicks - navigate to collections page
   const handleViewAllClick = (material: string) => {
-    // Set the material filter
-    setFilters(prev => ({ ...prev, material }));
-    
-    // Scroll to products section
-    const productsSection = document.getElementById('products');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    const materialPath = material.toLowerCase();
+    window.location.href = `/collections/${materialPath}`;
   };
   const [filters, setFilters] = useState<IProductFilters>({});
 
