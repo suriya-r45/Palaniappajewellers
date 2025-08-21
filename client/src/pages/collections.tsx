@@ -215,101 +215,101 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
           <div className="w-full">
             {/* Products Section */}
             <div>
-                {isLoading ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                    {[...Array(15)].map((_, i) => (
-                      <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
-                        <div className="h-64 bg-gray-300"></div>
-                        <div className="p-4">
-                          <div className="h-4 bg-gray-300 mb-2"></div>
-                          <div className="h-4 bg-gray-300 mb-2 w-3/4"></div>
-                          <div className="h-6 bg-gray-300"></div>
-                        </div>
+              {isLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                  {[...Array(15)].map((_, i) => (
+                    <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                      <div className="h-64 bg-gray-300"></div>
+                      <div className="p-4">
+                        <div className="h-4 bg-gray-300 mb-2"></div>
+                        <div className="h-4 bg-gray-300 mb-2 w-3/4"></div>
+                        <div className="h-6 bg-gray-300"></div>
                       </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center mb-6">
+                    <p className="text-gray-600">
+                      Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, filteredProducts.length)} of {filteredProducts.length} products
+                    </p>
+                    <p className="text-gray-600">
+                      Page {currentPage} of {totalPages}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" data-testid="grid-products">
+                    {paginatedProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        currency={selectedCurrency}
+                      />
                     ))}
                   </div>
-                ) : (
-                  <>
-                    <div className="flex justify-between items-center mb-6">
-                      <p className="text-gray-600">
-                        Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, filteredProducts.length)} of {filteredProducts.length} products
-                      </p>
-                      <p className="text-gray-600">
-                        Page {currentPage} of {totalPages}
-                      </p>
-                    </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" data-testid="grid-products">
-                      {paginatedProducts.map((product) => (
-                        <ProductCard
-                          key={product.id}
-                          product={product}
-                          currency={selectedCurrency}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                      <div className="mt-12 flex justify-center items-center space-x-2">
-                        <Button
-                          variant="outline"
-                          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                          disabled={currentPage === 1}
-                          className="px-3 py-2"
-                        >
-                          Previous
-                        </Button>
-                        
-                        {/* Page numbers */}
-                        <div className="flex space-x-1">
-                          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                            <Button
-                              key={page}
-                              variant={currentPage === page ? "default" : "outline"}
-                              onClick={() => setCurrentPage(page)}
-                              className="w-10 h-10"
-                              style={currentPage === page ? {
-                                background: 'linear-gradient(135deg, #881337 0%, #7f1d1d 100%)',
-                                color: 'white'
-                              } : {}}
-                            >
-                              {page}
-                            </Button>
-                          ))}
-                        </div>
-
-                        <Button
-                          variant="outline"
-                          onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                          disabled={currentPage === totalPages}
-                          className="px-3 py-2"
-                        >
-                          Next
-                        </Button>
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="mt-12 flex justify-center items-center space-x-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                        disabled={currentPage === 1}
+                        className="px-3 py-2"
+                      >
+                        Previous
+                      </Button>
+                      
+                      {/* Page numbers */}
+                      <div className="flex space-x-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "outline"}
+                            onClick={() => setCurrentPage(page)}
+                            className="w-10 h-10"
+                            style={currentPage === page ? {
+                              background: 'linear-gradient(135deg, #881337 0%, #7f1d1d 100%)',
+                              color: 'white'
+                            } : {}}
+                          >
+                            {page}
+                          </Button>
+                        ))}
                       </div>
-                    )}
 
-                    {filteredProducts.length === 0 && (
-                      <div className="text-center py-12" data-testid="empty-products">
-                        <div className="text-6xl mb-4">💍</div>
-                        <h3 className="text-xl font-semibold text-black mb-2">No products found</h3>
-                        <p className="text-gray-600 mb-4">Try adjusting your filters to see more results</p>
-                        <Button
-                          onClick={() => {
-                            setFilters({ material });
-                            setCurrentPage(1);
-                          }}
-                          variant="outline"
-                          data-testid="button-clear-filters"
-                        >
-                          Clear Filters
-                        </Button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
+                      <Button
+                        variant="outline"
+                        onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                        disabled={currentPage === totalPages}
+                        className="px-3 py-2"
+                      >
+                        Next
+                      </Button>
+                    </div>
+                  )}
+
+                  {filteredProducts.length === 0 && (
+                    <div className="text-center py-12" data-testid="empty-products">
+                      <div className="text-6xl mb-4">💍</div>
+                      <h3 className="text-xl font-semibold text-black mb-2">No products found</h3>
+                      <p className="text-gray-600 mb-4">Try adjusting your filters to see more results</p>
+                      <Button
+                        onClick={() => {
+                          setFilters({ material });
+                          setCurrentPage(1);
+                        }}
+                        variant="outline"
+                        data-testid="button-clear-filters"
+                      >
+                        Clear Filters
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </section>
