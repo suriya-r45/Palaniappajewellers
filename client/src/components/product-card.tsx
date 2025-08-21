@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Heart, ShoppingCart, Eye, Share2 } from 'lucide-react';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -19,6 +20,7 @@ export default function ProductCard({ product, currency, showActions = true }: P
   const [imageLoading, setImageLoading] = useState(true);
   const { addToCart, isInCart, getItemQuantity } = useCart();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const price = currency === 'BHD' ? parseFloat(product.priceBhd) : parseFloat(product.priceInr);
   const isInCartAlready = isInCart(product.id);
@@ -92,7 +94,11 @@ Could you please provide more details?`;
     <Card className="group card-hover glass-effect border-0 overflow-hidden">
       <div className="relative">
         {/* Product Image */}
-        <div className="aspect-square overflow-hidden bg-gray-100">
+        <div 
+          className="aspect-square overflow-hidden bg-gray-100 cursor-pointer"
+          onClick={() => setLocation(`/product/${product.id}`)}
+          data-testid={`product-image-${product.id}`}
+        >
           {imageLoading && (
             <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">
               <div className="w-8 h-8 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -152,7 +158,7 @@ Could you please provide more details?`;
             <h3 
               className="font-semibold text-xs md:text-sm line-clamp-2 flex-1 hover:text-yellow-600 cursor-pointer" 
               data-testid={`product-name-${product.id}`}
-              onClick={() => window.location.href = `/product/${product.id}`}
+              onClick={() => setLocation(`/product/${product.id}`)}
             >
               {product.name}
             </h3>
@@ -219,7 +225,7 @@ Could you please provide more details?`;
                 variant="outline"
                 size="sm"
                 className="flex-1"
-                onClick={() => window.location.href = `/product/${product.id}`}
+                onClick={() => setLocation(`/product/${product.id}`)}
                 data-testid={`button-view-product-${product.id}`}
               >
                 <Eye className="h-4 w-4 mr-1" />
