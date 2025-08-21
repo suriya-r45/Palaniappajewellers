@@ -159,7 +159,7 @@ export default function Login() {
       const data = await response.json();
       toast({
         title: "OTP Sent",
-        description: "We've sent a 6-digit OTP to your WhatsApp number.",
+        description: "We've sent a 6-digit OTP to your phone number via SMS.",
       });
       setForgotPasswordStep('otp');
     } catch (error: any) {
@@ -535,7 +535,7 @@ export default function Login() {
                       className="w-full bg-blue-600 text-white hover:bg-blue-700"
                       disabled={isOtpLoading}
                     >
-                      {isOtpLoading ? 'Sending OTP...' : 'Send OTP via WhatsApp'}
+                      {isOtpLoading ? 'Sending OTP...' : 'Send OTP via SMS'}
                     </Button>
                   </form>
                 </>
@@ -547,7 +547,7 @@ export default function Login() {
                     <KeyRound className="w-12 h-12 text-green-500 mx-auto mb-2" />
                     <h3 className="text-lg font-semibold">Enter OTP</h3>
                     <p className="text-gray-600 text-sm">
-                      We've sent a 6-digit OTP to your WhatsApp number<br />
+                      We've sent a 6-digit OTP to your phone number via SMS<br />
                       <strong>{phoneNumber}</strong>
                     </p>
                   </div>
@@ -566,7 +566,7 @@ export default function Login() {
                         className="text-center text-lg tracking-widest"
                       />
                       <p className="text-xs text-gray-500 mt-1">
-                        Check your WhatsApp messages for the OTP
+                        Check your text messages for the OTP
                       </p>
                     </div>
                     
