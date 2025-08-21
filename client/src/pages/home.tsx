@@ -130,32 +130,41 @@ export default function Home() {
     return filtered;
   }, [allProducts, filters, selectedCurrency]);
 
-  // Get category-specific products based on actual saved data
+  // Get category-specific products based on actual saved data with exclusive filtering
   const goldProducts = useMemo(() => 
-    allProducts.filter(product => 
-      product.material?.includes('GOLD') || 
-      product.subCategory?.toLowerCase().includes('gold') ||
-      (product.category === 'materials' && product.subCategory === 'Gold Jewellery') ||
-      (product.category === 'rings' && product.material?.includes('GOLD')) ||
-      (product.category === 'necklaces' && product.material?.includes('GOLD'))
-    ).slice(0, 8), [allProducts]
+    allProducts.filter(product => {
+      // Only show in gold section if specifically gold-related
+      const isGoldMaterial = product.material?.includes('GOLD');
+      const isGoldSubCategory = product.subCategory === 'Gold Jewellery';
+      const isDiamondSubCategory = product.subCategory === 'Diamond Jewellery';
+      
+      // Exclude if it's specifically diamond jewelry
+      if (isDiamondSubCategory) return false;
+      
+      return isGoldMaterial || isGoldSubCategory ||
+        (product.category === 'rings' && isGoldMaterial) ||
+        (product.category === 'necklaces' && isGoldMaterial);
+    }).slice(0, 8), [allProducts]
   );
 
   const silverProducts = useMemo(() => 
-    allProducts.filter(product => 
-      product.material?.includes('SILVER') ||
-      product.subCategory?.toLowerCase().includes('silver') ||
-      (product.category === 'materials' && product.subCategory === 'Silver Jewellery')
-    ).slice(0, 8), [allProducts]
+    allProducts.filter(product => {
+      const isSilverMaterial = product.material?.includes('SILVER');
+      const isSilverSubCategory = product.subCategory === 'Silver Jewellery';
+      
+      return isSilverMaterial || isSilverSubCategory;
+    }).slice(0, 8), [allProducts]
   );
 
   const diamondProducts = useMemo(() => 
-    allProducts.filter(product => 
-      product.material?.includes('DIAMOND') ||
-      product.subCategory?.toLowerCase().includes('diamond') ||
-      (product.category === 'materials' && product.subCategory === 'Diamond Jewellery') ||
-      (product.category === 'collections' && product.subCategory === 'Bridal Collection')
-    ).slice(0, 8), [allProducts]
+    allProducts.filter(product => {
+      // Only show in diamond section if specifically diamond-related
+      const isDiamondMaterial = product.material?.includes('DIAMOND');
+      const isDiamondSubCategory = product.subCategory === 'Diamond Jewellery';
+      const isBridalCollection = product.subCategory === 'Bridal Collection';
+      
+      return isDiamondMaterial || isDiamondSubCategory || isBridalCollection;
+    }).slice(0, 8), [allProducts]
   );
 
   const newArrivals = useMemo(() => 

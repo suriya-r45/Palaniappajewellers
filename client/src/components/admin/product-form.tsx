@@ -7,8 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Plus, Edit, Trash2, Upload, Calculator, ArrowLeft } from 'lucide-react';
+import { Plus, Edit, Trash2, Upload, ArrowLeft } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { Product, MetalRate } from '@shared/schema';
 
@@ -125,7 +124,7 @@ interface ProductFormProps {
   currency: Currency;
 }
 
-export default function ProductForm({ currency }: ProductFormProps) {
+function ProductForm({ currency }: ProductFormProps) {
   const { token } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -140,97 +139,18 @@ export default function ProductForm({ currency }: ProductFormProps) {
     priceBhd: '',
     grossWeight: '',
     netWeight: '',
-    stock: '',
-    metalType: 'GOLD',
-    isMetalPriceBased: false,
-    makingChargesPercentage: '15',
-    customPriceInr: '',
-    customPriceBhd: '',
-    purity: '22K'
+    stock: ''
   });
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [isGoldSelected, setIsGoldSelected] = useState(false);
-  const [isSilverSelected, setIsSilverSelected] = useState(false);
-  const [isDiamondSelected, setIsDiamondSelected] = useState(false);
-  const [isOtherSelected, setIsOtherSelected] = useState(true);
+
 
   const { data: products = [] } = useQuery<Product[]>({
     queryKey: ['/api/products'],
     enabled: !!token,
   });
 
-  // Fetch current metal rates for automatic pricing
-  const { data: metalRates = [] } = useQuery<MetalRate[]>({
-    queryKey: ['/api/metal-rates'],
-    enabled: !!token,
-  });
 
-  // Calculate prices based on metal rates
-  const calculateMetalBasedPrice = () => {
-    const weight = parseFloat(formData.netWeight);
-    // Removed making charges calculation
-    
-    if (!weight || weight <= 0) return { inr: 0, bhd: 0 };
-
-    let goldRate = null;
-    let silverRate = null;
-    
-    if (isGoldSelected) {
-      goldRate = metalRates.find(rate => 
-        rate.metal === 'GOLD' && 
-        rate.purity === formData.purity &&
-        rate.market === 'INDIA'
-      );
-    }
-    
-    if (isSilverSelected) {
-      silverRate = metalRates.find(rate => 
-        rate.metal === 'SILVER' && 
-        rate.market === 'INDIA'
-      );
-    }
-
-    let basePrice = 0;
-    let basePriceBhd = 0;
-
-    if (goldRate && isGoldSelected) {
-      basePrice = weight * parseFloat(goldRate.pricePerGramInr);
-      basePriceBhd = weight * parseFloat(goldRate.pricePerGramBhd);
-    } else if (silverRate && isSilverSelected) {
-      basePrice = weight * parseFloat(silverRate.pricePerGramInr);
-      basePriceBhd = weight * parseFloat(silverRate.pricePerGramBhd);
-    }
-
-    // Add making charges
-    const finalPriceInr = basePrice;
-    const finalPriceBhd = basePriceBhd;
-
-    return {
-      inr: Math.round(finalPriceInr * 100) / 100,
-      bhd: Math.round(finalPriceBhd * 1000) / 1000
-    };
-  };
-
-  // Auto-calculate prices when metal selection or weight changes
-  useEffect(() => {
-    if ((isGoldSelected || isSilverSelected) && formData.netWeight) {
-      const calculatedPrices = calculateMetalBasedPrice();
-      setFormData(prev => ({
-        ...prev,
-        priceInr: calculatedPrices.inr.toString(),
-        priceBhd: calculatedPrices.bhd.toString(),
-        isMetalPriceBased: true,
-        metalType: isGoldSelected ? 'GOLD' : 'SILVER'
-      }));
-    } else if (isOtherSelected) {
-      setFormData(prev => ({
-        ...prev,
-        isMetalPriceBased: false,
-        metalType: 'OTHER'
-      }));
-    }
-  }, [isGoldSelected, isSilverSelected, isOtherSelected, formData.netWeight, formData.purity, metalRates]);
 
   const addProductMutation = useMutation({
     mutationFn: async (data: FormData) => {
@@ -318,20 +238,10 @@ export default function ProductForm({ currency }: ProductFormProps) {
       priceBhd: '',
       grossWeight: '',
       netWeight: '',
-      stock: '',
-      metalType: 'GOLD',
-      isMetalPriceBased: false,
-      makingChargesPercentage: '15',
-      customPriceInr: '',
-      customPriceBhd: '',
-      purity: '22K'
+      stock: ''
     });
     setSelectedFiles([]);
     setEditingProduct(null);
-    setIsGoldSelected(false);
-    setIsSilverSelected(false);
-    setIsDiamondSelected(false);
-    setIsOtherSelected(true);
   };
 
   const handleDeleteProduct = (id: string) => {
@@ -490,176 +400,6 @@ export default function ProductForm({ currency }: ProductFormProps) {
               </div>
             </div>
 
-            {/* Enhanced Pricing Section */}
-            <div className="border-2 border-yellow-400 rounded-lg p-6 bg-gradient-to-r from-gray-50 to-yellow-50">
-              <div className="flex items-center space-x-2 mb-4">
-                <Calculator className="h-5 w-5 text-yellow-600" />
-                <Label className="text-lg font-semibold text-gray-800">Smart Pricing Calculator</Label>
-              </div>
-              
-              <div className="space-y-4">
-                <Label className="text-sm font-medium text-gray-700">Select Metal Type for Automatic Pricing:</Label>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg bg-white">
-                    <Checkbox
-                      id="gold"
-                      checked={isGoldSelected}
-                      onCheckedChange={(checked) => {
-                        setIsGoldSelected(!!checked);
-                        if (checked) {
-                          setIsSilverSelected(false);
-                          setIsDiamondSelected(false);
-                          setIsOtherSelected(false);
-                        }
-                      }}
-                      className="data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500"
-                    />
-                    <Label htmlFor="gold" className="text-sm font-medium text-yellow-700">🥇 Gold</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg bg-white">
-                    <Checkbox
-                      id="silver"
-                      checked={isSilverSelected}
-                      onCheckedChange={(checked) => {
-                        setIsSilverSelected(!!checked);
-                        if (checked) {
-                          setIsGoldSelected(false);
-                          setIsDiamondSelected(false);
-                          setIsOtherSelected(false);
-                        }
-                      }}
-                      className="data-[state=checked]:bg-gray-400 data-[state=checked]:border-gray-400"
-                    />
-                    <Label htmlFor="silver" className="text-sm font-medium text-gray-600">🥈 Silver</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg bg-white">
-                    <Checkbox
-                      id="diamond"
-                      checked={isDiamondSelected}
-                      onCheckedChange={(checked) => {
-                        setIsDiamondSelected(!!checked);
-                        if (checked) {
-                          setIsGoldSelected(false);
-                          setIsSilverSelected(false);
-                          setIsOtherSelected(false);
-                        }
-                      }}
-                      className="data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-                    />
-                    <Label htmlFor="diamond" className="text-sm font-medium text-blue-600">💎 Diamond</Label>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg bg-white">
-                    <Checkbox
-                      id="other"
-                      checked={isOtherSelected}
-                      onCheckedChange={(checked) => {
-                        setIsOtherSelected(!!checked);
-                        if (checked) {
-                          setIsGoldSelected(false);
-                          setIsSilverSelected(false);
-                          setIsDiamondSelected(false);
-                        }
-                      }}
-                      className="data-[state=checked]:bg-gray-500 data-[state=checked]:border-gray-500"
-                    />
-                    <Label htmlFor="other" className="text-sm font-medium text-gray-600">⚡ Other</Label>
-                  </div>
-                </div>
-
-                {(isGoldSelected || isSilverSelected) && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
-                    {isGoldSelected && (
-                      <div>
-                        <Label htmlFor="purity">Gold Purity</Label>
-                        <Select 
-                          value={formData.purity} 
-                          onValueChange={(value) => setFormData({ ...formData, purity: value })}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select Purity" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="24K">24K (Pure Gold)</SelectItem>
-                            <SelectItem value="22K">22K (91.6% Gold)</SelectItem>
-                            <SelectItem value="18K">18K (75% Gold)</SelectItem>
-                            <SelectItem value="14K">14K (58.3% Gold)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    )}
-                    
-
-                  </div>
-                )}
-
-                {(isGoldSelected || isSilverSelected) && formData.netWeight && (
-                  <div className="p-4 bg-gradient-to-r from-gray-100 to-yellow-100 rounded-lg border">
-                    <div className="text-sm text-gray-700 mb-2">💰 Auto-calculated prices (editable above):</div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="text-center p-2 bg-white rounded border">
-                        <div className="font-semibold text-gray-800">₹{formData.priceInr}</div>
-                        <div className="text-xs text-gray-600">Indian Rupees</div>
-                      </div>
-                      <div className="text-center p-2 bg-white rounded border">
-                        <div className="font-semibold text-yellow-600">BD {formData.priceBhd}</div>
-                        <div className="text-xs text-gray-600">Bahrain Dinar</div>
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-500 mt-2 text-center">
-                      Prices are calculated automatically but can be edited in the price fields above
-                    </div>
-                  </div>
-                )}
-
-                {isOtherSelected && (
-                  <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                    <Label className="text-sm font-medium text-gray-700 mb-3 block">Manual Price Entry:</Label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="customPriceInr">Custom Price (INR)</Label>
-                        <Input
-                          id="customPriceInr"
-                          type="number"
-                          step="0.01"
-                          value={formData.customPriceInr}
-                          onChange={(e) => {
-                            setFormData({ 
-                              ...formData, 
-                              customPriceInr: e.target.value,
-                              priceInr: e.target.value 
-                            });
-                          }}
-                          placeholder="Enter manual price"
-                          className="bg-white"
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="customPriceBhd">Custom Price (BHD)</Label>
-                        <Input
-                          id="customPriceBhd"
-                          type="number"
-                          step="0.001"
-                          value={formData.customPriceBhd}
-                          onChange={(e) => {
-                            setFormData({ 
-                              ...formData, 
-                              customPriceBhd: e.target.value,
-                              priceBhd: e.target.value 
-                            });
-                          }}
-                          placeholder="Enter manual price"
-                          className="bg-white"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
 
             <div>
               <Label htmlFor="stock">Stock Quantity</Label>
@@ -722,7 +462,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
               disabled={addProductMutation.isPending}
               data-testid="button-add-product"
             >
-              {addProductMutation.isPending ? 'Adding Product...' : '✨ Add Product to Inventory'}
+              {addProductMutation.isPending ? 'Adding Product...' : 'Add Product'}
             </Button>
           </form>
         </CardContent>
@@ -788,7 +528,9 @@ export default function ProductForm({ currency }: ProductFormProps) {
           </div>
         </CardContent>
       </Card>
-      </div>
+    </div>
     </div>
   );
 }
+
+export default ProductForm;
