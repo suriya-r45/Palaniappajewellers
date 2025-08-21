@@ -380,15 +380,6 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
 🏛️ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
 💰 *Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
 
-📄 *PDF Bill:* ${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber.replace(/[\/\\]/g, '')}.pdf
-🔗 ${pdfUrl}
-
-💡 *Download Steps:*
-1. Click the link above
-2. PDF will open in your browser
-3. Use browser menu to Save/Download
-4. Or share this link directly with customer
-
 🙏 Thank you for choosing Palaniappa Jewellers!
 ✨ Where every jewel is crafted for elegance that lasts generations.
 
