@@ -213,6 +213,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Separator */}
+      <div className="h-px bg-black"></div>
+
       {/* Silver Section */}
       <section className="py-16" data-testid="section-silver" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
         <div className="container mx-auto px-4">
@@ -241,6 +244,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section Separator */}
+      <div className="h-px bg-black"></div>
+
       {/* Diamond Section */}
       <section className="py-16" data-testid="section-diamond" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
         <div className="container mx-auto px-4">
@@ -268,6 +274,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Section Separator */}
+      <div className="h-px bg-black"></div>
 
       {/* New Arrivals Section */}
       <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
