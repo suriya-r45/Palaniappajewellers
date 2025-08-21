@@ -190,6 +190,7 @@ Could you please provide more details?`;
               </span>
               <Button
                 size="sm"
+                className="bg-black hover:bg-gray-800 text-white"
                 onClick={handleAddToCart}
                 disabled={product.stock <= 0 || cartQuantity >= product.stock}
                 data-testid={`button-add-more-${product.id}`}
@@ -200,7 +201,7 @@ Could you please provide more details?`;
             </div>
           ) : (
             <Button
-              className="w-full"
+              className="w-full bg-black hover:bg-gray-800 text-white"
               onClick={handleAddToCart}
               disabled={product.stock <= 0}
               data-testid={`button-add-to-cart-${product.id}`}

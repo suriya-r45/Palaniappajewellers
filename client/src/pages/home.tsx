@@ -214,13 +214,13 @@ export default function Home() {
       </section>
 
       {/* Silver Section */}
-      <section className="py-16 bg-gray-50" data-testid="section-silver">
+      <section className="py-16" data-testid="section-silver" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
-              <Star className="h-8 w-8 text-black mr-4" />
-              <h2 className="text-4xl font-bold text-black">Silver Collection</h2>
-              <Star className="h-8 w-8 text-black ml-4" />
+              <Star className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>Silver Collection</h2>
+              <Star className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">Sterling silver jewelry with contemporary elegance</p>
           </div>
@@ -234,7 +234,7 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
               View All Silver Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
@@ -242,13 +242,13 @@ export default function Home() {
       </section>
 
       {/* Diamond Section */}
-      <section className="py-16 bg-white" data-testid="section-diamond">
+      <section className="py-16" data-testid="section-diamond" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
-              <Gem className="h-8 w-8 text-black mr-4" />
-              <h2 className="text-4xl font-bold text-black">Diamond Collection</h2>
-              <Gem className="h-8 w-8 text-black ml-4" />
+              <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>Diamond Collection</h2>
+              <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">Brilliant diamonds for life's precious moments</p>
           </div>
@@ -262,7 +262,7 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
               View All Diamond Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
@@ -270,13 +270,13 @@ export default function Home() {
       </section>
 
       {/* New Arrivals Section */}
-      <section className="py-16 bg-gray-50" data-testid="section-new-arrivals">
+      <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
-              <Sparkles className="h-8 w-8 text-black mr-4" />
-              <h2 className="text-4xl font-bold text-black">New Arrivals</h2>
-              <Sparkles className="h-8 w-8 text-black ml-4" />
+              <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
+              <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">Latest additions to our exclusive collection</p>
           </div>
@@ -290,7 +290,7 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
               View All New Arrivals <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
