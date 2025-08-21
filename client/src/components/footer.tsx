@@ -62,7 +62,7 @@ export default function Footer() {
                 className="flex items-center space-x-2 text-white hover:text-green-400 transition-colors cursor-pointer" 
                 data-testid="link-whatsapp-phone"
               >
-                <FaWhatsapp className="h-4 w-4" />
+                <FaWhatsapp className="h-4 w-4 text-green-500" />
                 <span>+919597201554</span>
               </a>
               <a
