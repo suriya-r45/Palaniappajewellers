@@ -352,8 +352,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const message = `🧾 *BILL GENERATED* 🧾
 
-*Palaniappa Jewellers*
-📍 Premium Jewelry Collection
+*Palaniappa Jewellers since 2025*
 
 ━━━━━━━━━━━━━━━━━━━━━
 📋 *Bill Details*
@@ -381,7 +380,13 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
 🏛️ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
 💰 *Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
 
-📄 *Download PDF Bill:* ${pdfUrl}
+📄 *Download PDF Bill:* ${bill.customerName}_${bill.billNumber}
+Click this link to download: ${pdfUrl}
+
+📌 *How to download:*
+1. Click the link above
+2. Your browser will start downloading the PDF
+3. Save it to your device for records
 
 🙏 Thank you for choosing Palaniappa Jewellers!
 ✨ Where every jewel is crafted for elegance that lasts generations.
@@ -413,7 +418,7 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
 
 
 
-  // Professional Bill PDF generation - Exact replica of sample bill
+  // Professional Bill PDF generation - Exact replica of sample bill (public access for WhatsApp sharing)
   app.get("/api/bills/:id/pdf", async (req, res) => {
     try {
       const bill = await storage.getBill(req.params.id);
@@ -436,8 +441,15 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
       
       const filename = `${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber}.pdf`;
 
+      // Set headers for PDF download with better compatibility
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
 
       doc.pipe(res);
 
