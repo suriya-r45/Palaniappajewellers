@@ -71,6 +71,8 @@ Contact: +919597201554`;
       // Add +91 for Indian numbers if no country code
       formattedPhone = '+91' + formattedPhone;
     }
+    
+    console.log(`[SMS Debug] Original phone: ${phone}, Formatted phone: ${formattedPhone}`);
 
     const twilioMessage = await twilioClient.messages.create({
       body: message,
@@ -79,6 +81,18 @@ Contact: +919597201554`;
     });
 
     console.log(`[SMS Sent] OTP ${otp} sent to ${name} (${phone}) - Message SID: ${twilioMessage.sid}`);
+    console.log(`[SMS Details] Status: ${twilioMessage.status}, From: ${process.env.TWILIO_PHONE_NUMBER}, To: ${formattedPhone}`);
+    
+    // Check message status after a brief delay
+    setTimeout(async () => {
+      try {
+        const messageStatus = await twilioClient.messages(twilioMessage.sid).fetch();
+        console.log(`[SMS Status Update] Message ${twilioMessage.sid} status: ${messageStatus.status}, Error: ${messageStatus.errorMessage || 'None'}`);
+      } catch (error) {
+        console.log(`[SMS Status Error] Could not fetch status: ${error}`);
+      }
+    }, 5000);
+    
     return { success: true, messageSid: twilioMessage.sid };
   } catch (error) {
     console.error(`[SMS Error] Failed to send OTP to ${phone}:`, error);
