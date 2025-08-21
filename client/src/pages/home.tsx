@@ -167,15 +167,6 @@ export default function Home() {
     }).slice(0, 4), [allProducts]
   );
 
-  const newArrivals = useMemo(() => 
-    allProducts.filter(product => {
-      // Only show products specifically categorized as "New Arrivals"
-      const isNewArrivalCategory = product.category === 'new_arrivals';
-      const isNewArrivalSubCategory = product.subCategory && ['Latest Products', 'Featured Items', 'Trending Now', 'Exclusive Pieces'].includes(product.subCategory);
-      
-      return isNewArrivalCategory || isNewArrivalSubCategory;
-    }).slice(0, 4), [allProducts]
-  );
 
   return (
     <div className="min-h-screen" data-testid="page-home" style={{ background: 'linear-gradient(135deg, #fdfbf7 0%, #fff9e6 100%)' }}>
@@ -277,38 +268,6 @@ export default function Home() {
           <div className="text-center">
             <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
               View All Diamond Jewelry <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Section Separator */}
-      <div className="h-px bg-black"></div>
-
-      {/* New Arrivals Section */}
-      <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center mb-6">
-              <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-              <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
-              <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-            </div>
-            <p className="text-xl text-black">Latest additions to our exclusive collection</p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
-            {newArrivals.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                currency={selectedCurrency}
-                showActions={false}
-              />
-            ))}
-          </div>
-          <div className="text-center">
-            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
-              View All New Arrivals <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>

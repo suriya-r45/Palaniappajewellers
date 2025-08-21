@@ -113,6 +113,15 @@ const HOME_CATEGORIES = {
       'Engraving Services',
       'Repairs & Restorations'
     ]
+  },
+  'new_arrivals': {
+    name: 'New Arrivals',
+    subcategories: [
+      'Latest Products',
+      'Featured Items',
+      'Trending Now',
+      'Exclusive Pieces'
+    ]
   }
 };
 import { Currency } from '@/lib/currency';
