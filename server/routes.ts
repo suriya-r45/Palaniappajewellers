@@ -9,7 +9,7 @@ import fs from "fs";
 import jwt from "jsonwebtoken";
 import PDFDocument from "pdfkit";
 import Stripe from "stripe";
-//import { MetalRatesService } from "./services/metalRatesService.js";
+import { MetalRatesService } from "./services/testmetalRatesService.js";
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');

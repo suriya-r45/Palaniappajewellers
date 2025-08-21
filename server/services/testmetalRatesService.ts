@@ -44,7 +44,7 @@ export class MetalRatesService {
         .from(metalRates)
         .where(
           and(
-            eq(metalRates.metal_type, rateData.metal),
+            eq(metalRates.metal, rateData.metal),
             eq(metalRates.purity, rateData.purity),
             eq(metalRates.market, rateData.market)
           )
@@ -55,24 +55,23 @@ export class MetalRatesService {
         await db
           .update(metalRates)
           .set({
-            price_per_gram_inr: rateData.pricePerGramInr,
-            price_per_gram_bhd: rateData.pricePerGramBhd,
-            price_per_gram_usd: rateData.pricePerGramUsd,
+            pricePerGramInr: rateData.pricePerGramInr,
+            pricePerGramBhd: rateData.pricePerGramBhd,
+            pricePerGramUsd: rateData.pricePerGramUsd,
             source: rateData.source,
-            last_updated: new Date()
+            lastUpdated: new Date()
           })
           .where(eq(metalRates.id, existingRate[0].id));
       } else {
         await db.insert(metalRates).values({
-          metal_type: rateData.metal,
+          metal: rateData.metal,
           purity: rateData.purity,
-          rate: parseFloat(rateData.pricePerGramInr), // required
-          price_per_gram_inr: rateData.pricePerGramInr,
-          price_per_gram_bhd: rateData.pricePerGramBhd,
-          price_per_gram_usd: rateData.pricePerGramUsd,
+          pricePerGramInr: rateData.pricePerGramInr,
+          pricePerGramBhd: rateData.pricePerGramBhd,
+          pricePerGramUsd: rateData.pricePerGramUsd,
           market: rateData.market,
           source: rateData.source,
-          last_updated: new Date()
+          lastUpdated: new Date()
         });
       }
     } catch (error) {
@@ -159,7 +158,7 @@ export class MetalRatesService {
 
   static async getLatestRates(market?: "INDIA" | "BAHRAIN") {
     try {
-      const query = db.select().from(metalRates).orderBy(desc(metalRates.last_updated));
+      const query = db.select().from(metalRates).orderBy(desc(metalRates.lastUpdated));
       if (market) query.where(eq(metalRates.market, market));
       return await query;
     } catch (error) {
