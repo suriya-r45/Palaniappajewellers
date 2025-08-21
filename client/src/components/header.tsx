@@ -71,12 +71,6 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
             {/* Right Section Icons */}
             <div className="flex items-center space-x-2 md:space-x-4 text-white">
-              {/* Stores */}
-              <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
-                <MapPin className="h-3 w-3 md:h-5 md:w-5" />
-                <span className="text-xs">Stores</span>
-              </div>
-
               {/* Currency/Country */}
               <div className="flex flex-col items-center">
                 <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
