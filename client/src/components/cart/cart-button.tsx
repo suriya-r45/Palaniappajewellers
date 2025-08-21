@@ -12,16 +12,17 @@ export default function CartButton() {
   return (
     <>
       <Button
-        variant="outline"
+        variant="ghost"
         onClick={() => setIsOpen(true)}
-        className="relative"
+        className="relative flex flex-col items-center text-white hover:text-rose-100 hover:bg-rose-800 p-1 transition-all duration-200"
         data-testid="button-cart"
       >
-        <ShoppingCart className="h-5 w-5" />
+        <ShoppingCart className="h-3 w-3 md:h-5 md:w-5" />
+        <span className="text-xs">Cart</span>
         {totalItems > 0 && (
           <Badge
             variant="destructive"
-            className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+            className="absolute -top-1 -right-1 h-4 w-4 rounded-full p-0 flex items-center justify-center text-xs bg-red-500"
             data-testid="badge-cart-count"
           >
             {totalItems}
