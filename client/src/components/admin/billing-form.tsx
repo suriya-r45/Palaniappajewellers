@@ -506,11 +506,11 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
           <div className="flex space-x-4">
             <Button
               type="submit"
-              className="flex-1 bg-rose-800 hover:bg-rose-700 text-rose-100 font-semibold border border-rose-700 transition-all"
+              className="flex-1 bg-gradient-to-r from-rose-600 via-rose-700 to-red-700 hover:from-rose-500 hover:via-rose-600 hover:to-red-600 text-white font-bold shadow-lg border-2 border-rose-300 hover:border-rose-400 transform hover:scale-105 transition-all duration-300 py-3"
               disabled={createBillMutation.isPending || selectedProducts.size === 0}
               data-testid="button-create-bill"
             >
-              <FileText className="h-4 w-4 mr-2" />
+              <FileText className="h-5 w-5 mr-2" />
               {createBillMutation.isPending ? 'Creating...' : 'Generate Bill'}
             </Button>
           </div>
