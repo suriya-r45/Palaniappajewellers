@@ -27,7 +27,6 @@ const categoryIcons = {
   children: Baby,
   materials: Gem,
   collections: Palette,
-  new_arrivals: Sparkles,
   custom: Wrench
 };
 
@@ -132,16 +131,6 @@ const categories = [
       'Contemporary Collection',
       'Minimalist Collection',
       'Celebrity Collection'
-    ]
-  },
-  {
-    id: 'new_arrivals',
-    name: 'New Arrivals',
-    subcategories: [
-      'Latest Products',
-      'Featured Items',
-      'Trending Now',
-      'Exclusive Pieces'
     ]
   },
   {
