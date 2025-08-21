@@ -495,7 +495,7 @@ export default function Login() {
                 <div className="flex space-x-3 pt-4">
                   <Button
                     type="submit"
-                    className="flex-1 bg-white text-black border-2 border-black hover:bg-gray-100"
+                    className="flex-1 bg-rose-800 text-rose-100 border-2 border-rose-800 hover:bg-rose-700 hover:border-rose-700 transition-all"
                     disabled={isRegistering}
                     data-testid="button-submit-register"
                   >
@@ -504,7 +504,7 @@ export default function Login() {
                   <Button
                     type="button"
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 border-rose-800 text-rose-800 hover:bg-rose-100"
                     onClick={() => setLocation('/')}
                     data-testid="button-cancel-register"
                   >
@@ -542,7 +542,7 @@ export default function Login() {
                     
                     <Button 
                       type="submit" 
-                      className="w-full bg-blue-600 text-white hover:bg-blue-700"
+                      className="w-full bg-rose-800 text-rose-100 hover:bg-rose-700 transition-all"
                       disabled={isOtpLoading}
                     >
                       {isOtpLoading ? 'Sending OTP...' : 'Send OTP via SMS'}
@@ -583,7 +583,7 @@ export default function Login() {
                     <div className="flex space-x-3">
                       <Button 
                         type="submit" 
-                        className="flex-1 bg-green-600 text-white hover:bg-green-700"
+                        className="flex-1 bg-rose-800 text-rose-100 hover:bg-rose-700 transition-all"
                         disabled={isOtpLoading || otpCode.length !== 6}
                       >
                         {isOtpLoading ? 'Verifying...' : 'Login with OTP'}
@@ -592,7 +592,7 @@ export default function Login() {
                         type="button"
                         variant="outline"
                         onClick={() => setForgotPasswordStep('phone')}
-                        className="flex-1"
+                        className="flex-1 border-rose-800 text-rose-800 hover:bg-rose-100"
                       >
                         <ArrowLeft className="w-4 h-4 mr-1" />
                         Back
@@ -605,7 +605,7 @@ export default function Login() {
                         type="button"
                         variant="outline"
                         onClick={() => setForgotPasswordStep('reset')}
-                        className="text-sm"
+                        className="text-sm border-rose-800 text-rose-800 hover:bg-rose-100"
                         disabled={otpCode.length !== 6}
                       >
                         Reset Password
@@ -653,7 +653,7 @@ export default function Login() {
                     <div className="flex space-x-3">
                       <Button 
                         type="submit" 
-                        className="flex-1 bg-blue-600 text-white hover:bg-blue-700"
+                        className="flex-1 bg-rose-800 text-rose-100 hover:bg-rose-700 transition-all"
                         disabled={isOtpLoading || newPassword !== confirmNewPassword || newPassword.length < 6}
                       >
                         {isOtpLoading ? 'Resetting...' : 'Reset Password'}
@@ -662,7 +662,7 @@ export default function Login() {
                         type="button"
                         variant="outline"
                         onClick={() => setForgotPasswordStep('otp')}
-                        className="flex-1"
+                        className="flex-1 border-rose-800 text-rose-800 hover:bg-rose-100"
                       >
                         <ArrowLeft className="w-4 h-4 mr-1" />
                         Back
