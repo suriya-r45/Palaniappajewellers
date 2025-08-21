@@ -346,8 +346,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Bill not found" });
       }
 
-      // Format the bill for WhatsApp message
+      // Format the bill for WhatsApp message with PDF link
       const currencySymbol = bill.currency === 'INR' ? '₹' : 'BD';
+      const pdfUrl = `${req.protocol}://${req.get('host')}/api/bills/${bill.id}/pdf`;
+      
       const message = `🧾 *BILL GENERATED* 🧾
 
 *Palaniappa Jewellers*
@@ -379,10 +381,12 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
 🏛️ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
 💰 *Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
 
+📄 *Download PDF Bill:* ${pdfUrl}
+
 🙏 Thank you for choosing Palaniappa Jewellers!
 ✨ Where every jewel is crafted for elegance that lasts generations.
 
-📞 Contact us: +919597201554
+📞 Contact us: +919442131883
 🌐 Premium quality, timeless beauty.`;
 
       // Create WhatsApp URL
@@ -392,11 +396,13 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
       // Log for production integration
       console.log(`[WhatsApp Bill] Sending bill ${bill.billNumber} to ${bill.customerName} (${bill.customerPhone})`);
       console.log(`[WhatsApp URL] ${whatsappUrl}`);
+      console.log(`[PDF URL] ${pdfUrl}`);
 
       res.json({
         success: true,
-        message: "Bill prepared for WhatsApp",
+        message: "Bill prepared for WhatsApp with PDF link",
         whatsappUrl: whatsappUrl,
+        pdfUrl: pdfUrl,
         messagePreview: message
       });
     } catch (error) {
