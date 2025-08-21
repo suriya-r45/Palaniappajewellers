@@ -380,13 +380,14 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
 🏛️ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
 💰 *Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
 
-📄 *Download PDF Bill:* ${bill.customerName}_${bill.billNumber}
-Click this link to download: ${pdfUrl}
+📄 *PDF Bill:* ${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber}.pdf
+🔗 ${pdfUrl}
 
-📌 *How to download:*
+💡 *Download Steps:*
 1. Click the link above
-2. Your browser will start downloading the PDF
-3. Save it to your device for records
+2. PDF will open in your browser
+3. Use browser menu to Save/Download
+4. Or share this link directly with customer
 
 🙏 Thank you for choosing Palaniappa Jewellers!
 ✨ Where every jewel is crafted for elegance that lasts generations.
@@ -441,15 +442,14 @@ Click this link to download: ${pdfUrl}
       
       const filename = `${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber}.pdf`;
 
-      // Set headers for PDF download with better compatibility
+      // Set headers for PDF download with better compatibility for WhatsApp
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Disposition', `inline; filename="${filename}"`); // Changed to inline for better WhatsApp compatibility
       res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.setHeader('Pragma', 'no-cache');
-      res.setHeader('Expires', '0');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('X-Frame-Options', 'ALLOWALL');
+      res.setHeader('X-Content-Type-Options', 'nosniff');
 
       doc.pipe(res);
 
