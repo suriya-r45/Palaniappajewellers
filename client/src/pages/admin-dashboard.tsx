@@ -32,8 +32,31 @@ export default function AdminDashboard() {
 
   // Handle URL tab parameter
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const tabParam = url.searchParams.get('tab');
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates') {
+      setActiveTab(tabParam);
+    }
+  }, []);
+
+  // Listen for URL changes
+  useEffect(() => {
+    const handlePopState = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates') {
+        setActiveTab(tabParam);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Also check when location changes (for programmatic navigation)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
     if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates') {
       setActiveTab(tabParam);
     }
