@@ -28,7 +28,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
   return (
     <>
       {/* Top Contact Bar */}
-      <div className="bg-purple-900 text-white text-xs py-1">
+      <div className="bg-gradient-to-r from-rose-900 to-red-900 text-white text-xs py-1">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <span>For Store and Scheme Queries - +919442131883</span>
@@ -44,7 +44,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
       </div>
 
       {/* Main Header */}
-      <header className="bg-purple-900 shadow-sm sticky top-0 z-50" data-testid="header-main">
+      <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo Section */}
@@ -58,8 +58,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                   />
                 </div>
                 <div>
-                  <h1 className="text-lg md:text-2xl font-bold text-white tracking-wide">PALANIAPPA</h1>
-                  <p className="text-sm text-purple-200 hidden md:block font-medium">GOLD & DIAMONDS</p>
+                  <h1 className="text-lg md:text-2xl font-bold text-white tracking-wide drop-shadow-sm">PALANIAPPA</h1>
+                  <p className="text-sm text-rose-100 hidden md:block font-medium">GOLD & DIAMONDS</p>
                 </div>
               </Link>
             </div>
@@ -76,7 +76,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                 />
                 <Button 
                   size="sm" 
-                  className="absolute right-0 top-0 h-full px-4 bg-purple-800 hover:bg-purple-700 rounded-l-none"
+                  className="absolute right-0 top-0 h-full px-4 bg-rose-800 hover:bg-rose-900 rounded-l-none border-0 shadow-sm"
                 >
                   <Search className="h-4 w-4 text-white" />
                 </Button>
@@ -86,7 +86,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
             {/* Right Section Icons */}
             <div className="flex items-center space-x-4 text-white">
               {/* Stores */}
-              <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-purple-200">
+              <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
                 <MapPin className="h-5 w-5" />
                 <span className="text-xs mt-1">Stores</span>
               </div>
@@ -94,7 +94,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
               {/* Currency/Country */}
               <div className="flex flex-col items-center">
                 <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
-                  <SelectTrigger className="bg-transparent border-0 text-white hover:text-purple-200 p-0 h-auto">
+                  <SelectTrigger className="bg-transparent border-0 text-white hover:text-rose-100 p-0 h-auto transition-colors duration-200">
                     <div className="flex flex-col items-center cursor-pointer">
                       <span className="text-xs">Country</span>
                       <SelectValue />
@@ -132,7 +132,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                   <div className="flex items-center space-x-2">
                     {isAdmin && (
                       <Link href="/admin">
-                        <Button variant="ghost" size="sm" className="text-white hover:text-purple-200 hover:bg-purple-800" data-testid="button-admin-dashboard">
+                        <Button variant="ghost" size="sm" className="text-white hover:text-rose-100 hover:bg-rose-800 transition-all duration-200" data-testid="button-admin-dashboard">
                           Dashboard
                         </Button>
                       </Link>
@@ -141,7 +141,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                       variant="ghost"
                       size="sm"
                       onClick={handleLogout}
-                      className="flex flex-col items-center text-white hover:text-purple-200 hover:bg-purple-800 p-1"
+                      className="flex flex-col items-center text-white hover:text-rose-100 hover:bg-rose-800 p-1 transition-all duration-200"
                       data-testid="button-logout"
                     >
                       <LogOut className="h-5 w-5" />
@@ -150,7 +150,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                   </div>
                 ) : (
                   <Link href="/login">
-                    <div className="flex flex-col items-center cursor-pointer hover:text-purple-200">
+                    <div className="flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
                       <User className="h-5 w-5" />
                       <span className="text-xs mt-1">Profile</span>
                     </div>
@@ -159,7 +159,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
               </div>
 
               {/* Wishlist */}
-              <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-purple-200">
+              <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
                 <Heart className="h-5 w-5" />
                 <span className="text-xs mt-1">Wishlist</span>
               </div>
@@ -174,43 +174,43 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
       </header>
 
       {/* Navigation Menu */}
-      <nav className="bg-white border-b shadow-sm">
+      <nav className="bg-gradient-to-r from-gray-50 to-white border-b-2 border-rose-100 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-center space-x-8 py-3">
-            <Link href="/" className={`text-sm font-medium transition-colors ${location === '/' ? 'text-purple-900 border-b-2 border-purple-900 pb-2' : 'text-gray-700 hover:text-purple-900'}`} data-testid="nav-home">
+            <Link href="/" className={`text-sm font-medium transition-all duration-200 ${location === '/' ? 'text-rose-700 border-b-2 border-rose-700 pb-2 font-semibold' : 'text-gray-700 hover:text-rose-700 hover:scale-105'}`} data-testid="nav-home">
               DIAMOND
             </Link>
-            <a href="#products" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors" data-testid="nav-products">
+            <a href="#products" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105" data-testid="nav-products">
               GOLD
             </a>
-            <a href="#gemstone" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#gemstone" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               GEMSTONE
             </a>
-            <a href="#uncut" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#uncut" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               UNCUT DIAMOND
             </a>
-            <a href="#platinum" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#platinum" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               PLATINUM
             </a>
-            <a href="#coins" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#coins" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               GOLD COINS
             </a>
-            <a href="#silver" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#silver" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               SILVER
             </a>
-            <a href="#watches" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#watches" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               WATCHES
             </a>
-            <a href="#gifts" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#gifts" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               GIFTS
             </a>
-            <a href="#jewellery" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#jewellery" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               JEWELLERY
             </a>
-            <a href="#giftcards" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#giftcards" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               GIFT CARDS
             </a>
-            <a href="#goldrate" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+            <a href="#goldrate" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
               GOLD RATE
             </a>
           </div>
