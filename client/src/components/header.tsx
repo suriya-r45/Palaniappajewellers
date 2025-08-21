@@ -30,10 +30,10 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
       {/* Top Contact Bar */}
       <div className="bg-gradient-to-r from-rose-900 to-red-900 text-white text-xs py-1">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <span>For Store and Scheme Queries - +919442131883</span>
+          <div className="flex items-center space-x-1 md:space-x-4">
+            <span className="text-xs hidden md:block">For Store and Scheme Queries - +919442131883</span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-1 md:space-x-4">
             <span className="flex items-center">
               <Phone className="h-3 w-3 mr-1" />
               +91 9442131883
@@ -46,11 +46,11 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
       {/* Main Header */}
       <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-12 md:h-20">
             {/* Logo Section */}
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-3" data-testid="link-home">
-                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white">
+            <div className="flex items-center space-x-1 md:space-x-4">
+              <Link href="/" className="flex items-center space-x-1 md:space-x-3" data-testid="link-home">
+                <div className="w-6 h-6 md:w-16 md:h-16 rounded-full overflow-hidden border border-white">
                   <img 
                     src={logoPath} 
                     alt="Palaniappa Jewellers Logo" 
@@ -58,8 +58,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                   />
                 </div>
                 <div>
-                  <h1 className="text-lg md:text-2xl font-bold text-white tracking-wide drop-shadow-sm">PALANIAPPA</h1>
-                  <p className="text-sm text-rose-100 hidden md:block font-medium">GOLD & DIAMONDS</p>
+                  <h1 className="text-xs md:text-2xl font-bold text-white tracking-wide drop-shadow-sm">PALANIAPPA</h1>
+                  <p className="text-xs text-rose-100 hidden md:block font-medium">GOLD & DIAMONDS</p>
                 </div>
               </Link>
             </div>
@@ -84,11 +84,11 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
             </div>
 
             {/* Right Section Icons */}
-            <div className="flex items-center space-x-4 text-white">
+            <div className="flex items-center space-x-1 md:space-x-4 text-white">
               {/* Stores */}
               <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
-                <MapPin className="h-5 w-5" />
-                <span className="text-xs mt-1">Stores</span>
+                <MapPin className="h-3 w-3 md:h-5 md:w-5" />
+                <span className="text-xs">Stores</span>
               </div>
 
               {/* Currency/Country */}
@@ -151,8 +151,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                 ) : (
                   <Link href="/login">
                     <div className="flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
-                      <User className="h-5 w-5" />
-                      <span className="text-xs mt-1">Profile</span>
+                      <User className="h-3 w-3 md:h-5 md:w-5" />
+                      <span className="text-xs">Profile</span>
                     </div>
                   </Link>
                 )}
@@ -160,8 +160,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
               {/* Wishlist */}
               <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
-                <Heart className="h-5 w-5" />
-                <span className="text-xs mt-1">Wishlist</span>
+                <Heart className="h-3 w-3 md:h-5 md:w-5" />
+                <span className="text-xs">Wishlist</span>
               </div>
 
               {/* Cart */}
