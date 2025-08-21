@@ -51,14 +51,16 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
             </div>
 
             {/* Right Section Icons */}
-            <div className="flex items-center space-x-2 md:space-x-4 text-white">
+            <div className="flex items-center space-x-1 md:space-x-4 text-white">
               {/* Currency/Country */}
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center min-w-[50px] md:min-w-[60px] px-1">
                 <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
-                  <SelectTrigger className="bg-transparent border-0 text-white hover:text-rose-100 p-0 h-auto transition-colors duration-200">
-                    <div className="flex flex-col items-center cursor-pointer">
-                      <span className="text-xs">Country</span>
-                      <SelectValue />
+                  <SelectTrigger className="bg-transparent border-0 text-white hover:text-rose-100 p-0 h-auto transition-colors duration-200 w-full">
+                    <div className="flex flex-col items-center cursor-pointer w-full">
+                      <span className="text-[9px] md:text-xs whitespace-nowrap mb-0.5">Country</span>
+                      <div className="text-center text-[10px] md:text-xs font-medium">
+                        <SelectValue />
+                      </div>
                     </div>
                   </SelectTrigger>
                   <SelectContent>
@@ -88,7 +90,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
               </div>
 
               {/* Profile */}
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center px-1">
                 {user ? (
                   <div className="flex items-center space-x-2">
                     {isAdmin && (
