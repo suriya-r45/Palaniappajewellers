@@ -174,7 +174,7 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-white" data-testid="page-home" style={{ backgroundColor: '#ffffff' }}>
+    <div className="min-h-screen" data-testid="page-home" style={{ background: 'linear-gradient(135deg, #fdfbf7 0%, #fff9e6 100%)' }}>
       <Header
         selectedCurrency={selectedCurrency}
         onCurrencyChange={setSelectedCurrency}
@@ -186,13 +186,13 @@ export default function Home() {
 
 
       {/* Gold Section */}
-      <section className="py-16 bg-white" data-testid="section-gold">
+      <section className="py-16" data-testid="section-gold" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
-              <Crown className="h-8 w-8 text-black mr-4" />
-              <h2 className="text-4xl font-bold text-black">Gold Collection</h2>
-              <Crown className="h-8 w-8 text-black ml-4" />
+              <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Collection</h2>
+              <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">22K & 18K gold jewelry with intricate designs</p>
           </div>
@@ -206,7 +206,7 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="border-2 border-black text-black hover:bg-black hover:text-white px-8 py-3 text-lg">
+            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
               View All Gold Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
