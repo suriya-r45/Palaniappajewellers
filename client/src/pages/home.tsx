@@ -196,12 +196,13 @@ export default function Home() {
             </div>
             <p className="text-xl text-black">22K & 18K gold jewelry with intricate designs</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
             {goldProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 currency={selectedCurrency}
+                showActions={false}
               />
             ))}
           </div>
@@ -227,12 +228,13 @@ export default function Home() {
             </div>
             <p className="text-xl text-black">Sterling silver jewelry with contemporary elegance</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
             {silverProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 currency={selectedCurrency}
+                showActions={false}
               />
             ))}
           </div>
@@ -258,12 +260,13 @@ export default function Home() {
             </div>
             <p className="text-xl text-black">Brilliant diamonds for life's precious moments</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
             {diamondProducts.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 currency={selectedCurrency}
+                showActions={false}
               />
             ))}
           </div>
@@ -289,12 +292,13 @@ export default function Home() {
             </div>
             <p className="text-xl text-black">Latest additions to our exclusive collection</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
             {newArrivals.map((product) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 currency={selectedCurrency}
+                showActions={false}
               />
             ))}
           </div>

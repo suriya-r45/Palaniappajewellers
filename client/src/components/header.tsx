@@ -50,25 +50,6 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
               </Link>
             </div>
 
-            {/* Search Bar */}
-            <div className="hidden md:flex flex-1 max-w-md mx-8">
-              <div className="relative w-full">
-                <Input
-                  type="text"
-                  placeholder="Search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-4 pr-12 py-2 rounded-md border-0 bg-white text-black"
-                />
-                <Button 
-                  size="sm" 
-                  className="absolute right-0 top-0 h-full px-4 bg-rose-800 hover:bg-rose-900 rounded-l-none border-0 shadow-sm"
-                >
-                  <Search className="h-4 w-4 text-white" />
-                </Button>
-              </div>
-            </div>
-
             {/* Right Section Icons */}
             <div className="flex items-center space-x-2 md:space-x-4 text-white">
               {/* Currency/Country */}
