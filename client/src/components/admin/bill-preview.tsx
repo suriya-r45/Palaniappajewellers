@@ -87,7 +87,7 @@ export default function BillPreview({ bill, onClose }: BillPreviewProps) {
           <div className="text-center mb-6">
             <div className="flex justify-center items-center mb-4">
               <img
-                src="/attached_assets/1000284180_1755240849891_1755538055896.jpg"
+                src="/attached_assets/1000284180_1755240849891_1755763107777.jpg"
                 alt="Palaniappa Jewellers Logo"
                 className="w-32 h-32 object-contain mr-4"
               />

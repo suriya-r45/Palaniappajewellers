@@ -366,7 +366,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 💰 *Total Amount: ${currencySymbol} ${parseFloat(bill.total).toLocaleString()}*
 
 💎 *Items:*
-${JSON.parse(bill.items).map((item: any, index: number) => 
+${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((item: any, index: number) => 
   `${index + 1}. ${item.productName} - ${currencySymbol}${parseFloat(item.price).toLocaleString()} × ${item.quantity}`
 ).join('\n')}
 
@@ -443,7 +443,7 @@ ${JSON.parse(bill.items).map((item: any, index: number) =>
       // Add company logo (centered at top)
       try {
         const logoSize = 60;
-        doc.image('./attached_assets/1000284180_1755240849891_1755538055896.jpg', 
+        doc.image('./attached_assets/1000284180_1755240849891_1755763107777.jpg', 
                  (pageWidth - logoSize) / 2, currentY, { width: logoSize, height: logoSize });
         currentY += logoSize + 20;
       } catch (error) {
