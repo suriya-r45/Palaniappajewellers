@@ -149,7 +149,7 @@ Could you please provide more details?`;
         <div className="space-y-2">
           <div className="flex items-start justify-between">
             <h3 
-              className="font-semibold text-sm line-clamp-2 flex-1 hover:text-yellow-600 cursor-pointer" 
+              className="font-semibold text-xs md:text-sm line-clamp-2 flex-1 hover:text-yellow-600 cursor-pointer" 
               data-testid={`product-name-${product.id}`}
               onClick={() => window.location.href = `/product/${product.id}`}
             >
@@ -158,17 +158,17 @@ Could you please provide more details?`;
           </div>
 
           <div className="flex items-center gap-2 text-xs text-gray-600">
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-[10px] md:text-xs">
               {product.category}
             </Badge>
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-[10px] md:text-xs">
               {product.material}
             </Badge>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="space-y-1">
-              <p className="text-lg font-bold text-primary" data-testid={`product-price-${product.id}`}>
+              <p className="text-sm md:text-lg font-bold text-primary" data-testid={`product-price-${product.id}`}>
                 {formatPrice(price, currency)}
               </p>
               {product.stock > 0 && product.stock <= 5 && (

@@ -191,7 +191,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
               <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Collection</h2>
+              <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Collection</h2>
               <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">22K & 18K gold jewelry with intricate designs</p>
@@ -222,7 +222,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
               <Star className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>Silver Collection</h2>
+              <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Silver Collection</h2>
               <Star className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">Sterling silver jewelry with contemporary elegance</p>
@@ -253,7 +253,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
               <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>Diamond Collection</h2>
+              <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Diamond Collection</h2>
               <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">Brilliant diamonds for life's precious moments</p>
@@ -284,7 +284,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
               <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-              <h2 className="text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
+              <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
               <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
             </div>
             <p className="text-xl text-black">Latest additions to our exclusive collection</p>

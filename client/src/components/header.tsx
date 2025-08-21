@@ -31,7 +31,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300">
+              <div className="w-8 h-8 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gray-300">
               <img 
                 src={logoPath} 
                 alt="Palaniappa Jewellers Logo" 
@@ -40,8 +40,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
             </div>
 
               <div>
-                <h1 className="text-xl font-bold text-black">PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs text-gray-500">Since 2025</p>
+                <h1 className="text-sm md:text-xl font-bold text-black">PALANIAPPA JEWELLERS</h1>
+                <p className="text-xs text-gray-500 hidden md:block">Since 2025</p>
               </div>
             </Link>
           </div>
@@ -64,7 +64,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
           <div className="flex items-center space-x-4">
             <CartButton />
             <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
-              <SelectTrigger className="w-32 flex items-center" data-testid="trigger-currency">
+              <SelectTrigger className="w-20 md:w-32 flex items-center" data-testid="trigger-currency">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
