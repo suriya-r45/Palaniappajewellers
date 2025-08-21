@@ -173,49 +173,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
         </div>
       </header>
 
-      {/* Navigation Menu */}
-      <nav className="bg-gradient-to-r from-gray-50 to-white border-b-2 border-rose-100 shadow-sm">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center space-x-8 py-3">
-            <Link href="/" className={`text-sm font-medium transition-all duration-200 ${location === '/' ? 'text-rose-700 border-b-2 border-rose-700 pb-2 font-semibold' : 'text-gray-700 hover:text-rose-700 hover:scale-105'}`} data-testid="nav-home">
-              DIAMOND
-            </Link>
-            <a href="#products" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105" data-testid="nav-products">
-              GOLD
-            </a>
-            <a href="#gemstone" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              GEMSTONE
-            </a>
-            <a href="#uncut" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              UNCUT DIAMOND
-            </a>
-            <a href="#platinum" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              PLATINUM
-            </a>
-            <a href="#coins" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              GOLD COINS
-            </a>
-            <a href="#silver" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              SILVER
-            </a>
-            <a href="#watches" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              WATCHES
-            </a>
-            <a href="#gifts" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              GIFTS
-            </a>
-            <a href="#jewellery" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              JEWELLERY
-            </a>
-            <a href="#giftcards" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              GIFT CARDS
-            </a>
-            <a href="#goldrate" className="text-sm font-medium text-gray-700 hover:text-rose-700 transition-all duration-200 hover:scale-105">
-              GOLD RATE
-            </a>
-          </div>
-        </div>
-      </nav>
+
     </>
   );
 }
