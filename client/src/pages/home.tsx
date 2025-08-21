@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import ProductCard from '@/components/product-card';
 import ProductFilters from '@/components/product-filters';
 import WhatsAppFloat from '@/components/whatsapp-float';
@@ -396,6 +397,23 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* Mobile Bottom Navigation - for easy category navigation */}
+      <MobileBottomNav 
+        onCategorySelect={(category) => {
+          // Navigate to collections page with category filter
+          window.location.href = `/collections/${category}`;
+        }}
+        onSortChange={(sort) => {
+          // Not used on home page, but could redirect to collections
+          window.location.href = `/collections/all?sort=${sort}`;
+        }}
+        onFilterChange={(activeFilters) => {
+          // Redirect to collections page with filters
+          window.location.href = `/collections/all`;
+        }}
+        activeFilters={0} // Home page doesn't have active filters
+      />
 
       <Footer />
       <WhatsAppFloat />

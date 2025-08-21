@@ -6,6 +6,7 @@ import { Product } from '@shared/schema';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import ProductCard from '@/components/product-card';
 import { CollectionFilters } from '@/components/collection-filters';
+import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import WhatsAppFloat from '@/components/whatsapp-float';
@@ -263,6 +264,23 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
           </div>
         </div>
       </section>
+
+      {/* Mobile Bottom Navigation */}
+      <MobileBottomNav 
+        onCategorySelect={(category) => setFilters({ ...filters, category })}
+        onSortChange={(sort) => setFilters({ ...filters, sortBy: sort as any })}
+        onFilterChange={(activeFilters) => {
+          // Apply mobile filters to state
+          const newFilters = { ...filters };
+          // This could be enhanced to parse the activeFilters array
+          setFilters(newFilters);
+        }}
+        activeFilters={Object.keys(filters).filter(key => 
+          filters[key as keyof IProductFilters] !== undefined && 
+          filters[key as keyof IProductFilters] !== ''
+        ).length}
+        sortBy={filters.sortBy}
+      />
 
       <Footer />
       <WhatsAppFloat />
