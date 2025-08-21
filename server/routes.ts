@@ -27,6 +27,24 @@ const ADMIN_CREDENTIALS = {
   password: "P@lani@ppA@321"
 };
 
+// WhatsApp messaging function
+async function sendWelcomeWhatsAppMessage(name: string, phone: string) {
+  const message = `✨ Welcome, ${name}! You are now part of the Palaniappa Jewellers legacy, where every jewel is crafted for elegance that lasts generations.`;
+  
+  // Format phone number for WhatsApp (remove any non-numeric characters except +)
+  const formattedPhone = phone.replace(/[^\d+]/g, '');
+  
+  // Create WhatsApp URL
+  const whatsappUrl = `https://wa.me/${formattedPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
+  
+  // For now, we'll log the message. In production, you would integrate with WhatsApp Business API
+  console.log(`WhatsApp welcome message for ${name} (${phone}): ${message}`);
+  console.log(`WhatsApp URL: ${whatsappUrl}`);
+  
+  // Return the URL so it can be used if needed
+  return whatsappUrl;
+}
+
 // Multer configuration for file uploads
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) {
@@ -123,6 +141,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...userData,
         role: "guest"
       });
+
+      // Send WhatsApp welcome message if phone number is provided
+      if (userData.phone) {
+        try {
+          await sendWelcomeWhatsAppMessage(userData.name, userData.phone);
+        } catch (error) {
+          console.error('Failed to send WhatsApp message:', error);
+          // Continue with registration even if WhatsApp fails
+        }
+      }
 
       const token = jwt.sign(
         { id: user.id, email: user.email, role: user.role, name: user.name },

@@ -11,6 +11,7 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
   name: text("name").notNull(),
+  phone: text("phone"), // Phone number for WhatsApp messaging
   role: text("role").notNull().default("guest"), // 'admin' or 'guest'
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),

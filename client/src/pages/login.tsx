@@ -33,6 +33,7 @@ export default function Login() {
   const [registerForm, setRegisterForm] = useState({
     name: '',
     email: '',
+    phone: '',
     password: '',
     confirmPassword: ''
   });
@@ -91,6 +92,7 @@ export default function Login() {
         body: JSON.stringify({
           name: registerForm.name,
           email: registerForm.email,
+          phone: registerForm.phone,
           password: registerForm.password,
         }),
       });
@@ -269,6 +271,19 @@ export default function Login() {
                     onChange={(e) => setRegisterForm({...registerForm, email: e.target.value})}
                     required
                     data-testid="input-register-email"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="register-phone">Phone Number</Label>
+                  <Input
+                    id="register-phone"
+                    type="tel"
+                    placeholder="Enter your phone number (e.g., +919597201554)"
+                    value={registerForm.phone}
+                    onChange={(e) => setRegisterForm({...registerForm, phone: e.target.value})}
+                    required
+                    data-testid="input-register-phone"
                   />
                 </div>
                 
