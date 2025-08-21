@@ -15,6 +15,10 @@ export const users = pgTable("users", {
   role: text("role").notNull().default("guest"), // 'admin' or 'guest'
   stripeCustomerId: text("stripe_customer_id"),
   stripeSubscriptionId: text("stripe_subscription_id"),
+  // OTP fields for forgot password functionality
+  otpCode: text("otp_code"),
+  otpExpiry: timestamp("otp_expiry"),
+  otpVerified: boolean("otp_verified").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -466,6 +470,22 @@ export const insertBillSchema = createInsertSchema(bills).omit({
 export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
+});
+
+// OTP schemas for forgot password functionality
+export const sendOtpSchema = z.object({
+  phone: z.string().min(10, "Phone number must be at least 10 digits"),
+});
+
+export const verifyOtpSchema = z.object({
+  phone: z.string().min(10),
+  otp: z.string().length(6, "OTP must be 6 digits"),
+});
+
+export const resetPasswordSchema = z.object({
+  phone: z.string().min(10),
+  otp: z.string().length(6),
+  newPassword: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

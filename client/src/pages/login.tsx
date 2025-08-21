@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/lib/auth';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
+import { Smartphone, KeyRound, ArrowLeft } from 'lucide-react';
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -38,6 +39,14 @@ export default function Login() {
     confirmPassword: ''
   });
   const [isRegistering, setIsRegistering] = useState(false);
+
+  // Forgot password state
+  const [forgotPasswordStep, setForgotPasswordStep] = useState<'phone' | 'otp' | 'reset'>('phone');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otpCode, setOtpCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,6 +136,161 @@ export default function Login() {
     }
   };
 
+  // Forgot password handlers
+  const handleSendOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsOtpLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/send-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone: phoneNumber }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to send OTP');
+      }
+
+      const data = await response.json();
+      toast({
+        title: "OTP Sent",
+        description: "We've sent a 6-digit OTP to your WhatsApp number.",
+      });
+      setForgotPasswordStep('otp');
+    } catch (error: any) {
+      toast({
+        title: "Failed to Send OTP",
+        description: error.message || "Please check your phone number and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsOtpLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone: phoneNumber, otp: otpCode }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Invalid OTP');
+      }
+
+      const data = await response.json();
+      
+      // If user chooses to login directly with OTP
+      if (data.token && data.user) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
+        toast({
+          title: "Login Successful",
+          description: "You are now logged in via OTP!",
+        });
+        
+        setTimeout(() => {
+          if (data.user.role === 'admin') {
+            setLocation('/admin');
+          } else {
+            setLocation('/');
+          }
+        }, 100);
+      } else {
+        // Proceed to password reset
+        setForgotPasswordStep('reset');
+        toast({
+          title: "OTP Verified",
+          description: "Now you can set a new password.",
+        });
+      }
+    } catch (error: any) {
+      toast({
+        title: "Invalid OTP",
+        description: error.message || "Please check your OTP and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (newPassword !== confirmNewPassword) {
+      toast({
+        title: "Password Mismatch",
+        description: "Passwords do not match.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      toast({
+        title: "Weak Password",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsOtpLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          phone: phoneNumber, 
+          otp: otpCode, 
+          newPassword: newPassword 
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to reset password');
+      }
+
+      toast({
+        title: "Password Reset Successful",
+        description: "You can now login with your new password.",
+      });
+      
+      // Reset forgot password form and go back to login
+      setForgotPasswordStep('phone');
+      setPhoneNumber('');
+      setOtpCode('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+    } catch (error: any) {
+      toast({
+        title: "Reset Failed",
+        description: error.message || "Failed to reset password. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4" data-testid="page-login">
       <Card className="w-full max-w-md" data-testid="card-login">
@@ -146,9 +310,13 @@ export default function Login() {
         
         <CardContent>
           <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="login">Login</TabsTrigger>
               <TabsTrigger value="register">Register</TabsTrigger>
+              <TabsTrigger value="forgot-password">
+                <Smartphone className="w-4 h-4 mr-1" />
+                Forgot Password
+              </TabsTrigger>
             </TabsList>
             
             <TabsContent value="login" className="space-y-4">
@@ -333,6 +501,165 @@ export default function Login() {
                   </Button>
                 </div>
               </form>
+            </TabsContent>
+
+            {/* Forgot Password Tab */}
+            <TabsContent value="forgot-password" className="space-y-4">
+              {forgotPasswordStep === 'phone' && (
+                <>
+                  <div className="text-center mb-4">
+                    <Smartphone className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                    <h3 className="text-lg font-semibold">Reset Password</h3>
+                    <p className="text-gray-600 text-sm">Enter your phone number to receive an OTP via WhatsApp</p>
+                  </div>
+                  
+                  <form onSubmit={handleSendOtp} className="space-y-4">
+                    <div>
+                      <Label htmlFor="phone">Phone Number</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="Enter your phone number (e.g., +919442131883)"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Make sure this is the same number you used to register
+                      </p>
+                    </div>
+                    
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-blue-600 text-white hover:bg-blue-700"
+                      disabled={isOtpLoading}
+                    >
+                      {isOtpLoading ? 'Sending OTP...' : 'Send OTP via WhatsApp'}
+                    </Button>
+                  </form>
+                </>
+              )}
+
+              {forgotPasswordStep === 'otp' && (
+                <>
+                  <div className="text-center mb-4">
+                    <KeyRound className="w-12 h-12 text-green-500 mx-auto mb-2" />
+                    <h3 className="text-lg font-semibold">Enter OTP</h3>
+                    <p className="text-gray-600 text-sm">
+                      We've sent a 6-digit OTP to your WhatsApp number<br />
+                      <strong>{phoneNumber}</strong>
+                    </p>
+                  </div>
+                  
+                  <form onSubmit={handleVerifyOtp} className="space-y-4">
+                    <div>
+                      <Label htmlFor="otp">6-Digit OTP</Label>
+                      <Input
+                        id="otp"
+                        type="text"
+                        placeholder="000000"
+                        value={otpCode}
+                        onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                        required
+                        maxLength={6}
+                        className="text-center text-lg tracking-widest"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">
+                        Check your WhatsApp messages for the OTP
+                      </p>
+                    </div>
+                    
+                    <div className="flex space-x-3">
+                      <Button 
+                        type="submit" 
+                        className="flex-1 bg-green-600 text-white hover:bg-green-700"
+                        disabled={isOtpLoading || otpCode.length !== 6}
+                      >
+                        {isOtpLoading ? 'Verifying...' : 'Login with OTP'}
+                      </Button>
+                      <Button 
+                        type="button"
+                        variant="outline"
+                        onClick={() => setForgotPasswordStep('phone')}
+                        className="flex-1"
+                      >
+                        <ArrowLeft className="w-4 h-4 mr-1" />
+                        Back
+                      </Button>
+                    </div>
+                    
+                    <div className="text-center">
+                      <p className="text-xs text-gray-500 mb-2">Or set a new password instead:</p>
+                      <Button 
+                        type="button"
+                        variant="outline"
+                        onClick={() => setForgotPasswordStep('reset')}
+                        className="text-sm"
+                        disabled={otpCode.length !== 6}
+                      >
+                        Reset Password
+                      </Button>
+                    </div>
+                  </form>
+                </>
+              )}
+
+              {forgotPasswordStep === 'reset' && (
+                <>
+                  <div className="text-center mb-4">
+                    <KeyRound className="w-12 h-12 text-blue-500 mx-auto mb-2" />
+                    <h3 className="text-lg font-semibold">Set New Password</h3>
+                    <p className="text-gray-600 text-sm">Create a new password for your account</p>
+                  </div>
+                  
+                  <form onSubmit={handleResetPassword} className="space-y-4">
+                    <div>
+                      <Label htmlFor="new-password">New Password</Label>
+                      <Input
+                        id="new-password"
+                        type="password"
+                        placeholder="Enter new password (min 6 characters)"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                        minLength={6}
+                      />
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="confirm-new-password">Confirm New Password</Label>
+                      <Input
+                        id="confirm-new-password"
+                        type="password"
+                        placeholder="Confirm your new password"
+                        value={confirmNewPassword}
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
+                        required
+                        minLength={6}
+                      />
+                    </div>
+                    
+                    <div className="flex space-x-3">
+                      <Button 
+                        type="submit" 
+                        className="flex-1 bg-blue-600 text-white hover:bg-blue-700"
+                        disabled={isOtpLoading || newPassword !== confirmNewPassword || newPassword.length < 6}
+                      >
+                        {isOtpLoading ? 'Resetting...' : 'Reset Password'}
+                      </Button>
+                      <Button 
+                        type="button"
+                        variant="outline"
+                        onClick={() => setForgotPasswordStep('otp')}
+                        className="flex-1"
+                      >
+                        <ArrowLeft className="w-4 h-4 mr-1" />
+                        Back
+                      </Button>
+                    </div>
+                  </form>
+                </>
+              )}
             </TabsContent>
           </Tabs>
         </CardContent>

@@ -7,10 +7,17 @@ export interface IStorage {
   // User operations
   getUser(id: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByPhone(phone: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   authenticateUser(email: string, password: string): Promise<User | null>;
   updateStripeCustomerId(userId: string, customerId: string): Promise<User | undefined>;
   updateUserStripeInfo(userId: string, stripeInfo: { customerId: string; subscriptionId: string }): Promise<User | undefined>;
+  
+  // OTP operations for forgot password
+  updateUserOtp(userId: string, otpCode: string, otpExpiry: Date): Promise<User | undefined>;
+  updateUserOtpVerified(userId: string, verified: boolean): Promise<User | undefined>;
+  updateUserPassword(userId: string, newPassword: string): Promise<User | undefined>;
+  clearUserOtp(userId: string): Promise<User | undefined>;
 
   // Product operations
   getAllProducts(): Promise<Product[]>;
@@ -75,6 +82,11 @@ export class DatabaseStorage implements IStorage {
     return user || undefined;
   }
 
+  async getUserByPhone(phone: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.phone, phone));
+    return user || undefined;
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const hashedPassword = await bcrypt.hash(insertUser.password, 10);
     const [user] = await db
@@ -93,6 +105,73 @@ export class DatabaseStorage implements IStorage {
 
     const isValid = await bcrypt.compare(password, user.password);
     return isValid ? user : null;
+  }
+
+  async updateStripeCustomerId(userId: string, customerId: string): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ stripeCustomerId: customerId })
+      .where(eq(users.id, userId))
+      .returning();
+    return updatedUser || undefined;
+  }
+
+  async updateUserStripeInfo(userId: string, stripeInfo: { customerId: string; subscriptionId: string }): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ 
+        stripeCustomerId: stripeInfo.customerId,
+        stripeSubscriptionId: stripeInfo.subscriptionId 
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    return updatedUser || undefined;
+  }
+
+  // OTP operations for forgot password
+  async updateUserOtp(userId: string, otpCode: string, otpExpiry: Date): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ 
+        otpCode: otpCode,
+        otpExpiry: otpExpiry,
+        otpVerified: false 
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    return updatedUser || undefined;
+  }
+
+  async updateUserOtpVerified(userId: string, verified: boolean): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ otpVerified: verified })
+      .where(eq(users.id, userId))
+      .returning();
+    return updatedUser || undefined;
+  }
+
+  async updateUserPassword(userId: string, newPassword: string): Promise<User | undefined> {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const [updatedUser] = await db
+      .update(users)
+      .set({ password: hashedPassword })
+      .where(eq(users.id, userId))
+      .returning();
+    return updatedUser || undefined;
+  }
+
+  async clearUserOtp(userId: string): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set({ 
+        otpCode: null,
+        otpExpiry: null,
+        otpVerified: false 
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    return updatedUser || undefined;
   }
 
   // Product operations

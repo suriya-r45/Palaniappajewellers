@@ -45,6 +45,33 @@ async function sendWelcomeWhatsAppMessage(name: string, phone: string) {
   return whatsappUrl;
 }
 
+async function sendOtpWhatsAppMessage(name: string, phone: string, otp: string) {
+  const message = `🔐 *Palaniappa Jewellers - Password Reset OTP*
+
+Hello ${name}!
+
+Your One-Time Password (OTP) for account verification is:
+
+*${otp}*
+
+⏰ This OTP is valid for 10 minutes only.
+🔒 Please do not share this OTP with anyone.
+
+If you didn't request this, please ignore this message.
+
+*Palaniappa Jewellers*
+Contact: +919597201554`;
+  
+  // Format phone number for WhatsApp
+  const formattedPhone = phone.replace(/[^\d+]/g, '');
+  const whatsappUrl = `https://wa.me/${formattedPhone.replace('+', '')}?text=${encodeURIComponent(message)}`;
+  
+  console.log(`[OTP WhatsApp] Sending OTP ${otp} to ${name} (${phone})`);
+  console.log(`[WhatsApp URL] ${whatsappUrl}`);
+  
+  return whatsappUrl;
+}
+
 // Multer configuration for file uploads
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) {
@@ -161,6 +188,132 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ user: { id: user.id, email: user.email, role: user.role, name: user.name }, token });
     } catch (error) {
       res.status(400).json({ message: "Invalid request data" });
+    }
+  });
+
+  // OTP routes for forgot password functionality
+  app.post("/api/auth/send-otp", async (req, res) => {
+    try {
+      const { phone } = req.body;
+      
+      if (!phone || phone.length < 10) {
+        return res.status(400).json({ message: "Valid phone number is required" });
+      }
+
+      // Find user by phone number
+      const user = await storage.getUserByPhone(phone);
+      if (!user) {
+        return res.status(404).json({ message: "User not found with this phone number" });
+      }
+
+      // Generate 6-digit OTP
+      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      
+      // Set OTP expiry to 10 minutes from now
+      const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+
+      // Update user with OTP
+      await storage.updateUserOtp(user.id, otpCode, otpExpiry);
+
+      // Send OTP via WhatsApp
+      await sendOtpWhatsAppMessage(user.name, phone, otpCode);
+
+      res.json({ 
+        success: true, 
+        message: "OTP sent to your WhatsApp number",
+        phone: phone 
+      });
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      res.status(500).json({ message: "Failed to send OTP" });
+    }
+  });
+
+  app.post("/api/auth/verify-otp", async (req, res) => {
+    try {
+      const { phone, otp } = req.body;
+      
+      if (!phone || !otp) {
+        return res.status(400).json({ message: "Phone number and OTP are required" });
+      }
+
+      // Find user by phone number
+      const user = await storage.getUserByPhone(phone);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Check if OTP is valid and not expired
+      if (!user.otpCode || user.otpCode !== otp) {
+        return res.status(401).json({ message: "Invalid OTP" });
+      }
+
+      if (!user.otpExpiry || new Date() > user.otpExpiry) {
+        return res.status(401).json({ message: "OTP has expired" });
+      }
+
+      // Mark OTP as verified
+      await storage.updateUserOtpVerified(user.id, true);
+
+      // Generate JWT token for direct login
+      const token = jwt.sign(
+        { id: user.id, email: user.email, role: user.role, name: user.name },
+        JWT_SECRET,
+        { expiresIn: '24h' }
+      );
+
+      res.json({ 
+        success: true, 
+        user: { id: user.id, email: user.email, role: user.role, name: user.name }, 
+        token,
+        message: "OTP verified successfully, you are now logged in!" 
+      });
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      res.status(500).json({ message: "Failed to verify OTP" });
+    }
+  });
+
+  app.post("/api/auth/reset-password", async (req, res) => {
+    try {
+      const { phone, otp, newPassword } = req.body;
+      
+      if (!phone || !otp || !newPassword) {
+        return res.status(400).json({ message: "Phone number, OTP, and new password are required" });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({ message: "Password must be at least 6 characters" });
+      }
+
+      // Find user by phone number
+      const user = await storage.getUserByPhone(phone);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Check if OTP is valid and verified
+      if (!user.otpCode || user.otpCode !== otp || !user.otpVerified) {
+        return res.status(401).json({ message: "Invalid or unverified OTP" });
+      }
+
+      if (!user.otpExpiry || new Date() > user.otpExpiry) {
+        return res.status(401).json({ message: "OTP has expired" });
+      }
+
+      // Reset password
+      await storage.updateUserPassword(user.id, newPassword);
+      
+      // Clear OTP data
+      await storage.clearUserOtp(user.id);
+
+      res.json({ 
+        success: true, 
+        message: "Password reset successfully! You can now login with your new password." 
+      });
+    } catch (error) {
+      console.error("Error resetting password:", error);
+      res.status(500).json({ message: "Failed to reset password" });
     }
   });
 
