@@ -14,6 +14,18 @@ import { ArrowRight, Star, Sparkles, Crown, Gem } from "lucide-react";
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
+
+  // Handle "View All" button clicks
+  const handleViewAllClick = (material: string) => {
+    // Set the material filter
+    setFilters(prev => ({ ...prev, material }));
+    
+    // Scroll to products section
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const [filters, setFilters] = useState<IProductFilters>({});
 
   const { data: allProducts = [], isLoading } = useQuery<Product[]>({
@@ -202,7 +214,14 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
+            <Button 
+              variant="outline" 
+              className="border-2 px-8 py-3 text-lg" 
+              style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
+              onClick={() => handleViewAllClick('GOLD')}
+            >
               View All Gold Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
@@ -234,7 +253,14 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
+            <Button 
+              variant="outline" 
+              className="border-2 px-8 py-3 text-lg" 
+              style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
+              onClick={() => handleViewAllClick('SILVER')}
+            >
               View All Silver Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
@@ -266,7 +292,14 @@ export default function Home() {
             ))}
           </div>
           <div className="text-center">
-            <Button variant="outline" className="border-2 px-8 py-3 text-lg" style={{ borderColor: '#b8860b', color: '#8b4513' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}>
+            <Button 
+              variant="outline" 
+              className="border-2 px-8 py-3 text-lg" 
+              style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
+              onClick={() => handleViewAllClick('DIAMOND')}
+            >
               View All Diamond Jewelry <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
