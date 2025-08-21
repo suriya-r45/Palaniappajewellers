@@ -5,7 +5,7 @@ import { Currency } from '@/lib/currency';
 import { Product } from '@shared/schema';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import ProductCard from '@/components/product-card';
-import { CollectionFilters } from '@/components/collection-filters';
+
 import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -23,6 +23,8 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
   const [filters, setFilters] = useState<IProductFilters>({
     material: material // Set initial filter based on material
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15; // 5x3 grid = 15 items per page
 
   const { data: allProducts = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
@@ -135,6 +137,14 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
     return filtered;
   }, [allProducts, filters, selectedCurrency]);
 
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredProducts.slice(startIndex, endIndex);
+  }, [filteredProducts, currentPage, itemsPerPage]);
+
   const getCollectionTitle = () => {
     switch (material) {
       case 'GOLD':
@@ -199,22 +209,15 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
         </div>
       </section>
 
-      {/* Products Section with Filters */}
+      {/* Products Section */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="lg:flex lg:gap-8">
-            <main className="w-full">
-              {/* New Collection Filters */}
-              <CollectionFilters
-                filters={filters}
-                onFiltersChange={setFilters}
-              />
-
-              {/* Products Section */}
-              <div className="mt-8">
+          <div className="w-full">
+            {/* Products Section */}
+            <div>
                 {isLoading ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {[...Array(12)].map((_, i) => (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    {[...Array(15)].map((_, i) => (
                       <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
                         <div className="h-64 bg-gray-300"></div>
                         <div className="p-4">
@@ -229,12 +232,15 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
                   <>
                     <div className="flex justify-between items-center mb-6">
                       <p className="text-gray-600">
-                        Showing {filteredProducts.length} of {allProducts.length} products
+                        Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, filteredProducts.length)} of {filteredProducts.length} products
+                      </p>
+                      <p className="text-gray-600">
+                        Page {currentPage} of {totalPages}
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" data-testid="grid-products">
-                      {filteredProducts.map((product) => (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6" data-testid="grid-products">
+                      {paginatedProducts.map((product) => (
                         <ProductCard
                           key={product.id}
                           product={product}
@@ -243,13 +249,57 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
                       ))}
                     </div>
 
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                      <div className="mt-12 flex justify-center items-center space-x-2">
+                        <Button
+                          variant="outline"
+                          onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                          disabled={currentPage === 1}
+                          className="px-3 py-2"
+                        >
+                          Previous
+                        </Button>
+                        
+                        {/* Page numbers */}
+                        <div className="flex space-x-1">
+                          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                            <Button
+                              key={page}
+                              variant={currentPage === page ? "default" : "outline"}
+                              onClick={() => setCurrentPage(page)}
+                              className="w-10 h-10"
+                              style={currentPage === page ? {
+                                background: 'linear-gradient(135deg, #881337 0%, #7f1d1d 100%)',
+                                color: 'white'
+                              } : {}}
+                            >
+                              {page}
+                            </Button>
+                          ))}
+                        </div>
+
+                        <Button
+                          variant="outline"
+                          onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                          disabled={currentPage === totalPages}
+                          className="px-3 py-2"
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    )}
+
                     {filteredProducts.length === 0 && (
                       <div className="text-center py-12" data-testid="empty-products">
                         <div className="text-6xl mb-4">💍</div>
                         <h3 className="text-xl font-semibold text-black mb-2">No products found</h3>
                         <p className="text-gray-600 mb-4">Try adjusting your filters to see more results</p>
                         <Button
-                          onClick={() => setFilters({ material })}
+                          onClick={() => {
+                            setFilters({ material });
+                            setCurrentPage(1);
+                          }}
                           variant="outline"
                           data-testid="button-clear-filters"
                         >
@@ -260,7 +310,6 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
                   </>
                 )}
               </div>
-            </main>
           </div>
         </div>
       </section>
