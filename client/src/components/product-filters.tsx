@@ -105,7 +105,8 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
               <Select
                 value={filters.category || ''}
                 onValueChange={(value) => {
-                  handleFilterChange('category', value || undefined);
+                  const categoryValue = value === 'ALL_CATEGORIES' ? undefined : value;
+                  handleFilterChange('category', categoryValue);
                   handleFilterChange('subCategory', undefined); // Reset subcategory
                 }}
                 data-testid="select-category"
@@ -114,7 +115,7 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Categories</SelectItem>
+                  <SelectItem value="ALL_CATEGORIES">All Categories</SelectItem>
                   {Object.entries(JEWELRY_CATEGORIES).map(([key, category]) => (
                     <SelectItem key={key} value={key}>
                       {category.name}
@@ -130,14 +131,17 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
                 <Label>Subcategory</Label>
                 <Select
                   value={filters.subCategory || ''}
-                  onValueChange={(value) => handleFilterChange('subCategory', value || undefined)}
+                  onValueChange={(value) => {
+                    const subCategoryValue = value === 'ALL_SUBCATEGORIES' ? undefined : value;
+                    handleFilterChange('subCategory', subCategoryValue);
+                  }}
                   data-testid="select-subcategory"
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select subcategory" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Subcategories</SelectItem>
+                    <SelectItem value="ALL_SUBCATEGORIES">All Subcategories</SelectItem>
                     {Object.entries(selectedCategory.subCategories).map(([key, name]) => (
                       <SelectItem key={key} value={key}>
                         {name}
@@ -153,14 +157,17 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
               <Label>Material</Label>
               <Select
                 value={filters.material || ''}
-                onValueChange={(value) => handleFilterChange('material', value || undefined)}
+                onValueChange={(value) => {
+                  const materialValue = value === 'ALL_MATERIALS' ? undefined : value;
+                  handleFilterChange('material', materialValue);
+                }}
                 data-testid="select-material"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select material" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Materials</SelectItem>
+                  <SelectItem value="ALL_MATERIALS">All Materials</SelectItem>
                   {Object.entries(MATERIALS).map(([key, name]) => (
                     <SelectItem key={key} value={key}>
                       {name}
@@ -175,14 +182,17 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
               <Label>Gender</Label>
               <Select
                 value={filters.gender || ''}
-                onValueChange={(value) => handleFilterChange('gender', value || undefined)}
+                onValueChange={(value) => {
+                  const genderValue = value === 'ALL_GENDERS' ? undefined : value;
+                  handleFilterChange('gender', genderValue);
+                }}
                 data-testid="select-gender"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select gender" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Genders</SelectItem>
+                  <SelectItem value="ALL_GENDERS">All Genders</SelectItem>
                   {Object.entries(GENDERS).map(([key, name]) => (
                     <SelectItem key={key} value={key}>
                       {name}
@@ -197,14 +207,17 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
               <Label>Occasion</Label>
               <Select
                 value={filters.occasion || ''}
-                onValueChange={(value) => handleFilterChange('occasion', value || undefined)}
+                onValueChange={(value) => {
+                  const occasionValue = value === 'ALL_OCCASIONS' ? undefined : value;
+                  handleFilterChange('occasion', occasionValue);
+                }}
                 data-testid="select-occasion"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select occasion" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Occasions</SelectItem>
+                  <SelectItem value="ALL_OCCASIONS">All Occasions</SelectItem>
                   {Object.entries(OCCASIONS).map(([key, name]) => (
                     <SelectItem key={key} value={key}>
                       {name}
@@ -239,14 +252,17 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
               <Label>Sort By</Label>
               <Select
                 value={filters.sortBy || ''}
-                onValueChange={(value) => handleFilterChange('sortBy', value || undefined)}
+                onValueChange={(value) => {
+                  const sortValue = value === 'DEFAULT_SORT' ? undefined : value;
+                  handleFilterChange('sortBy', sortValue);
+                }}
                 data-testid="select-sort"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Default</SelectItem>
+                  <SelectItem value="DEFAULT_SORT">Default</SelectItem>
                   <SelectItem value="newest">Newest First</SelectItem>
                   <SelectItem value="popular">Most Popular</SelectItem>
                   <SelectItem value="price_asc">Price: Low to High</SelectItem>
@@ -262,18 +278,75 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
             </div>
           </div>
 
-          {/* Stock Filter */}
-          <div className="mt-4 pt-4 border-t">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="inStock"
-                checked={filters.inStock || false}
-                onCheckedChange={(checked) => handleFilterChange('inStock', checked)}
-                data-testid="checkbox-in-stock"
-              />
-              <Label htmlFor="inStock" className="text-sm">
-                Show only items in stock
-              </Label>
+          {/* Advanced Filters */}
+          <div className="mt-6 pt-4 border-t">
+            <h4 className="font-semibold mb-4 text-gray-800">Advanced Filters</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              
+              {/* Stock Filter */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="inStock"
+                  checked={filters.inStock || false}
+                  onCheckedChange={(checked) => handleFilterChange('inStock', checked)}
+                  data-testid="checkbox-in-stock"
+                />
+                <Label htmlFor="inStock" className="text-sm">
+                  Show only items in stock
+                </Label>
+              </div>
+
+              {/* Featured Items */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="featured"
+                  checked={filters.featured || false}
+                  onCheckedChange={(checked) => handleFilterChange('featured', checked)}
+                  data-testid="checkbox-featured"
+                />
+                <Label htmlFor="featured" className="text-sm">
+                  Featured items only
+                </Label>
+              </div>
+
+              {/* Discount Items */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="discount"
+                  checked={filters.discount || false}
+                  onCheckedChange={(checked) => handleFilterChange('discount', checked)}
+                  data-testid="checkbox-discount"
+                />
+                <Label htmlFor="discount" className="text-sm">
+                  Items on sale
+                </Label>
+              </div>
+
+              {/* Premium Items */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="premium"
+                  checked={filters.premium || false}
+                  onCheckedChange={(checked) => handleFilterChange('premium', checked)}
+                  data-testid="checkbox-premium"
+                />
+                <Label htmlFor="premium" className="text-sm">
+                  Premium collection
+                </Label>
+              </div>
+
+              {/* New Arrivals */}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="newArrivals"
+                  checked={filters.newArrivals || false}
+                  onCheckedChange={(checked) => handleFilterChange('newArrivals', checked)}
+                  data-testid="checkbox-new-arrivals"
+                />
+                <Label htmlFor="newArrivals" className="text-sm">
+                  New arrivals (30 days)
+                </Label>
+              </div>
             </div>
           </div>
         </CollapsibleContent>

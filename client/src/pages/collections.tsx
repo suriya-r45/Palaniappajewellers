@@ -75,6 +75,30 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
       filtered = filtered.filter(product => product.stock > 0);
     }
 
+    // Apply advanced filters
+    if (filters.featured) {
+      // Use stock and name as criteria for featured items
+      filtered = filtered.filter(product => product.stock > 0 || product.name.toLowerCase().includes('featured'));
+    }
+
+    if (filters.discount) {
+      // Filter for items that might be on sale (can be enhanced with actual discount field)
+      filtered = filtered.filter(product => product.name.toLowerCase().includes('sale') || product.name.toLowerCase().includes('discount'));
+    }
+
+    if (filters.premium) {
+      // Filter for premium items based on price threshold
+      filtered = filtered.filter(product => parseFloat(selectedCurrency === 'INR' ? product.priceInr : product.priceBhd) > 50000);
+    }
+
+    if (filters.newArrivals) {
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      filtered = filtered.filter(product => 
+        product.createdAt && new Date(product.createdAt) > thirtyDaysAgo
+      );
+    }
+
     // Apply sorting
     if (filters.sortBy) {
       filtered.sort((a, b) => {
@@ -91,6 +115,16 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
             return a.name.localeCompare(b.name);
           case 'name_desc':
             return b.name.localeCompare(a.name);
+          case 'popular':
+            return b.name.localeCompare(a.name); // Can be enhanced with actual popularity metrics
+          case 'rating':
+            return b.name.localeCompare(a.name); // Can be enhanced with actual rating system
+          case 'weight_asc':
+            return parseFloat(a.grossWeight || '0') - parseFloat(b.grossWeight || '0');
+          case 'weight_desc':
+            return parseFloat(b.grossWeight || '0') - parseFloat(a.grossWeight || '0');
+          case 'stock':
+            return (b.stock || 0) - (a.stock || 0);
           default:
             return 0;
         }

@@ -81,8 +81,18 @@ export default function Home() {
 
     // Apply featured filter
     if (filters.featured) {
-      // Can be enhanced based on product featured status
-      filtered = filtered.filter(product => product.stock > 0);
+      // Filter for featured items based on stock and name
+      filtered = filtered.filter(product => product.stock > 0 || product.name.toLowerCase().includes('featured'));
+    }
+
+    // Apply discount filter
+    if (filters.discount) {
+      filtered = filtered.filter(product => product.name.toLowerCase().includes('sale') || product.name.toLowerCase().includes('discount'));
+    }
+
+    // Apply premium filter
+    if (filters.premium) {
+      filtered = filtered.filter(product => parseFloat(selectedCurrency === 'INR' ? product.priceInr : product.priceBhd) > 50000);
     }
 
     // Apply new arrivals filter (last 30 days)
