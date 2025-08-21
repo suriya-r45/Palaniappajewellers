@@ -252,15 +252,6 @@ function ProductForm({ currency }: ProductFormProps) {
 
   return (
     <div>
-      <Button
-        variant="ghost"
-        onClick={() => setLocation('/admin')}
-        className="mb-4 text-luxury-black hover:bg-champagne/20 border border-gold/30"
-        data-testid="button-back-to-dashboard-product"
-      >
-        <ArrowLeft className="h-4 w-4 mr-2" />
-        Back to Admin Dashboard
-      </Button>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Add Product Form */}
       <Card data-testid="card-add-product">
