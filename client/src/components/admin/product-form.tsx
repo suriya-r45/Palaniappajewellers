@@ -212,7 +212,7 @@ function ProductForm({ currency }: ProductFormProps) {
     
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, typeof value === 'boolean' ? value.toString() : value);
+      data.append(key, String(value));
     });
     
     selectedFiles.forEach(file => {
@@ -458,7 +458,7 @@ function ProductForm({ currency }: ProductFormProps) {
 
             <Button
               type="submit"
-              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 rounded-lg shadow-lg border border-yellow-400"
+              className="w-full bg-rose-800 hover:bg-rose-700 text-rose-100 font-semibold py-3 rounded-lg shadow-lg border border-rose-700 transition-all"
               disabled={addProductMutation.isPending}
               data-testid="button-add-product"
             >

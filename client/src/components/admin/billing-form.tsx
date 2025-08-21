@@ -506,7 +506,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
           <div className="flex space-x-4">
             <Button
               type="submit"
-              className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold"
+              className="flex-1 bg-rose-800 hover:bg-rose-700 text-rose-100 font-semibold border border-rose-700 transition-all"
               disabled={createBillMutation.isPending || selectedProducts.size === 0}
               data-testid="button-create-bill"
             >

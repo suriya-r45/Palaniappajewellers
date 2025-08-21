@@ -25,9 +25,9 @@ export function EstimatesPage() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="mb-8">
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => setLocation('/admin')}
-            className="mb-4 text-luxury-black hover:bg-champagne/20 border border-gold/30"
+            className="mb-4 border-rose-800 text-rose-800 hover:bg-rose-100"
             data-testid="button-back-to-dashboard"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -40,12 +40,12 @@ export function EstimatesPage() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto mb-8">
-            <TabsTrigger value="list" className="flex items-center space-x-2">
+          <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto mb-8 bg-rose-100">
+            <TabsTrigger value="list" className="flex items-center space-x-2 data-[state=active]:bg-rose-800 data-[state=active]:text-rose-100 text-rose-700">
               <List className="h-4 w-4" />
               <span>View Estimates</span>
             </TabsTrigger>
-            <TabsTrigger value="create" className="flex items-center space-x-2">
+            <TabsTrigger value="create" className="flex items-center space-x-2 data-[state=active]:bg-rose-800 data-[state=active]:text-rose-100 text-rose-700">
               <Plus className="h-4 w-4" />
               <span>Create Estimate</span>
             </TabsTrigger>
