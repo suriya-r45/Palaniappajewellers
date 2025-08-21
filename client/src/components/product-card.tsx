@@ -91,7 +91,7 @@ Could you please provide more details?`;
   };
 
   return (
-    <Card className="group card-hover glass-effect border-0 overflow-hidden">
+    <Card className="group card-hover glass-effect border-0 overflow-hidden w-full max-w-sm mx-auto">
       <div className="relative">
         {/* Product Image */}
         <div 
