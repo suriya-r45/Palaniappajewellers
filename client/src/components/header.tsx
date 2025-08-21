@@ -26,7 +26,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
   return (
     <>
       {/* <GoldRatesTicker /> */}
-      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50" data-testid="header-main">
+      <header className="bg-gradient-to-r from-yellow-50 via-white to-red-50 shadow-sm border-b border-gray-200 sticky top-0 z-50" data-testid="header-main">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">

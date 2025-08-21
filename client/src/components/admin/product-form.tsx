@@ -427,9 +427,38 @@ export default function ProductForm({ currency }: ProductFormProps) {
               />
             </div>
 
-            {/* Hidden price fields - prices are calculated automatically */}
-            <input type="hidden" name="priceInr" value={formData.priceInr} />
-            <input type="hidden" name="priceBhd" value={formData.priceBhd} />
+            {/* Editable price fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="priceInr">Price (INR)</Label>
+                <Input
+                  id="priceInr"
+                  type="number"
+                  step="0.01"
+                  value={formData.priceInr}
+                  onChange={(e) => setFormData({ ...formData, priceInr: e.target.value })}
+                  placeholder="Enter price in INR"
+                  required
+                  data-testid="input-price-inr"
+                  className="bg-white"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="priceBhd">Price (BHD)</Label>
+                <Input
+                  id="priceBhd"
+                  type="number"
+                  step="0.001"
+                  value={formData.priceBhd}
+                  onChange={(e) => setFormData({ ...formData, priceBhd: e.target.value })}
+                  placeholder="Enter price in BHD"
+                  required
+                  data-testid="input-price-bhd"
+                  className="bg-white"
+                />
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -569,7 +598,7 @@ export default function ProductForm({ currency }: ProductFormProps) {
 
                 {(isGoldSelected || isSilverSelected) && formData.netWeight && (
                   <div className="p-4 bg-gradient-to-r from-gray-100 to-yellow-100 rounded-lg border">
-                    <div className="text-sm text-gray-700 mb-2">💰 Calculated Prices:</div>
+                    <div className="text-sm text-gray-700 mb-2">💰 Auto-calculated prices (editable above):</div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center p-2 bg-white rounded border">
                         <div className="font-semibold text-gray-800">₹{formData.priceInr}</div>
@@ -579,6 +608,9 @@ export default function ProductForm({ currency }: ProductFormProps) {
                         <div className="font-semibold text-yellow-600">BD {formData.priceBhd}</div>
                         <div className="text-xs text-gray-600">Bahrain Dinar</div>
                       </div>
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2 text-center">
+                      Prices are calculated automatically but can be edited in the price fields above
                     </div>
                   </div>
                 )}
