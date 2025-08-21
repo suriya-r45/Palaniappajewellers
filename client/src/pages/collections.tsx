@@ -5,7 +5,7 @@ import { Currency } from '@/lib/currency';
 import { Product } from '@shared/schema';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import ProductCard from '@/components/product-card';
-import ProductFilters from '@/components/product-filters';
+import { CollectionFilters } from '@/components/collection-filters';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import WhatsAppFloat from '@/components/whatsapp-float';
@@ -202,61 +202,63 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="lg:flex lg:gap-8">
-            <aside className="lg:w-1/4 mb-8 lg:mb-0">
-              <ProductFilters
+            <main className="w-full">
+              {/* New Collection Filters */}
+              <CollectionFilters
                 filters={filters}
                 onFiltersChange={setFilters}
               />
-            </aside>
 
-            <main className="lg:w-3/4">
-              {isLoading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {[...Array(12)].map((_, i) => (
-                    <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
-                      <div className="h-64 bg-gray-300"></div>
-                      <div className="p-4">
-                        <div className="h-4 bg-gray-300 mb-2"></div>
-                        <div className="h-4 bg-gray-300 mb-2 w-3/4"></div>
-                        <div className="h-6 bg-gray-300"></div>
+              {/* Products Section */}
+              <div className="mt-8">
+                {isLoading ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {[...Array(12)].map((_, i) => (
+                      <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                        <div className="h-64 bg-gray-300"></div>
+                        <div className="p-4">
+                          <div className="h-4 bg-gray-300 mb-2"></div>
+                          <div className="h-4 bg-gray-300 mb-2 w-3/4"></div>
+                          <div className="h-6 bg-gray-300"></div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <>
-                  <div className="flex justify-between items-center mb-6">
-                    <p className="text-gray-600">
-                      Showing {filteredProducts.length} of {allProducts.length} products
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" data-testid="grid-products">
-                    {filteredProducts.map((product) => (
-                      <ProductCard
-                        key={product.id}
-                        product={product}
-                        currency={selectedCurrency}
-                      />
                     ))}
                   </div>
-
-                  {filteredProducts.length === 0 && (
-                    <div className="text-center py-12" data-testid="empty-products">
-                      <div className="text-6xl mb-4">💍</div>
-                      <h3 className="text-xl font-semibold text-black mb-2">No products found</h3>
-                      <p className="text-gray-600 mb-4">Try adjusting your filters to see more results</p>
-                      <Button
-                        onClick={() => setFilters({ material })}
-                        variant="outline"
-                        data-testid="button-clear-filters"
-                      >
-                        Clear Filters
-                      </Button>
+                ) : (
+                  <>
+                    <div className="flex justify-between items-center mb-6">
+                      <p className="text-gray-600">
+                        Showing {filteredProducts.length} of {allProducts.length} products
+                      </p>
                     </div>
-                  )}
-                </>
-              )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" data-testid="grid-products">
+                      {filteredProducts.map((product) => (
+                        <ProductCard
+                          key={product.id}
+                          product={product}
+                          currency={selectedCurrency}
+                        />
+                      ))}
+                    </div>
+
+                    {filteredProducts.length === 0 && (
+                      <div className="text-center py-12" data-testid="empty-products">
+                        <div className="text-6xl mb-4">💍</div>
+                        <h3 className="text-xl font-semibold text-black mb-2">No products found</h3>
+                        <p className="text-gray-600 mb-4">Try adjusting your filters to see more results</p>
+                        <Button
+                          onClick={() => setFilters({ material })}
+                          variant="outline"
+                          data-testid="button-clear-filters"
+                        >
+                          Clear Filters
+                        </Button>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
             </main>
           </div>
         </div>
