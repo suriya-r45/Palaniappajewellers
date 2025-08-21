@@ -1,5 +1,6 @@
 // import { openWhatsAppGeneral } from '@/lib/whatsapp';
 import { MessageCircle, Phone, Mail, MapPin, Instagram } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import logoPath from '@assets/1000284180_1755240849891.jpg';
 
 
@@ -61,7 +62,7 @@ export default function Footer() {
                 className="flex items-center space-x-2 text-white hover:text-green-400 transition-colors cursor-pointer" 
                 data-testid="link-whatsapp-phone"
               >
-                <Phone className="h-4 w-4" />
+                <FaWhatsapp className="h-4 w-4" />
                 <span>+919597201554</span>
               </a>
               <a
