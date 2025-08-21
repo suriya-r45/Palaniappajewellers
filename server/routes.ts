@@ -528,7 +528,8 @@ Premium quality, timeless beauty.`;
 
       // Enhanced Items table with better spacing and design
       const tableY = currentY;
-      const tableHeaders = ['Product Description', 'Purity', 'Net Weight (g)', 'Gross Weight (g)', 'Product Price', 'Making Charges', 'Discount', 'Tax', 'Total Amount'];
+      const taxHeader = bill.currency === 'INR' ? 'GST (3%)' : 'VAT (10%)';
+      const tableHeaders = ['Product Description', 'Purity', 'Net Weight (g)', 'Gross Weight (g)', 'Product Price', 'Making Charges', 'Discount', taxHeader, 'Total Amount'];
       const colWidths = [85, 45, 55, 55, 60, 55, 50, 40, 85];
       
       // Enhanced Table header with better styling
@@ -607,7 +608,8 @@ Premium quality, timeless beauty.`;
         // Tax (GST for India, VAT for Bahrain)
         const tax = bill.currency === 'INR' ? parseFloat(item.sgst) + parseFloat(item.cgst) : parseFloat(item.vat);
         const taxLabel = bill.currency === 'INR' ? 'GST' : 'VAT';
-        doc.text(`${taxLabel} ${tax.toFixed(2)}%`, cellX, rowY + 8, { width: colWidths[7] - 2, align: 'center' });
+        const taxPercentage = bill.currency === 'INR' ? '3' : '10';
+        doc.text(`${taxLabel} (${taxPercentage}%)`, cellX, rowY + 8, { width: colWidths[7] - 2, align: 'center' });
         cellX += colWidths[7];
         
         // Total Amount
