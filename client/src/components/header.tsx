@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { User, LogOut } from 'lucide-react';
+import { User, LogOut, Search, MapPin, Heart, ShoppingCart, Menu, Phone } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { Currency, CURRENCY_NAMES } from '@/lib/currency';
 import CartButton from '@/components/cart/cart-button';
@@ -17,6 +18,7 @@ interface HeaderProps {
 export default function Header({ selectedCurrency, onCurrencyChange }: HeaderProps) {
   const [location] = useLocation();
   const { user, logout, isAdmin } = useAuth();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleLogout = () => {
     logout();
@@ -25,107 +27,195 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
   return (
     <>
-      {/* <GoldRatesTicker /> */}
-      <header className="bg-gradient-to-r from-yellow-100 via-amber-25 to-red-100 shadow-sm border-b border-amber-300 sticky top-0 z-50" data-testid="header-main">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+      {/* Top Contact Bar */}
+      <div className="bg-purple-900 text-white text-xs py-1">
+        <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <div className="w-8 h-8 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-gray-300">
-              <img 
-                src={logoPath} 
-                alt="Palaniappa Jewellers Logo" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-              <div>
-                <h1 className="text-sm md:text-xl font-bold text-black">PALANIAPPA JEWELLERS</h1>
-                <p className="text-xs text-gray-500 hidden md:block">Since 2025</p>
-              </div>
-            </Link>
+            <span>For Store and Scheme Queries - +919442131883</span>
           </div>
-
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`transition-colors ${location === '/' ? 'text-black font-medium' : 'text-gray-700 hover:text-black'}`} data-testid="nav-home">
-              Home
-            </Link>
-            <a href="#products" className="text-gray-700 hover:text-black transition-colors" data-testid="nav-products">
-              Products
-            </a>
-            <a href="#about" className="text-gray-700 hover:text-black transition-colors" data-testid="nav-about">
-              About
-            </a>
-            <a href="#contact" className="text-gray-700 hover:text-black transition-colors" data-testid="nav-contact">
-              Contact
-            </a>
-          </nav>
-
           <div className="flex items-center space-x-4">
-            <CartButton />
-            <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
-              <SelectTrigger className="w-20 md:w-32 flex items-center" data-testid="trigger-currency">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="INR" data-testid="option-inr">
-                  <div className="flex items-center gap-2">
-                    <svg className="w-5 h-5 rounded-sm" viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="8" fill="#FF9933"/>
-                      <rect y="8" width="24" height="8" fill="#FFFFFF"/>
-                      <rect y="16" width="24" height="8" fill="#138808"/>
-                      <circle cx="12" cy="12" r="3" fill="#000080"/>
-                    </svg>
-                    <span>₹ INR</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="BHD" data-testid="option-bhd">
-                  <div className="flex items-center gap-2">
-                    <svg className="w-5 h-5 rounded-sm" viewBox="0 0 24 24" fill="none">
-                      <rect width="24" height="12" fill="#FFFFFF"/>
-                      <rect y="12" width="24" height="12" fill="#CE1126"/>
-                      <path d="M0 0 L8 6 L0 12 V8 L4 6 L0 4 Z" fill="#CE1126"/>
-                    </svg>
-                    <span>BD BHD</span>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-
-            <div className="flex items-center space-x-2">
-              {user ? (
-                <div className="flex items-center space-x-2">
-                  {isAdmin && (
-                    <Link href="/admin">
-                      <Button variant="outline" size="sm" data-testid="button-admin-dashboard">
-                        Dashboard
-                      </Button>
-                    </Link>
-                  )}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleLogout}
-                    className="flex items-center space-x-1"
-                    data-testid="button-logout"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>{user.name}</span>
-                  </Button>
-                </div>
-              ) : (
-                <Link href="/login">
-                  <Button className="bg-black text-white hover:bg-gray-800" data-testid="button-login">
-                    <User className="h-4 w-4 mr-2" />
-                    Login
-                  </Button>
-                </Link>
-              )}
-            </div>
+            <span className="flex items-center">
+              <Phone className="h-3 w-3 mr-1" />
+              +91 9442131883
+            </span>
+            <span>+91 9167789918</span>
           </div>
         </div>
       </div>
-    </header>
+
+      {/* Main Header */}
+      <header className="bg-purple-900 shadow-sm sticky top-0 z-50" data-testid="header-main">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo Section */}
+            <div className="flex items-center space-x-4">
+              <Link href="/" className="flex items-center space-x-3" data-testid="link-home">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-white">
+                  <img 
+                    src={logoPath} 
+                    alt="Palaniappa Jewellers Logo" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <h1 className="text-lg md:text-2xl font-bold text-white tracking-wide">PALANIAPPA</h1>
+                  <p className="text-sm text-purple-200 hidden md:block font-medium">GOLD & DIAMONDS</p>
+                </div>
+              </Link>
+            </div>
+
+            {/* Search Bar */}
+            <div className="hidden md:flex flex-1 max-w-md mx-8">
+              <div className="relative w-full">
+                <Input
+                  type="text"
+                  placeholder="Search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-4 pr-12 py-2 rounded-md border-0 bg-white text-black"
+                />
+                <Button 
+                  size="sm" 
+                  className="absolute right-0 top-0 h-full px-4 bg-purple-800 hover:bg-purple-700 rounded-l-none"
+                >
+                  <Search className="h-4 w-4 text-white" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Right Section Icons */}
+            <div className="flex items-center space-x-4 text-white">
+              {/* Stores */}
+              <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-purple-200">
+                <MapPin className="h-5 w-5" />
+                <span className="text-xs mt-1">Stores</span>
+              </div>
+
+              {/* Currency/Country */}
+              <div className="flex flex-col items-center">
+                <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
+                  <SelectTrigger className="bg-transparent border-0 text-white hover:text-purple-200 p-0 h-auto">
+                    <div className="flex flex-col items-center cursor-pointer">
+                      <span className="text-xs">Country</span>
+                      <SelectValue />
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="INR" data-testid="option-inr">
+                      <div className="flex items-center gap-2">
+                        <svg className="w-5 h-5 rounded-sm" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="8" fill="#FF9933"/>
+                          <rect y="8" width="24" height="8" fill="#FFFFFF"/>
+                          <rect y="16" width="24" height="8" fill="#138808"/>
+                          <circle cx="12" cy="12" r="3" fill="#000080"/>
+                        </svg>
+                        <span>₹ INR</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="BHD" data-testid="option-bhd">
+                      <div className="flex items-center gap-2">
+                        <svg className="w-5 h-5 rounded-sm" viewBox="0 0 24 24" fill="none">
+                          <rect width="24" height="12" fill="#FFFFFF"/>
+                          <rect y="12" width="24" height="12" fill="#CE1126"/>
+                          <path d="M0 0 L8 6 L0 12 V8 L4 6 L0 4 Z" fill="#CE1126"/>
+                        </svg>
+                        <span>BD BHD</span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Profile */}
+              <div className="flex flex-col items-center">
+                {user ? (
+                  <div className="flex items-center space-x-2">
+                    {isAdmin && (
+                      <Link href="/admin">
+                        <Button variant="ghost" size="sm" className="text-white hover:text-purple-200 hover:bg-purple-800" data-testid="button-admin-dashboard">
+                          Dashboard
+                        </Button>
+                      </Link>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleLogout}
+                      className="flex flex-col items-center text-white hover:text-purple-200 hover:bg-purple-800 p-1"
+                      data-testid="button-logout"
+                    >
+                      <LogOut className="h-5 w-5" />
+                      <span className="text-xs mt-1">{user.name}</span>
+                    </Button>
+                  </div>
+                ) : (
+                  <Link href="/login">
+                    <div className="flex flex-col items-center cursor-pointer hover:text-purple-200">
+                      <User className="h-5 w-5" />
+                      <span className="text-xs mt-1">Profile</span>
+                    </div>
+                  </Link>
+                )}
+              </div>
+
+              {/* Wishlist */}
+              <div className="hidden md:flex flex-col items-center cursor-pointer hover:text-purple-200">
+                <Heart className="h-5 w-5" />
+                <span className="text-xs mt-1">Wishlist</span>
+              </div>
+
+              {/* Cart */}
+              <div className="flex flex-col items-center">
+                <CartButton />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Navigation Menu */}
+      <nav className="bg-white border-b shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center space-x-8 py-3">
+            <Link href="/" className={`text-sm font-medium transition-colors ${location === '/' ? 'text-purple-900 border-b-2 border-purple-900 pb-2' : 'text-gray-700 hover:text-purple-900'}`} data-testid="nav-home">
+              DIAMOND
+            </Link>
+            <a href="#products" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors" data-testid="nav-products">
+              GOLD
+            </a>
+            <a href="#gemstone" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              GEMSTONE
+            </a>
+            <a href="#uncut" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              UNCUT DIAMOND
+            </a>
+            <a href="#platinum" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              PLATINUM
+            </a>
+            <a href="#coins" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              GOLD COINS
+            </a>
+            <a href="#silver" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              SILVER
+            </a>
+            <a href="#watches" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              WATCHES
+            </a>
+            <a href="#gifts" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              GIFTS
+            </a>
+            <a href="#jewellery" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              JEWELLERY
+            </a>
+            <a href="#giftcards" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              GIFT CARDS
+            </a>
+            <a href="#goldrate" className="text-sm font-medium text-gray-700 hover:text-purple-900 transition-colors">
+              GOLD RATE
+            </a>
+          </div>
+        </div>
+      </nav>
     </>
   );
 }
