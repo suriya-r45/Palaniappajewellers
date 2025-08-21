@@ -479,6 +479,7 @@ Premium quality, timeless beauty.`;
 
       doc.fontSize(14)
          .font('Helvetica-Bold')
+         .fillColor('#FF0000')
          .text('TAX INVOICE', margin + 5, headerY + 8);
 
       currentY += 35;
@@ -532,7 +533,7 @@ Premium quality, timeless beauty.`;
       
       // Enhanced Table header with better styling
       doc.rect(margin, tableY, pageWidth - (margin * 2), 35)
-         .fill('#D4AF37')
+         .fill('#FF0000')
          .stroke('#000000');
 
       let headerX = margin + 3;
