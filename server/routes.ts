@@ -383,7 +383,7 @@ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
 Thank you for choosing Palaniappa Jewellers!
 Where every jewel is crafted for elegance that lasts generations.
 
-Contact us: +919442131883
+Contact us: +919597201554
 Premium quality, timeless beauty.`;
 
       // Create WhatsApp URL

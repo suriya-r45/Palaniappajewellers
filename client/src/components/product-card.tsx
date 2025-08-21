@@ -83,7 +83,7 @@ Product ID: ${product.id}
 
 Could you please provide more details?`;
 
-    const whatsappUrl = `https://wa.me/919442131883?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/919597201554?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 

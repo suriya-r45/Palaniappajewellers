@@ -4,7 +4,7 @@ This is a jewelry management and e-commerce system for Palaniappa Jewellers. The
 
 ## Recent Changes (August 2025)
 - **PDF Alignment Fix (August 21, 2025)**: Fixed "TOTAL AMOUNT TO BE PAID" section alignment in PDF bills to ensure proper containment within page margins and prevent text overflow beyond document boundaries
-- **WhatsApp Number Update (August 21, 2025)**: Updated WhatsApp business number from +919597201554 to +919442131883 across all contact points including footer, product enquiry buttons, and general messaging integrations
+- **WhatsApp Number Update (August 21, 2025)**: Updated WhatsApp business number from +919442131883 to +919597201554 across all contact points including footer, product enquiry buttons, and general messaging integrations
 - **Successful Replit Migration (August 21, 2025)**: Completed full migration from Replit Agent to native Replit environment with PostgreSQL database provisioning, Stripe payment integration (both secret and public keys), secure environment variable configuration, database schema migration, and all services running optimally
 - **Warm Champagne/Rose Gold Color Theme (August 20, 2025)**: Updated entire application to elegant warm champagne/rose gold color palette featuring Champagne Beige (#C08C6A) to Light Nude (#E3C7AF) background gradient, Rose Gold (#C98A6B) primary accents, Pure White (#FFFFFF) headings, and Soft Warm Gray (#DDDDDD) body text for sophisticated jewelry store aesthetics
 - **Accurate Gold Rate Integration (August 20, 2025)**: Implemented proper daily gold rate updates with verified market data - Salem Tamil Nadu (₹9,180/gram for 22K gold) and Bahrain (BHD 38.40/gram for 22K gold) rates using reliable API sources with automatic daily updates and fallback mechanisms
