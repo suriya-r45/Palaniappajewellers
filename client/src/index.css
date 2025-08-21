@@ -36,6 +36,17 @@
       transform: scale(1);
     }
   }
+  
+  @keyframes brightPulse {
+    0% {
+      box-shadow: 0 0 30px #ff0066, 0 8px 25px rgba(255, 0, 102, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+      filter: brightness(1.2) saturate(1.5);
+    }
+    100% {
+      box-shadow: 0 0 50px #ff0066, 0 12px 35px rgba(255, 0, 102, 0.9), inset 0 2px 0 rgba(255, 255, 255, 0.6) !important;
+      filter: brightness(1.4) saturate(1.8);
+    }
+  }
 }
 
 :root {
