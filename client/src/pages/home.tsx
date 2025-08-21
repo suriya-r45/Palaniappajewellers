@@ -130,26 +130,31 @@ export default function Home() {
     return filtered;
   }, [allProducts, filters, selectedCurrency]);
 
-  // Get category-specific products
+  // Get category-specific products based on actual saved data
   const goldProducts = useMemo(() => 
     allProducts.filter(product => 
       product.material?.includes('GOLD') || 
-      product.category === 'RINGS' || 
-      product.category === 'NECKLACES_CHAINS'
+      product.subCategory?.toLowerCase().includes('gold') ||
+      (product.category === 'materials' && product.subCategory === 'Gold Jewellery') ||
+      (product.category === 'rings' && product.material?.includes('GOLD')) ||
+      (product.category === 'necklaces' && product.material?.includes('GOLD'))
     ).slice(0, 8), [allProducts]
   );
 
   const silverProducts = useMemo(() => 
     allProducts.filter(product => 
       product.material?.includes('SILVER') ||
-      product.category === 'ANKLETS_TOE_RINGS'
+      product.subCategory?.toLowerCase().includes('silver') ||
+      (product.category === 'materials' && product.subCategory === 'Silver Jewellery')
     ).slice(0, 8), [allProducts]
   );
 
   const diamondProducts = useMemo(() => 
     allProducts.filter(product => 
       product.material?.includes('DIAMOND') ||
-      product.category === 'BRIDAL_COLLECTIONS'
+      product.subCategory?.toLowerCase().includes('diamond') ||
+      (product.category === 'materials' && product.subCategory === 'Diamond Jewellery') ||
+      (product.category === 'collections' && product.subCategory === 'Bridal Collection')
     ).slice(0, 8), [allProducts]
   );
 
@@ -164,8 +169,6 @@ export default function Home() {
       <Header
         selectedCurrency={selectedCurrency}
         onCurrencyChange={setSelectedCurrency}
-        filters={filters}
-        onFiltersChange={setFilters}
       />
 
       {/* Category Navigation - Moved to top above hero section */}
