@@ -267,18 +267,23 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
 
       {/* Mobile Bottom Navigation */}
       <MobileBottomNav 
-        onCategorySelect={(category) => setFilters({ ...filters, category })}
-        onSortChange={(sort) => setFilters({ ...filters, sortBy: sort as any })}
-        onFilterChange={(activeFilters) => {
-          // Apply mobile filters to state
+        onCategorySelect={(category) => {
+          setFilters({ ...filters, category });
+        }}
+        onSortChange={(sort) => {
+          setFilters({ ...filters, sortBy: sort as any });
+        }}
+        onFilterChange={(selectedFilters) => {
+          // This is where mobile filter selections would be applied
+          // For now, we maintain the existing filter state
           const newFilters = { ...filters };
-          // This could be enhanced to parse the activeFilters array
           setFilters(newFilters);
         }}
-        activeFilters={Object.keys(filters).filter(key => 
-          filters[key as keyof IProductFilters] !== undefined && 
-          filters[key as keyof IProductFilters] !== ''
-        ).length}
+        activeFilters={Object.keys(filters).filter(key => {
+          const value = filters[key as keyof IProductFilters];
+          return value !== undefined && value !== '' && value !== 'ALL_CATEGORIES' && 
+                 value !== 'ALL_MATERIALS' && value !== 'DEFAULT_SORT';
+        }).length}
         sortBy={filters.sortBy}
       />
 
