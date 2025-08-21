@@ -91,7 +91,7 @@ Could you please provide more details?`;
   };
 
   return (
-    <Card className="group card-hover glass-effect border-0 overflow-hidden w-full">
+    <Card className="group card-hover glass-effect border-0 overflow-hidden w-full h-full flex flex-col">
       <div className="relative">
         {/* Product Image */}
         <div 
@@ -151,9 +151,9 @@ Could you please provide more details?`;
         </div>
       </div>
 
-      <CardContent className="p-2 sm:p-4">
+      <CardContent className="p-2 sm:p-4 flex-1 flex flex-col">
         {/* Product Info */}
-        <div className="space-y-2">
+        <div className="space-y-2 flex-1">
           <div className="flex items-start justify-between">
             <h3 
               className="font-semibold text-xs md:text-sm line-clamp-2 flex-1 hover:text-yellow-600 cursor-pointer" 

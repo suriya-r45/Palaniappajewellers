@@ -244,7 +244,7 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
             {/* Products Section */}
             <div>
               {isLoading ? (
-                <div className="grid grid-cols-3 gap-0.5 sm:gap-2 md:gap-4 lg:grid-cols-4 xl:grid-cols-5 xl:gap-6">
+                <div className="grid grid-cols-3 gap-0.5 sm:gap-2 md:gap-4 lg:grid-cols-4 xl:grid-cols-5 xl:gap-6 items-start">
                   {[...Array(itemsPerPage)].map((_, i) => (
                     <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
                       <div className="h-64 bg-gray-300"></div>
@@ -267,7 +267,7 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-0.5 sm:gap-2 md:gap-4 lg:grid-cols-4 xl:grid-cols-5 xl:gap-6" data-testid="grid-products">
+                  <div className="grid grid-cols-3 gap-0.5 sm:gap-2 md:gap-4 lg:grid-cols-4 xl:grid-cols-5 xl:gap-6 items-start" data-testid="grid-products">
                     {paginatedProducts.map((product) => (
                       <ProductCard
                         key={product.id}
