@@ -265,6 +265,14 @@ export default function BillPreview({ bill, onClose }: BillPreviewProps) {
             </div>
           </div>
 
+          {/* Total Amount to be Paid - Matching PDF format */}
+          <div className="mt-6 mb-4">
+            <div className="bg-black text-yellow-400 p-3 flex justify-between items-center border-2 border-yellow-400" style={{ width: '100%' }}>
+              <span className="font-bold text-sm">TOTAL AMOUNT TO BE PAID:</span>
+              <span className="font-bold text-sm">{bill.currency === 'INR' ? '₹' : 'BD'} {parseFloat(bill.total).toFixed(2)}</span>
+            </div>
+          </div>
+
           {/* Footer */}
           <div className="mt-6 text-center text-xs text-gray-600">
             <p>This is a computer-generated bill.No signature required</p>
