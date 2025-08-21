@@ -380,7 +380,7 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
 🏛️ VAT: ${currencySymbol}${parseFloat(bill.vat).toLocaleString()}
 💰 *Total: ${currencySymbol}${parseFloat(bill.total).toLocaleString()}*
 
-📄 *PDF Bill:* ${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber}.pdf
+📄 *PDF Bill:* ${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber.replace(/[\/\\]/g, '')}.pdf
 🔗 ${pdfUrl}
 
 💡 *Download Steps:*
@@ -440,7 +440,7 @@ ${(typeof bill.items === 'string' ? JSON.parse(bill.items) : bill.items).map((it
         }
       });
       
-      const filename = `${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber}.pdf`;
+      const filename = `${bill.customerName.replace(/\s+/g, '_')}_${bill.billNumber.replace(/[\/\\]/g, '')}.pdf`;
 
       // Set headers for PDF download with better compatibility for WhatsApp
       res.setHeader('Content-Type', 'application/pdf');
