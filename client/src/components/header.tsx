@@ -46,11 +46,11 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
       {/* Main Header */}
       <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-12 md:h-20">
+          <div className="flex items-center justify-between h-14 md:h-20">
             {/* Logo Section */}
-            <div className="flex items-center space-x-1 md:space-x-4">
-              <Link href="/" className="flex items-center space-x-1 md:space-x-3" data-testid="link-home">
-                <div className="w-6 h-6 md:w-16 md:h-16 rounded-full overflow-hidden border border-white">
+            <div className="flex items-center space-x-2 md:space-x-4">
+              <Link href="/" className="flex items-center space-x-2 md:space-x-3" data-testid="link-home">
+                <div className="w-8 h-8 md:w-16 md:h-16 rounded-full overflow-hidden border border-white">
                   <img 
                     src={logoPath} 
                     alt="Palaniappa Jewellers Logo" 
