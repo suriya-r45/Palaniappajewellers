@@ -21,7 +21,14 @@ export default function AdminDashboard() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('INR');
-  const [activeTab, setActiveTab] = useState('products');
+  const [activeTab, setActiveTab] = useState(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates') {
+      return tabParam;
+    }
+    return 'products';
+  });
   const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
 
   useEffect(() => {
