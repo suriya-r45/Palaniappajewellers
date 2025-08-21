@@ -109,12 +109,25 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
   };
 
   const calculateBillTotals = () => {
-    let subtotal = 0;
+    // Use manually entered amounts instead of calculating from product prices
+    const subtotal = customerData.currency === 'INR' 
+      ? parseFloat(customerData.amountInr) || 0
+      : parseFloat(customerData.amountBhd) || 0;
     
     const billItems: BillItem[] = Array.from(selectedProducts.values()).map(({ product, quantity }) => {
-      const price = customerData.currency === 'INR' ? parseFloat(product.priceInr) : parseFloat(product.priceBhd);
-      const itemTotal = price * quantity;
-      subtotal += itemTotal;
+      // Calculate proportional amount for each item based on total edited amount
+      const originalPrice = customerData.currency === 'INR' ? parseFloat(product.priceInr) : parseFloat(product.priceBhd);
+      const originalItemTotal = originalPrice * quantity;
+      
+      // Calculate what portion this item represents of the original total
+      let originalSubtotal = 0;
+      selectedProducts.forEach(({ product: p, quantity: q }) => {
+        const pPrice = customerData.currency === 'INR' ? parseFloat(p.priceInr) : parseFloat(p.priceBhd);
+        originalSubtotal += pPrice * q;
+      });
+      
+      // Proportionally distribute the edited amount
+      const itemTotal = originalSubtotal > 0 ? (originalItemTotal / originalSubtotal) * subtotal : 0;
       
       const makingChargesAmount = (itemTotal * parseFloat(customerData.makingCharges)) / 100;
       
