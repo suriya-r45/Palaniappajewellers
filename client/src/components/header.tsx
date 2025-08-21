@@ -26,12 +26,12 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
   return (
     <>
       {/* <GoldRatesTicker /> */}
-      <header className="bg-gradient-to-r from-yellow-50 via-white to-red-50 shadow-sm border-b border-gray-200 sticky top-0 z-50" data-testid="header-main">
+      <header className="bg-gradient-to-r from-yellow-50 via-white to-red-50 shadow-sm border-b border-amber-200 sticky top-0 z-50" data-testid="header-main">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-2" data-testid="link-home">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gold">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-300">
               <img 
                 src={logoPath} 
                 alt="Palaniappa Jewellers Logo" 
