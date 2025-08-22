@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -42,6 +42,59 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
 
   const [selectedProducts, setSelectedProducts] = useState<Map<string, { product: Product; quantity: number }>>(new Map());
   const [searchQuery, setSearchQuery] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  // Check for edit bill data in localStorage
+  useEffect(() => {
+    const editBillData = localStorage.getItem('editBill');
+    if (editBillData) {
+      try {
+        const billData = JSON.parse(editBillData);
+        
+        // Populate customer data
+        setCustomerData({
+          customerName: billData.customerName || '',
+          customerEmail: billData.customerEmail || '',
+          customerPhone: billData.customerPhone || '',
+          customerAddress: billData.customerAddress || '',
+          currency: billData.currency || currency,
+          makingCharges: billData.makingCharges || '12.0',
+          gst: billData.gst || '3.0',
+          vat: billData.vat || '10.0',
+          amountInr: billData.currency === 'INR' ? billData.total : '0.00',
+          amountBhd: billData.currency === 'BHD' ? billData.total : '0.00',
+        });
+
+        // Populate selected products from bill items
+        if (billData.items && Array.isArray(billData.items)) {
+          const productMap = new Map<string, { product: Product; quantity: number }>();
+          
+          billData.items.forEach((item: any) => {
+            // Find the product in the products list
+            const product = products.find(p => p.id === item.productId);
+            if (product) {
+              productMap.set(item.productId, { product, quantity: item.quantity || 1 });
+            }
+          });
+          
+          setSelectedProducts(productMap);
+        }
+
+        setIsEditMode(true);
+        
+        // Clear the edit data from localStorage after loading
+        localStorage.removeItem('editBill');
+        
+        toast({
+          title: "Edit Mode",
+          description: "Bill loaded for editing. Make your changes and regenerate the bill.",
+        });
+      } catch (error) {
+        console.error('Error loading edit bill data:', error);
+        localStorage.removeItem('editBill');
+      }
+    }
+  }, [products, currency, toast]);
 
   const createBillMutation = useMutation({
     mutationFn: async (billData: any) => {
@@ -251,7 +304,12 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
         <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <FileText className="h-5 w-5" />
-          <span>Create New Bill</span>
+          <span>{isEditMode ? 'Edit Customer Bill' : 'Create New Bill'}</span>
+          {isEditMode && (
+            <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-800">
+              Edit Mode
+            </Badge>
+          )}
         </CardTitle>
       </CardHeader>
       
@@ -549,7 +607,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
               }}
             >
               <FileText className="h-6 w-6 mr-2" />
-              {createBillMutation.isPending ? 'Creating...' : 'Generate Bill'}
+              {createBillMutation.isPending ? 'Creating...' : (isEditMode ? 'Update Bill' : 'Generate Bill')}
             </Button>
           </div>
         </form>

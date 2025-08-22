@@ -14,7 +14,7 @@ import { EstimatesList } from '@/components/admin/estimates-list';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product, Bill } from '@shared/schema';
 import { Currency } from '@/lib/currency';
-import { Package, FileText, TrendingUp, Users, Calculator, DollarSign } from 'lucide-react';
+import { Package, FileText, TrendingUp, Users, Calculator, DollarSign, Edit } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export default function AdminDashboard() {
@@ -285,6 +285,20 @@ export default function AdminDashboard() {
                                     data-testid={`button-preview-${bill.id}`}
                                   >
                                     Preview
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => {
+                                      // Store bill data in localStorage for editing
+                                      localStorage.setItem('editBill', JSON.stringify(bill));
+                                      setLocation('/admin?tab=billing');
+                                    }}
+                                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                                    data-testid={`button-edit-${bill.id}`}
+                                  >
+                                    <Edit className="h-4 w-4 mr-1" />
+                                    Edit
                                   </Button>
                                   <Button
                                     size="sm"
