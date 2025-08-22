@@ -3,7 +3,6 @@ import { Grid3X3, ArrowUpDown, Filter, X, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
-import { JEWELRY_CATEGORIES } from '@shared/schema';
 
 interface MobileBottomNavProps {
   onCategorySelect?: (category: string) => void;
@@ -14,9 +13,133 @@ interface MobileBottomNavProps {
   currentMainCategory?: string;
 }
 
+// Categories from admin product form - same as in product-form.tsx
+const HOME_CATEGORIES = {
+  'rings': {
+    name: 'Rings',
+    subcategories: [
+      'Engagement Rings',
+      'Wedding Bands', 
+      'Fashion Rings',
+      'Cocktail Rings',
+      'Promise Rings',
+      'Birthstone Rings'
+    ]
+  },
+  'necklaces': {
+    name: 'Necklaces',
+    subcategories: [
+      'Chains',
+      'Chokers',
+      'Lockets',
+      'Beaded Necklaces',
+      'Collars',
+      'Long Necklaces/Opera Chains',
+      'Multi-layered Necklaces'
+    ]
+  },
+  'pendants': {
+    name: 'Pendants',
+    subcategories: [
+      'Solitaire',
+      'Halo',
+      'Cluster',
+      'Heart',
+      'Cross',
+      'Initial',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
+    ]
+  },
+  'earrings': { 
+    name: 'Earrings',
+    subcategories: [
+      'Stud Earrings',
+      'Hoop Earrings',
+      'Drop Earrings',
+      'Dangle Earrings',
+      'Ear Cuffs',
+      'Huggie Earrings'
+    ]
+  },
+  'bracelets': {
+    name: 'Bracelets',
+    subcategories: [
+      'Cuff',
+      'Tennis',
+      'Charm',
+      'Chain',
+      'Beaded',
+      'Link',
+      'Bolo',
+      'Leather',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
+    ]
+  },
+  'bangles': {
+    name: 'Bangles',
+    subcategories: [
+      'Classic',
+      'Kada',
+      'Cuff',
+      'Openable',
+      'Adjustable',
+      'Charm',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional',
+      'Temple',
+      'Kundan',
+      'Polki',
+      'Navratna'
+    ]
+  },
+  'watches': {
+    name: 'Watches',
+    subcategories: [
+      "Men's Watches",
+      "Women's Watches",
+      'Smartwatches',
+      'Luxury Watches',
+      'Sport Watches'
+    ]
+  },
+  'mens': {
+    name: "Men's Jewellery",
+    subcategories: [
+      'Rings',
+      'Bracelets', 
+      'Necklaces',
+      'Cufflinks',
+      'Tie Clips'
+    ]
+  },
+  'children': {
+    name: "Children's Jewellery",
+    subcategories: [
+      "Kids' Rings",
+      "Kids' Necklaces",
+      "Kids' Earrings",
+      "Kids' Bracelets"
+    ]
+  }
+};
+
 // Helper function to get category icon
 const getCategoryIcon = (categoryKey: string) => {
-  switch (categoryKey) {
+  switch (categoryKey.toUpperCase()) {
     case 'RINGS':
       return '💍';
     case 'NECKLACES':
@@ -29,70 +152,17 @@ const getCategoryIcon = (categoryKey: string) => {
       return '💫';
     case 'PENDANTS':
       return '✨';
-    case 'MANGALSUTRA':
-      return '🖤';
-    case 'NOSE_JEWELLERY':
-      return '👃';
-    case 'ANKLETS_TOE_RINGS':
-      return '👣';
-    case 'KIDS_JEWELLERY':
+    case 'WATCHES':
+      return '⌚';
+    case 'MENS':
+      return '👨';
+    case 'CHILDREN':
       return '🧒';
-    case 'BRIDAL_COLLECTIONS':
-      return '👰';
     default:
       return '💎';
   }
 };
 
-// Helper function to get subcategory display name
-const getSubcategoryDisplayName = (subcategoryKey: string, mainCategoryKey: string) => {
-  const displayNames: Record<string, Record<string, string>> = {
-    RINGS: {
-      ENGAGEMENT_RINGS: 'Engagement Rings',
-      WEDDING_BANDS: 'Wedding Bands',
-      COUPLE_RINGS: 'Couple Rings',
-      COCKTAIL_PARTY_RINGS: 'Cocktail Rings',
-      DAILY_WEAR_RINGS: 'Fashion Rings',
-      MENS_RINGS: 'Men\'s Rings'
-    },
-    NECKLACES: {
-      CHAINS: 'Chains',
-      CHOKERS: 'Chokers',
-      LOCKETS: 'Lockets',
-      BEADED_NECKLACES: 'Beaded Necklaces',
-      COLLARS: 'Collars',
-      LONG_NECKLACES_OPERA_CHAINS: 'Long Necklaces',
-      MULTI_LAYERED_NECKLACES: 'Multi Layered'
-    },
-    EARRINGS: {
-      STUDS: 'Studs',
-      HOOPS: 'Hoops',
-      DROPS_DANGLERS: 'Drops & Danglers',
-      CHANDBALIS: 'Chandbalis',
-      JHUMKAS: 'Jhumkas',
-      EAR_CUFFS: 'Ear Cuffs',
-      KIDS_EARRINGS: 'Kids Earrings'
-    },
-    BRACELETS: {
-      CUFF: 'Cuff Bracelets',
-      TENNIS: 'Tennis Bracelets',
-      CHARM: 'Charm Bracelets',
-      CHAIN: 'Chain Bracelets',
-      BEADED: 'Beaded Bracelets',
-      LINK: 'Link Bracelets',
-      BOLO: 'Bolo Bracelets',
-      LEATHER: 'Leather Bracelets',
-      DIAMOND: 'Diamond Bracelets',
-      GEMSTONE: 'Gemstone Bracelets',
-      PEARL: 'Pearl Bracelets',
-      BRIDAL: 'Bridal Bracelets',
-      MINIMALIST: 'Minimalist',
-      TRADITIONAL: 'Traditional'
-    }
-  };
-
-  return displayNames[mainCategoryKey]?.[subcategoryKey] || subcategoryKey.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
-};
 
 const SORT_OPTIONS = [
   { value: 'latest', label: 'Latest' },
@@ -162,22 +232,22 @@ export function MobileBottomNav({
   // Get categories to show based on current context
   const getCategoriesToShow = () => {
     // If we're on a specific main category page, show its subcategories
-    if (currentMainCategory && JEWELRY_CATEGORIES[currentMainCategory.toUpperCase() as keyof typeof JEWELRY_CATEGORIES]) {
-      const mainCategory = JEWELRY_CATEGORIES[currentMainCategory.toUpperCase() as keyof typeof JEWELRY_CATEGORIES];
+    if (currentMainCategory && HOME_CATEGORIES[currentMainCategory.toLowerCase() as keyof typeof HOME_CATEGORIES]) {
+      const mainCategory = HOME_CATEGORIES[currentMainCategory.toLowerCase() as keyof typeof HOME_CATEGORIES];
       const mainCategoryIcon = getCategoryIcon(currentMainCategory.toUpperCase());
       
-      return mainCategory.subCategories.map(subcategoryKey => ({
-        id: subcategoryKey,
-        name: getSubcategoryDisplayName(subcategoryKey, currentMainCategory.toUpperCase()),
+      return mainCategory.subcategories.map(subcategoryName => ({
+        id: subcategoryName,
+        name: subcategoryName,
         icon: mainCategoryIcon
       }));
     }
     
     // If no main category is selected, show all main categories
-    return Object.entries(JEWELRY_CATEGORIES).map(([key, category]) => ({
+    return Object.entries(HOME_CATEGORIES).map(([key, category]) => ({
       id: key,
       name: category.name,
-      icon: getCategoryIcon(key)
+      icon: getCategoryIcon(key.toUpperCase())
     }));
   };
 
