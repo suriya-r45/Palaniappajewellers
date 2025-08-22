@@ -468,7 +468,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.patch("/api/products/:id/price", authenticateToken, requireAdmin, async (req, res) => {
     try {
       const { id } = req.params;
-      const { priceInr, priceBhd } = req.body;
+      const { priceInr, priceBhd, stock } = req.body;
 
       // Validate price inputs
       if (!priceInr || !priceBhd) {
@@ -482,10 +482,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Invalid price values' });
       }
 
-      const updatedProduct = await storage.updateProduct(id, {
+      // Validate stock if provided
+      let updateData: any = {
         priceInr: priceInrNum.toFixed(2),
         priceBhd: priceBhdNum.toFixed(3)
-      });
+      };
+
+      if (stock !== undefined) {
+        const stockNum = parseInt(stock);
+        if (isNaN(stockNum) || stockNum < 0) {
+          return res.status(400).json({ error: 'Invalid stock value' });
+        }
+        updateData.stock = stockNum;
+      }
+
+      const updatedProduct = await storage.updateProduct(id, updateData);
 
       if (!updatedProduct) {
         return res.status(404).json({ error: 'Product not found' });
@@ -494,7 +505,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(updatedProduct);
     } catch (error) {
       console.error('Error updating product price:', error);
-      res.status(500).json({ error: 'Failed to update product price' });
+      res.status(500).json({ error: 'Failed to update product price and stock' });
     }
   });
 

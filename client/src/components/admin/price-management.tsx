@@ -17,6 +17,7 @@ import type { Product } from '@shared/schema';
 interface PriceUpdateData {
   priceInr: string;
   priceBhd: string;
+  stock: string;
   updateType: 'fixed' | 'percentage';
   percentageChange?: number;
 }
@@ -33,6 +34,7 @@ export default function PriceManagement() {
   const [priceData, setPriceData] = useState<PriceUpdateData>({
     priceInr: '',
     priceBhd: '',
+    stock: '',
     updateType: 'fixed',
     percentageChange: 0
   });
@@ -52,7 +54,7 @@ export default function PriceManagement() {
   });
 
   // Get unique categories for filter
-  const categories = [...new Set(products.map(p => p.category))];
+  const categories = Array.from(new Set(products.map(p => p.category)));
 
   // Update product price mutation
   const updatePriceMutation = useMutation({
@@ -65,7 +67,8 @@ export default function PriceManagement() {
         },
         body: JSON.stringify({
           priceInr: priceData.priceInr,
-          priceBhd: priceData.priceBhd
+          priceBhd: priceData.priceBhd,
+          stock: parseInt(priceData.stock)
         })
       });
       
@@ -77,8 +80,8 @@ export default function PriceManagement() {
     },
     onSuccess: () => {
       toast({
-        title: "Price Updated Successfully",
-        description: `${selectedProduct?.name} price has been updated.`,
+        title: "Price & Stock Updated Successfully",
+        description: `${selectedProduct?.name} price and stock have been updated.`,
       });
       queryClient.invalidateQueries({ queryKey: ['/api/products'] });
       setIsUpdateDialogOpen(false);
@@ -103,6 +106,7 @@ export default function PriceManagement() {
     setPriceData({
       priceInr: '',
       priceBhd: '',
+      stock: '',
       updateType: 'fixed',
       percentageChange: 0
     });
@@ -113,6 +117,7 @@ export default function PriceManagement() {
     setPriceData({
       priceInr: product.priceInr,
       priceBhd: product.priceBhd,
+      stock: product.stock.toString(),
       updateType: 'fixed',
       percentageChange: 0
     });
@@ -259,7 +264,7 @@ export default function PriceManagement() {
                           onClick={() => handleEditPrice(product)}
                         >
                           <Edit className="h-4 w-4 mr-1" />
-                          Update Price
+                          Update Price & Stock
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -276,7 +281,7 @@ export default function PriceManagement() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>
-              Update Price - {selectedProduct?.name}
+              Update Price & Stock - {selectedProduct?.name}
             </DialogTitle>
           </DialogHeader>
           
@@ -329,7 +334,7 @@ export default function PriceManagement() {
             </div>
 
             {/* Manual Price Input */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="priceInr">Price (INR)</Label>
                 <Input
@@ -360,6 +365,23 @@ export default function PriceManagement() {
                 {selectedProduct && (
                   <p className="text-xs text-gray-500 mt-1">
                     Current: BD {parseFloat(selectedProduct.priceBhd).toFixed(3)}
+                  </p>
+                )}
+              </div>
+              
+              <div>
+                <Label htmlFor="stock">Stock Quantity</Label>
+                <Input
+                  id="stock"
+                  type="number"
+                  min="0"
+                  value={priceData.stock}
+                  onChange={(e) => setPriceData({...priceData, stock: e.target.value})}
+                  required
+                />
+                {selectedProduct && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Current: {selectedProduct.stock} units
                   </p>
                 )}
               </div>
@@ -405,7 +427,7 @@ export default function PriceManagement() {
                 disabled={updatePriceMutation.isPending}
                 className="bg-gradient-to-r from-rose-900 to-red-900 hover:from-rose-800 hover:to-red-800"
               >
-                {updatePriceMutation.isPending ? 'Updating...' : 'Update Price'}
+                {updatePriceMutation.isPending ? 'Updating...' : 'Update Price & Stock'}
               </Button>
             </div>
           </form>
