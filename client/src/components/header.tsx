@@ -8,6 +8,7 @@ import { useAuth } from '@/lib/auth';
 import { Currency, CURRENCY_NAMES } from '@/lib/currency';
 import CartButton from '@/components/cart/cart-button';
 import GoldRatesTicker from '@/components/gold-rates-ticker';
+import MobileMenu from '@/components/mobile-menu';
 import logoPath from '@assets/1000284180_1755240849891.jpg';
 
 interface HeaderProps {
@@ -19,6 +20,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
   const [location] = useLocation();
   const { user, logout, isAdmin } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -33,6 +35,18 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
       <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-14 md:h-20">
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-white hover:bg-rose-800"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+            </div>
+
             {/* Logo Section */}
             <div className="flex items-center space-x-2 md:space-x-4">
               <Link href="/" className="flex items-center space-x-2 md:space-x-3" data-testid="link-home">
@@ -136,7 +150,11 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
         </div>
       </header>
 
-
+      {/* Mobile Menu */}
+      <MobileMenu 
+        isOpen={isMobileMenuOpen}
+        onToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      />
     </>
   );
 }
