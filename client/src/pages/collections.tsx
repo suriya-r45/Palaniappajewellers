@@ -15,13 +15,15 @@ import { Button } from '@/components/ui/button';
 
 interface CollectionsPageProps {
   material?: string;
+  category?: string;
 }
 
-export default function CollectionsPage({ material }: CollectionsPageProps) {
+export default function CollectionsPage({ material, category }: CollectionsPageProps) {
   const [location, setLocation] = useLocation();
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
   const [filters, setFilters] = useState<IProductFilters>({
-    material: material // Set initial filter based on material
+    material: material, // Set initial filter based on material
+    category: category // Set initial filter based on category
   });
   const [sortBy, setSortBy] = useState<string>('latest');
   const [selectedMobileFilters, setSelectedMobileFilters] = useState<string[]>([]);
