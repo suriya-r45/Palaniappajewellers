@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 import { Currency } from '@/lib/currency';
-import { Product } from '@shared/schema';
+import { Product, JEWELRY_CATEGORIES } from '@shared/schema';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import ProductCard from '@/components/product-card';
 
@@ -78,9 +78,28 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
 
     // Apply category filter from mobile nav
     if (filters.category && filters.category !== 'ALL_CATEGORIES') {
-      filtered = filtered.filter(product => 
-        product.category.toLowerCase() === filters.category?.toLowerCase()
+      // If the selected category is a subcategory (not a main category), filter by subcategory
+      const isMainCategory = Object.keys(JEWELRY_CATEGORIES).some(key => 
+        key.toLowerCase() === filters.category?.toLowerCase()
       );
+      
+      if (isMainCategory) {
+        // Filter by main category
+        filtered = filtered.filter(product => 
+          product.category?.toLowerCase() === filters.category?.toLowerCase()
+        );
+      } else {
+        // Filter by subcategory, but also ensure we're in the right main category context
+        filtered = filtered.filter(product => {
+          // If we have a current main category context, respect it
+          if (category) {
+            return product.category?.toLowerCase() === category.toLowerCase() && 
+                   product.subCategory?.toLowerCase() === filters.category?.toLowerCase();
+          }
+          // Otherwise just filter by subcategory
+          return product.subCategory?.toLowerCase() === filters.category?.toLowerCase();
+        });
+      }
     }
 
     // Apply mobile filters
@@ -455,6 +474,7 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
                  value !== 'ALL_MATERIALS' && value !== 'DEFAULT_SORT';
         }).length}
         sortBy={sortBy}
+        currentMainCategory={category}
       />
 
       <Footer />

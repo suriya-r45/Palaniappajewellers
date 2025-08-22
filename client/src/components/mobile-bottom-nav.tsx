@@ -3,6 +3,7 @@ import { Grid3X3, ArrowUpDown, Filter, X, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
+import { JEWELRY_CATEGORIES } from '@shared/schema';
 
 interface MobileBottomNavProps {
   onCategorySelect?: (category: string) => void;
@@ -10,26 +11,88 @@ interface MobileBottomNavProps {
   onFilterChange?: (filters: any) => void;
   activeFilters?: number;
   sortBy?: string;
+  currentMainCategory?: string;
 }
 
-const CATEGORIES = [
-  { id: 'rings', name: 'Rings', icon: '💍' },
-  { id: 'Engagement Rings', name: 'Engagement Rings', icon: '💍' },
-  { id: 'Wedding Bands', name: 'Wedding Bands', icon: '💍' },
-  { id: 'Fashion Rings', name: 'Fashion Rings', icon: '💍' },
-  { id: 'Cocktail Rings', name: 'Cocktail Rings', icon: '💍' },
-  { id: 'Promise Rings', name: 'Promise Rings', icon: '💍' },
-  { id: 'Birthstone Rings', name: 'Birthstone Rings', icon: '💍' },
-  { id: 'EARRINGS', name: 'Earrings', icon: '👂' },
-  { id: 'NECKLACES_CHAINS', name: 'Necklaces & Chains', icon: '📿' },
-  { id: 'BRACELETS_BANGLES', name: 'Bracelets & Bangles', icon: '🔗' },
-  { id: 'PENDANTS_LOCKETS', name: 'Pendants & Lockets', icon: '✨' },
-  { id: 'MANGALSUTRA', name: 'Mangalsutra', icon: '🖤' },
-  { id: 'NOSE_JEWELLERY', name: 'Nose Jewellery', icon: '👃' },
-  { id: 'ANKLETS_TOE_RINGS', name: 'Anklets & Toe Rings', icon: '👣' },
-  { id: 'KIDS_JEWELLERY', name: 'Kids Jewellery', icon: '🧒' },
-  { id: 'BRIDAL_COLLECTIONS', name: 'Bridal Collections', icon: '👰' }
-];
+// Helper function to get category icon
+const getCategoryIcon = (categoryKey: string) => {
+  switch (categoryKey) {
+    case 'RINGS':
+      return '💍';
+    case 'NECKLACES':
+      return '📿';
+    case 'EARRINGS':
+      return '🌸';
+    case 'BRACELETS':
+      return '🔗';
+    case 'BANGLES':
+      return '💫';
+    case 'PENDANTS':
+      return '✨';
+    case 'MANGALSUTRA':
+      return '🖤';
+    case 'NOSE_JEWELLERY':
+      return '👃';
+    case 'ANKLETS_TOE_RINGS':
+      return '👣';
+    case 'KIDS_JEWELLERY':
+      return '🧒';
+    case 'BRIDAL_COLLECTIONS':
+      return '👰';
+    default:
+      return '💎';
+  }
+};
+
+// Helper function to get subcategory display name
+const getSubcategoryDisplayName = (subcategoryKey: string, mainCategoryKey: string) => {
+  const displayNames: Record<string, Record<string, string>> = {
+    RINGS: {
+      ENGAGEMENT_RINGS: 'Engagement Rings',
+      WEDDING_BANDS: 'Wedding Bands',
+      COUPLE_RINGS: 'Couple Rings',
+      COCKTAIL_PARTY_RINGS: 'Cocktail Rings',
+      DAILY_WEAR_RINGS: 'Fashion Rings',
+      MENS_RINGS: 'Men\'s Rings'
+    },
+    NECKLACES: {
+      CHAINS: 'Chains',
+      CHOKERS: 'Chokers',
+      LOCKETS: 'Lockets',
+      BEADED_NECKLACES: 'Beaded Necklaces',
+      COLLARS: 'Collars',
+      LONG_NECKLACES_OPERA_CHAINS: 'Long Necklaces',
+      MULTI_LAYERED_NECKLACES: 'Multi Layered'
+    },
+    EARRINGS: {
+      STUDS: 'Studs',
+      HOOPS: 'Hoops',
+      DROPS_DANGLERS: 'Drops & Danglers',
+      CHANDBALIS: 'Chandbalis',
+      JHUMKAS: 'Jhumkas',
+      EAR_CUFFS: 'Ear Cuffs',
+      KIDS_EARRINGS: 'Kids Earrings'
+    },
+    BRACELETS: {
+      CUFF: 'Cuff Bracelets',
+      TENNIS: 'Tennis Bracelets',
+      CHARM: 'Charm Bracelets',
+      CHAIN: 'Chain Bracelets',
+      BEADED: 'Beaded Bracelets',
+      LINK: 'Link Bracelets',
+      BOLO: 'Bolo Bracelets',
+      LEATHER: 'Leather Bracelets',
+      DIAMOND: 'Diamond Bracelets',
+      GEMSTONE: 'Gemstone Bracelets',
+      PEARL: 'Pearl Bracelets',
+      BRIDAL: 'Bridal Bracelets',
+      MINIMALIST: 'Minimalist',
+      TRADITIONAL: 'Traditional'
+    }
+  };
+
+  return displayNames[mainCategoryKey]?.[subcategoryKey] || subcategoryKey.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+};
 
 const SORT_OPTIONS = [
   { value: 'latest', label: 'Latest' },
@@ -91,9 +154,32 @@ export function MobileBottomNav({
   onSortChange, 
   onFilterChange, 
   activeFilters = 0,
-  sortBy 
+  sortBy,
+  currentMainCategory
 }: MobileBottomNavProps) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+
+  // Get categories to show based on current context
+  const getCategoriesToShow = () => {
+    // If we're on a specific main category page, show its subcategories
+    if (currentMainCategory && JEWELRY_CATEGORIES[currentMainCategory.toUpperCase() as keyof typeof JEWELRY_CATEGORIES]) {
+      const mainCategory = JEWELRY_CATEGORIES[currentMainCategory.toUpperCase() as keyof typeof JEWELRY_CATEGORIES];
+      const mainCategoryIcon = getCategoryIcon(currentMainCategory.toUpperCase());
+      
+      return mainCategory.subCategories.map(subcategoryKey => ({
+        id: subcategoryKey,
+        name: getSubcategoryDisplayName(subcategoryKey, currentMainCategory.toUpperCase()),
+        icon: mainCategoryIcon
+      }));
+    }
+    
+    // If no main category is selected, show all main categories
+    return Object.entries(JEWELRY_CATEGORIES).map(([key, category]) => ({
+      id: key,
+      name: category.name,
+      icon: getCategoryIcon(key)
+    }));
+  };
 
   const handleFilterToggle = (filter: string) => {
     const updated = selectedFilters.includes(filter)
@@ -134,7 +220,7 @@ export function MobileBottomNav({
                 <SheetTitle className="text-rose-900">Select Category</SheetTitle>
               </SheetHeader>
               <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto">
-                {CATEGORIES.map((category) => (
+                {getCategoriesToShow().map((category) => (
                   <Button
                     key={category.id}
                     variant="outline"
