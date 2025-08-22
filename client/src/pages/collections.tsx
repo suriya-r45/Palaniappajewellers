@@ -10,8 +10,14 @@ import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import WhatsAppFloat from '@/components/whatsapp-float';
-import { ArrowLeft, Crown, Star, Gem } from 'lucide-react';
+import { ArrowLeft, Crown, Star, Gem, Filter, SlidersHorizontal, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Badge } from '@/components/ui/badge';
 
 interface CollectionsPageProps {
   material?: string;
@@ -41,6 +47,12 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
   const [sortBy, setSortBy] = useState<string>('latest');
   const [selectedMobileFilters, setSelectedMobileFilters] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200000]);
+  const [weightRange, setWeightRange] = useState<[number, number]>([0, 50]);
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [availabilityFilter, setAvailabilityFilter] = useState<string>('all');
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   
   // Dynamic items per page based on screen size
   const getItemsPerPage = () => {
@@ -79,7 +91,18 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
   const filteredProducts = useMemo(() => {
     let filtered = [...allProducts];
 
-    // Apply search filter
+    // Apply search filter (from advanced search)
+    if (searchQuery) {
+      const searchTerm = searchQuery.toLowerCase();
+      filtered = filtered.filter(product =>
+        product.name.toLowerCase().includes(searchTerm) ||
+        product.description.toLowerCase().includes(searchTerm) ||
+        product.category.toLowerCase().includes(searchTerm) ||
+        product.material?.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Apply search filter (from mobile filters)
     if (filters.search) {
       const searchTerm = filters.search.toLowerCase();
       filtered = filtered.filter(product =>
@@ -87,6 +110,41 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
         product.description.toLowerCase().includes(searchTerm) ||
         product.category.toLowerCase().includes(searchTerm)
       );
+    }
+
+    // Apply advanced material filters
+    if (selectedMaterials.length > 0) {
+      filtered = filtered.filter(product => {
+        const productMaterial = product.material?.toLowerCase() || '';
+        const productMetalType = product.metalType?.toLowerCase() || '';
+        return selectedMaterials.some(mat => 
+          productMaterial.includes(mat.toLowerCase()) || 
+          productMetalType.includes(mat.toLowerCase())
+        );
+      });
+    }
+
+    // Apply price range filter (advanced)
+    if (priceRange[0] > 0 || priceRange[1] < 200000) {
+      filtered = filtered.filter(product => {
+        const price = selectedCurrency === 'INR' ? parseFloat(product.priceInr) : parseFloat(product.priceBhd);
+        return price >= priceRange[0] && price <= priceRange[1];
+      });
+    }
+
+    // Apply weight range filter (advanced)
+    if (weightRange[0] > 0 || weightRange[1] < 50) {
+      filtered = filtered.filter(product => {
+        const weight = parseFloat(product.grossWeight || '0');
+        return weight >= weightRange[0] && weight <= weightRange[1];
+      });
+    }
+
+    // Apply availability filter
+    if (availabilityFilter === 'in-stock') {
+      filtered = filtered.filter(product => product.stock > 0);
+    } else if (availabilityFilter === 'out-of-stock') {
+      filtered = filtered.filter(product => product.stock === 0);
     }
 
     // Apply category filter from mobile nav
@@ -274,7 +332,7 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
       });
     }
 
-    // Apply mobile sorting
+    // Apply advanced sorting
     if (sortBy && sortBy !== 'latest') {
       filtered.sort((a, b) => {
         switch (sortBy) {
@@ -284,12 +342,31 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
           case 'price_desc':
             return parseFloat(selectedCurrency === 'INR' ? b.priceInr : b.priceBhd) -
               parseFloat(selectedCurrency === 'INR' ? a.priceInr : a.priceBhd);
+          case 'name_asc':
+            return a.name.localeCompare(b.name);
+          case 'name_desc':
+            return b.name.localeCompare(a.name);
+          case 'weight_asc':
+            return parseFloat(a.grossWeight || '0') - parseFloat(b.grossWeight || '0');
+          case 'weight_desc':
+            return parseFloat(b.grossWeight || '0') - parseFloat(a.grossWeight || '0');
+          case 'stock_high':
+            return b.stock - a.stock;
+          case 'stock_low':
+            return a.stock - b.stock;
+          case 'popularity':
+            // Sort by stock as proxy for popularity
+            return (b.stock * 0.7 + b.name.length * 0.3) - (a.stock * 0.7 + a.name.length * 0.3);
           case 'discount':
             return a.name.localeCompare(b.name);
           case 'featured':
             return b.stock - a.stock;
           case 'rating':
             return a.name.localeCompare(b.name);
+          case 'newest':
+            return new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime();
+          case 'oldest':
+            return new Date(a.createdAt!).getTime() - new Date(b.createdAt!).getTime();
           case 'latest':
           default:
             return new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime();
@@ -298,7 +375,7 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
     }
 
     return filtered;
-  }, [allProducts, filters, selectedCurrency, sortBy, selectedMobileFilters]);
+  }, [allProducts, filters, selectedCurrency, sortBy, selectedMobileFilters, searchQuery, priceRange, weightRange, selectedMaterials, availabilityFilter]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -368,6 +445,170 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
             <p className="text-xl text-black mb-6">
               Explore our complete {material?.toLowerCase()} jewelry collection
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Advanced Filters and Search Section - Desktop */}
+      <section className="py-8 bg-gray-50 hidden md:block">
+        <div className="container mx-auto px-4">
+          <div className="flex gap-6 items-center justify-between mb-6">
+            {/* Search Bar */}
+            <div className="flex-1 max-w-md">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  type="text"
+                  placeholder="Search jewelry..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium text-gray-700">Sort by:</span>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="latest">Latest Arrivals</SelectItem>
+                  <SelectItem value="price_asc">Price: Low to High</SelectItem>
+                  <SelectItem value="price_desc">Price: High to Low</SelectItem>
+                  <SelectItem value="name_asc">Name: A to Z</SelectItem>
+                  <SelectItem value="name_desc">Name: Z to A</SelectItem>
+                  <SelectItem value="weight_asc">Weight: Light to Heavy</SelectItem>
+                  <SelectItem value="weight_desc">Weight: Heavy to Light</SelectItem>
+                  <SelectItem value="stock_high">High Stock First</SelectItem>
+                  <SelectItem value="popularity">Most Popular</SelectItem>
+                  <SelectItem value="newest">Newest First</SelectItem>
+                  <SelectItem value="oldest">Oldest First</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Advanced Filters Button */}
+              <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <SlidersHorizontal className="h-4 w-4" />
+                    Advanced Filters
+                    {(selectedMaterials.length > 0 || priceRange[0] > 0 || priceRange[1] < 200000 || weightRange[0] > 0 || weightRange[1] < 50 || availabilityFilter !== 'all') && (
+                      <Badge variant="secondary" className="ml-1">
+                        {selectedMaterials.length + 
+                         (priceRange[0] > 0 || priceRange[1] < 200000 ? 1 : 0) + 
+                         (weightRange[0] > 0 || weightRange[1] < 50 ? 1 : 0) + 
+                         (availabilityFilter !== 'all' ? 1 : 0)}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-96 overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle>Advanced Filters</SheetTitle>
+                  </SheetHeader>
+                  
+                  <div className="mt-6 space-y-6">
+                    {/* Material Filter */}
+                    <div>
+                      <h3 className="font-medium mb-3">Material</h3>
+                      <div className="space-y-2">
+                        {['Gold', 'Silver', 'Diamond', 'Platinum', 'Pearl', 'Gemstone'].map((material) => (
+                          <div key={material} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={material}
+                              checked={selectedMaterials.includes(material)}
+                              onCheckedChange={(checked) => {
+                                if (checked) {
+                                  setSelectedMaterials([...selectedMaterials, material]);
+                                } else {
+                                  setSelectedMaterials(selectedMaterials.filter(m => m !== material));
+                                }
+                              }}
+                            />
+                            <label htmlFor={material} className="text-sm">{material}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Price Range */}
+                    <div>
+                      <h3 className="font-medium mb-3">
+                        Price Range ({selectedCurrency === 'INR' ? '₹' : 'BHD'})
+                      </h3>
+                      <div className="px-2">
+                        <Slider
+                          value={priceRange}
+                          onValueChange={setPriceRange}
+                          max={200000}
+                          min={0}
+                          step={1000}
+                          className="mb-2"
+                        />
+                        <div className="flex justify-between text-sm text-gray-600">
+                          <span>{selectedCurrency === 'INR' ? '₹' : 'BHD'}{priceRange[0].toLocaleString()}</span>
+                          <span>{selectedCurrency === 'INR' ? '₹' : 'BHD'}{priceRange[1].toLocaleString()}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Weight Range */}
+                    <div>
+                      <h3 className="font-medium mb-3">Weight Range (grams)</h3>
+                      <div className="px-2">
+                        <Slider
+                          value={weightRange}
+                          onValueChange={setWeightRange}
+                          max={50}
+                          min={0}
+                          step={0.5}
+                          className="mb-2"
+                        />
+                        <div className="flex justify-between text-sm text-gray-600">
+                          <span>{weightRange[0]}g</span>
+                          <span>{weightRange[1]}g</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Availability */}
+                    <div>
+                      <h3 className="font-medium mb-3">Availability</h3>
+                      <Select value={availabilityFilter} onValueChange={setAvailabilityFilter}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="all">All Products</SelectItem>
+                          <SelectItem value="in-stock">In Stock Only</SelectItem>
+                          <SelectItem value="out-of-stock">Out of Stock</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Clear Filters */}
+                    <div className="pt-4 border-t">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setSelectedMaterials([]);
+                          setPriceRange([0, 200000]);
+                          setWeightRange([0, 50]);
+                          setAvailabilityFilter('all');
+                          setSearchQuery('');
+                        }}
+                        className="w-full"
+                      >
+                        Clear All Filters
+                      </Button>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </section>

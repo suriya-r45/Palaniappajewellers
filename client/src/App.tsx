@@ -37,6 +37,8 @@ function Router() {
       <Route path="/collections/collections" component={() => <CollectionsPage category="collections" />} />
       <Route path="/collections/custom" component={() => <CollectionsPage category="custom" />} />
       <Route path="/collections/new-arrivals" component={() => <CollectionsPage category="new-arrivals" />} />
+      {/* Subcategory routes - catch all subcategory combinations */}
+      <Route path="/collections/:subcategory" component={({ params }) => <CollectionsPage category={params.subcategory} />} />
       {/* Generic collections route */}
       <Route path="/collections" component={() => <CollectionsPage />} />
       <Route path="/product/:id" component={ProductDetails} />
