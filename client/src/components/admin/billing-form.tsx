@@ -51,6 +51,17 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       try {
         const billData = JSON.parse(editBillData);
         
+        // Calculate percentage values from bill totals (convert back from calculated amounts)
+        const subtotal = parseFloat(billData.subtotal || '0');
+        const makingChargesAmount = parseFloat(billData.makingCharges || '0');
+        const gstAmount = parseFloat(billData.gst || '0');
+        const vatAmount = parseFloat(billData.vat || '0');
+        
+        // Calculate percentages (reverse engineering from bill amounts)
+        const makingChargesPercentage = subtotal > 0 ? ((makingChargesAmount / subtotal) * 100).toFixed(1) : '12.0';
+        const gstPercentage = subtotal > 0 ? ((gstAmount / subtotal) * 100).toFixed(1) : '3.0';
+        const vatPercentage = subtotal > 0 ? ((vatAmount / subtotal) * 100).toFixed(1) : '10.0';
+        
         // Populate customer data
         setCustomerData({
           customerName: billData.customerName || '',
@@ -58,9 +69,9 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
           customerPhone: billData.customerPhone || '',
           customerAddress: billData.customerAddress || '',
           currency: billData.currency || currency,
-          makingCharges: billData.makingCharges || '12.0',
-          gst: billData.gst || '3.0',
-          vat: billData.vat || '10.0',
+          makingCharges: makingChargesPercentage,
+          gst: gstPercentage,
+          vat: vatPercentage,
           amountInr: billData.currency === 'INR' ? billData.total : '0.00',
           amountBhd: billData.currency === 'BHD' ? billData.total : '0.00',
         });

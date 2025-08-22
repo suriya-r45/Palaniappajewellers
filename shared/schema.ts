@@ -42,6 +42,7 @@ export const products = pgTable("products", {
   images: jsonb("images").$type<string[]>().notNull().default(sql`'[]'::jsonb`),
   isActive: boolean("is_active").notNull().default(true),
   isFeatured: boolean("is_featured").notNull().default(false),
+  isNewArrival: boolean("is_new_arrival").notNull().default(false),
   // New fields for enhanced pricing calculation
   metalType: text("metal_type").default("GOLD"), // GOLD, SILVER, DIAMOND, OTHER
   isMetalPriceBased: boolean("is_metal_price_based").notNull().default(false),

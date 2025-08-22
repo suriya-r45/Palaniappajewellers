@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Plus, Edit, Trash2, Upload, ArrowLeft } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { Product, MetalRate } from '@shared/schema';
@@ -195,7 +196,6 @@ const MATERIAL_OPTIONS = [
   { value: 'DIAMOND', label: 'Diamond' },
   { value: 'GEMSTONE', label: 'Gemstone' },
   { value: 'PEARL', label: 'Pearl' },
-  { value: 'new_arrivals', label: 'New Arrivals' },
   { value: 'OTHER', label: 'Other' }
 ];
 
@@ -225,7 +225,8 @@ function ProductForm({ currency }: ProductFormProps) {
     priceBhd: '',
     grossWeight: '',
     netWeight: '',
-    stock: ''
+    stock: '',
+    isNewArrival: false
   });
 
   // Helper function to determine metalType from material
@@ -343,7 +344,8 @@ function ProductForm({ currency }: ProductFormProps) {
       priceBhd: '',
       grossWeight: '',
       netWeight: '',
-      stock: ''
+      stock: '',
+      isNewArrival: false
     });
     setSelectedFiles([]);
     setEditingProduct(null);
@@ -542,6 +544,18 @@ function ProductForm({ currency }: ProductFormProps) {
                 required
                 data-testid="input-stock"
               />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="isNewArrival"
+                checked={formData.isNewArrival}
+                onCheckedChange={(checked) => setFormData({ ...formData, isNewArrival: !!checked })}
+                data-testid="checkbox-new-arrival"
+              />
+              <Label htmlFor="isNewArrival" className="text-sm font-medium">
+                Mark as New Arrival (will appear in New Arrivals section)
+              </Label>
             </div>
 
             <div>

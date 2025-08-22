@@ -1,7 +1,7 @@
 // import { openWhatsAppGeneral } from '@/lib/whatsapp';
 import { MessageCircle, Phone, Mail, MapPin, Instagram } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
-import logoPath from '@assets/Royal_gold_jewelry_collection_e293857a.png';
+import logoPath from '@assets/1000284180_1755240849891_1755886428742.jpg';
 
 
 export default function Footer() {

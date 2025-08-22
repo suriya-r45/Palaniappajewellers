@@ -162,7 +162,7 @@ export default function Home() {
   // Category counts for display
   const getCategoryCount = (category: string) => {
     return allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
+      if (product.isNewArrival) return false; // Exclude new arrivals from regular categories
       // Map display category names to database category names
       const categoryMapping: { [key: string]: string } = {
         'rings': 'RINGS',
@@ -190,7 +190,7 @@ export default function Home() {
 
   const getMaterialCount = (material: string) => {
     return allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
+      if (product.isNewArrival) return false; // Exclude new arrivals from regular categories
       // Use metalType field for broad material categorization instead of material field
       return product.metalType === material;
     }).length;
@@ -198,17 +198,17 @@ export default function Home() {
 
   // Material-based collections
   const goldProducts = useMemo(() => 
-    allProducts.filter(product => product.metalType === 'GOLD').slice(0, 8), 
+    allProducts.filter(product => product.metalType === 'GOLD' && !product.isNewArrival).slice(0, 8), 
     [allProducts]
   );
 
   const silverProducts = useMemo(() => 
-    allProducts.filter(product => product.metalType === 'SILVER').slice(0, 8), 
+    allProducts.filter(product => product.metalType === 'SILVER' && !product.isNewArrival).slice(0, 8), 
     [allProducts]
   );
 
   const diamondProducts = useMemo(() => 
-    allProducts.filter(product => product.metalType === 'DIAMOND').slice(0, 8), 
+    allProducts.filter(product => product.metalType === 'DIAMOND' && !product.isNewArrival).slice(0, 8), 
     [allProducts]
   );
 
@@ -260,21 +260,10 @@ export default function Home() {
     [allProducts]
   );
 
-  // New Arrivals - Products specifically tagged as new_arrivals OR recent products
-  const newArrivalProducts = useMemo(() => {
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    
+  // New Arrivals - Products specifically marked as new arrivals
+  const newArrivalProducts = useMemo(() => {    
     return allProducts
-      .filter(product => {
-        // First priority: Products specifically tagged with "new_arrivals"
-        const isTaggedNewArrival = product.material?.includes('new_arrivals');
-        if (isTaggedNewArrival) return true;
-        
-        // Second priority: Recent products
-        const isRecent = product.createdAt && new Date(product.createdAt) > thirtyDaysAgo;
-        return isRecent;
-      })
+      .filter(product => product.isNewArrival) // Only products explicitly marked as new arrivals
       .sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime())
       .slice(0, 9);
   }, [allProducts]);
