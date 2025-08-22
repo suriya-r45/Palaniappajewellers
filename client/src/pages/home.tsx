@@ -6,7 +6,6 @@ import ProductCard from '@/components/product-card';
 import ProductFilters from '@/components/product-filters';
 import WhatsAppFloat from '@/components/whatsapp-float';
 import CategoryNavigation from '@/components/category-navigation';
-import HeroCategoryScroll from '@/components/hero-category-scroll';
 import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
 import { Currency } from '@/lib/currency';
@@ -237,9 +236,6 @@ export default function Home() {
         onCurrencyChange={setSelectedCurrency}
       />
 
-      {/* Hero Category Scroll - Mobile scrollable categories */}
-      <HeroCategoryScroll />
-      
       {/* Category Navigation - Moved to top above hero section */}
       <CategoryNavigation />
 
