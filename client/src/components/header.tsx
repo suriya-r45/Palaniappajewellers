@@ -110,7 +110,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                     {isAdmin && (
                       <Link href="/admin">
                         <Button variant="ghost" size="sm" className="flex text-white hover:text-rose-100 hover:bg-rose-800 transition-all duration-200 px-2 py-1" data-testid="button-admin-dashboard">
-                          <span className="text-xs">Admin</span>
+                          <span className="text-xs">Dashboard</span>
                         </Button>
                       </Link>
                     )}
