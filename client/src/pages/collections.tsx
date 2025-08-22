@@ -203,8 +203,6 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
             return b.name.localeCompare(a.name);
           case 'popular':
             return b.name.localeCompare(a.name); // Can be enhanced with actual popularity metrics
-          case 'newest':
-            return new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime();
           case 'rating':
             return a.name.localeCompare(b.name); // Can be enhanced with actual rating logic
           case 'weight_asc':

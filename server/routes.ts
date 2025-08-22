@@ -12,18 +12,26 @@ import Stripe from "stripe";
 import { MetalRatesService } from "./services/testmetalRatesService.js";
 import twilio from "twilio";
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+// Initialize Stripe only if key is provided
+let stripe: Stripe | undefined;
+if (process.env.STRIPE_SECRET_KEY) {
+  stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2025-07-30.basil",
+  });
+} else {
+  console.warn('⚠️  STRIPE_SECRET_KEY not found. Payment features will be disabled.');
 }
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2025-07-30.basil",
-});
 
 // JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
-// Twilio configuration
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+// Twilio configuration - optional for development
+let twilioClient: twilio.Twilio | undefined;
+if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
+  twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+} else {
+  console.warn('⚠️  Twilio credentials not found. SMS features will be disabled.');
+}
 
 // Admin credentials
 const ADMIN_CREDENTIALS = {
@@ -74,6 +82,11 @@ Contact: +919597201554`;
     
     console.log(`[SMS Debug] Original phone: ${phone}, Formatted phone: ${formattedPhone}`);
 
+    if (!twilioClient) {
+      console.log('[SMS Debug] Twilio not configured, skipping SMS send');
+      return { success: false, error: 'Twilio not configured' };
+    }
+
     const twilioMessage = await twilioClient.messages.create({
       body: message,
       from: process.env.TWILIO_PHONE_NUMBER,
@@ -86,7 +99,7 @@ Contact: +919597201554`;
     // Check message status after a brief delay
     setTimeout(async () => {
       try {
-        const messageStatus = await twilioClient.messages(twilioMessage.sid).fetch();
+        const messageStatus = await twilioClient!.messages(twilioMessage.sid).fetch();
         console.log(`[SMS Status Update] Message ${twilioMessage.sid} status: ${messageStatus.status}, Error: ${messageStatus.errorMessage || 'None'}`);
       } catch (error) {
         console.log(`[SMS Status Error] Could not fetch status: ${error}`);
@@ -962,6 +975,10 @@ Premium quality, timeless beauty.`;
       
       if (!amount || amount <= 0) {
         return res.status(400).json({ message: "Invalid amount" });
+      }
+
+      if (!stripe) {
+        return res.status(503).json({ message: "Payment processing is not available" });
       }
 
       const paymentIntent = await stripe.paymentIntents.create({

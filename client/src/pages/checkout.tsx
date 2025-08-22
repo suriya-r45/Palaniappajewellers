@@ -13,11 +13,10 @@ import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { useLocation } from 'wouter';
 
-// Initialize Stripe
-if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
-  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLISHABLE_KEY');
-}
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+// Initialize Stripe if key is available
+const stripePromise = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY 
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
+  : null;
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -26,7 +25,7 @@ function CheckoutForm() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [isProcessing, setIsProcessing] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('stripe');
+  const [paymentMethod, setPaymentMethod] = useState(stripePromise ? 'stripe' : 'gpay');
   const [isIndianUser, setIsIndianUser] = useState(true); // Detect based on phone or location
   
   // Customer information
@@ -328,11 +327,12 @@ function CheckoutForm() {
                       {paymentMethod === 'stripe' ? 'Payment Information' : 'Payment Details'}
                     </h3>
                     
-                    {paymentMethod === 'stripe' ? (
+                    {paymentMethod === 'stripe' && stripePromise ? (
                       <PaymentElement />
                     ) : (
                       <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                         <p className="text-sm text-blue-800">
+                          {!stripePromise && paymentMethod === 'stripe' && "Online payment is currently unavailable. Please choose an alternative payment method."}
                           {paymentMethod === 'gpay' && "You'll be redirected to Google Pay to complete your payment."}
                           {paymentMethod === 'phonepe' && "You'll be redirected to PhonePe to complete your payment."}
                           {paymentMethod === 'paytm' && "You'll be redirected to Paytm to complete your payment."}
@@ -375,23 +375,28 @@ export default function Checkout() {
       return;
     }
 
-    // Create PaymentIntent when component loads
-    apiRequest("POST", "/api/create-payment-intent", { 
-      amount: totalAmount,
-      items: items.map(item => ({
-        id: item.product.id,
-        name: item.product.name,
-        quantity: item.quantity,
-        price: parseFloat(item.product.priceInr)
-      }))
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setClientSecret(data.clientSecret);
+    // Only create PaymentIntent if Stripe is available
+    if (stripePromise) {
+      apiRequest("POST", "/api/create-payment-intent", { 
+        amount: totalAmount,
+        items: items.map(item => ({
+          id: item.product.id,
+          name: item.product.name,
+          quantity: item.quantity,
+          price: parseFloat(item.product.priceInr)
+        }))
       })
-      .catch((error) => {
-        console.error('Error creating payment intent:', error);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          setClientSecret(data.clientSecret);
+        })
+        .catch((error) => {
+          console.error('Error creating payment intent:', error);
+        });
+    } else {
+      // Skip payment intent creation when Stripe is not configured
+      setClientSecret("skip-payment");
+    }
   }, [items, totalAmount, setLocation]);
 
   if (items.length === 0) {
@@ -404,6 +409,11 @@ export default function Checkout() {
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label="Loading"/>
       </div>
     );
+  }
+
+  // Show non-payment checkout form when Stripe is not available
+  if (!stripePromise || clientSecret === "skip-payment") {
+    return <CheckoutForm />;
   }
 
   return (
