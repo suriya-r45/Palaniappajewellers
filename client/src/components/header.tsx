@@ -41,14 +41,14 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 text-white hover:bg-rose-800"
+                className="p-3 text-white hover:bg-rose-800"
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-8 w-8" />
               </Button>
             </div>
 
             {/* Logo Section */}
-            <div className="flex items-center space-x-2 md:space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4 ml-2 md:ml-0">
               <Link href="/" className="flex items-center space-x-2 md:space-x-3" data-testid="link-home">
                 <div className="w-8 h-8 md:w-16 md:h-16 rounded-full overflow-hidden border border-white">
                   <img 
