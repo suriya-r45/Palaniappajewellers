@@ -253,13 +253,13 @@ export default function Home() {
           {/* Row 1: Rings, Necklaces, Pendants */}
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-24 md:h-40 bg-gray-50"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('rings')}
               data-testid="category-card-rings"
               style={{
                 backgroundImage: `url(${ringsImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center top',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
               }}
             >
@@ -274,13 +274,13 @@ export default function Home() {
               <p className="text-xs text-gray-600">{getCategoryCount('necklaces')} items</p>
             </div>
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-24 md:h-40 bg-gray-50"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('pendants')}
               data-testid="category-card-pendants"
               style={{
                 backgroundImage: `url(${pendantsImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center top',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
               }}
             >
