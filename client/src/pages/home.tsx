@@ -262,8 +262,8 @@ export default function Home() {
             <p className="text-xl text-black mt-4">Discover jewelry for every occasion</p>
           </div>
           
-          {/* 4x4 Grid Layout */}
-          <div className="grid grid-cols-4 gap-4">
+          {/* 5x3 Grid Layout on Mobile, 4x4 on Desktop */}
+          <div className="grid grid-cols-5 md:grid-cols-4 gap-2 md:gap-4">
             {/* Row 1 */}
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
