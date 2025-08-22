@@ -13,14 +13,16 @@ interface MobileBottomNavProps {
 }
 
 const CATEGORIES = [
-  { id: 'rings', name: 'Rings', icon: '💍' },
-  { id: 'earrings', name: 'Earrings', icon: '👂' },
-  { id: 'bracelets', name: 'Bracelets & Bangles', icon: '🔗' },
-  { id: 'necklaces', name: 'Necklaces & Pendants', icon: '📿' },
-  { id: 'mens', name: "Men's Designs", icon: '👨' },
-  { id: 'children', name: "Kid's Designs", icon: '🧒' },
-  { id: 'materials', name: 'Materials', icon: '✨' },
-  { id: 'collections', name: 'Collections', icon: '💎' }
+  { id: 'RINGS', name: 'Rings', icon: '💍' },
+  { id: 'EARRINGS', name: 'Earrings', icon: '👂' },
+  { id: 'NECKLACES_CHAINS', name: 'Necklaces & Chains', icon: '📿' },
+  { id: 'BRACELETS_BANGLES', name: 'Bracelets & Bangles', icon: '🔗' },
+  { id: 'PENDANTS_LOCKETS', name: 'Pendants & Lockets', icon: '✨' },
+  { id: 'MANGALSUTRA', name: 'Mangalsutra', icon: '🖤' },
+  { id: 'NOSE_JEWELLERY', name: 'Nose Jewellery', icon: '👃' },
+  { id: 'ANKLETS_TOE_RINGS', name: 'Anklets & Toe Rings', icon: '👣' },
+  { id: 'KIDS_JEWELLERY', name: 'Kids Jewellery', icon: '🧒' },
+  { id: 'BRIDAL_COLLECTIONS', name: 'Bridal Collections', icon: '👰' }
 ];
 
 const SORT_OPTIONS = [
@@ -34,21 +36,37 @@ const SORT_OPTIONS = [
 
 const FILTER_OPTIONS = [
   {
-    category: 'Price Range',
+    category: 'Materials',
     options: [
-      '₹10001 - ₹15000',
-      '₹20001 - ₹30000',
-      '₹5001 - ₹10000',
-      '₹15001 - ₹20000'
+      'Diamond',
+      'Gold',
+      'Gemstone', 
+      'Uncut Diamond',
+      'Platinum',
+      'Silver',
+      'Gold Coins',
+      'Pearl'
     ]
   },
   {
-    category: 'Material',
+    category: 'Price Range',
     options: [
-      'Gold 22K',
-      'Silver 925',
-      'Diamond',
-      'Platinum'
+      '₹5000 - ₹10000',
+      '₹10000 - ₹20000', 
+      '₹20000 - ₹50000',
+      '₹50000 - ₹100000',
+      '₹100000+'
+    ]
+  },
+  {
+    category: 'Collections',
+    options: [
+      'Bridal Collection',
+      'Wedding Bands',
+      'Daily Wear',
+      'Party Collection',
+      'Traditional',
+      'Modern Design'
     ]
   },
   {

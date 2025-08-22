@@ -86,12 +86,24 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
       filtered = filtered.filter(product => {
         // Check material filters
         const materialFilters = selectedMobileFilters.filter(f => 
-          ['Gold 22K', 'Silver 925', 'Diamond', 'Platinum'].includes(f)
+          ['Diamond', 'Gold', 'Gemstone', 'Uncut Diamond', 'Platinum', 'Silver', 'Gold Coins', 'Pearl'].includes(f)
         );
         if (materialFilters.length > 0) {
-          const hasMatchingMaterial = materialFilters.some(mat => 
-            product.material?.toLowerCase().includes(mat.toLowerCase()) || false
-          );
+          const hasMatchingMaterial = materialFilters.some(mat => {
+            const productMaterial = product.material?.toLowerCase() || '';
+            const productCategory = product.category?.toLowerCase() || '';
+            const materialLower = mat.toLowerCase();
+            
+            // Map filter to product material/category
+            if (materialLower === 'gold' && (productMaterial.includes('gold') || productCategory.includes('gold'))) return true;
+            if (materialLower === 'silver' && (productMaterial.includes('silver') || productCategory.includes('silver'))) return true;
+            if (materialLower === 'diamond' && (productMaterial.includes('diamond') || productCategory.includes('diamond'))) return true;
+            if (materialLower === 'platinum' && (productMaterial.includes('platinum') || productCategory.includes('platinum'))) return true;
+            if (materialLower === 'pearl' && (productMaterial.includes('pearl') || productCategory.includes('pearl'))) return true;
+            if (materialLower === 'gemstone' && (productMaterial.includes('gemstone') || productCategory.includes('gemstone'))) return true;
+            
+            return productMaterial.includes(materialLower) || productCategory.includes(materialLower);
+          });
           if (!hasMatchingMaterial) return false;
         }
 
@@ -100,10 +112,11 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
         if (priceFilters.length > 0) {
           const price = parseFloat(product.priceInr);
           const hasMatchingPrice = priceFilters.some(range => {
-            if (range === '₹5001 - ₹10000') return price >= 5001 && price <= 10000;
-            if (range === '₹10001 - ₹15000') return price >= 10001 && price <= 15000;
-            if (range === '₹15001 - ₹20000') return price >= 15001 && price <= 20000;
-            if (range === '₹20001 - ₹30000') return price >= 20001 && price <= 30000;
+            if (range === '₹5000 - ₹10000') return price >= 5000 && price <= 10000;
+            if (range === '₹10000 - ₹20000') return price >= 10000 && price <= 20000;
+            if (range === '₹20000 - ₹50000') return price >= 20000 && price <= 50000;
+            if (range === '₹50000 - ₹100000') return price >= 50000 && price <= 100000;
+            if (range === '₹100000+') return price >= 100000;
             return false;
           });
           if (!hasMatchingPrice) return false;
