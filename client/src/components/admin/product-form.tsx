@@ -206,12 +206,23 @@ function ProductForm({ currency }: ProductFormProps) {
     category: '',
     subCategory: '',
     material: 'GOLD_22K',
+    metalType: 'GOLD', // Add metalType field
     priceInr: '',
     priceBhd: '',
     grossWeight: '',
     netWeight: '',
     stock: ''
   });
+
+  // Helper function to determine metalType from material
+  const getMetalTypeFromMaterial = (material: string): string => {
+    if (material.includes('GOLD')) return 'GOLD';
+    if (material.includes('SILVER')) return 'SILVER';
+    if (material.includes('DIAMOND')) return 'DIAMOND';
+    if (material.includes('PLATINUM')) return 'OTHER';
+    if (material.includes('PEARL') || material.includes('GEMSTONE')) return 'OTHER';
+    return 'OTHER';
+  };
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
@@ -306,6 +317,7 @@ function ProductForm({ currency }: ProductFormProps) {
       category: '',
       subCategory: '',
       material: 'GOLD_22K',
+      metalType: 'GOLD',
       priceInr: '',
       priceBhd: '',
       grossWeight: '',
@@ -390,7 +402,11 @@ function ProductForm({ currency }: ProductFormProps) {
                 <Label htmlFor="material">Material</Label>
                 <Select 
                   value={formData.material} 
-                  onValueChange={(value) => setFormData({ ...formData, material: value })}
+                  onValueChange={(value) => setFormData({ 
+                    ...formData, 
+                    material: value,
+                    metalType: getMetalTypeFromMaterial(value) // Auto-set metalType
+                  })}
                 >
                   <SelectTrigger data-testid="select-material">
                     <SelectValue placeholder="Select Material" />

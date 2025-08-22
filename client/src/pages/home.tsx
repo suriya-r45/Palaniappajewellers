@@ -175,6 +175,22 @@ export default function Home() {
     }).length;
   };
 
+  // Material-based collections
+  const goldProducts = useMemo(() => 
+    allProducts.filter(product => product.metalType === 'GOLD').slice(0, 8), 
+    [allProducts]
+  );
+
+  const silverProducts = useMemo(() => 
+    allProducts.filter(product => product.metalType === 'SILVER').slice(0, 8), 
+    [allProducts]
+  );
+
+  const diamondProducts = useMemo(() => 
+    allProducts.filter(product => product.metalType === 'DIAMOND').slice(0, 8), 
+    [allProducts]
+  );
+
   // New Arrivals - Products specifically tagged as new_arrivals OR recent products
   const newArrivalProducts = useMemo(() => {
     const thirtyDaysAgo = new Date();
@@ -539,6 +555,110 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Gold Collection Section */}
+      {goldProducts.length > 0 && (
+        <section className="py-16 bg-gradient-to-r from-yellow-50 to-orange-50" data-testid="section-gold">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center mb-4">
+                <Crown className="h-8 w-8 text-yellow-600 mr-3" />
+                <h2 className="text-4xl font-bold text-black">Gold Collection</h2>
+                <Crown className="h-8 w-8 text-yellow-600 ml-3" />
+              </div>
+              <p className="text-xl text-gray-600">22K & 18K gold jewelry with intricate designs</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {goldProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  currency={selectedCurrency}
+                  showActions={false}
+                />
+              ))}
+            </div>
+            <div className="text-center">
+              <Button 
+                variant="outline" 
+                className="border-yellow-600 text-yellow-600 hover:bg-yellow-50"
+                onClick={() => handleViewAllClick('GOLD')}
+              >
+                View All Gold Jewelry <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Silver Collection Section */}
+      {silverProducts.length > 0 && (
+        <section className="py-16 bg-gradient-to-r from-gray-50 to-slate-50" data-testid="section-silver">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center mb-4">
+                <Star className="h-8 w-8 text-gray-600 mr-3" />
+                <h2 className="text-4xl font-bold text-black">Silver Collection</h2>
+                <Star className="h-8 w-8 text-gray-600 ml-3" />
+              </div>
+              <p className="text-xl text-gray-600">Sterling silver jewelry with contemporary elegance</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {silverProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  currency={selectedCurrency}
+                  showActions={false}
+                />
+              ))}
+            </div>
+            <div className="text-center">
+              <Button 
+                variant="outline" 
+                className="border-gray-600 text-gray-600 hover:bg-gray-50"
+                onClick={() => handleViewAllClick('SILVER')}
+              >
+                View All Silver Jewelry <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Diamond Collection Section */}
+      {diamondProducts.length > 0 && (
+        <section className="py-16 bg-gradient-to-r from-blue-50 to-indigo-50" data-testid="section-diamond">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center mb-4">
+                <Gem className="h-8 w-8 text-blue-600 mr-3" />
+                <h2 className="text-4xl font-bold text-black">Diamond Collection</h2>
+                <Gem className="h-8 w-8 text-blue-600 ml-3" />
+              </div>
+              <p className="text-xl text-gray-600">Brilliant diamonds for life's precious moments</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {diamondProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  currency={selectedCurrency}
+                  showActions={false}
+                />
+              ))}
+            </div>
+            <div className="text-center">
+              <Button 
+                variant="outline" 
+                className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                onClick={() => handleViewAllClick('DIAMOND')}
+              >
+                View All Diamond Jewelry <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
       <WhatsAppFloat />
