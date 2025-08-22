@@ -66,13 +66,13 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
             {/* Right Section Icons */}
             <div className="flex items-center space-x-1 md:space-x-4 text-white">
-              {/* Currency/Country - Hidden on small mobile */}
-              <div className="hidden sm:flex flex-col items-center min-w-[45px] md:min-w-[60px] px-1">
+              {/* Currency/Country - Now visible on mobile */}
+              <div className="flex flex-col items-center min-w-[35px] sm:min-w-[45px] md:min-w-[60px] px-1">
                 <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
                   <SelectTrigger className="bg-transparent border-0 text-white hover:text-rose-100 p-0 h-auto transition-colors duration-200 w-full">
                     <div className="flex flex-col items-center cursor-pointer w-full">
-                      <span className="text-[8px] md:text-xs whitespace-nowrap mb-0.5">Country</span>
-                      <div className="text-center text-[9px] md:text-xs font-medium">
+                      <span className="text-[7px] sm:text-[8px] md:text-xs whitespace-nowrap mb-0.5">Country</span>
+                      <div className="text-center text-[8px] sm:text-[9px] md:text-xs font-medium">
                         <SelectValue />
                       </div>
                     </div>
