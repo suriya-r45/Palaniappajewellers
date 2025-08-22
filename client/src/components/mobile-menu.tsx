@@ -49,20 +49,8 @@ const categories: Category[] = [
     subcategories: ['Men\'s Watches', 'Women\'s Watches', 'Luxury Watches', 'Smart Watches']
   },
   {
-    name: 'Gifts',
-    subcategories: ['Gift Sets', 'Gift Vouchers', 'Personalized Gifts']
-  },
-  {
     name: 'Jewellery',
     subcategories: ['Rings', 'Necklaces', 'Earrings', 'Pendants', 'Bracelets', 'Bangles']
-  },
-  {
-    name: 'Gift Cards',
-    path: '/gift-cards'
-  },
-  {
-    name: 'Gold Rate',
-    path: '/gold-rates'
   }
 ];
 
