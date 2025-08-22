@@ -13,6 +13,7 @@ import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Pale
 import ringsImage from '@assets/pexels-enginakyurt-1457801_1755851188044.jpg';
 import pendantsImage from '@assets/pendants_1755855074188.jpg';
 import earringsImage from '@assets/earrings_1755855590727.png';
+import braceletsImage from '@assets/bracelets_1755855680895.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -302,13 +303,16 @@ export default function Home() {
 
             {/* Row 2 */}
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('bracelets')}
               data-testid="category-card-bracelets"
+              style={{
+                backgroundImage: `url(${braceletsImage})`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Heart className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Bracelets</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('bracelets')} items</p>
             </div>
             <div 
               className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
