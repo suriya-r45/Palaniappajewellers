@@ -14,6 +14,16 @@ import ringsImage from '@assets/pexels-enginakyurt-1457801_1755851188044.jpg';
 import pendantsImage from '@assets/pendants_1755855074188.jpg';
 import earringsImage from '@assets/earrings_1755855590727.png';
 import braceletsImage from '@assets/bracelets_1755855680895.png';
+import necklacesImage from '@assets/necklaces_luxury.png';
+import banglesImage from '@assets/bangles_luxury.png';
+import watchesImage from '@assets/watches_luxury.png';
+import mensJewelryImage from '@assets/mens_jewelry_luxury.png';
+import childrenJewelryImage from '@assets/children_jewelry_luxury.png';
+import customJewelryImage from '@assets/custom_jewelry_luxury.png';
+import collectionsImage from '@assets/collections_luxury.png';
+import goldCollectionImage from '@assets/gold_collection_luxury.png';
+import silverCollectionImage from '@assets/silver_collection_luxury.png';
+import diamondCollectionImage from '@assets/diamond_collection_luxury.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -268,13 +278,16 @@ export default function Home() {
             >
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('necklaces')}
               data-testid="category-card-necklaces"
+              style={{
+                backgroundImage: `url(${necklacesImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Sparkles className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Necklaces</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('necklaces')} items</p>
             </div>
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
@@ -315,89 +328,116 @@ export default function Home() {
             >
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('bangles')}
               data-testid="category-card-bangles"
+              style={{
+                backgroundImage: `url(${banglesImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Heart className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Bangles</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('bangles')} items</p>
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('watches')}
               data-testid="category-card-watches"
+              style={{
+                backgroundImage: `url(${watchesImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Watch className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Watches</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('watches')} items</p>
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('mens')}
               data-testid="category-card-mens"
+              style={{
+                backgroundImage: `url(${mensJewelryImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Users className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Men's Jewellery</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('mens')} items</p>
             </div>
 
             {/* Row 3 */}
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('children')}
               data-testid="category-card-children"
+              style={{
+                backgroundImage: `url(${childrenJewelryImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Baby className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Children's Jewellery</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('children')} items</p>
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('custom')}
               data-testid="category-card-custom"
+              style={{
+                backgroundImage: `url(${customJewelryImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Wrench className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Custom Jewellery</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('custom')} items</p>
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('collections')}
               data-testid="category-card-collections"
+              style={{
+                backgroundImage: `url(${collectionsImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Palette className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Collections</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('collections')} items</p>
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('GOLD')}
               data-testid="category-card-gold"
+              style={{
+                backgroundImage: `url(${goldCollectionImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Crown className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Gold Collection</h3>
-              <p className="text-xs text-gray-600">{getMaterialCount('GOLD')} items</p>
             </div>
 
             {/* Row 4 */}
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('SILVER')}
               data-testid="category-card-silver"
+              style={{
+                backgroundImage: `url(${silverCollectionImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Star className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Silver Collection</h3>
-              <p className="text-xs text-gray-600">{getMaterialCount('SILVER')} items</p>
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('DIAMOND')}
               data-testid="category-card-diamond"
+              style={{
+                backgroundImage: `url(${diamondCollectionImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Gem className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Diamond Collection</h3>
-              <p className="text-xs text-gray-600">{getMaterialCount('DIAMOND')} items</p>
             </div>
             <div className="bg-gray-100 rounded-lg shadow-md p-2 md:p-4 text-center">
               {/* Placeholder for future category */}
