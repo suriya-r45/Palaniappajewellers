@@ -5,7 +5,7 @@ import { dirname } from "path";
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import { MetalRatesService } from "./services/metalRatesService.js";
+import { MetalRatesService } from "./services/testmetalRatesService.js";
 
 // Recreate __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
