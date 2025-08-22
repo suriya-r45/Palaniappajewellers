@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid3X3, ArrowUpDown, Filter, X } from 'lucide-react';
+import { Grid3X3, ArrowUpDown, Filter, X, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
@@ -13,7 +13,7 @@ interface MobileBottomNavProps {
 }
 
 const CATEGORIES = [
-  { id: 'RINGS', name: 'Rings', icon: '💍' },
+  { id: 'rings', name: 'Rings', icon: '💍' },
   { id: 'EARRINGS', name: 'Earrings', icon: '👂' },
   { id: 'NECKLACES_CHAINS', name: 'Necklaces & Chains', icon: '📿' },
   { id: 'BRACELETS_BANGLES', name: 'Bracelets & Bangles', icon: '🔗' },
@@ -23,6 +23,15 @@ const CATEGORIES = [
   { id: 'ANKLETS_TOE_RINGS', name: 'Anklets & Toe Rings', icon: '👣' },
   { id: 'KIDS_JEWELLERY', name: 'Kids Jewellery', icon: '🧒' },
   { id: 'BRIDAL_COLLECTIONS', name: 'Bridal Collections', icon: '👰' }
+];
+
+const RING_SUBCATEGORIES = [
+  'Engagement Rings',
+  'Wedding Bands', 
+  'Fashion Rings',
+  'Cocktail Rings',
+  'Promise Rings',
+  'Birthstone Rings'
 ];
 
 const SORT_OPTIONS = [
@@ -88,6 +97,8 @@ export function MobileBottomNav({
   sortBy 
 }: MobileBottomNavProps) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showSubcategories, setShowSubcategories] = useState(false);
 
   const handleFilterToggle = (filter: string) => {
     const updated = selectedFilters.includes(filter)
@@ -100,6 +111,26 @@ export function MobileBottomNav({
   const clearAllFilters = () => {
     setSelectedFilters([]);
     onFilterChange?.([]);
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    if (categoryId === 'rings') {
+      setSelectedCategory(categoryId);
+      setShowSubcategories(true);
+    } else {
+      onCategorySelect?.(categoryId);
+    }
+  };
+
+  const handleSubcategoryClick = (subcategory: string) => {
+    onCategorySelect?.(subcategory);
+    setShowSubcategories(false);
+    setSelectedCategory(null);
+  };
+
+  const handleBackToCategories = () => {
+    setShowSubcategories(false);
+    setSelectedCategory(null);
   };
 
   return (
@@ -125,21 +156,51 @@ export function MobileBottomNav({
             </SheetTrigger>
             <SheetContent side="bottom" className="h-[80vh] bg-white">
               <SheetHeader className="pb-4">
-                <SheetTitle className="text-rose-900">Select Category</SheetTitle>
+                {showSubcategories ? (
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleBackToCategories}
+                      className="p-2 hover:bg-rose-50"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                    </Button>
+                    <SheetTitle className="text-rose-900">Ring Types</SheetTitle>
+                  </div>
+                ) : (
+                  <SheetTitle className="text-rose-900">Select Category</SheetTitle>
+                )}
               </SheetHeader>
-              <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto">
-                {CATEGORIES.map((category) => (
-                  <Button
-                    key={category.id}
-                    variant="outline"
-                    className="h-16 flex flex-col items-center gap-2 border-rose-200 hover:bg-rose-50 hover:border-rose-300"
-                    onClick={() => onCategorySelect?.(category.id)}
-                  >
-                    <span className="text-lg">{category.icon}</span>
-                    <span className="text-xs text-center leading-tight">{category.name}</span>
-                  </Button>
-                ))}
-              </div>
+              
+              {showSubcategories ? (
+                <div className="space-y-2 max-h-[60vh] overflow-y-auto">
+                  {RING_SUBCATEGORIES.map((subcategory) => (
+                    <Button
+                      key={subcategory}
+                      variant="outline"
+                      className="w-full h-12 justify-start border-rose-200 hover:bg-rose-50 hover:border-rose-300"
+                      onClick={() => handleSubcategoryClick(subcategory)}
+                    >
+                      <span className="text-sm">{subcategory}</span>
+                    </Button>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto">
+                  {CATEGORIES.map((category) => (
+                    <Button
+                      key={category.id}
+                      variant="outline"
+                      className="h-16 flex flex-col items-center gap-2 border-rose-200 hover:bg-rose-50 hover:border-rose-300"
+                      onClick={() => handleCategoryClick(category.id)}
+                    >
+                      <span className="text-lg">{category.icon}</span>
+                      <span className="text-xs text-center leading-tight">{category.name}</span>
+                    </Button>
+                  ))}
+                </div>
+              )}
             </SheetContent>
           </Sheet>
 
