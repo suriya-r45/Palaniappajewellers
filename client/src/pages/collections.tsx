@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 import { Currency } from '@/lib/currency';
-import { Product, JEWELRY_CATEGORIES } from '@shared/schema';
+import { Product } from '@shared/schema';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import ProductCard from '@/components/product-card';
 
@@ -17,6 +17,19 @@ interface CollectionsPageProps {
   material?: string;
   category?: string;
 }
+
+// Categories from admin product form - same as in mobile-bottom-nav.tsx  
+const HOME_CATEGORIES = {
+  'rings': { name: 'Rings', subcategories: ['Engagement Rings', 'Wedding Bands', 'Fashion Rings', 'Cocktail Rings', 'Promise Rings', 'Birthstone Rings'] },
+  'necklaces': { name: 'Necklaces', subcategories: ['Chains', 'Chokers', 'Lockets', 'Beaded Necklaces', 'Collars', 'Long Necklaces/Opera Chains', 'Multi-layered Necklaces'] },
+  'pendants': { name: 'Pendants', subcategories: ['Solitaire', 'Halo', 'Cluster', 'Heart', 'Cross', 'Initial', 'Diamond', 'Gemstone', 'Pearl', 'Bridal', 'Minimalist', 'Traditional'] },
+  'earrings': { name: 'Earrings', subcategories: ['Stud Earrings', 'Hoop Earrings', 'Drop Earrings', 'Dangle Earrings', 'Ear Cuffs', 'Huggie Earrings'] },
+  'bracelets': { name: 'Bracelets', subcategories: ['Cuff', 'Tennis', 'Charm', 'Chain', 'Beaded', 'Link', 'Bolo', 'Leather', 'Diamond', 'Gemstone', 'Pearl', 'Bridal', 'Minimalist', 'Traditional'] },
+  'bangles': { name: 'Bangles', subcategories: ['Classic', 'Kada', 'Cuff', 'Openable', 'Adjustable', 'Charm', 'Diamond', 'Gemstone', 'Pearl', 'Bridal', 'Minimalist', 'Traditional', 'Temple', 'Kundan', 'Polki', 'Navratna'] },
+  'watches': { name: 'Watches', subcategories: ["Men's Watches", "Women's Watches", 'Smartwatches', 'Luxury Watches', 'Sport Watches'] },
+  'mens': { name: "Men's Jewellery", subcategories: ['Rings', 'Bracelets', 'Necklaces', 'Cufflinks', 'Tie Clips'] },
+  'children': { name: "Children's Jewellery", subcategories: ["Kids' Rings", "Kids' Necklaces", "Kids' Earrings", "Kids' Bracelets"] }
+};
 
 export default function CollectionsPage({ material, category }: CollectionsPageProps) {
   const [location, setLocation] = useLocation();
@@ -79,7 +92,7 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
     // Apply category filter from mobile nav
     if (filters.category && filters.category !== 'ALL_CATEGORIES') {
       // If the selected category is a subcategory (not a main category), filter by subcategory
-      const isMainCategory = Object.keys(JEWELRY_CATEGORIES).some(key => 
+      const isMainCategory = Object.keys(HOME_CATEGORIES).some(key => 
         key.toLowerCase() === filters.category?.toLowerCase()
       );
       
