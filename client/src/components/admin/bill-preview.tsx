@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Bill } from '@shared/schema';
 import { useAuth } from '@/lib/auth';
-import logoPath from '@assets/1000284180_1755240849891.jpg';
+import logoPath from '@assets/Royal_gold_jewelry_collection_e293857a.png';
 
 interface BillPreviewProps {
   bill: Bill;
@@ -87,7 +87,7 @@ export default function BillPreview({ bill, onClose }: BillPreviewProps) {
           <div className="text-center mb-6">
             <div className="flex justify-center items-center mb-4">
               <img
-                src="/attached_assets/1000284180_1755240849891_1755763107777.jpg"
+                src={logoPath}
                 alt="Palaniappa Jewellers Logo"
                 className="w-32 h-32 object-contain mr-4"
               />

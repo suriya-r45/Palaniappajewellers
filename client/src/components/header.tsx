@@ -9,7 +9,7 @@ import { Currency, CURRENCY_NAMES } from '@/lib/currency';
 import CartButton from '@/components/cart/cart-button';
 import GoldRatesTicker from '@/components/gold-rates-ticker';
 import MobileMenu from '@/components/mobile-menu';
-import logoPath from '@assets/1000284180_1755240849891.jpg';
+import logoPath from '@assets/Royal_gold_jewelry_collection_e293857a.png';
 
 interface HeaderProps {
   selectedCurrency: Currency;
