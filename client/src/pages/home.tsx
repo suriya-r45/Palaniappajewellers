@@ -252,17 +252,15 @@ export default function Home() {
           {/* Row 1: Rings, Necklaces & Pendants, Earrings */}
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
-              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-24 md:h-32"
               onClick={() => handleViewAllClick('rings')}
               data-testid="category-card-rings"
+              style={{
+                backgroundImage: `url(${ringsImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
             >
-              <img 
-                src={ringsImage} 
-                alt="Rings" 
-                className="h-12 w-auto mx-auto mb-2 object-contain"
-              />
-              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Rings</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('rings')} items</p>
             </div>
             <div 
               className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
