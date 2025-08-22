@@ -13,6 +13,181 @@ import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import type { Category, InsertCategory } from '@shared/schema';
 
+// Standard jewelry categories and subcategories
+const HOME_CATEGORIES = {
+  'rings': {
+    name: 'Rings',
+    subcategories: [
+      'Engagement Rings',
+      'Wedding Bands', 
+      'Fashion Rings',
+      'Cocktail Rings',
+      'Promise Rings',
+      'Birthstone Rings'
+    ]
+  },
+  'necklaces': {
+    name: 'Necklaces',
+    subcategories: [
+      'Chains',
+      'Chokers',
+      'Lockets',
+      'Beaded Necklaces',
+      'Collars',
+      'Long Necklaces/Opera Chains',
+      'Multi-layered Necklaces'
+    ]
+  },
+  'pendants': {
+    name: 'Pendants',
+    subcategories: [
+      'Solitaire',
+      'Halo',
+      'Cluster',
+      'Heart',
+      'Cross',
+      'Initial',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
+    ]
+  },
+  'earrings': { 
+    name: 'Earrings',
+    subcategories: [
+      'Stud Earrings',
+      'Hoop Earrings',
+      'Drop Earrings',
+      'Dangle Earrings',
+      'Ear Cuffs',
+      'Huggie Earrings'
+    ]
+  },
+  'bracelets': {
+    name: 'Bracelets',
+    subcategories: [
+      'Cuff',
+      'Tennis',
+      'Charm',
+      'Chain',
+      'Beaded',
+      'Link',
+      'Bolo',
+      'Leather',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
+    ]
+  },
+  'bangles': {
+    name: 'Bangles',
+    subcategories: [
+      'Classic',
+      'Kada',
+      'Cuff',
+      'Openable',
+      'Adjustable',
+      'Charm',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional',
+      'Temple',
+      'Kundan',
+      'Polki',
+      'Navratna'
+    ]
+  },
+  'watches': {
+    name: 'Watches',
+    subcategories: [
+      "Men's Watches",
+      "Women's Watches",
+      'Smartwatches',
+      'Luxury Watches',
+      'Sport Watches'
+    ]
+  },
+  'mens': {
+    name: "Men's Jewellery",
+    subcategories: [
+      'Rings',
+      'Bracelets', 
+      'Necklaces',
+      'Cufflinks',
+      'Tie Clips'
+    ]
+  },
+  'children': {
+    name: "Children's Jewellery",
+    subcategories: [
+      "Kids' Rings",
+      "Kids' Necklaces",
+      "Kids' Earrings",
+      "Kids' Bracelets"
+    ]
+  },
+  'materials': {
+    name: 'Materials',
+    subcategories: [
+      'Gold Jewellery',
+      'Silver Jewellery',
+      'Platinum Jewellery',
+      'Diamond Jewellery',
+      'Gemstone Jewellery',
+      'Pearl Jewellery'
+    ]
+  },
+  'collections': {
+    name: 'Collections',
+    subcategories: [
+      'Bridal Collection',
+      'Vintage Collection',
+      'Contemporary Collection',
+      'Minimalist Collection',
+      'Celebrity Collection'
+    ]
+  },
+  'custom': {
+    name: 'Custom Jewellery',
+    subcategories: [
+      'Design Your Own',
+      'Engraving Services',
+      'Repairs & Restorations'
+    ]
+  },
+  'new_arrivals': {
+    name: 'New Arrivals',
+    subcategories: [
+      'Latest Products',
+      'Featured Items',
+      'Trending Now',
+      'Exclusive Pieces'
+    ]
+  },
+  'gold_coins': {
+    name: 'Gold Coins',
+    subcategories: [
+      'Investment',
+      'Religious',
+      'Customized',
+      'Occasion',
+      'Corporate Gifting',
+      'Collectible',
+      'Plain',
+      'Hallmarked'
+    ]
+  }
+};
+
 interface CategoryWithChildren extends Category {
   children?: Category[];
 }
@@ -21,7 +196,7 @@ interface CategoryFormData {
   name: string;
   slug: string;
   description: string;
-  parentId: string;
+  parentId: string | null;
   displayOrder: number;
   isActive: boolean;
 }
@@ -145,6 +320,82 @@ export default function CategoryManagement() {
       toast({ 
         title: 'Error deleting category',
         description: error.message || 'Category may have subcategories or be used by products',
+        variant: 'destructive'
+      });
+    },
+  });
+
+  // Bulk import categories mutation
+  const bulkImportMutation = useMutation({
+    mutationFn: async () => {
+      const results = [];
+      
+      // First create all main categories
+      for (const [key, category] of Object.entries(HOME_CATEGORIES)) {
+        const mainCategoryData = {
+          name: category.name,
+          slug: key,
+          description: `${category.name} collection - premium jewelry items`,
+          parentId: null,
+          displayOrder: 0,
+          isActive: true,
+        };
+
+        const response = await fetch('/api/categories', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(mainCategoryData)
+        });
+        
+        if (response.ok) {
+          const createdCategory = await response.json();
+          results.push(createdCategory);
+
+          // Create subcategories for this main category
+          for (let i = 0; i < category.subcategories.length; i++) {
+            const subCat = category.subcategories[i];
+            const subCategoryData = {
+              name: subCat,
+              slug: `${key}-${subCat.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-')}`,
+              description: `${subCat} in ${category.name}`,
+              parentId: createdCategory.id,
+              displayOrder: i,
+              isActive: true,
+            };
+
+            const subResponse = await fetch('/api/categories', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              },
+              body: JSON.stringify(subCategoryData)
+            });
+
+            if (subResponse.ok) {
+              const createdSubCategory = await subResponse.json();
+              results.push(createdSubCategory);
+            }
+          }
+        }
+      }
+      
+      return results;
+    },
+    onSuccess: (results) => {
+      toast({ 
+        title: 'Categories imported successfully!', 
+        description: `Created ${results.length} categories and subcategories`
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/categories'] });
+    },
+    onError: (error: any) => {
+      toast({ 
+        title: 'Error importing categories',
+        description: error.message || 'Some categories may already exist',
         variant: 'destructive'
       });
     },
@@ -304,18 +555,33 @@ export default function CategoryManagement() {
         </div>
         
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogTrigger asChild>
+          <div className="flex gap-2">
+            <DialogTrigger asChild>
+              <Button 
+                onClick={() => {
+                  setEditingCategory(null);
+                  setFormData(defaultFormData);
+                }}
+                data-testid="button-add-category"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Category
+              </Button>
+            </DialogTrigger>
+            
             <Button 
               onClick={() => {
-                setEditingCategory(null);
-                setFormData(defaultFormData);
+                if (confirm('This will import all standard jewelry categories and subcategories. Continue?')) {
+                  bulkImportMutation.mutate();
+                }
               }}
-              data-testid="button-add-category"
+              variant="outline"
+              disabled={bulkImportMutation.isPending}
+              data-testid="button-bulk-import"
             >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Category
+              {bulkImportMutation.isPending ? 'Importing...' : 'Import Standard Categories'}
             </Button>
-          </DialogTrigger>
+          </div>
           
           <DialogContent className="max-w-md">
             <DialogHeader>
