@@ -236,9 +236,9 @@ export function MobileBottomNav({
                 <Button
                   className="flex-1 text-white"
                   style={{ backgroundColor: '#881337' }}
-                  onClick={() => {/* Apply filters logic */}}
+                  onClick={() => onFilterChange?.(selectedFilters)}
                 >
-                  APPLY FILTERS
+                  APPLY FILTERS ({selectedFilters.length})
                 </Button>
               </div>
             </SheetContent>

@@ -23,6 +23,8 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
   const [filters, setFilters] = useState<IProductFilters>({
     material: material // Set initial filter based on material
   });
+  const [sortBy, setSortBy] = useState<string>('latest');
+  const [selectedMobileFilters, setSelectedMobileFilters] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   
   // Dynamic items per page based on screen size
@@ -58,7 +60,7 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
     queryKey: ['/api/products'],
   });
 
-  // Filter products based on current filters
+  // Filter and sort products based on current filters
   const filteredProducts = useMemo(() => {
     let filtered = [...allProducts];
 
@@ -70,6 +72,59 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
         product.description.toLowerCase().includes(searchTerm) ||
         product.category.toLowerCase().includes(searchTerm)
       );
+    }
+
+    // Apply category filter from mobile nav
+    if (filters.category && filters.category !== 'ALL_CATEGORIES') {
+      filtered = filtered.filter(product => 
+        product.category.toLowerCase() === filters.category?.toLowerCase()
+      );
+    }
+
+    // Apply mobile filters
+    if (selectedMobileFilters.length > 0) {
+      filtered = filtered.filter(product => {
+        // Check material filters
+        const materialFilters = selectedMobileFilters.filter(f => 
+          ['Gold 22K', 'Silver 925', 'Diamond', 'Platinum'].includes(f)
+        );
+        if (materialFilters.length > 0) {
+          const hasMatchingMaterial = materialFilters.some(mat => 
+            product.material?.toLowerCase().includes(mat.toLowerCase()) || false
+          );
+          if (!hasMatchingMaterial) return false;
+        }
+
+        // Check price range filters
+        const priceFilters = selectedMobileFilters.filter(f => f.includes('₹'));
+        if (priceFilters.length > 0) {
+          const price = parseFloat(product.priceInr);
+          const hasMatchingPrice = priceFilters.some(range => {
+            if (range === '₹5001 - ₹10000') return price >= 5001 && price <= 10000;
+            if (range === '₹10001 - ₹15000') return price >= 10001 && price <= 15000;
+            if (range === '₹15001 - ₹20000') return price >= 15001 && price <= 20000;
+            if (range === '₹20001 - ₹30000') return price >= 20001 && price <= 30000;
+            return false;
+          });
+          if (!hasMatchingPrice) return false;
+        }
+
+        // Check weight filters
+        const weightFilters = selectedMobileFilters.filter(f => f.includes('g'));
+        if (weightFilters.length > 0) {
+          const weight = parseFloat(product.grossWeight || '0');
+          const hasMatchingWeight = weightFilters.some(range => {
+            if (range === 'Under 5g') return weight < 5;
+            if (range === '5g - 10g') return weight >= 5 && weight <= 10;
+            if (range === '10g - 20g') return weight >= 10 && weight <= 20;
+            if (range === 'Above 20g') return weight > 20;
+            return false;
+          });
+          if (!hasMatchingWeight) return false;
+        }
+
+        return true;
+      });
     }
 
     // Apply category filter
@@ -148,8 +203,10 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
             return b.name.localeCompare(a.name);
           case 'popular':
             return b.name.localeCompare(a.name); // Can be enhanced with actual popularity metrics
+          case 'newest':
+            return new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime();
           case 'rating':
-            return b.name.localeCompare(a.name); // Can be enhanced with actual rating system
+            return a.name.localeCompare(b.name); // Can be enhanced with actual rating logic
           case 'weight_asc':
             return parseFloat(a.grossWeight || '0') - parseFloat(b.grossWeight || '0');
           case 'weight_desc':
@@ -162,8 +219,31 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
       });
     }
 
+    // Apply mobile sorting
+    if (sortBy && sortBy !== 'latest') {
+      filtered.sort((a, b) => {
+        switch (sortBy) {
+          case 'price_asc':
+            return parseFloat(selectedCurrency === 'INR' ? a.priceInr : a.priceBhd) -
+              parseFloat(selectedCurrency === 'INR' ? b.priceInr : b.priceBhd);
+          case 'price_desc':
+            return parseFloat(selectedCurrency === 'INR' ? b.priceInr : b.priceBhd) -
+              parseFloat(selectedCurrency === 'INR' ? a.priceInr : a.priceBhd);
+          case 'discount':
+            return a.name.localeCompare(b.name);
+          case 'featured':
+            return b.stock - a.stock;
+          case 'rating':
+            return a.name.localeCompare(b.name);
+          case 'latest':
+          default:
+            return new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime();
+        }
+      });
+    }
+
     return filtered;
-  }, [allProducts, filters, selectedCurrency]);
+  }, [allProducts, filters, selectedCurrency, sortBy, selectedMobileFilters]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -346,22 +426,22 @@ export default function CollectionsPage({ material }: CollectionsPageProps) {
       <MobileBottomNav 
         onCategorySelect={(category) => {
           setFilters({ ...filters, category });
+          setCurrentPage(1);
         }}
         onSortChange={(sort) => {
-          setFilters({ ...filters, sortBy: sort as any });
+          setSortBy(sort);
+          setCurrentPage(1);
         }}
         onFilterChange={(selectedFilters) => {
-          // This is where mobile filter selections would be applied
-          // For now, we maintain the existing filter state
-          const newFilters = { ...filters };
-          setFilters(newFilters);
+          setSelectedMobileFilters(selectedFilters);
+          setCurrentPage(1);
         }}
-        activeFilters={Object.keys(filters).filter(key => {
+        activeFilters={selectedMobileFilters.length + Object.keys(filters).filter(key => {
           const value = filters[key as keyof IProductFilters];
           return value !== undefined && value !== '' && value !== 'ALL_CATEGORIES' && 
                  value !== 'ALL_MATERIALS' && value !== 'DEFAULT_SORT';
         }).length}
-        sortBy={filters.sortBy}
+        sortBy={sortBy}
       />
 
       <Footer />
