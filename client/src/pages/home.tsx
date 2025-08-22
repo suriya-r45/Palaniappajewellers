@@ -170,16 +170,8 @@ export default function Home() {
   const getMaterialCount = (material: string) => {
     return allProducts.filter(product => {
       if (product.material?.includes('new_arrivals')) return false;
-      const isGoldMaterial = product.material?.includes('GOLD');
-      const isSilverMaterial = product.material?.includes('SILVER');
-      const isDiamondMaterial = product.material?.includes('DIAMOND');
-      
-      switch(material) {
-        case 'GOLD': return isGoldMaterial;
-        case 'SILVER': return isSilverMaterial;
-        case 'DIAMOND': return isDiamondMaterial;
-        default: return false;
-      }
+      // Use metalType field for broad material categorization instead of material field
+      return product.metalType === material;
     }).length;
   };
 
