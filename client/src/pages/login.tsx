@@ -27,6 +27,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
   
   // Registration form state
   const [registerForm, setRegisterForm] = useState({
@@ -126,7 +127,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4" data-testid="page-login">
       <div className="w-full max-w-md">
-        <Tabs defaultValue="login" className="w-full">
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'login' | 'register')} className="w-full">
           {/* Login Tab */}
           <TabsContent value="login" className="space-y-0">
             <Card className="border-0 shadow-lg">
@@ -203,10 +204,7 @@ export default function Login() {
                   <Button 
                     variant="link" 
                     className="text-pink-600 hover:text-pink-700 font-semibold p-0"
-                    onClick={() => {
-                      const registerTab = document.querySelector('[data-value="register"]') as HTMLElement;
-                      registerTab?.click();
-                    }}
+                    onClick={() => setActiveTab('register')}
                   >
                     Create New Account
                   </Button>
@@ -374,10 +372,7 @@ export default function Login() {
                   <Button 
                     variant="link" 
                     className="text-pink-600 hover:text-pink-700 font-semibold p-0"
-                    onClick={() => {
-                      const loginTab = document.querySelector('[data-value="login"]') as HTMLElement;
-                      loginTab?.click();
-                    }}
+                    onClick={() => setActiveTab('login')}
                   >
                     Log In!
                   </Button>
@@ -386,13 +381,6 @@ export default function Login() {
             </Card>
           </TabsContent>
 
-          {/* Hidden tab triggers for navigation */}
-          <div className="hidden">
-            <TabsList>
-              <TabsTrigger value="login" data-value="login">Login</TabsTrigger>
-              <TabsTrigger value="register" data-value="register">Register</TabsTrigger>
-            </TabsList>
-          </div>
         </Tabs>
       </div>
     </div>
