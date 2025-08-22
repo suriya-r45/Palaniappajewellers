@@ -506,15 +506,6 @@ export default function Home() {
                 <p className="text-xs text-gray-600">{getCategoryCount('gold_coins')} items</p>
               </div>
             </div>
-            <div className="bg-gray-100 rounded-lg shadow-md p-2 md:p-4 text-center">
-              {/* Placeholder for future category */}
-            </div>
-            <div className="bg-gray-100 rounded-lg shadow-md p-2 md:p-4 text-center">
-              {/* Placeholder for future category */}
-            </div>
-            <div className="bg-gray-100 rounded-lg shadow-md p-2 md:p-4 text-center">
-              {/* Placeholder for future category */}
-            </div>
           </div>
         </div>
       </section>
