@@ -24,6 +24,7 @@ import collectionsImage from '@assets/collections_luxury.png';
 import goldCollectionImage from '@assets/gold_collection_luxury.png';
 import silverCollectionImage from '@assets/silver_collection_luxury.png';
 import diamondCollectionImage from '@assets/diamond_collection_luxury.png';
+import goldCoinsImage from '@assets/generated_images/HD_luxury_gold_coins_31016b54.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -509,7 +510,7 @@ export default function Home() {
               <div 
                 className="h-24 md:h-32"
                 style={{
-                  backgroundImage: `url('https://images.unsplash.com/photo-1609884261025-5d5f2a9b4ec9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
+                  backgroundImage: `url(${goldCoinsImage})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat'
