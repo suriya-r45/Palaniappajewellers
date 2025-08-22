@@ -106,8 +106,18 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
         filtered = filtered.filter(product => {
           // If we have a current main category context, respect it
           if (category) {
-            return product.category?.toLowerCase() === category.toLowerCase() && 
-                   product.subCategory?.toLowerCase() === filters.category?.toLowerCase();
+            const categoryMatch = product.category?.toLowerCase() === category.toLowerCase();
+            const subCategoryMatch = product.subCategory?.toLowerCase() === filters.category?.toLowerCase();
+            console.log('Category filter debug:', { 
+              productCategory: product.category, 
+              contextCategory: category, 
+              productSubCategory: product.subCategory, 
+              filterCategory: filters.category,
+              categoryMatch,
+              subCategoryMatch,
+              bothMatch: categoryMatch && subCategoryMatch
+            });
+            return categoryMatch && subCategoryMatch;
           }
           // Otherwise just filter by subcategory
           return product.subCategory?.toLowerCase() === filters.category?.toLowerCase();
