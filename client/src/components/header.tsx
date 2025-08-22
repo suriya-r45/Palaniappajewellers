@@ -109,8 +109,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                   <div className="flex items-center space-x-1 md:space-x-2">
                     {isAdmin && (
                       <Link href="/admin">
-                        <Button variant="ghost" size="sm" className="hidden sm:flex text-white hover:text-rose-100 hover:bg-rose-800 transition-all duration-200" data-testid="button-admin-dashboard">
-                          Dashboard
+                        <Button variant="ghost" size="sm" className="flex text-white hover:text-rose-100 hover:bg-rose-800 transition-all duration-200 px-2 py-1" data-testid="button-admin-dashboard">
+                          <span className="text-xs">Admin</span>
                         </Button>
                       </Link>
                     )}
