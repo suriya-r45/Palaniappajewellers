@@ -50,7 +50,7 @@ export default function OrderSuccess() {
                 
                 <Button 
                   variant="outline"
-                  onClick={() => window.open('https://wa.me/16195972011', '_blank')}
+                  onClick={() => window.open('https://wa.me/14155238886', '_blank')}
                   className="w-full"
                   data-testid="button-whatsapp-support"
                 >
