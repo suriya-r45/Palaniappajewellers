@@ -147,7 +147,7 @@ export default function Login() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="h-14 text-base border-gray-300 rounded-lg focus:border-pink-500 focus:ring-pink-500"
+                      className="h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900"
                       data-testid="input-email"
                     />
                   </div>
@@ -163,7 +163,7 @@ export default function Login() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="h-14 text-base border-gray-300 rounded-lg focus:border-pink-500 focus:ring-pink-500 pr-16"
+                        className="h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900 pr-16"
                         data-testid="input-password"
                       />
                       <Button
@@ -180,7 +180,7 @@ export default function Login() {
                   
                   <Button
                     type="submit"
-                    className="w-full h-14 bg-pink-600 hover:bg-pink-700 text-white text-lg font-semibold rounded-lg mt-8"
+                    className="w-full h-14 bg-gradient-to-r from-rose-900 to-red-900 hover:from-rose-800 hover:to-red-800 text-white text-lg font-semibold rounded-lg mt-8"
                     disabled={isLoading}
                     data-testid="button-submit-login"
                   >
@@ -191,7 +191,7 @@ export default function Login() {
                 <div className="flex justify-between items-center mt-8">
                   <Button 
                     variant="link" 
-                    className="text-pink-600 hover:text-pink-700 font-semibold p-0"
+                    className="text-rose-900 hover:text-red-900 font-semibold p-0"
                     onClick={() => {
                       toast({
                         title: "Feature Coming Soon",
@@ -203,7 +203,7 @@ export default function Login() {
                   </Button>
                   <Button 
                     variant="link" 
-                    className="text-pink-600 hover:text-pink-700 font-semibold p-0"
+                    className="text-rose-900 hover:text-red-900 font-semibold p-0"
                     onClick={() => setActiveTab('register')}
                   >
                     Create New Account
@@ -246,7 +246,7 @@ export default function Login() {
                           setRegisterForm({...registerForm, name: `${e.target.value} ${lastName}`.trim()});
                         }}
                         required
-                        className="flex-1 h-14 text-base border-gray-300 rounded-lg focus:border-pink-500 focus:ring-pink-500"
+                        className="flex-1 h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900"
                       />
                     </div>
                   </div>
@@ -264,7 +264,7 @@ export default function Login() {
                         setRegisterForm({...registerForm, name: `${firstName} ${e.target.value}`.trim()});
                       }}
                       required
-                      className="h-14 text-base border-gray-300 rounded-lg focus:border-pink-500 focus:ring-pink-500"
+                      className="h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900"
                     />
                   </div>
                   
@@ -278,7 +278,7 @@ export default function Login() {
                       value={registerForm.email}
                       onChange={(e) => setRegisterForm({...registerForm, email: e.target.value})}
                       required
-                      className="h-14 text-base border-gray-300 rounded-lg focus:border-pink-500 focus:ring-pink-500"
+                      className="h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900"
                     />
                   </div>
                   
@@ -301,7 +301,7 @@ export default function Login() {
                         value={registerForm.phone.replace('+91', '')}
                         onChange={(e) => setRegisterForm({...registerForm, phone: `+91${e.target.value}`})}
                         required
-                        className="h-14 text-base border-gray-300 rounded-l-none rounded-r-lg focus:border-pink-500 focus:ring-pink-500"
+                        className="h-14 text-base border-gray-300 rounded-l-none rounded-r-lg focus:border-rose-900 focus:ring-rose-900"
                         placeholder="Mobile number"
                       />
                     </div>
@@ -319,7 +319,7 @@ export default function Login() {
                           value={registerForm.password}
                           onChange={(e) => setRegisterForm({...registerForm, password: e.target.value})}
                           required
-                          className="h-14 text-base border-gray-300 rounded-lg focus:border-pink-500 focus:ring-pink-500 pr-16"
+                          className="h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900 pr-16"
                         />
                         <Button
                           type="button"
@@ -343,7 +343,7 @@ export default function Login() {
                           value={registerForm.confirmPassword}
                           onChange={(e) => setRegisterForm({...registerForm, confirmPassword: e.target.value})}
                           required
-                          className="h-14 text-base border-gray-300 rounded-lg focus:border-pink-500 focus:ring-pink-500 pr-16"
+                          className="h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900 pr-16"
                         />
                         <Button
                           type="button"
@@ -360,7 +360,7 @@ export default function Login() {
                   
                   <Button
                     type="submit"
-                    className="w-full h-14 bg-pink-600 hover:bg-pink-700 text-white text-lg font-semibold rounded-lg mt-8"
+                    className="w-full h-14 bg-gradient-to-r from-rose-900 to-red-900 hover:from-rose-800 hover:to-red-800 text-white text-lg font-semibold rounded-lg mt-8"
                     disabled={isRegistering}
                   >
                     {isRegistering ? 'CREATING ACCOUNT...' : 'REGISTER TO CONTINUE'}
@@ -371,7 +371,7 @@ export default function Login() {
                   <span className="text-gray-600">Already have an account? </span>
                   <Button 
                     variant="link" 
-                    className="text-pink-600 hover:text-pink-700 font-semibold p-0"
+                    className="text-rose-900 hover:text-red-900 font-semibold p-0"
                     onClick={() => setActiveTab('login')}
                   >
                     Log In!
