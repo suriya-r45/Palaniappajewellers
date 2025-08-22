@@ -18,19 +18,13 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   const { toast } = useToast();
 
   const handleCheckout = () => {
-    if (!user) {
-      toast({
-        title: "Login Required",
-        description: "Please login or register to proceed to checkout",
-        variant: "destructive",
-      });
-      onClose();
-      setLocation("/login");
-      return;
-    }
-    
     onClose();
     setLocation("/checkout");
+  };
+
+  const handleViewCart = () => {
+    onClose();
+    setLocation("/cart");
   };
 
   if (!isOpen) return null;
@@ -219,21 +213,22 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             
             <div className="space-y-2">
               <Button
-                onClick={handleCheckout}
+                onClick={handleViewCart}
                 className="w-full"
-                data-testid="button-checkout"
+                data-testid="button-view-cart"
               >
-                <CreditCard className="h-4 w-4 mr-2" />
-                Proceed to Checkout
+                <ShoppingBag className="h-4 w-4 mr-2" />
+                View Cart
               </Button>
               
               <Button
-                variant="outline"
-                onClick={clearCart}
+                onClick={handleCheckout}
                 className="w-full"
-                data-testid="button-clear-cart"
+                variant="outline"
+                data-testid="button-checkout"
               >
-                Clear Cart
+                <CreditCard className="h-4 w-4 mr-2" />
+                Quick Checkout
               </Button>
             </div>
           </div>

@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import AdminDashboard from "@/pages/admin-dashboard";
 import Login from "@/pages/login";
 import ProductDetails from "@/pages/product-details";
+import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
 import OrderSuccess from "@/pages/order-success";
 import { EstimatesPage } from "@/pages/estimates";
@@ -46,6 +47,7 @@ function Router() {
       {/* Generic collections route */}
       <Route path="/collections" component={() => <CollectionsPage />} />
       <Route path="/product/:id" component={ProductDetails} />
+      <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/order-success" component={OrderSuccess} />
       <Route component={NotFound} />

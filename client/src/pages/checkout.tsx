@@ -12,10 +12,11 @@ import { formatPrice } from '@/lib/currency';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { useLocation } from 'wouter';
+import { ShoppingBag } from 'lucide-react';
 
 // Initialize Stripe if key is available
-const stripePromise = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY 
-  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY)
+const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
+  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
   : null;
 
 function CheckoutForm() {
@@ -175,48 +176,88 @@ function CheckoutForm() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-8" style={{ backgroundColor: '#ffffff' }}>
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8">Checkout</h1>
+    <div className="min-h-screen bg-white" style={{ backgroundColor: '#ffffff' }}>
+      {/* Header */}
+      <div className="bg-gradient-to-r from-rose-900 to-red-900 text-white py-4">
+        <div className="container mx-auto px-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-center">Checkout</h1>
+          <p className="text-center text-rose-100 mt-2">Secure payment with 256-bit SSL encryption</p>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-6 md:py-8">
+        <div className="max-w-5xl mx-auto">
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Order Summary */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {items.map((item) => (
-                  <div key={item.product.id} className="flex justify-between items-center">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={item.product.images[0] || "https://images.unsplash.com/photo-1603561596112-db2eca6c9df4?w=100"}
-                        alt={item.product.name}
-                        className="w-12 h-12 object-cover rounded"
-                      />
-                      <div>
-                        <h3 className="font-medium text-sm">{item.product.name}</h3>
-                        <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+            <div className="lg:order-2">
+              <Card className="shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <ShoppingBag className="h-5 w-5" />
+                    Order Summary
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="max-h-64 md:max-h-80 overflow-y-auto">
+                    {items.map((item) => (
+                      <div key={item.product.id} className="flex justify-between items-start gap-3 py-2">
+                        <div className="flex items-start gap-3 flex-1 min-w-0">
+                          <img
+                            src={item.product.images[0] || "https://images.unsplash.com/photo-1603561596112-db2eca6c9df4?w=100"}
+                            alt={item.product.name}
+                            className="w-12 h-12 md:w-16 md:h-16 object-cover rounded flex-shrink-0"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-medium text-sm md:text-base truncate">{item.product.name}</h3>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              <span className="text-xs bg-gray-100 px-2 py-1 rounded">{item.product.material}</span>
+                            </div>
+                            <p className="text-sm text-gray-500 mt-1">Qty: {item.quantity}</p>
+                          </div>
+                        </div>
+                        <div className="text-right flex-shrink-0">
+                          <span className="font-medium text-sm md:text-base">
+                            {formatPrice(parseFloat(item.product.priceInr) * item.quantity, 'INR')}
+                          </span>
+                          <p className="text-xs text-gray-500">
+                            {formatPrice(parseFloat(item.product.priceInr), 'INR')} each
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <span className="font-medium">
-                      {formatPrice(parseFloat(item.product.priceInr) * item.quantity, 'INR')}
-                    </span>
+                    ))}
                   </div>
-                ))}
-                
-                <Separator />
-                
-                <div className="flex justify-between items-center text-lg font-semibold">
-                  <span>Total:</span>
-                  <span>{formatPrice(totalAmount, 'INR')}</span>
-                </div>
-              </CardContent>
-            </Card>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Subtotal:</span>
+                      <span>{formatPrice(totalAmount, 'INR')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Shipping:</span>
+                      <span className="text-green-600 font-medium">FREE</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Tax:</span>
+                      <span className="text-gray-600">Included</span>
+                    </div>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="flex justify-between items-center text-lg font-bold" style={{ color: '#8b4513' }}>
+                    <span>Total:</span>
+                    <span>{formatPrice(totalAmount, 'INR')}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Payment Form */}
-            <Card>
+            <div className="lg:order-1">
+              <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle>Payment & Shipping Details</CardTitle>
               </CardHeader>
@@ -275,51 +316,53 @@ function CheckoutForm() {
                   <Separator />
 
                   {/* Payment Method Selection */}
-                  {isIndianUser && (
-                    <div className="space-y-4">
-                      <h3 className="font-semibold">Payment Method</h3>
-                      <RadioGroup 
-                        value={paymentMethod} 
-                        onValueChange={setPaymentMethod}
-                        className="grid grid-cols-2 gap-4"
-                      >
-                        <div className="flex items-center space-x-2 border rounded-lg p-3">
-                          <RadioGroupItem value="stripe" id="stripe" />
-                          <Label htmlFor="stripe" className="flex items-center cursor-pointer">
-                            💳 Credit/Debit Card
-                          </Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2 border rounded-lg p-3">
-                          <RadioGroupItem value="gpay" id="gpay" />
-                          <Label htmlFor="gpay" className="flex items-center cursor-pointer">
-                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMjIgMTJMMTIgMjJMMiAxMkwxMiAyWiIgZmlsbD0iIzQyODVGNCIvPgo8cGF0aCBkPSJNMTIgN0wxNyAxMkwxMiAxN0w3IDEyTDEyIDdaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" alt="GPay" className="w-5 h-5 mr-2"/>
-                            Google Pay
-                          </Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2 border rounded-lg p-3">
-                          <RadioGroupItem value="phonepe" id="phonepe" />
-                          <Label htmlFor="phonepe" className="flex items-center cursor-pointer">
-                            <div className="w-5 h-5 mr-2 bg-purple-600 rounded flex items-center justify-center text-white text-xs font-bold">
-                              P
-                            </div>
-                            PhonePe
-                          </Label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2 border rounded-lg p-3">
-                          <RadioGroupItem value="paytm" id="paytm" />
-                          <Label htmlFor="paytm" className="flex items-center cursor-pointer">
-                            <div className="w-5 h-5 mr-2 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">
-                              ₹
-                            </div>
-                            Paytm
-                          </Label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-                  )}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold">Payment Method</h3>
+                    <RadioGroup 
+                      value={paymentMethod} 
+                      onValueChange={setPaymentMethod}
+                      className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+                    >
+                      <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                        <RadioGroupItem value="stripe" id="stripe" />
+                        <Label htmlFor="stripe" className="flex items-center cursor-pointer flex-1">
+                          💳 Credit/Debit Card
+                          <span className="ml-auto text-xs text-gray-500">Visa, Mastercard, etc.</span>
+                        </Label>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                        <RadioGroupItem value="gpay" id="gpay" />
+                        <Label htmlFor="gpay" className="flex items-center cursor-pointer flex-1">
+                          <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJMMjIgMTJMMTIgMjJMMiAxMkwxMiAyWiIgZmlsbD0iIzQyODVGNCIvPgo8cGF0aCBkPSJNMTIgN0wxNyAxMkwxMiAxN0w3IDEyTDEyIDdaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K" alt="GPay" className="w-5 h-5 mr-2"/>
+                          Google Pay
+                          <span className="ml-auto text-xs text-gray-500">UPI</span>
+                        </Label>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                        <RadioGroupItem value="phonepe" id="phonepe" />
+                        <Label htmlFor="phonepe" className="flex items-center cursor-pointer flex-1">
+                          <div className="w-5 h-5 mr-2 bg-purple-600 rounded flex items-center justify-center text-white text-xs font-bold">
+                            P
+                          </div>
+                          PhonePe
+                          <span className="ml-auto text-xs text-gray-500">UPI</span>
+                        </Label>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2 border rounded-lg p-3 hover:bg-gray-50 transition-colors">
+                        <RadioGroupItem value="paytm" id="paytm" />
+                        <Label htmlFor="paytm" className="flex items-center cursor-pointer flex-1">
+                          <div className="w-5 h-5 mr-2 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">
+                            ₹
+                          </div>
+                          Paytm
+                          <span className="ml-auto text-xs text-gray-500">UPI</span>
+                        </Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
 
                   {/* Payment Element */}
                   <div className="space-y-4">
@@ -328,15 +371,49 @@ function CheckoutForm() {
                     </h3>
                     
                     {paymentMethod === 'stripe' && stripePromise ? (
-                      <PaymentElement />
+                      <div className="space-y-4">
+                        <PaymentElement options={{
+                          layout: {
+                            type: 'accordion',
+                            defaultCollapsed: false,
+                            radios: false,
+                            spacedAccordionItems: false
+                          }
+                        }} />
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <div className="flex gap-1">
+                            <span className="text-blue-600">💳</span>
+                            <span className="text-red-600">💳</span>
+                            <span className="text-yellow-600">💳</span>
+                            <span className="text-green-600">💳</span>
+                          </div>
+                          <span>Secure payments powered by Stripe</span>
+                        </div>
+                      </div>
                     ) : (
-                      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                        <p className="text-sm text-blue-800">
-                          {!stripePromise && paymentMethod === 'stripe' && "Online payment is currently unavailable. Please choose an alternative payment method."}
-                          {paymentMethod === 'gpay' && "You'll be redirected to Google Pay to complete your payment."}
-                          {paymentMethod === 'phonepe' && "You'll be redirected to PhonePe to complete your payment."}
-                          {paymentMethod === 'paytm' && "You'll be redirected to Paytm to complete your payment."}
-                        </p>
+                      <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+                        <div className="flex items-start gap-3">
+                          <div className="text-2xl">
+                            {paymentMethod === 'gpay' && '📱'}
+                            {paymentMethod === 'phonepe' && '📱'}
+                            {paymentMethod === 'paytm' && '📱'}
+                            {!stripePromise && paymentMethod === 'stripe' && '⚠️'}
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-blue-900 mb-1">
+                              {!stripePromise && paymentMethod === 'stripe' && "Payment Setup Required"}
+                              {paymentMethod === 'gpay' && "Google Pay Payment"}
+                              {paymentMethod === 'phonepe' && "PhonePe Payment"}
+                              {paymentMethod === 'paytm' && "Paytm Payment"}
+                            </p>
+                            <p className="text-sm text-blue-800">
+                              {!stripePromise && paymentMethod === 'stripe' && "Online card payments are currently being set up. Please choose UPI payment or contact us directly."}
+                              {paymentMethod === 'gpay' && "You'll be redirected to Google Pay to complete your secure UPI payment."}
+                              {paymentMethod === 'phonepe' && "You'll be redirected to PhonePe to complete your secure UPI payment."}
+                              {paymentMethod === 'paytm' && "You'll be redirected to Paytm to complete your secure UPI payment."}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -355,7 +432,8 @@ function CheckoutForm() {
                   </Button>
                 </form>
               </CardContent>
-            </Card>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
@@ -369,9 +447,9 @@ export default function Checkout() {
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Redirect if cart is empty
+    // Don't redirect if cart is empty, show empty state instead
     if (items.length === 0) {
-      setLocation('/');
+      setClientSecret("empty-cart");
       return;
     }
 
@@ -392,15 +470,36 @@ export default function Checkout() {
         })
         .catch((error) => {
           console.error('Error creating payment intent:', error);
+          setClientSecret("skip-payment");
         });
     } else {
       // Skip payment intent creation when Stripe is not configured
       setClientSecret("skip-payment");
     }
-  }, [items, totalAmount, setLocation]);
+  }, [items, totalAmount]);
 
+  // Handle empty cart
   if (items.length === 0) {
-    return null; // Will redirect
+    return (
+      <div className="min-h-screen bg-white py-8" style={{ backgroundColor: '#ffffff' }}>
+        <div className="container mx-auto px-4">
+          <div className="max-w-md mx-auto text-center py-16">
+            <ShoppingBag className="mx-auto h-24 w-24 text-gray-400 mb-6" />
+            <h1 className="text-2xl font-semibold text-gray-700 mb-4">Your cart is empty</h1>
+            <p className="text-gray-500 mb-8">
+              Add some beautiful jewelry pieces to your cart before checking out.
+            </p>
+            <Button
+              onClick={() => setLocation('/')}
+              className="px-8 py-3 text-lg"
+              style={{ backgroundColor: '#8b4513', color: 'white' }}
+            >
+              Continue Shopping
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!clientSecret) {
@@ -411,8 +510,8 @@ export default function Checkout() {
     );
   }
 
-  // Show non-payment checkout form when Stripe is not available
-  if (!stripePromise || clientSecret === "skip-payment") {
+  // Show non-payment checkout form when Stripe is not available or empty cart
+  if (!stripePromise || clientSecret === "skip-payment" || clientSecret === "empty-cart") {
     return <CheckoutForm />;
   }
 
