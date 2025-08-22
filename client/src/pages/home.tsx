@@ -212,6 +212,21 @@ export default function Home() {
     [allProducts]
   );
 
+  // Gold Platted Silver Products - Products with gold plating on silver base
+  const goldPlattedSilverProducts = useMemo(() => 
+    allProducts.filter(product => 
+      product.material?.toLowerCase().includes('gold plated') ||
+      product.material?.toLowerCase().includes('gold platted') ||
+      product.description?.toLowerCase().includes('gold plated') ||
+      product.description?.toLowerCase().includes('gold platted') ||
+      (product.metalType === 'SILVER' && 
+       (product.material?.toLowerCase().includes('gold') || 
+        product.name.toLowerCase().includes('gold plated') ||
+        product.name.toLowerCase().includes('gold platted')))
+    ).slice(0, 8), 
+    [allProducts]
+  );
+
   // New Arrivals - Products specifically tagged as new_arrivals OR recent products
   const newArrivalProducts = useMemo(() => {
     const thirtyDaysAgo = new Date();
@@ -239,6 +254,48 @@ export default function Home() {
         onCurrencyChange={setSelectedCurrency}
       />
 
+      {/* Gold Platted Silver Jewellery Section */}
+      {goldPlattedSilverProducts.length > 0 && (
+        <>
+          <section className="py-16" data-testid="section-gold-platted-silver" style={{ background: 'linear-gradient(135deg, #f8f6e6 0%, #fff2cc 100%)' }}>
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <div className="flex items-center justify-center mb-6">
+                  <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Platted Silver Jewellery</h2>
+                  <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
+                </div>
+                <p className="text-xl text-black">Elegant silver jewelry with luxurious gold finish</p>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+                {goldPlattedSilverProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    currency={selectedCurrency}
+                    showActions={false}
+                  />
+                ))}
+              </div>
+              <div className="text-center">
+                <Button 
+                  variant="outline" 
+                  className="border-2 px-8 py-3 text-lg" 
+                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
+                  onClick={() => handleViewAllClick('gold-plated-silver')}
+                >
+                  View All Gold Platted Silver <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* Section Separator */}
+          <div className="h-px bg-black"></div>
+        </>
+      )}
 
       {/* New Arrivals Section */}
       {newArrivalProducts.length > 0 && (
