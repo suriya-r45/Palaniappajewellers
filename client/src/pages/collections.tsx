@@ -85,6 +85,11 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
 
   const { data: allProducts = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
+    queryFn: async () => {
+      const response = await fetch('/api/products');
+      if (!response.ok) throw new Error('Failed to fetch products');
+      return response.json();
+    },
   });
 
   // Filter and sort products based on current filters
@@ -147,40 +152,36 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
       filtered = filtered.filter(product => product.stock === 0);
     }
 
-    // Apply category filter from mobile nav
+    // Apply category filter from URL parameter or mobile nav
     if (filters.category && filters.category !== 'ALL_CATEGORIES') {
-      // If the selected category is a subcategory (not a main category), filter by subcategory
-      const isMainCategory = Object.keys(HOME_CATEGORIES).some(key => 
-        key.toLowerCase() === filters.category?.toLowerCase()
-      );
+      // Map display category names to database category names
+      const categoryMapping: { [key: string]: string } = {
+        'rings': 'RINGS',
+        'necklaces': 'NECKLACES', 
+        'pendants': 'PENDANTS',
+        'earrings': 'EARRINGS',
+        'bracelets': 'BRACELETS',
+        'bangles': 'BANGLES',
+        'watches': 'WATCHES',
+        'mens_jewellery': 'MENS_JEWELLERY',
+        'mens': 'MENS_JEWELLERY',
+        'children_jewellery': 'CHILDRENS_JEWELLERY',
+        'children': 'CHILDRENS_JEWELLERY',
+        'materials': 'MATERIALS',
+        'collections': 'COLLECTIONS',
+        'custom_jewellery': 'CUSTOM_JEWELLERY',
+        'custom': 'CUSTOM_JEWELLERY',
+        'new_arrivals': 'NEW_ARRIVALS',
+        'new-arrivals': 'NEW_ARRIVALS',
+        'gold_coins': 'GOLD_COINS'
+      };
       
-      if (isMainCategory) {
-        // Filter by main category
-        filtered = filtered.filter(product => 
-          product.category?.toLowerCase() === filters.category?.toLowerCase()
-        );
-      } else {
-        // Filter by subcategory, but also ensure we're in the right main category context
-        filtered = filtered.filter(product => {
-          // If we have a current main category context, respect it
-          if (category) {
-            const categoryMatch = product.category?.toLowerCase() === category.toLowerCase();
-            const subCategoryMatch = product.subCategory?.toLowerCase() === filters.category?.toLowerCase();
-            console.log('Category filter debug:', { 
-              productCategory: product.category, 
-              contextCategory: category, 
-              productSubCategory: product.subCategory, 
-              filterCategory: filters.category,
-              categoryMatch,
-              subCategoryMatch,
-              bothMatch: categoryMatch && subCategoryMatch
-            });
-            return categoryMatch && subCategoryMatch;
-          }
-          // Otherwise just filter by subcategory
-          return product.subCategory?.toLowerCase() === filters.category?.toLowerCase();
-        });
-      }
+      const dbCategory = categoryMapping[filters.category.toLowerCase()] || filters.category.toUpperCase();
+      
+      // Filter by main category
+      filtered = filtered.filter(product => 
+        product.category === dbCategory
+      );
     }
 
     // Apply mobile filters
