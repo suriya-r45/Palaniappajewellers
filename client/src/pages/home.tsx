@@ -12,6 +12,7 @@ import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench } from "lucide-react";
 import ringsImage from '@assets/pexels-enginakyurt-1457801_1755851188044.jpg';
 import pendantsImage from '@assets/pendants_1755855074188.jpg';
+import earringsImage from '@assets/earrings_1755855590727.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -287,13 +288,16 @@ export default function Home() {
             >
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-2 md:p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-32 md:h-48 bg-gray-50"
               onClick={() => handleViewAllClick('earrings')}
               data-testid="category-card-earrings"
+              style={{
+                backgroundImage: `url(${earringsImage})`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Gem className="h-6 w-6 md:h-8 md:w-8 mx-auto mb-1 md:mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Earrings</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('earrings')} items</p>
             </div>
 
             {/* Row 2 */}
