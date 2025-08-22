@@ -11,6 +11,7 @@ import { Currency } from '@/lib/currency';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench } from "lucide-react";
 import ringsImage from '@assets/pexels-enginakyurt-1457801_1755851188044.jpg';
+import pendantsImage from '@assets/pendants_1755855074188.jpg';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -273,13 +274,16 @@ export default function Home() {
               <p className="text-xs text-gray-600">{getCategoryCount('necklaces')} items</p>
             </div>
             <div 
-              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-24 md:h-40 bg-gray-50"
               onClick={() => handleViewAllClick('pendants')}
               data-testid="category-card-pendants"
+              style={{
+                backgroundImage: `url(${pendantsImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
-              <Star className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Pendants</h3>
-              <p className="text-xs text-gray-600">{getCategoryCount('pendants')} items</p>
             </div>
           </div>
           
