@@ -542,7 +542,7 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
                       <div className="px-2">
                         <Slider
                           value={priceRange}
-                          onValueChange={setPriceRange}
+                          onValueChange={(value) => setPriceRange(value as [number, number])}
                           max={200000}
                           min={0}
                           step={1000}
@@ -561,7 +561,7 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
                       <div className="px-2">
                         <Slider
                           value={weightRange}
-                          onValueChange={setWeightRange}
+                          onValueChange={(value) => setWeightRange(value as [number, number])}
                           max={50}
                           min={0}
                           step={0.5}

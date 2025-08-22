@@ -15,42 +15,63 @@ interface Category {
   path?: string;
 }
 
+// Categories from admin product form - exact same structure as in admin dashboard
 const categories: Category[] = [
   {
-    name: 'Diamond',
-    subcategories: ['Diamond Rings', 'Diamond Necklaces', 'Diamond Earrings', 'Diamond Pendants', 'Diamond Bracelets']
+    name: 'Rings',
+    subcategories: ['Engagement Rings', 'Wedding Bands', 'Fashion Rings', 'Cocktail Rings', 'Promise Rings', 'Birthstone Rings']
   },
   {
-    name: 'Gold',
-    subcategories: ['Gold Rings', 'Gold Necklaces', 'Gold Earrings', 'Gold Pendants', 'Gold Bracelets', 'Gold Bangles']
+    name: 'Necklaces',
+    subcategories: ['Chains', 'Chokers', 'Lockets', 'Beaded Necklaces', 'Collars', 'Long Necklaces/Opera Chains', 'Multi-layered Necklaces']
   },
   {
-    name: 'Gemstone',
-    subcategories: ['Gemstone Rings', 'Gemstone Necklaces', 'Gemstone Earrings', 'Gemstone Pendants']
+    name: 'Pendants',
+    subcategories: ['Solitaire', 'Halo', 'Cluster', 'Heart', 'Cross', 'Initial', 'Diamond', 'Gemstone', 'Pearl', 'Bridal', 'Minimalist', 'Traditional']
   },
   {
-    name: 'Uncut Diamond',
-    subcategories: ['Uncut Diamond Rings', 'Uncut Diamond Pendants', 'Uncut Diamond Earrings']
+    name: 'Earrings',
+    subcategories: ['Stud Earrings', 'Hoop Earrings', 'Drop Earrings', 'Dangle Earrings', 'Ear Cuffs', 'Huggie Earrings']
   },
   {
-    name: 'Platinum',
-    subcategories: ['Platinum Rings', 'Platinum Necklaces', 'Platinum Bracelets']
+    name: 'Bracelets',
+    subcategories: ['Cuff', 'Tennis', 'Charm', 'Chain', 'Beaded', 'Link', 'Bolo', 'Leather', 'Diamond', 'Gemstone', 'Pearl', 'Bridal', 'Minimalist', 'Traditional']
   },
   {
-    name: 'Gold Coins',
-    subcategories: ['Investment Coins', 'Collectible Coins', 'Religious Coins']
-  },
-  {
-    name: 'Silver',
-    subcategories: ['Silver Rings', 'Silver Necklaces', 'Silver Earrings', 'Silver Pendants', 'Silver Bracelets', 'Silver Bangles']
+    name: 'Bangles',
+    subcategories: ['Classic', 'Kada', 'Cuff', 'Openable', 'Adjustable', 'Charm', 'Diamond', 'Gemstone', 'Pearl', 'Bridal', 'Minimalist', 'Traditional', 'Temple', 'Kundan', 'Polki', 'Navratna']
   },
   {
     name: 'Watches',
-    subcategories: ['Men\'s Watches', 'Women\'s Watches', 'Luxury Watches', 'Smart Watches']
+    subcategories: ['Men\'s Watches', 'Women\'s Watches', 'Smartwatches', 'Luxury Watches', 'Sport Watches']
   },
   {
-    name: 'Jewellery',
-    subcategories: ['Rings', 'Necklaces', 'Earrings', 'Pendants', 'Bracelets', 'Bangles']
+    name: 'Men\'s Jewellery',
+    subcategories: ['Rings', 'Bracelets', 'Necklaces', 'Cufflinks', 'Tie Clips']
+  },
+  {
+    name: 'Children\'s Jewellery',
+    subcategories: ['Kids\' Rings', 'Kids\' Necklaces', 'Kids\' Earrings', 'Kids\' Bracelets']
+  },
+  {
+    name: 'Materials',
+    subcategories: ['Gold Jewellery', 'Silver Jewellery', 'Platinum Jewellery', 'Diamond Jewellery', 'Gemstone Jewellery', 'Pearl Jewellery']
+  },
+  {
+    name: 'Collections',
+    subcategories: ['Bridal Collection', 'Vintage Collection', 'Contemporary Collection', 'Minimalist Collection', 'Celebrity Collection']
+  },
+  {
+    name: 'Custom Jewellery',
+    subcategories: ['Design Your Own', 'Engraving Services', 'Repairs & Restorations']
+  },
+  {
+    name: 'New Arrivals',
+    subcategories: ['Latest Products', 'Featured Items', 'Trending Now', 'Exclusive Pieces']
+  },
+  {
+    name: 'Gold Coins',
+    subcategories: ['Investment', 'Religious', 'Customized', 'Occasion', 'Corporate Gifting', 'Collectible', 'Plain', 'Hallmarked']
   }
 ];
 
