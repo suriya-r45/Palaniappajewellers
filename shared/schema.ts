@@ -229,17 +229,16 @@ export const JEWELRY_CATEGORIES = {
       "MENS_RINGS"
     ]
   },
-  "NECKLACES_CHAINS": {
-    name: "Necklaces & Chains 📿",
+  "NECKLACES": {
+    name: "Necklaces 📿",
     subCategories: [
-      "GOLD_CHAINS",
-      "SILVER_CHAINS",
-      "PLATINUM_CHAINS",
-      "BEADED_PEARL_NECKLACES",
-      "BRIDAL_NECKLACES", 
-      "TEMPLE_JEWELLERY_NECKLACES",
-      "MENS_CHAINS",
-      "KIDS_CHAINS"
+      "CHAINS",
+      "CHOKERS",
+      "LOCKETS",
+      "BEADED_NECKLACES",
+      "COLLARS",
+      "LONG_NECKLACES_OPERA_CHAINS",
+      "MULTI_LAYERED_NECKLACES"
     ]
   },
   "EARRINGS": {
@@ -254,27 +253,61 @@ export const JEWELRY_CATEGORIES = {
       "KIDS_EARRINGS"
     ]
   },
-  "BRACELETS_BANGLES": {
-    name: "Bracelets & Bangles 🔗",
+  "BRACELETS": {
+    name: "Bracelets 🔗",
     subCategories: [
-      "GOLD_BANGLES",
-      "DIAMOND_BANGLES",
-      "SILVER_BANGLES", 
-      "KADA_SINGLE_BANGLE",
-      "CHARM_BRACELETS",
-      "CUFF_BRACELETS",
-      "MENS_BRACELETS",
-      "KIDS_BANGLES"
+      "CUFF",
+      "TENNIS",
+      "CHARM",
+      "CHAIN",
+      "BEADED",
+      "LINK",
+      "BOLO",
+      "LEATHER",
+      "DIAMOND",
+      "GEMSTONE",
+      "PEARL",
+      "BRIDAL",
+      "MINIMALIST",
+      "TRADITIONAL"
     ]
   },
-  "PENDANTS_LOCKETS": {
-    name: "Pendants & Lockets ✨",
+  "BANGLES": {
+    name: "Bangles 💫",
     subCategories: [
-      "GOLD_PENDANTS",
-      "DIAMOND_PENDANTS",
-      "RELIGIOUS_PENDANTS",
-      "NAME_PENDANTS",
-      "COUPLE_PENDANTS"
+      "CLASSIC",
+      "KADA",
+      "CUFF",
+      "OPENABLE",
+      "ADJUSTABLE",
+      "CHARM",
+      "DIAMOND",
+      "GEMSTONE",
+      "PEARL",
+      "BRIDAL",
+      "MINIMALIST",
+      "TRADITIONAL",
+      "TEMPLE",
+      "KUNDAN",
+      "POLKI",
+      "NAVRATNA"
+    ]
+  },
+  "PENDANTS": {
+    name: "Pendants ✨",
+    subCategories: [
+      "SOLITAIRE",
+      "HALO",
+      "CLUSTER",
+      "HEART",
+      "CROSS",
+      "INITIAL",
+      "DIAMOND",
+      "GEMSTONE",
+      "PEARL",
+      "BRIDAL",
+      "MINIMALIST",
+      "TRADITIONAL"
     ]
   },
   "MANGALSUTRA": {

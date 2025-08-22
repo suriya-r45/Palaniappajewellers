@@ -20,8 +20,10 @@ import {
 const categoryIcons = {
   rings: Crown,
   necklaces: Sparkles,
-  earrings: Star,
+  pendants: Star,
+  earrings: Gem,
   bracelets: Heart,
+  bangles: Heart,
   watches: Watch,
   mens: Users,
   children: Baby,
@@ -45,14 +47,33 @@ const categories = [
   },
   {
     id: 'necklaces',
-    name: 'Necklaces & Pendants',
+    name: 'Necklaces',
     subcategories: [
       'Chains',
-      'Lockets',
-      'Statement Necklaces',
-      'Pendant Necklaces',
       'Chokers',
-      'Layered Necklaces'
+      'Lockets',
+      'Beaded Necklaces',
+      'Collars',
+      'Long Necklaces/Opera Chains',
+      'Multi-layered Necklaces'
+    ]
+  },
+  {
+    id: 'pendants',
+    name: 'Pendants',
+    subcategories: [
+      'Solitaire',
+      'Halo',
+      'Cluster',
+      'Heart',
+      'Cross',
+      'Initial',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
     ]
   },
   {
@@ -69,13 +90,44 @@ const categories = [
   },
   {
     id: 'bracelets',
-    name: 'Bracelets & Bangles',
+    name: 'Bracelets',
     subcategories: [
-      'Charm Bracelets',
-      'Bangles',
-      'Cuff Bracelets',
-      'Chain Bracelets',
-      'Tennis Bracelets'
+      'Cuff',
+      'Tennis',
+      'Charm',
+      'Chain',
+      'Beaded',
+      'Link',
+      'Bolo',
+      'Leather',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
+    ]
+  },
+  {
+    id: 'bangles',
+    name: 'Bangles',
+    subcategories: [
+      'Classic',
+      'Kada',
+      'Cuff',
+      'Openable',
+      'Adjustable',
+      'Charm',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional',
+      'Temple',
+      'Kundan',
+      'Polki',
+      'Navratna'
     ]
   },
   {

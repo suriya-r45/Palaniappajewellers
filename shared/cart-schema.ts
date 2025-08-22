@@ -17,12 +17,13 @@ export const JEWELRY_CATEGORIES = {
   necklaces: {
     name: 'Necklaces',
     subCategories: {
-      chain: 'Chain Necklaces',
-      pendant: 'Pendant Necklaces',
-      choker: 'Chokers',
-      statement: 'Statement Necklaces',
-      lariat: 'Lariat Necklaces',
-      collar: 'Collar Necklaces'
+      chains: 'Chains',
+      chokers: 'Chokers',
+      lockets: 'Lockets',
+      beaded_necklaces: 'Beaded Necklaces',
+      collars: 'Collars',
+      long_necklaces: 'Long Necklaces/Opera Chains',
+      multi_layered: 'Multi-layered Necklaces'
     }
   },
   earrings: {
@@ -39,23 +40,58 @@ export const JEWELRY_CATEGORIES = {
   bracelets: {
     name: 'Bracelets',
     subCategories: {
-      tennis: 'Tennis Bracelets',
-      chain: 'Chain Bracelets',
-      bangle: 'Bangles',
-      charm: 'Charm Bracelets',
-      cuff: 'Cuff Bracelets',
-      link: 'Link Bracelets'
+      cuff: 'Cuff',
+      tennis: 'Tennis',
+      charm: 'Charm',
+      chain: 'Chain',
+      beaded: 'Beaded',
+      link: 'Link',
+      bolo: 'Bolo',
+      leather: 'Leather',
+      diamond: 'Diamond',
+      gemstone: 'Gemstone',
+      pearl: 'Pearl',
+      bridal: 'Bridal',
+      minimalist: 'Minimalist',
+      traditional: 'Traditional'
+    }
+  },
+  bangles: {
+    name: 'Bangles',
+    subCategories: {
+      classic: 'Classic',
+      kada: 'Kada',
+      cuff: 'Cuff',
+      openable: 'Openable',
+      adjustable: 'Adjustable',
+      charm: 'Charm',
+      diamond: 'Diamond',
+      gemstone: 'Gemstone',
+      pearl: 'Pearl',
+      bridal: 'Bridal',
+      minimalist: 'Minimalist',
+      traditional: 'Traditional',
+      temple: 'Temple',
+      kundan: 'Kundan',
+      polki: 'Polki',
+      navratna: 'Navratna'
     }
   },
   pendants: {
     name: 'Pendants',
     subCategories: {
-      solitaire: 'Solitaire Pendants',
-      heart: 'Heart Pendants',
-      cross: 'Cross Pendants',
-      initial: 'Initial Pendants',
-      locket: 'Lockets',
-      charm: 'Charm Pendants'
+      solitaire: 'Solitaire',
+      halo: 'Halo',
+      cluster: 'Cluster',
+      heart: 'Heart',
+      cross: 'Cross',
+      initial: 'Initial',
+      diamond: 'Diamond',
+      gemstone: 'Gemstone',
+      pearl: 'Pearl',
+      bridal: 'Bridal',
+      minimalist: 'Minimalist',
+      traditional: 'Traditional'
     }
   },
   mangalsutra: {

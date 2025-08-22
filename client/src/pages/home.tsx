@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
 import { Currency } from '@/lib/currency';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
-import { ArrowRight, Star, Sparkles, Crown, Gem } from "lucide-react";
+import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench } from "lucide-react";
 import ringsImage from '@assets/pexels-enginakyurt-1457801_1755851188044.jpg';
 
 export default function Home() {
@@ -249,7 +249,7 @@ export default function Home() {
             <p className="text-xl text-black mt-4">Discover jewelry for every occasion</p>
           </div>
           
-          {/* Row 1: Rings, Necklaces & Pendants, Earrings */}
+          {/* Row 1: Rings, Necklaces, Pendants */}
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden h-24 md:h-40 bg-gray-50"
@@ -269,37 +269,59 @@ export default function Home() {
               data-testid="category-card-necklaces"
             >
               <Sparkles className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Necklaces & Pendants</h3>
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Necklaces</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('necklaces')} items</p>
             </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('pendants')}
+              data-testid="category-card-pendants"
+            >
+              <Star className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Pendants</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('pendants')} items</p>
+            </div>
+          </div>
+          
+          {/* Row 2: Earrings, Bracelets, Bangles */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
               className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleViewAllClick('earrings')}
               data-testid="category-card-earrings"
             >
-              <Star className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <Gem className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
               <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Earrings</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('earrings')} items</p>
             </div>
-          </div>
-          
-          {/* Row 2: Bracelets & Bangles, Watches, Men's Jewellery */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
               className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleViewAllClick('bracelets')}
               data-testid="category-card-bracelets"
             >
-              <Gem className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
-              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Bracelets & Bangles</h3>
+              <Heart className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Bracelets</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('bracelets')} items</p>
             </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('bangles')}
+              data-testid="category-card-bangles"
+            >
+              <Heart className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Bangles</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('bangles')} items</p>
+            </div>
+          </div>
+          
+          {/* Row 3: Watches, Men's Jewellery, Children's Jewellery */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
               className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleViewAllClick('watches')}
               data-testid="category-card-watches"
             >
-              <Crown className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <Watch className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
               <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Watches</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('watches')} items</p>
             </div>
@@ -308,29 +330,29 @@ export default function Home() {
               onClick={() => handleViewAllClick('mens')}
               data-testid="category-card-mens"
             >
-              <Star className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <Users className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
               <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Men's Jewellery</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('mens')} items</p>
             </div>
-          </div>
-          
-          {/* Row 3: Children's Jewellery, Custom Jewellery, Collections */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
               className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleViewAllClick('children')}
               data-testid="category-card-children"
             >
-              <Sparkles className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <Baby className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
               <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Children's Jewellery</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('children')} items</p>
             </div>
+          </div>
+          
+          {/* Row 4: Custom Jewellery, Collections, Special */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
             <div 
               className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleViewAllClick('custom')}
               data-testid="category-card-custom"
             >
-              <Crown className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <Wrench className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
               <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Custom Jewellery</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('custom')} items</p>
             </div>
@@ -339,13 +361,16 @@ export default function Home() {
               onClick={() => handleViewAllClick('collections')}
               data-testid="category-card-collections"
             >
-              <Gem className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <Palette className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
               <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Collections</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('collections')} items</p>
             </div>
+            <div className="bg-gray-100 rounded-lg shadow-md p-4 text-center">
+              {/* Placeholder for future category */}
+            </div>
           </div>
           
-          {/* Row 4: Gold Collection, Silver Collection, Diamond Collection */}
+          {/* Row 5: Gold Collection, Silver Collection, Diamond Collection */}
           <div className="grid grid-cols-3 gap-4">
             <div 
               className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
