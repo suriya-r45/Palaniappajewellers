@@ -9,7 +9,7 @@ import { Currency, CURRENCY_NAMES } from '@/lib/currency';
 import CartButton from '@/components/cart/cart-button';
 import GoldRatesTicker from '@/components/gold-rates-ticker';
 import MobileMenu from '@/components/mobile-menu';
-import logoPath from '@assets/Royal_gold_jewelry_collection_e293857a.png';
+import logoPath from '@assets/1000284180_1755240849891_1755886428742.jpg';
 
 interface HeaderProps {
   selectedCurrency: Currency;
@@ -33,7 +33,7 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
       {/* Main Header */}
       <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-2 md:px-4">
           <div className="flex items-center justify-between h-14 md:h-20">
             {/* Mobile Menu Button */}
             <div className="md:hidden">
@@ -66,13 +66,13 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
             {/* Right Section Icons */}
             <div className="flex items-center space-x-1 md:space-x-4 text-white">
-              {/* Currency/Country */}
-              <div className="flex flex-col items-center min-w-[50px] md:min-w-[60px] px-1">
+              {/* Currency/Country - Hidden on small mobile */}
+              <div className="hidden sm:flex flex-col items-center min-w-[45px] md:min-w-[60px] px-1">
                 <Select value={selectedCurrency} onValueChange={onCurrencyChange} data-testid="select-currency">
                   <SelectTrigger className="bg-transparent border-0 text-white hover:text-rose-100 p-0 h-auto transition-colors duration-200 w-full">
                     <div className="flex flex-col items-center cursor-pointer w-full">
-                      <span className="text-[9px] md:text-xs whitespace-nowrap mb-0.5">Country</span>
-                      <div className="text-center text-[10px] md:text-xs font-medium">
+                      <span className="text-[8px] md:text-xs whitespace-nowrap mb-0.5">Country</span>
+                      <div className="text-center text-[9px] md:text-xs font-medium">
                         <SelectValue />
                       </div>
                     </div>
@@ -103,13 +103,13 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                 </Select>
               </div>
 
-              {/* Profile */}
-              <div className="flex flex-col items-center px-1">
+              {/* Profile - Compact on mobile */}
+              <div className="flex flex-col items-center px-0.5 md:px-1">
                 {user ? (
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-1 md:space-x-2">
                     {isAdmin && (
                       <Link href="/admin">
-                        <Button variant="ghost" size="sm" className="text-white hover:text-rose-100 hover:bg-rose-800 transition-all duration-200" data-testid="button-admin-dashboard">
+                        <Button variant="ghost" size="sm" className="hidden sm:flex text-white hover:text-rose-100 hover:bg-rose-800 transition-all duration-200" data-testid="button-admin-dashboard">
                           Dashboard
                         </Button>
                       </Link>
@@ -121,15 +121,15 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                       className="flex flex-col items-center text-white hover:text-rose-100 hover:bg-rose-800 p-1 transition-all duration-200"
                       data-testid="button-logout"
                     >
-                      <LogOut className="h-5 w-5" />
-                      <span className="text-xs mt-1">{user.name}</span>
+                      <LogOut className="h-4 w-4 md:h-5 md:w-5" />
+                      <span className="text-xs mt-1 hidden sm:block">{user.name}</span>
                     </Button>
                   </div>
                 ) : (
                   <Link href="/login">
                     <div className="flex flex-col items-center cursor-pointer hover:text-rose-100 transition-colors duration-200">
-                      <User className="h-3 w-3 md:h-5 md:w-5" />
-                      <span className="text-xs">Profile</span>
+                      <User className="h-4 w-4 md:h-5 md:w-5" />
+                      <span className="text-xs hidden sm:block">Profile</span>
                     </div>
                   </Link>
                 )}
@@ -141,8 +141,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                 <span className="text-xs">Wishlist</span>
               </div>
 
-              {/* Cart */}
-              <div className="flex flex-col items-center min-w-[50px] md:min-w-[60px]">
+              {/* Cart - Always visible and properly sized */}
+              <div className="flex flex-col items-center min-w-[45px] md:min-w-[60px] mr-1">
                 <CartButton />
               </div>
             </div>

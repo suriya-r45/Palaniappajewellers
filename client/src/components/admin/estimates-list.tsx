@@ -3,9 +3,10 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MessageCircle, Search, Calendar, User, Package, Calculator } from "lucide-react";
+import { MessageCircle, Search, Calendar, User, Package, Calculator, Edit } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useLocation } from "wouter";
 
 interface Estimate {
   id: string;
@@ -40,6 +41,7 @@ export function EstimatesList() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [searchQuery, setSearchQuery] = useState("");
+  const [, setLocation] = useLocation();
 
   const { data: estimates = [], isLoading } = useQuery({
     queryKey: ["/api/estimates"],
@@ -228,7 +230,19 @@ export function EstimatesList() {
                   </div>
                 </div>
 
-                <div className="mt-6 flex justify-end">
+                <div className="mt-6 flex justify-end space-x-3">
+                  <Button
+                    onClick={() => {
+                      // Store estimate data in localStorage for editing
+                      localStorage.setItem('editEstimate', JSON.stringify(estimate));
+                      setLocation('/admin/estimates');
+                    }}
+                    variant="outline"
+                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit Bill
+                  </Button>
                   <Button
                     onClick={() => sendToWhatsAppMutation.mutate(estimate.id)}
                     disabled={sendToWhatsAppMutation.isPending}
