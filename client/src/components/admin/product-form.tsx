@@ -245,6 +245,12 @@ function ProductForm({ currency }: ProductFormProps) {
     enabled: !!token,
   });
 
+  // Fetch categories from API
+  const { data: apiCategories = [] } = useQuery<any[]>({
+    queryKey: ['/api/categories'],
+    enabled: !!token,
+  });
+
 
 
   const addProductMutation = useMutation({
@@ -267,6 +273,7 @@ function ProductForm({ currency }: ProductFormProps) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/products'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/categories'] });
       toast({
         title: "Success",
         description: "Product added successfully!",
@@ -384,8 +391,13 @@ function ProductForm({ currency }: ProductFormProps) {
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
+                    {/* Static predefined categories */}
                     {Object.entries(HOME_CATEGORIES).map(([key, category]) => (
                       <SelectItem key={key} value={key}>{category.name}</SelectItem>
+                    ))}
+                    {/* Dynamic categories from API */}
+                    {apiCategories.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>{category.name}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -403,6 +415,12 @@ function ProductForm({ currency }: ProductFormProps) {
                   </SelectTrigger>
                   <SelectContent>
                     {formData.category && HOME_CATEGORIES[formData.category as keyof typeof HOME_CATEGORIES]?.subcategories.map((subCat) => (
+                      <SelectItem key={subCat} value={subCat}>
+                        {subCat}
+                      </SelectItem>
+                    ))}
+                    {/* For API categories, show subcategories if available */}
+                    {formData.category && apiCategories.find(cat => cat.id === formData.category)?.subcategories?.map((subCat: string) => (
                       <SelectItem key={subCat} value={subCat}>
                         {subCat}
                       </SelectItem>
