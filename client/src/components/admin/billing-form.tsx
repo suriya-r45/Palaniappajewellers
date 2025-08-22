@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { FileText, Eye, ArrowLeft } from 'lucide-react';
+import { FileText, Eye, ArrowLeft, Search } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { Product, BillItem } from '@shared/schema';
 import { Currency, formatPrice } from '@/lib/currency';
@@ -41,6 +41,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
   });
 
   const [selectedProducts, setSelectedProducts] = useState<Map<string, { product: Product; quantity: number }>>(new Map());
+  const [searchQuery, setSearchQuery] = useState('');
 
   const createBillMutation = useMutation({
     mutationFn: async (billData: any) => {
@@ -232,6 +233,17 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
   };
 
   const totals = calculateBillTotals();
+
+  // Filter products based on search query
+  const filteredProducts = products.filter(product => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      product.name.toLowerCase().includes(query) ||
+      product.description.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query)
+    );
+  });
 
   return (
     <div>
@@ -438,11 +450,37 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
           {/* Product Selection */}
           <div>
             <h4 className="text-lg font-medium text-black mb-4">Select Products</h4>
+            
+            {/* Search Input */}
+            <div className="mb-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  type="text"
+                  placeholder="Search products by name, description, or category..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                  data-testid="input-search-products"
+                />
+              </div>
+            </div>
+            
             <div className="border border-gray-300 rounded-lg p-4 max-h-60 overflow-y-auto" data-testid="product-selection">
               {products.length === 0 ? (
                 <p className="text-gray-500 text-center py-8">No products available.</p>
+              ) : filteredProducts.length === 0 ? (
+                <p className="text-gray-500 text-center py-8">
+                  No products found matching "{searchQuery}"
+                  <button 
+                    onClick={() => setSearchQuery('')} 
+                    className="ml-2 text-blue-600 hover:underline"
+                  >
+                    Clear search
+                  </button>
+                </p>
               ) : (
-                products.map((product) => {
+                filteredProducts.map((product) => {
                   const isSelected = selectedProducts.has(product.id);
                   const selectedItem = selectedProducts.get(product.id);
                   
