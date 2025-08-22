@@ -145,69 +145,29 @@ export default function Home() {
     return filtered;
   }, [allProducts, filters, selectedCurrency]);
 
-  // Category-based product sections
-  const ringsProducts = useMemo(() => 
-    allProducts.filter(product => {
+  // Category counts for display
+  const getCategoryCount = (category: string) => {
+    return allProducts.filter(product => {
       if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'rings';
-    }).slice(0, 9), [allProducts]
-  );
+      return product.category === category;
+    }).length;
+  };
 
-  const necklacesProducts = useMemo(() => 
-    allProducts.filter(product => {
+  const getMaterialCount = (material: string) => {
+    return allProducts.filter(product => {
       if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'necklaces';
-    }).slice(0, 9), [allProducts]
-  );
-
-  const earringsProducts = useMemo(() => 
-    allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'earrings';
-    }).slice(0, 9), [allProducts]
-  );
-
-  const braceletsProducts = useMemo(() => 
-    allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'bracelets';
-    }).slice(0, 9), [allProducts]
-  );
-
-  const watchesProducts = useMemo(() => 
-    allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'watches';
-    }).slice(0, 9), [allProducts]
-  );
-
-  const mensProducts = useMemo(() => 
-    allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'mens';
-    }).slice(0, 9), [allProducts]
-  );
-
-  const childrenProducts = useMemo(() => 
-    allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'children';
-    }).slice(0, 9), [allProducts]
-  );
-
-  const collectionsProducts = useMemo(() => 
-    allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'collections';
-    }).slice(0, 9), [allProducts]
-  );
-
-  const customProducts = useMemo(() => 
-    allProducts.filter(product => {
-      if (product.material?.includes('new_arrivals')) return false;
-      return product.category === 'custom';
-    }).slice(0, 9), [allProducts]
-  );
+      const isGoldMaterial = product.material?.includes('GOLD');
+      const isSilverMaterial = product.material?.includes('SILVER');
+      const isDiamondMaterial = product.material?.includes('DIAMOND');
+      
+      switch(material) {
+        case 'GOLD': return isGoldMaterial;
+        case 'SILVER': return isSilverMaterial;
+        case 'DIAMOND': return isDiamondMaterial;
+        default: return false;
+      }
+    }).length;
+  };
 
   // New Arrivals - Products specifically tagged as new_arrivals OR recent products
   const newArrivalProducts = useMemo(() => {
@@ -280,374 +240,139 @@ export default function Home() {
         </>
       )}
 
-      {/* Rings Section */}
-      {ringsProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-rings" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Rings</h2>
-                  <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Elegant rings for every occasion</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {ringsProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('rings')}
-                >
-                  View All Rings <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+      {/* Categories Grid Layout */}
+      <section className="py-16" data-testid="section-categories" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Explore Our Collections</h2>
+            <p className="text-xl text-black mt-4">Discover jewelry for every occasion</p>
+          </div>
+          
+          {/* Row 1: Rings, Necklaces & Pendants, Earrings */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('rings')}
+              data-testid="category-card-rings"
+            >
+              <Crown className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Rings</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('rings')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Necklaces & Pendants Section */}
-      {necklacesProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-necklaces" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Necklaces & Pendants</h2>
-                  <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Beautiful necklaces and pendants</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {necklacesProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('necklaces')}
-                >
-                  View All Necklaces <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('necklaces')}
+              data-testid="category-card-necklaces"
+            >
+              <Sparkles className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Necklaces & Pendants</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('necklaces')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Earrings Section */}
-      {earringsProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-earrings" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Star className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Earrings</h2>
-                  <Star className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Stunning earrings for every style</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {earringsProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('earrings')}
-                >
-                  View All Earrings <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('earrings')}
+              data-testid="category-card-earrings"
+            >
+              <Star className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Earrings</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('earrings')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Bracelets & Bangles Section */}
-      {braceletsProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-bracelets" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Bracelets & Bangles</h2>
-                  <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Exquisite bracelets and bangles</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {braceletsProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('bracelets')}
-                >
-                  View All Bracelets <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+          </div>
+          
+          {/* Row 2: Bracelets & Bangles, Watches, Men's Jewellery */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('bracelets')}
+              data-testid="category-card-bracelets"
+            >
+              <Gem className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Bracelets & Bangles</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('bracelets')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Watches Section */}
-      {watchesProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-watches" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Watches</h2>
-                  <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Luxury watches for timeless elegance</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {watchesProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('watches')}
-                >
-                  View All Watches <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('watches')}
+              data-testid="category-card-watches"
+            >
+              <Crown className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Watches</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('watches')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Men's Jewellery Section */}
-      {mensProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-mens" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Star className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Men's Jewellery</h2>
-                  <Star className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Distinguished jewelry for men</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {mensProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('mens')}
-                >
-                  View All Men's Jewelry <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('mens')}
+              data-testid="category-card-mens"
+            >
+              <Star className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Men's Jewellery</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('mens')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Children's Jewellery Section */}
-      {childrenProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-children" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Children's Jewellery</h2>
-                  <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Safe and beautiful jewelry for kids</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {childrenProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('children')}
-                >
-                  View All Children's Jewelry <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+          </div>
+          
+          {/* Row 3: Children's Jewellery, Custom Jewellery, Collections */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('children')}
+              data-testid="category-card-children"
+            >
+              <Sparkles className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Children's Jewellery</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('children')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Collections Section */}
-      {collectionsProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-collections" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Collections</h2>
-                  <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Exclusive jewelry collections</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {collectionsProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('collections')}
-                >
-                  View All Collections <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('custom')}
+              data-testid="category-card-custom"
+            >
+              <Crown className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Custom Jewellery</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('custom')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
-
-      {/* Custom Jewellery Section */}
-      {customProducts.length > 0 && (
-        <>
-          <section className="py-16" data-testid="section-custom" style={{ background: 'linear-gradient(135deg, #fff8e1 0%, #fffbf0 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Custom Jewellery</h2>
-                  <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Personalized jewelry made just for you</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {customProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('custom')}
-                >
-                  View All Custom Jewelry <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('collections')}
+              data-testid="category-card-collections"
+            >
+              <Gem className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Collections</h3>
+              <p className="text-xs text-gray-600">{getCategoryCount('collections')} items</p>
             </div>
-          </section>
-          <div className="h-px bg-black"></div>
-        </>
-      )}
+          </div>
+          
+          {/* Row 4: Gold Collection, Silver Collection, Diamond Collection */}
+          <div className="grid grid-cols-3 gap-4">
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('GOLD')}
+              data-testid="category-card-gold"
+            >
+              <Crown className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Gold Collection</h3>
+              <p className="text-xs text-gray-600">{getMaterialCount('GOLD')} items</p>
+            </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('SILVER')}
+              data-testid="category-card-silver"
+            >
+              <Star className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Silver Collection</h3>
+              <p className="text-xs text-gray-600">{getMaterialCount('SILVER')} items</p>
+            </div>
+            <div 
+              className="bg-white rounded-lg shadow-md p-4 text-center cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleViewAllClick('DIAMOND')}
+              data-testid="category-card-diamond"
+            >
+              <Gem className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Diamond Collection</h3>
+              <p className="text-xs text-gray-600">{getMaterialCount('DIAMOND')} items</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       <Footer />
