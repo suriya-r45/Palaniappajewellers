@@ -10,7 +10,7 @@ import { Product } from '@shared/schema';
 import { Currency } from '@/lib/currency';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import { ArrowRight, Star, Sparkles, Crown, Gem } from "lucide-react";
-import ringsImage from '@assets/Rings_1755850717719.png';
+import ringsImage from '@assets/pexels-enginakyurt-1457801_1755851188044.jpg';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -257,7 +257,7 @@ export default function Home() {
               data-testid="category-card-rings"
               style={{
                 backgroundImage: `url(${ringsImage})`,
-                backgroundSize: 'contain',
+                backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
               }}
