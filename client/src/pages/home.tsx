@@ -486,26 +486,6 @@ export default function Home() {
                 <p className="text-xs text-gray-600">{getCategoryCount('collections')} items</p>
               </div>
             </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
-              onClick={() => handleViewAllClick('GOLD')}
-              data-testid="category-card-gold"
-            >
-              <div 
-                className="h-24 md:h-32"
-                style={{
-                  backgroundImage: `url(${goldCollectionImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Gold Collection</h3>
-                <p className="text-xs text-gray-600">{getMaterialCount('GOLD')} items</p>
-              </div>
-            </div>
-
             {/* Row 4 */}
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
@@ -515,7 +495,7 @@ export default function Home() {
               <div 
                 className="h-24 md:h-32"
                 style={{
-                  backgroundImage: `url(${goldCollectionImage})`,
+                  backgroundImage: `url('https://images.unsplash.com/photo-1609884261025-5d5f2a9b4ec9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat'
