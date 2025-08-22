@@ -292,7 +292,15 @@ export default function AdminDashboard() {
                                     onClick={() => {
                                       // Store bill data in localStorage for editing
                                       localStorage.setItem('editBill', JSON.stringify(bill));
+                                      // Set active tab immediately
+                                      setActiveTab('billing');
+                                      // Also update URL for consistency
                                       setLocation('/admin?tab=billing');
+                                      
+                                      toast({
+                                        title: "Bill Loaded",
+                                        description: `Bill ${bill.billNumber} loaded for editing.`,
+                                      });
                                     }}
                                     className="border-blue-600 text-blue-600 hover:bg-blue-50"
                                     data-testid={`button-edit-${bill.id}`}
