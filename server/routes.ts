@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertProductSchema, insertBillSchema, loginSchema, insertUserSchema, insertEstimateSchema } from "@shared/schema";
+import { insertProductSchema, insertBillSchema, loginSchema, insertUserSchema, insertEstimateSchema, insertCategorySchema, updateCategorySchema } from "@shared/schema";
 import { z } from "zod";
 import multer from "multer";
 import path from "path";
@@ -1167,6 +1167,227 @@ Thank you for choosing Palaniappa Jewellers!`;
       res.status(500).json({ error: 'Failed to send to WhatsApp' });
     }
   });
+
+  // === CATEGORY MANAGEMENT ROUTES ===
+
+  // Get all categories with hierarchy
+  app.get("/api/categories", async (req, res) => {
+    try {
+      const categories = await storage.getCategoriesHierarchy();
+      res.json(categories);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      res.status(500).json({ error: 'Failed to fetch categories' });
+    }
+  });
+
+  // Get main categories only
+  app.get("/api/categories/main", async (req, res) => {
+    try {
+      const categories = await storage.getMainCategories();
+      res.json(categories);
+    } catch (error) {
+      console.error('Error fetching main categories:', error);
+      res.status(500).json({ error: 'Failed to fetch main categories' });
+    }
+  });
+
+  // Get subcategories for a parent category
+  app.get("/api/categories/:parentId/subcategories", async (req, res) => {
+    try {
+      const { parentId } = req.params;
+      const subcategories = await storage.getSubCategories(parentId);
+      res.json(subcategories);
+    } catch (error) {
+      console.error('Error fetching subcategories:', error);
+      res.status(500).json({ error: 'Failed to fetch subcategories' });
+    }
+  });
+
+  // Get single category by ID
+  app.get("/api/categories/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const category = await storage.getCategory(id);
+      if (!category) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+      res.json(category);
+    } catch (error) {
+      console.error('Error fetching category:', error);
+      res.status(500).json({ error: 'Failed to fetch category' });
+    }
+  });
+
+  // Create new category (Admin only)
+  app.post("/api/categories", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const categoryData = insertCategorySchema.parse(req.body);
+      const category = await storage.createCategory(categoryData);
+      res.status(201).json(category);
+    } catch (error) {
+      console.error('Error creating category:', error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid category data', details: error.errors });
+      }
+      res.status(500).json({ error: 'Failed to create category' });
+    }
+  });
+
+  // Update category (Admin only)
+  app.put("/api/categories/:id", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updateData = updateCategorySchema.parse({ ...req.body, id });
+      const category = await storage.updateCategory(id, updateData);
+      
+      if (!category) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+      
+      res.json(category);
+    } catch (error) {
+      console.error('Error updating category:', error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid category data', details: error.errors });
+      }
+      res.status(500).json({ error: 'Failed to update category' });
+    }
+  });
+
+  // Delete category (Admin only)
+  app.delete("/api/categories/:id", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteCategory(id);
+      
+      if (!success) {
+        return res.status(400).json({ 
+          error: 'Cannot delete category. It may have subcategories or be used by products.' 
+        });
+      }
+      
+      res.json({ message: 'Category deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      res.status(500).json({ error: 'Failed to delete category' });
+    }
+  });
+
+  // Reorder categories (Admin only)
+  app.post("/api/categories/reorder", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { categoryIds } = req.body;
+      
+      if (!Array.isArray(categoryIds)) {
+        return res.status(400).json({ error: 'categoryIds must be an array' });
+      }
+      
+      const success = await storage.reorderCategories(categoryIds);
+      
+      if (!success) {
+        return res.status(400).json({ error: 'Failed to reorder categories' });
+      }
+      
+      res.json({ message: 'Categories reordered successfully' });
+    } catch (error) {
+      console.error('Error reordering categories:', error);
+      res.status(500).json({ error: 'Failed to reorder categories' });
+    }
+  });
+
+  // Seed initial categories (Admin only - for setup)
+  app.post("/api/categories/seed", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      // Check if categories already exist
+      const existingCategories = await storage.getAllCategories();
+      if (existingCategories.length > 0) {
+        return res.status(400).json({ error: 'Categories already exist' });
+      }
+
+      // Define initial categories matching the admin product form
+      const initialCategories = [
+        { name: 'Rings', slug: 'rings', displayOrder: 0 },
+        { name: 'Necklaces', slug: 'necklaces', displayOrder: 1 },
+        { name: 'Pendants', slug: 'pendants', displayOrder: 2 },
+        { name: 'Earrings', slug: 'earrings', displayOrder: 3 },
+        { name: 'Bracelets', slug: 'bracelets', displayOrder: 4 },
+        { name: 'Bangles', slug: 'bangles', displayOrder: 5 },
+        { name: 'Watches', slug: 'watches', displayOrder: 6 },
+        { name: "Men's Jewellery", slug: 'mens-jewellery', displayOrder: 7 },
+        { name: "Children's Jewellery", slug: 'childrens-jewellery', displayOrder: 8 },
+        { name: 'Materials', slug: 'materials', displayOrder: 9 },
+        { name: 'Collections', slug: 'collections', displayOrder: 10 },
+        { name: 'Custom Jewellery', slug: 'custom-jewellery', displayOrder: 11 },
+        { name: 'New Arrivals', slug: 'new-arrivals', displayOrder: 12 },
+        { name: 'Gold Coins', slug: 'gold-coins', displayOrder: 13 }
+      ];
+
+      // Create main categories first
+      const createdCategories = new Map<string, any>();
+      for (const category of initialCategories) {
+        const created = await storage.createCategory({
+          ...category,
+          isActive: true
+        });
+        createdCategories.set(category.slug, created);
+      }
+
+      // Define subcategories
+      const subcategories = [
+        // Rings subcategories
+        { name: 'Engagement Rings', slug: 'engagement-rings', parentSlug: 'rings' },
+        { name: 'Wedding Bands', slug: 'wedding-bands', parentSlug: 'rings' },
+        { name: 'Fashion Rings', slug: 'fashion-rings', parentSlug: 'rings' },
+        { name: 'Cocktail Rings', slug: 'cocktail-rings', parentSlug: 'rings' },
+        { name: 'Promise Rings', slug: 'promise-rings', parentSlug: 'rings' },
+        { name: 'Birthstone Rings', slug: 'birthstone-rings', parentSlug: 'rings' },
+
+        // Necklaces subcategories
+        { name: 'Chains', slug: 'chains', parentSlug: 'necklaces' },
+        { name: 'Chokers', slug: 'chokers', parentSlug: 'necklaces' },
+        { name: 'Lockets', slug: 'lockets', parentSlug: 'necklaces' },
+        { name: 'Beaded Necklaces', slug: 'beaded-necklaces', parentSlug: 'necklaces' },
+        { name: 'Collars', slug: 'collars', parentSlug: 'necklaces' },
+        { name: 'Long Necklaces/Opera Chains', slug: 'long-necklaces-opera-chains', parentSlug: 'necklaces' },
+
+        // Materials subcategories
+        { name: 'Gold Jewellery', slug: 'gold-jewellery', parentSlug: 'materials' },
+        { name: 'Silver Jewellery', slug: 'silver-jewellery', parentSlug: 'materials' },
+        { name: 'Platinum Jewellery', slug: 'platinum-jewellery', parentSlug: 'materials' },
+        { name: 'Diamond Jewellery', slug: 'diamond-jewellery', parentSlug: 'materials' },
+        { name: 'Gemstone Jewellery', slug: 'gemstone-jewellery', parentSlug: 'materials' },
+        { name: 'Pearl Jewellery', slug: 'pearl-jewellery', parentSlug: 'materials' },
+      ];
+
+      // Create subcategories
+      let createdSubcategories = 0;
+      for (const subcategory of subcategories) {
+        const parentCategory = createdCategories.get(subcategory.parentSlug);
+        if (parentCategory) {
+          await storage.createCategory({
+            name: subcategory.name,
+            slug: subcategory.slug,
+            parentId: parentCategory.id,
+            isActive: true,
+            displayOrder: createdSubcategories
+          });
+          createdSubcategories++;
+        }
+      }
+
+      res.json({ 
+        message: 'Initial categories created successfully',
+        mainCategories: initialCategories.length,
+        subcategories: createdSubcategories
+      });
+    } catch (error) {
+      console.error('Error seeding categories:', error);
+      res.status(500).json({ error: 'Failed to seed categories' });
+    }
+  });
+
+  // === END CATEGORY MANAGEMENT ROUTES ===
 
   // Static file serving for uploads
   app.use('/uploads', (req, res, next) => {

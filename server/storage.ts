@@ -1,6 +1,6 @@
-import { users, products, bills, cartItems, orders, estimates, type User, type InsertUser, type Product, type InsertProduct, type Bill, type InsertBill, type CartItemRow, type InsertCartItem, type Order, type InsertOrder, type CartItem, type Estimate, type InsertEstimate } from "@shared/schema";
+import { users, products, bills, cartItems, orders, estimates, categories, type User, type InsertUser, type Product, type InsertProduct, type Bill, type InsertBill, type CartItemRow, type InsertCartItem, type Order, type InsertOrder, type CartItem, type Estimate, type InsertEstimate, type Category, type InsertCategory } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, like, and, gte, lte } from "drizzle-orm";
+import { eq, desc, like, and, gte, lte, isNull, or } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
 export interface IStorage {
@@ -57,6 +57,22 @@ export interface IStorage {
   getEstimate(id: string): Promise<Estimate | undefined>;
   createEstimate(estimate: InsertEstimate): Promise<Estimate>;
   updateEstimate(id: string, estimate: Partial<InsertEstimate>): Promise<Estimate | undefined>;
+
+  // Category operations
+  getAllCategories(): Promise<Category[]>;
+  getCategoriesHierarchy(): Promise<CategoryWithChildren[]>;
+  getCategory(id: string): Promise<Category | undefined>;
+  getCategoryBySlug(slug: string): Promise<Category | undefined>;
+  getMainCategories(): Promise<Category[]>; // Categories without parent
+  getSubCategories(parentId: string): Promise<Category[]>;
+  createCategory(category: InsertCategory): Promise<Category>;
+  updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined>;
+  deleteCategory(id: string): Promise<boolean>;
+  reorderCategories(categoryIds: string[]): Promise<boolean>;
+}
+
+export interface CategoryWithChildren extends Category {
+  children?: Category[];
 }
 
 export interface ProductFilters {
@@ -368,6 +384,100 @@ export class DatabaseStorage implements IStorage {
       .where(eq(estimates.id, id))
       .returning();
     return estimate || undefined;
+  }
+
+  // Category operations
+  async getAllCategories(): Promise<Category[]> {
+    return db.select().from(categories).orderBy(categories.displayOrder, categories.name);
+  }
+
+  async getCategoriesHierarchy(): Promise<CategoryWithChildren[]> {
+    const allCategories = await this.getAllCategories();
+    const mainCategories = allCategories.filter(cat => !cat.parentId);
+    
+    return mainCategories.map(mainCat => ({
+      ...mainCat,
+      children: allCategories.filter(cat => cat.parentId === mainCat.id)
+    }));
+  }
+
+  async getCategory(id: string): Promise<Category | undefined> {
+    const [category] = await db.select().from(categories).where(eq(categories.id, id));
+    return category || undefined;
+  }
+
+  async getCategoryBySlug(slug: string): Promise<Category | undefined> {
+    const [category] = await db.select().from(categories).where(eq(categories.slug, slug));
+    return category || undefined;
+  }
+
+  async getMainCategories(): Promise<Category[]> {
+    return db.select().from(categories)
+      .where(isNull(categories.parentId))
+      .orderBy(categories.displayOrder, categories.name);
+  }
+
+  async getSubCategories(parentId: string): Promise<Category[]> {
+    return db.select().from(categories)
+      .where(eq(categories.parentId, parentId))
+      .orderBy(categories.displayOrder, categories.name);
+  }
+
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const [newCategory] = await db
+      .insert(categories)
+      .values({
+        ...category,
+        updatedAt: new Date()
+      })
+      .returning();
+    return newCategory;
+  }
+
+  async updateCategory(id: string, updateData: Partial<InsertCategory>): Promise<Category | undefined> {
+    const [category] = await db
+      .update(categories)
+      .set({
+        ...updateData,
+        updatedAt: new Date()
+      })
+      .where(eq(categories.id, id))
+      .returning();
+    return category || undefined;
+  }
+
+  async deleteCategory(id: string): Promise<boolean> {
+    // First check if category has children
+    const children = await this.getSubCategories(id);
+    if (children.length > 0) {
+      return false; // Cannot delete category with children
+    }
+
+    // Check if category is used by products
+    const productsUsingCategory = await db.select().from(products)
+      .where(eq(products.category, (await this.getCategory(id))?.slug || ''));
+    
+    if (productsUsingCategory.length > 0) {
+      return false; // Cannot delete category used by products
+    }
+
+    const result = await db.delete(categories).where(eq(categories.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+
+  async reorderCategories(categoryIds: string[]): Promise<boolean> {
+    try {
+      for (let i = 0; i < categoryIds.length; i++) {
+        await db
+          .update(categories)
+          .set({ displayOrder: i, updatedAt: new Date() })
+          .where(eq(categories.id, categoryIds[i]));
+      }
+      return true;
+    } catch (error) {
+      console.error('Error reordering categories:', error);
+      return false;
+    }
   }
 }
 

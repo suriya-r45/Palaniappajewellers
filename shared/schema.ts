@@ -216,7 +216,44 @@ export type CartItem = {
   product: Product;
 };
 
-// Jewelry Categories
+// Categories Management Table
+export const categories = pgTable("categories", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(), // URL-friendly version
+  description: text("description"),
+  parentId: varchar("parent_id"), // For subcategories
+  displayOrder: integer("display_order").default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Categories Relations
+export const categoriesRelations = relations(categories, ({ one, many }) => ({
+  parent: one(categories, {
+    fields: [categories.parentId],
+    references: [categories.id],
+    relationName: "parent_child"
+  }),
+  children: many(categories, {
+    relationName: "parent_child"
+  }),
+  products: many(products),
+}));
+
+// Update products relation to include categories
+export const productsRelationsUpdated = relations(products, ({ one, many }) => ({
+  category: one(categories, {
+    fields: [products.category],
+    references: [categories.slug],
+  }),
+  billItems: many(bills),
+  orderItems: many(orders),
+  cartItems: many(cartItems),
+}));
+
+// Jewelry Categories (Legacy - will be replaced by database categories)
 export const JEWELRY_CATEGORIES = {
   "RINGS": {
     name: "Rings 💍",
@@ -521,15 +558,31 @@ export const resetPasswordSchema = z.object({
   newPassword: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+// Category schemas
+export const insertCategorySchema = createInsertSchema(categories).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
+  slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug must contain only lowercase letters, numbers, and hyphens"),
+});
+
+export const updateCategorySchema = insertCategorySchema.partial().extend({
+  id: z.string(),
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type InsertBill = z.infer<typeof insertBillSchema>;
 export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
+export type InsertCategory = z.infer<typeof insertCategorySchema>;
+export type UpdateCategory = z.infer<typeof updateCategorySchema>;
 export type LoginRequest = z.infer<typeof loginSchema>;
 
 export type User = typeof users.$inferSelect;
 export type Product = typeof products.$inferSelect;
 export type Bill = typeof bills.$inferSelect;
 export type Order = typeof orders.$inferSelect;
+export type Category = typeof categories.$inferSelect;
 export type CartItemRow = typeof cartItems.$inferSelect;
