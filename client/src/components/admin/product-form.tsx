@@ -190,6 +190,7 @@ const MATERIAL_OPTIONS = [
   { value: 'GOLD_22K', label: 'Gold 22K' },
   { value: 'GOLD_18K', label: 'Gold 18K' },
   { value: 'SILVER_925', label: 'Silver 925' },
+  { value: 'GOLD_PLATED_SILVER', label: 'Gold Platted Silver Jewellery' },
   { value: 'PLATINUM', label: 'Platinum' },
   { value: 'DIAMOND', label: 'Diamond' },
   { value: 'GEMSTONE', label: 'Gemstone' },
@@ -229,8 +230,8 @@ function ProductForm({ currency }: ProductFormProps) {
 
   // Helper function to determine metalType from material
   const getMetalTypeFromMaterial = (material: string): string => {
-    if (material.includes('GOLD')) return 'GOLD';
-    if (material.includes('SILVER')) return 'SILVER';
+    if (material.includes('GOLD') && !material.includes('PLATED')) return 'GOLD';
+    if (material.includes('SILVER') || material.includes('GOLD_PLATED_SILVER')) return 'SILVER';
     if (material.includes('DIAMOND')) return 'DIAMOND';
     if (material.includes('PLATINUM')) return 'OTHER';
     if (material.includes('PEARL') || material.includes('GEMSTONE')) return 'OTHER';
