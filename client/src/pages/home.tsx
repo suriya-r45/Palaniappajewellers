@@ -509,41 +509,25 @@ export default function Home() {
             {/* Row 4 */}
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
-              onClick={() => handleViewAllClick('SILVER')}
-              data-testid="category-card-silver"
+              onClick={() => handleViewAllClick('gold_coins')}
+              data-testid="category-card-gold-coins"
             >
               <div 
                 className="h-24 md:h-32"
                 style={{
-                  backgroundImage: `url(${silverCollectionImage})`,
+                  backgroundImage: `url(${goldCollectionImage})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
               <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Silver Collection</h3>
-                <p className="text-xs text-gray-600">{getMaterialCount('SILVER')} items</p>
+                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Gold Coins</h3>
+                <p className="text-xs text-gray-600">{getCategoryCount('gold_coins')} items</p>
               </div>
             </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
-              onClick={() => handleViewAllClick('DIAMOND')}
-              data-testid="category-card-diamond"
-            >
-              <div 
-                className="h-24 md:h-32"
-                style={{
-                  backgroundImage: `url(${diamondCollectionImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Diamond Collection</h3>
-                <p className="text-xs text-gray-600">{getMaterialCount('DIAMOND')} items</p>
-              </div>
+            <div className="bg-gray-100 rounded-lg shadow-md p-2 md:p-4 text-center">
+              {/* Placeholder for future category */}
             </div>
             <div className="bg-gray-100 rounded-lg shadow-md p-2 md:p-4 text-center">
               {/* Placeholder for future category */}

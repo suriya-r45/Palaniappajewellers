@@ -170,6 +170,19 @@ const HOME_CATEGORIES = {
       'Trending Now',
       'Exclusive Pieces'
     ]
+  },
+  'gold_coins': {
+    name: 'Gold Coins',
+    subcategories: [
+      'Investment',
+      'Religious',
+      'Customized',
+      'Occasion',
+      'Corporate Gifting',
+      'Collectible',
+      'Plain',
+      'Hallmarked'
+    ]
   }
 };
 
