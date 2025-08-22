@@ -464,6 +464,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update product price (Admin only)
+  app.patch("/api/products/:id/price", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { priceInr, priceBhd } = req.body;
+
+      // Validate price inputs
+      if (!priceInr || !priceBhd) {
+        return res.status(400).json({ error: 'Both INR and BHD prices are required' });
+      }
+
+      const priceInrNum = parseFloat(priceInr);
+      const priceBhdNum = parseFloat(priceBhd);
+
+      if (isNaN(priceInrNum) || isNaN(priceBhdNum) || priceInrNum <= 0 || priceBhdNum <= 0) {
+        return res.status(400).json({ error: 'Invalid price values' });
+      }
+
+      const updatedProduct = await storage.updateProduct(id, {
+        priceInr: priceInrNum.toFixed(2),
+        priceBhd: priceBhdNum.toFixed(3)
+      });
+
+      if (!updatedProduct) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+
+      res.json(updatedProduct);
+    } catch (error) {
+      console.error('Error updating product price:', error);
+      res.status(500).json({ error: 'Failed to update product price' });
+    }
+  });
+
   // Bill routes
   app.get("/api/bills", authenticateToken, requireAdmin, async (req, res) => {
     try {

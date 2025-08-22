@@ -359,7 +359,7 @@ export default function CategoryManagement() {
             const subCat = category.subcategories[i];
             const subCategoryData = {
               name: subCat,
-              slug: `${key}-${subCat.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-')}`,
+              slug: `${key}-${subCat.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-').replace(/^-+|-+$/g, '')}`,
               description: `${subCat} in ${category.name}`,
               parentId: createdCategory.id,
               displayOrder: i,
