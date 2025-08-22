@@ -10,6 +10,7 @@ import { Product } from '@shared/schema';
 import { Currency } from '@/lib/currency';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import { ArrowRight, Star, Sparkles, Crown, Gem } from "lucide-react";
+import ringsImage from '@assets/Rings_1755850717719.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -255,7 +256,11 @@ export default function Home() {
               onClick={() => handleViewAllClick('rings')}
               data-testid="category-card-rings"
             >
-              <Crown className="h-8 w-8 mx-auto mb-2" style={{ color: '#b8860b' }} />
+              <img 
+                src={ringsImage} 
+                alt="Rings" 
+                className="h-12 w-auto mx-auto mb-2 object-contain"
+              />
               <h3 className="font-bold text-sm md:text-base" style={{ color: '#8b4513' }}>Rings</h3>
               <p className="text-xs text-gray-600">{getCategoryCount('rings')} items</p>
             </div>
