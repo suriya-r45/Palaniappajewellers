@@ -163,7 +163,28 @@ export default function Home() {
   const getCategoryCount = (category: string) => {
     return allProducts.filter(product => {
       if (product.material?.includes('new_arrivals')) return false;
-      return product.category === category;
+      // Map display category names to database category names
+      const categoryMapping: { [key: string]: string } = {
+        'rings': 'RINGS',
+        'necklaces': 'NECKLACES', 
+        'pendants': 'PENDANTS',
+        'earrings': 'EARRINGS',
+        'bracelets': 'BRACELETS',
+        'bangles': 'BANGLES',
+        'watches': 'WATCHES',
+        'mens_jewellery': 'MENS_JEWELLERY',
+        'mens': 'MENS_JEWELLERY',
+        'children_jewellery': 'CHILDRENS_JEWELLERY',
+        'children': 'CHILDRENS_JEWELLERY',
+        'materials': 'MATERIALS',
+        'collections': 'COLLECTIONS',
+        'custom_jewellery': 'CUSTOM_JEWELLERY',
+        'custom': 'CUSTOM_JEWELLERY',
+        'new_arrivals': 'NEW_ARRIVALS',
+        'gold_coins': 'GOLD_COINS'
+      };
+      const dbCategory = categoryMapping[category.toLowerCase()] || category.toUpperCase();
+      return product.category === dbCategory;
     }).length;
   };
 

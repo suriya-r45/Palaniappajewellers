@@ -49,6 +49,9 @@ app.use((req, res, next) => {
 // Serve uploaded images
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
+// Serve attached assets (jewelry images)
+app.use("/attached_assets", express.static(path.join(__dirname, "../attached_assets")));
+
 (async () => {
   const server = await registerRoutes(app);
 
