@@ -243,10 +243,7 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
       });
     }
 
-    // Apply category filter
-    if (filters.category) {
-      filtered = filtered.filter(product => product.category === filters.category);
-    }
+    // Category filter already applied above with proper mapping
 
     // Apply material filter
     if (filters.material) {
