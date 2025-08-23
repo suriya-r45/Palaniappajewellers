@@ -290,7 +290,7 @@ export default function Home() {
           <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
             {/* Row 1 */}
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('rings')}
               data-testid="category-card-rings"
             >
