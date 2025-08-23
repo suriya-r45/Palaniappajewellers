@@ -163,35 +163,36 @@ export default function Home() {
   // Category counts for display
   const getCategoryCount = (category: string) => {
     return allProducts.filter(product => {
-      if (product.isNewArrival) return false; // Exclude new arrivals from regular categories
-      // Map display category names to database category names
+      // Don't exclude new arrivals - they should be counted in their respective categories too
+      // Map display category names to database category names (handle both cases)
       const categoryMapping: { [key: string]: string } = {
-        'rings': 'RINGS',
-        'necklaces': 'NECKLACES', 
-        'pendants': 'PENDANTS',
-        'earrings': 'EARRINGS',
-        'bracelets': 'BRACELETS',
-        'bangles': 'BANGLES',
-        'watches': 'WATCHES',
-        'mens_jewellery': 'MENS_JEWELLERY',
-        'mens': 'MENS_JEWELLERY',
-        'children_jewellery': 'CHILDRENS_JEWELLERY',
-        'children': 'CHILDRENS_JEWELLERY',
-        'materials': 'MATERIALS',
-        'collections': 'COLLECTIONS',
-        'custom_jewellery': 'CUSTOM_JEWELLERY',
-        'custom': 'CUSTOM_JEWELLERY',
-        'new_arrivals': 'NEW_ARRIVALS',
-        'gold_coins': 'GOLD_COINS'
+        'rings': 'rings',
+        'necklaces': 'necklaces', 
+        'pendants': 'pendants',
+        'earrings': 'earrings',
+        'bracelets': 'bracelets',
+        'bangles': 'bangles',
+        'watches': 'watches',
+        'mens_jewellery': 'mens_jewellery',
+        'mens': 'mens_jewellery',
+        'children_jewellery': 'children_jewellery',
+        'children': 'children_jewellery',
+        'materials': 'materials',
+        'collections': 'collections',
+        'custom_jewellery': 'custom_jewellery',
+        'custom': 'custom_jewellery',
+        'new_arrivals': 'new_arrivals',
+        'gold_coins': 'gold_coins',
+        'anklets': 'anklets & toe rings' // Handle compound category names
       };
-      const dbCategory = categoryMapping[category.toLowerCase()] || category.toUpperCase();
-      return product.category.toLowerCase() === dbCategory.toLowerCase();
+      const mappedCategory = categoryMapping[category.toLowerCase()] || category.toLowerCase();
+      return product.category.toLowerCase() === mappedCategory.toLowerCase();
     }).length;
   };
 
   const getMaterialCount = (material: string) => {
     return allProducts.filter(product => {
-      if (product.isNewArrival) return false; // Exclude new arrivals from regular categories
+      // Don't exclude new arrivals - they should be counted in their material categories too
       // Use metalType field for broad material categorization instead of material field
       return product.metalType === material;
     }).length;
