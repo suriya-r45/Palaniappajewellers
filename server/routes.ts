@@ -1218,46 +1218,36 @@ Premium quality, timeless beauty.`;
         return res.status(404).json({ error: 'Estimate not found' });
       }
       
-      // Format WhatsApp message
-      const message = `*JEWELLERY QUOTATION*
+      // Generate estimate image
+      const { generateEstimateImage } = await import('./utils/estimate-image-generator.js');
+      const imageUrl = await generateEstimateImage({ estimate });
+      
+      // Create full URL for the image
+      const baseUrl = process.env.REPL_SLUG ? `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co` : `http://localhost:5000`;
+      const fullImageUrl = `${baseUrl}${imageUrl}`;
+      
+      // Create a shorter message with image
+      const message = `🏺 *JEWELLERY QUOTATION*
 *PALANIAPPA JEWELLERS*
 
+Dear ${estimate.customerName},
+
+Please find your jewellery quotation attached below.
+
 *Quotation No:* ${estimate.quotationNo}
-*Date:* ${estimate.createdAt?.toLocaleDateString()}
-*Customer:* ${estimate.customerName}
+*Product:* ${estimate.productName}
+*Total Amount:* ₹${parseFloat(estimate.totalAmount).toLocaleString('en-IN')}
 
-*PRODUCT DETAILS*
-*Product Name:* ${estimate.productName}
-*Category:* ${estimate.category}
-*Purity:* ${estimate.purity}
-*Gross Weight:* ${estimate.grossWeight}g
-*Net Weight:* ${estimate.netWeight}g
-*Product Code:* ${estimate.productCode}
+📋 View complete quotation: ${fullImageUrl}
 
-*PRICE ESTIMATION*
-*Metal Value:* ₹${parseFloat(estimate.metalValue).toLocaleString('en-IN')}
-*Making Charges (${estimate.makingChargesPercentage}%):* ₹${parseFloat(estimate.makingCharges).toLocaleString('en-IN')}
-*Stone/Diamond Charges (${estimate.stoneDiamondChargesPercentage}%):* ₹${parseFloat(estimate.stoneDiamondCharges || '0').toLocaleString('en-IN')}
-*Wastage (${estimate.wastagePercentage}%):* ₹${parseFloat(estimate.wastageCharges).toLocaleString('en-IN')}
-*Hallmarking:* ₹${parseFloat(estimate.hallmarkingCharges || '450').toLocaleString('en-IN')}
-*Subtotal:* ₹${parseFloat(estimate.subtotal).toLocaleString('en-IN')}
-
-*TAX DETAILS*
-*GST (3%):* ₹${Math.round((parseFloat(estimate.subtotal) * 3) / 100).toLocaleString('en-IN')}
-*VAT (0%):* ₹0
-
-*TOTAL AMOUNT: ₹${parseFloat(estimate.totalAmount).toLocaleString('en-IN')}*
-
-*Valid Until:* ${estimate.validUntil.toLocaleDateString()}
-
-Thank you for choosing Palaniappa Jewellers!`;
+Thank you for choosing Palaniappa Jewellers! 🙏`;
 
       const whatsappUrl = `https://wa.me/${estimate.customerPhone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
       
       // Mark as sent to WhatsApp
       await storage.updateEstimate(estimateId, { sentToWhatsApp: true });
 
-      res.json({ whatsappUrl, message });
+      res.json({ whatsappUrl, message, imageUrl: fullImageUrl });
     } catch (error) {
       console.error('Error sending to WhatsApp:', error);
       res.status(500).json({ error: 'Failed to send to WhatsApp' });

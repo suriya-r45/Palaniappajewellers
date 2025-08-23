@@ -454,8 +454,11 @@ export const insertProductSchema = z.object({
   customPriceInr: z.coerce.number().optional(),
   customPriceBhd: z.coerce.number().optional(),
   // New fields for barcode functionality
+  productCode: z.string().optional(),
   stones: z.string().optional().default("None"),
   goldRateAtCreation: z.coerce.number().optional(),
+  barcode: z.string().optional(),
+  barcodeImageUrl: z.string().optional(),
 });
 
 // Estimates schema
