@@ -418,14 +418,19 @@ export function EstimateForm() {
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="RINGS">Rings</SelectItem>
-                      <SelectItem value="NECKLACES">Necklaces</SelectItem>
-                      <SelectItem value="EARRINGS">Earrings</SelectItem>
-                      <SelectItem value="BRACELETS">Bracelets</SelectItem>
-                      <SelectItem value="BANGLES">Bangles</SelectItem>
-                      <SelectItem value="CHAINS">Chains</SelectItem>
-                      <SelectItem value="PENDANTS">Pendants</SelectItem>
-                      <SelectItem value="SETS">Sets</SelectItem>
+                      <SelectItem value="rings">Rings</SelectItem>
+                      <SelectItem value="necklaces">Necklaces</SelectItem>
+                      <SelectItem value="pendants">Pendants</SelectItem>
+                      <SelectItem value="earrings">Earrings</SelectItem>
+                      <SelectItem value="bracelets">Bracelets</SelectItem>
+                      <SelectItem value="bangles">Bangles</SelectItem>
+                      <SelectItem value="watches">Watches</SelectItem>
+                      <SelectItem value="mens">Men's Jewellery</SelectItem>
+                      <SelectItem value="children">Children's Jewellery</SelectItem>
+                      <SelectItem value="materials">Materials</SelectItem>
+                      <SelectItem value="custom">Custom Jewellery</SelectItem>
+                      <SelectItem value="collections">Collections</SelectItem>
+                      <SelectItem value="gold_coins">Gold Coins</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
