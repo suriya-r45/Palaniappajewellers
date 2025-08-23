@@ -538,7 +538,7 @@ export default function Home() {
                 </div>
                 <p className="text-xl text-black">Elegant silver jewelry with luxurious gold finish</p>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
                 {goldPlattedSilverProducts.map((product) => (
                   <ProductCard
                     key={product.id}
@@ -623,7 +623,7 @@ export default function Home() {
               </div>
               <p className="text-xl text-gray-600">22K & 18K gold jewelry with intricate designs</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {goldProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -658,7 +658,7 @@ export default function Home() {
               </div>
               <p className="text-xl text-gray-600">Sterling silver jewelry with contemporary elegance</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {silverProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -693,7 +693,7 @@ export default function Home() {
               </div>
               <p className="text-xl text-gray-600">Brilliant diamonds for life's precious moments</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {diamondProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -728,7 +728,7 @@ export default function Home() {
               </div>
               <p className="text-xl text-gray-600">Rare and precious platinum jewelry for discerning taste</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {platinumProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -763,7 +763,7 @@ export default function Home() {
               </div>
               <p className="text-xl text-gray-600">Vibrant gemstones for colorful expressions</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {gemstoneProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -798,7 +798,7 @@ export default function Home() {
               </div>
               <p className="text-xl text-gray-600">Timeless pearls for elegant sophistication</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {pearlProducts.map((product) => (
                 <ProductCard
                   key={product.id}
