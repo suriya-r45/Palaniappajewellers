@@ -241,7 +241,7 @@ export function EstimatesList() {
                     className="border-blue-600 text-blue-600 hover:bg-blue-50"
                   >
                     <Edit className="h-4 w-4 mr-2" />
-                    Edit Bill
+                    Edit Estimate
                   </Button>
                   <Button
                     onClick={() => sendToWhatsAppMutation.mutate(estimate.id)}

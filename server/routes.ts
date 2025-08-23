@@ -1157,6 +1157,17 @@ Premium quality, timeless beauty.`;
     }
   });
 
+  app.put('/api/estimates/:id', authenticateToken, async (req, res) => {
+    try {
+      const estimateId = req.params.id;
+      const estimate = await storage.updateEstimate(estimateId, req.body);
+      res.json(estimate);
+    } catch (error) {
+      console.error('Error updating estimate:', error);
+      res.status(500).json({ error: 'Failed to update estimate' });
+    }
+  });
+
   // Send estimate to WhatsApp
   app.post('/api/estimates/:id/send-whatsapp', authenticateToken, async (req, res) => {
     try {

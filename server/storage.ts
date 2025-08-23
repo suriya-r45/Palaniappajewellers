@@ -377,14 +377,31 @@ export class DatabaseStorage implements IStorage {
     return estimate;
   }
 
-  async updateEstimate(id: string, updateData: Partial<InsertEstimate>): Promise<Estimate | undefined> {
+  async updateEstimate(id: string, updateData: Partial<InsertEstimate>): Promise<Estimate> {
+    // Ensure validUntil is a proper Date object if provided
+    const estimateData = {
+      ...updateData,
+      ...(updateData.validUntil && {
+        validUntil: updateData.validUntil instanceof Date 
+          ? updateData.validUntil 
+          : new Date(updateData.validUntil as string),
+      }),
+      updatedAt: new Date(),
+    };
+    
     const [estimate] = await db
       .update(estimates)
-      .set(updateData)
+      .set(estimateData)
       .where(eq(estimates.id, id))
       .returning();
-    return estimate || undefined;
+    
+    if (!estimate) {
+      throw new Error('Estimate not found');
+    }
+    
+    return estimate;
   }
+
 
   // Category operations
   async getAllCategories(): Promise<Category[]> {

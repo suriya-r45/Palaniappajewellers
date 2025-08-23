@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,6 +42,9 @@ export function EstimateForm() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [, setLocation] = useLocation();
+  
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingEstimateId, setEditingEstimateId] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<EstimateFormData>({
     customerName: "",
@@ -70,6 +73,58 @@ export function EstimateForm() {
     validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 days from now
     currency: "INR"
   });
+
+  // Check for edit estimate data in localStorage
+  useEffect(() => {
+    const editEstimateData = localStorage.getItem('editEstimate');
+    if (editEstimateData) {
+      try {
+        const estimateData = JSON.parse(editEstimateData);
+        
+        setFormData({
+          customerName: estimateData.customerName || "",
+          customerPhone: estimateData.customerPhone || "",
+          customerEmail: estimateData.customerEmail || "",
+          productName: estimateData.productName || "",
+          category: estimateData.category || "",
+          purity: estimateData.purity || "22K",
+          grossWeight: estimateData.grossWeight || "",
+          netWeight: estimateData.netWeight || "",
+          productCode: estimateData.productCode || "",
+          metalValue: estimateData.metalValue || "",
+          makingChargesPercentage: estimateData.makingChargesPercentage || "15",
+          makingCharges: estimateData.makingCharges || "",
+          stoneDiamondChargesPercentage: estimateData.stoneDiamondChargesPercentage || "0",
+          stoneDiamondCharges: estimateData.stoneDiamondCharges || "0",
+          wastagePercentage: estimateData.wastagePercentage || "2",
+          wastageCharges: estimateData.wastageCharges || "",
+          hallmarkingCharges: estimateData.hallmarkingCharges || "450",
+          gstPercentage: estimateData.gstPercentage || "3",
+          gstAmount: estimateData.gstAmount || "",
+          vatPercentage: estimateData.vatPercentage || "1",
+          vatAmount: estimateData.vatAmount || "",
+          subtotal: estimateData.subtotal || "",
+          totalAmount: estimateData.totalAmount || "",
+          validUntil: estimateData.validUntil ? new Date(estimateData.validUntil).toISOString().split('T')[0] : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          currency: estimateData.currency || "INR"
+        });
+        
+        setIsEditMode(true);
+        setEditingEstimateId(estimateData.id);
+        
+        // Clear the edit data from localStorage after loading
+        localStorage.removeItem('editEstimate');
+        
+        toast({
+          title: "Edit Mode",
+          description: "Estimate loaded for editing. Make your changes and update the estimate.",
+        });
+      } catch (error) {
+        console.error('Error loading edit estimate data:', error);
+        localStorage.removeItem('editEstimate');
+      }
+    }
+  }, []);
 
   const createEstimateMutation = useMutation({
     mutationFn: async (data: EstimateFormData) => {
@@ -149,6 +204,87 @@ export function EstimateForm() {
     },
   });
 
+  const updateEstimateMutation = useMutation({
+    mutationFn: async (data: EstimateFormData) => {
+      const cleanedData = {
+        ...data,
+        grossWeight: data.grossWeight || "0",
+        netWeight: data.netWeight || "0",
+        metalValue: data.metalValue || "0",
+        makingCharges: data.makingCharges || "0",
+        stoneDiamondCharges: data.stoneDiamondCharges || "0",
+        wastageCharges: data.wastageCharges || "0",
+        hallmarkingCharges: data.hallmarkingCharges || "0",
+        gstAmount: data.gstAmount || "0",
+        vatAmount: data.vatAmount || "0",
+        subtotal: data.subtotal || "0",
+        totalAmount: data.totalAmount || "0",
+        validUntil: data.validUntil,
+      };
+      
+      const response = await fetch(`/api/estimates/${editingEstimateId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(cleanedData),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update estimate");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Estimate updated successfully!",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/estimates"] });
+      resetForm();
+      setLocation('/estimates?tab=list');
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to update estimate. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const resetForm = () => {
+    setFormData({
+      customerName: "",
+      customerPhone: "",
+      customerEmail: "",
+      productName: "",
+      category: "",
+      purity: "22K",
+      grossWeight: "",
+      netWeight: "",
+      productCode: "",
+      metalValue: "",
+      makingChargesPercentage: "15",
+      makingCharges: "",
+      stoneDiamondChargesPercentage: "0",
+      stoneDiamondCharges: "0",
+      wastagePercentage: "2",
+      wastageCharges: "",
+      hallmarkingCharges: "450",
+      gstPercentage: "3",
+      gstAmount: "",
+      vatPercentage: "1",
+      vatAmount: "",
+      subtotal: "",
+      totalAmount: "",
+      validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      currency: "INR"
+    });
+    setIsEditMode(false);
+    setEditingEstimateId(null);
+  };
+
   const calculatePricing = () => {
     const metalVal = parseFloat(formData.metalValue) || 0;
     const makingPercent = parseFloat(formData.makingChargesPercentage) || 0;
@@ -189,7 +325,12 @@ export function EstimateForm() {
       });
       return;
     }
-    createEstimateMutation.mutate(formData);
+    
+    if (isEditMode) {
+      updateEstimateMutation.mutate(formData);
+    } else {
+      createEstimateMutation.mutate(formData);
+    }
   };
 
   const handleInputChange = (field: keyof EstimateFormData, value: string) => {
@@ -214,7 +355,7 @@ export function EstimateForm() {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2 text-gray-800">
             <Calculator className="h-6 w-6 text-yellow-600" />
-            <span>Create Customer Estimate</span>
+            <span>{isEditMode ? 'Edit Customer Estimate' : 'Create Customer Estimate'}</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -476,13 +617,27 @@ export function EstimateForm() {
               )}
             </div>
 
-            <Button
-              type="submit"
-              className="w-full bg-rose-800 hover:bg-rose-700 text-rose-100 font-semibold py-3 rounded-lg shadow-lg border border-rose-700 transition-all"
-              disabled={createEstimateMutation.isPending}
-            >
-              {createEstimateMutation.isPending ? "Creating Estimate..." : "Create Estimate"}
-            </Button>
+            <div className="flex gap-4">
+              {isEditMode && (
+                <Button 
+                  type="button" 
+                  variant="outline"
+                  className="flex-1 border-gray-600 text-gray-600 hover:bg-gray-50"
+                  onClick={resetForm}
+                >
+                  Cancel Edit
+                </Button>
+              )}
+              <Button
+                type="submit"
+                className={`${isEditMode ? 'flex-1' : 'w-full'} bg-rose-800 hover:bg-rose-700 text-rose-100 font-semibold py-3 rounded-lg shadow-lg border border-rose-700 transition-all`}
+                disabled={createEstimateMutation.isPending || updateEstimateMutation.isPending}
+              >
+                {createEstimateMutation.isPending ? "Creating Estimate..." : 
+                 updateEstimateMutation.isPending ? "Updating Estimate..." : 
+                 isEditMode ? "Update Estimate" : "Create Estimate"}
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
