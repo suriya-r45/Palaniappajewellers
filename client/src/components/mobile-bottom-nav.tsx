@@ -241,13 +241,23 @@ const FILTER_OPTIONS = [
     ]
   },
   {
-    category: 'Price Range',
+    category: 'Price Range (INR)',
     options: [
       '₹5000 - ₹10000',
       '₹10000 - ₹20000', 
       '₹20000 - ₹50000',
       '₹50000 - ₹100000',
       '₹100000+'
+    ]
+  },
+  {
+    category: 'Price Range (BHD)',
+    options: [
+      'BD 10 - BD 25',
+      'BD 25 - BD 50', 
+      'BD 50 - BD 125',
+      'BD 125 - BD 250',
+      'BD 250+'
     ]
   },
   {

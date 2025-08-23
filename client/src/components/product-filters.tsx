@@ -21,6 +21,7 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
   };
   const [isOpen, setIsOpen] = useState(false);
   const [priceRange, setPriceRange] = useState([filters.priceMin || 0, filters.priceMax || 500000]);
+  const [priceBhdRange, setPriceBhdRange] = useState([filters.priceMinBhd || 0, filters.priceMaxBhd || 1250]);
 
   const handleFilterChange = (key: keyof ProductFilters, value: any) => {
     onFiltersChange({ ...filters, [key]: value });
@@ -30,6 +31,12 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
     setPriceRange(values);
     handleFilterChange('priceMin', values[0]);
     handleFilterChange('priceMax', values[1]);
+  };
+
+  const handlePriceBhdChange = (values: number[]) => {
+    setPriceBhdRange(values);
+    handleFilterChange('priceMinBhd', values[0]);
+    handleFilterChange('priceMaxBhd', values[1]);
   };
 
   const getActiveFiltersCount = () => {
@@ -227,9 +234,9 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
               </Select>
             </div>
 
-            {/* Price Range */}
+            {/* Price Range INR */}
             <div className="space-y-2">
-              <Label>Price Range (₹)</Label>
+              <Label>Price Range (₹ INR)</Label>
               <div className="px-2">
                 <Slider
                   value={priceRange}
@@ -238,11 +245,31 @@ export default function ProductFiltersComponent({ filters, onFiltersChange }: Pr
                   min={0}
                   step={1000}
                   className="w-full"
-                  data-testid="slider-price"
+                  data-testid="slider-price-inr"
                 />
                 <div className="flex justify-between text-sm text-gray-500 mt-1">
                   <span>₹{priceRange[0].toLocaleString()}</span>
                   <span>₹{priceRange[1].toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Price Range BHD */}
+            <div className="space-y-2">
+              <Label>Price Range (BD BHD)</Label>
+              <div className="px-2">
+                <Slider
+                  value={priceBhdRange}
+                  onValueChange={handlePriceBhdChange}
+                  max={1250}
+                  min={0}
+                  step={5}
+                  className="w-full"
+                  data-testid="slider-price-bhd"
+                />
+                <div className="flex justify-between text-sm text-gray-500 mt-1">
+                  <span>BD {priceBhdRange[0]}</span>
+                  <span>BD {priceBhdRange[1]}</span>
                 </div>
               </div>
             </div>

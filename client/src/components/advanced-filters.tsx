@@ -138,9 +138,9 @@ export default function AdvancedFilters({ filters, onFiltersChange }: AdvancedFi
             />
           </div>
 
-          {/* Price Range with Advanced Options */}
+          {/* Price Range with Dual Currency */}
           <div className="space-y-3">
-            <Label className="text-sm font-semibold">Price Range</Label>
+            <Label className="text-sm font-semibold">Price Range (INR)</Label>
             <div className="space-y-2">
               <Slider
                 value={[localFilters.priceMin || 0, localFilters.priceMax || 500000]}
@@ -155,6 +155,27 @@ export default function AdvancedFilters({ filters, onFiltersChange }: AdvancedFi
               <div className="flex justify-between text-xs text-muted-foreground">
                 <span>₹{localFilters.priceMin || 0}</span>
                 <span>₹{localFilters.priceMax || 500000}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* BHD Price Range */}
+          <div className="space-y-3">
+            <Label className="text-sm font-semibold">Price Range (BHD)</Label>
+            <div className="space-y-2">
+              <Slider
+                value={[localFilters.priceMinBhd || 0, localFilters.priceMaxBhd || 1250]}
+                onValueChange={([min, max]) => {
+                  handleLocalFilterChange('priceMinBhd', min);
+                  handleLocalFilterChange('priceMaxBhd', max);
+                }}
+                max={1250}
+                step={5}
+                className="w-full"
+              />
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>BD {localFilters.priceMinBhd || 0}</span>
+                <span>BD {localFilters.priceMaxBhd || 1250}</span>
               </div>
             </div>
           </div>

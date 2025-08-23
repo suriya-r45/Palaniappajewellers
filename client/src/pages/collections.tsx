@@ -210,16 +210,24 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
           if (!hasMatchingMaterial) return false;
         }
 
-        // Check price range filters
-        const priceFilters = selectedMobileFilters.filter(f => f.includes('₹'));
+        // Check price range filters (INR and BHD)
+        const priceFilters = selectedMobileFilters.filter(f => f.includes('₹') || f.includes('BD'));
         if (priceFilters.length > 0) {
-          const price = parseFloat(product.priceInr);
+          const priceInr = parseFloat(product.priceInr);
+          const priceBhd = parseFloat(product.priceBhd);
           const hasMatchingPrice = priceFilters.some(range => {
-            if (range === '₹5000 - ₹10000') return price >= 5000 && price <= 10000;
-            if (range === '₹10000 - ₹20000') return price >= 10000 && price <= 20000;
-            if (range === '₹20000 - ₹50000') return price >= 20000 && price <= 50000;
-            if (range === '₹50000 - ₹100000') return price >= 50000 && price <= 100000;
-            if (range === '₹100000+') return price >= 100000;
+            // INR ranges
+            if (range === '₹5000 - ₹10000') return priceInr >= 5000 && priceInr <= 10000;
+            if (range === '₹10000 - ₹20000') return priceInr >= 10000 && priceInr <= 20000;
+            if (range === '₹20000 - ₹50000') return priceInr >= 20000 && priceInr <= 50000;
+            if (range === '₹50000 - ₹100000') return priceInr >= 50000 && priceInr <= 100000;
+            if (range === '₹100000+') return priceInr >= 100000;
+            // BHD ranges
+            if (range === 'BD 10 - BD 25') return priceBhd >= 10 && priceBhd <= 25;
+            if (range === 'BD 25 - BD 50') return priceBhd >= 25 && priceBhd <= 50;
+            if (range === 'BD 50 - BD 125') return priceBhd >= 50 && priceBhd <= 125;
+            if (range === 'BD 125 - BD 250') return priceBhd >= 125 && priceBhd <= 250;
+            if (range === 'BD 250+') return priceBhd >= 250;
             return false;
           });
           if (!hasMatchingPrice) return false;

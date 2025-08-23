@@ -205,6 +205,8 @@ export interface ProductFilters {
   occasion?: string;
   priceMin?: number;
   priceMax?: number;
+  priceMinBhd?: number;
+  priceMaxBhd?: number;
   inStock?: boolean;
   sortBy?: 'newest' | 'popular' | 'price_asc' | 'price_desc' | 'name_asc' | 'name_desc' | 'weight_asc' | 'weight_desc' | 'stock' | 'rating' | 'discount' | 'premium';
   // Advanced filter options
