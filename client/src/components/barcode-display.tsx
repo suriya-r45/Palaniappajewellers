@@ -130,14 +130,15 @@ Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}`;
                 <span>${product.purity || '22K'}</span>
               </div>
               <div class="weight-info">Gross Weight : ${grossWeight}</div>
-              <div class="qr-area">
+              <div class="barcode-area">
                 <canvas id="print-qrcode" style="width: 150px; height: 150px;"></canvas>
               </div>
               <div class="product-code-bottom">${product.productCode}</div>
             </div>
             <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
             <script>
-              const qrData = \`Product Code: ${product.productCode}
+              function generateQRCode() {
+                const qrData = \`Product Code: ${product.productCode}
 Product Name: ${product.name}
 Purity: ${product.purity || '22K'}
 Gross Weight: ${grossWeight}
@@ -145,19 +146,35 @@ Net Weight: ${product.netWeight} g
 Stone: ${product.stones || 'None'}
 Gold Rate: ${product.goldRateAtCreation ? `₹${product.goldRateAtCreation}/g` : 'N/A'}
 Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}\`;
-              
-              QRCode.toCanvas(document.getElementById("print-qrcode"), qrData, {
-                width: 150,
-                margin: 2,
-                color: {
-                  dark: '#000000',
-                  light: '#FFFFFF'
+                
+                if (window.QRCode && document.getElementById("print-qrcode")) {
+                  QRCode.toCanvas(document.getElementById("print-qrcode"), qrData, {
+                    width: 150,
+                    margin: 2,
+                    color: {
+                      dark: '#000000',
+                      light: '#FFFFFF'
+                    }
+                  }, function(error) {
+                    if (error) console.error('QR Code generation failed:', error);
+                    // Print after QR code is ready
+                    setTimeout(() => {
+                      window.print();
+                      window.close();
+                    }, 100);
+                  });
+                } else {
+                  // Retry if QRCode library or element not ready
+                  setTimeout(generateQRCode, 100);
                 }
-              });
-              setTimeout(() => {
-                window.print();
-                window.close();
-              }, 500);
+              }
+              
+              // Wait for DOM and script to load
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', generateQRCode);
+              } else {
+                generateQRCode();
+              }
             </script>
           </body>
         </html>
