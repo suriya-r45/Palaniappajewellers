@@ -24,7 +24,7 @@ import collectionsImage from '@assets/collections_luxury.png';
 import goldCollectionImage from '@assets/gold_collection_luxury.png';
 import silverCollectionImage from '@assets/silver_collection_luxury.png';
 import diamondCollectionImage from '@assets/diamond_collection_luxury.png';
-import goldCoinsImage from '@assets/generated_images/HD_luxury_gold_coins_31016b54.png';
+import goldCoinsImage from '@assets/gold_coins_luxury.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -484,16 +484,16 @@ export default function Home() {
               </div>
             </div>
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('collections')}
               data-testid="category-card-collections"
             >
               <div 
-                className="h-24 md:h-32"
+                className="aspect-square"
                 style={{
                   backgroundImage: `url(${collectionsImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
+                  backgroundSize: '130%',
+                  backgroundPosition: 'center 50%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
@@ -504,16 +504,16 @@ export default function Home() {
             </div>
             {/* Row 4 */}
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('gold_coins')}
               data-testid="category-card-gold-coins"
             >
               <div 
-                className="h-24 md:h-32"
+                className="aspect-square"
                 style={{
                   backgroundImage: `url(${goldCoinsImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
+                  backgroundSize: '110%',
+                  backgroundPosition: 'center 50%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
