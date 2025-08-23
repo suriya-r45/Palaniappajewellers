@@ -413,7 +413,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Generate product code
-      const productCode = generateProductCode(productData.category);
+      const productCode = await generateProductCode(productData.category, productData.subCategory);
 
       // Get current gold rate if it's a gold product
       let goldRateAtCreation = null;

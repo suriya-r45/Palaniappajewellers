@@ -14,41 +14,270 @@ export interface ProductBarcodeData {
   approxPrice: string;
 }
 
-export function generateProductCode(category: string, year: number = new Date().getFullYear()): string {
-  // Get category abbreviation
+export async function generateProductCode(category: string, subCategory?: string, year: number = new Date().getFullYear()): Promise<string> {
+  // Get category and subcategory abbreviations
   const categoryAbbreviation = getCategoryAbbreviation(category);
+  const subCategoryAbbreviation = getSubCategoryAbbreviation(category, subCategory);
   
-  // Generate a unique number based on timestamp
-  const timestamp = Date.now();
-  const uniqueId = timestamp.toString().slice(-3).padStart(3, '0');
+  // Import storage to count existing products
+  const { db } = await import('../db.js');
+  const { products } = await import('../../shared/schema.js');
+  const { like, and, gte, lte } = await import('drizzle-orm');
   
-  return `PJ-${categoryAbbreviation}-${year}-${uniqueId}`;
+  // Count existing products for this specific subcategory in the current year
+  const startOfYear = new Date(year, 0, 1);
+  const endOfYear = new Date(year, 11, 31, 23, 59, 59, 999);
+  
+  const codePattern = `PJ-${categoryAbbreviation}-${subCategoryAbbreviation}-${year}-%`;
+  
+  const existingProducts = await db
+    .select()
+    .from(products)
+    .where(
+      and(
+        like(products.productCode, codePattern),
+        gte(products.createdAt, startOfYear),
+        lte(products.createdAt, endOfYear)
+      )
+    );
+  
+  // Generate sequential number
+  const sequentialNumber = String(existingProducts.length + 1).padStart(3, '0');
+  
+  return `PJ-${categoryAbbreviation}-${subCategoryAbbreviation}-${year}-${sequentialNumber}`;
 }
 
 function getCategoryAbbreviation(category: string): string {
-  const abbreviations: { [key: string]: string } = {
-    'rings': 'RG',
-    'necklaces': 'NK',
-    'pendants': 'PD',
+  const categoryMappings: { [key: string]: string } = {
+    // Main categories
+    'rings': 'RN',
+    'necklaces': 'NK', 
     'earrings': 'ER',
     'bracelets': 'BR',
     'bangles': 'BG',
-    'watches': 'WC',
-    'mens': 'MN',
-    'children': 'CH',
-    'materials': 'MT',
-    'collections': 'CL',
-    'custom': 'CT',
-    'new_arrivals': 'NA',
-    'gold_coins': 'GC'
+    'pendants': 'PD',
+    'mangalsutra': 'MS',
+    'mangalsutra & thali chains': 'MS',
+    'nose jewellery': 'NJ',
+    'anklets & toe rings': 'AN',
+    'brooches & pins': 'BP',
+    'kids jewellery': 'KJ',
+    'bridal & special collections': 'SC',
+    'shop by material / gemstone': 'MT',
+    'material': 'MT',
+    'gemstone': 'MT'
   };
   
-  // Handle nose pins specifically
-  if (category.toLowerCase().includes('nose') || category.toLowerCase().includes('pin')) {
-    return 'NP';
+  return categoryMappings[category.toLowerCase()] || 'GN'; // GN for General
+}
+
+function getSubCategoryAbbreviation(category: string, subCategory?: string): string {
+  if (!subCategory) return 'GN';
+  
+  const categoryKey = category.toLowerCase();
+  const subCategoryKey = subCategory.toLowerCase();
+  
+  // Comprehensive subcategory mappings
+  const subCategoryMappings: { [category: string]: { [subCategory: string]: string } } = {
+    'rings': {
+      'engagement rings': 'ENG',
+      'engagement_rings': 'ENG',
+      'wedding bands': 'WB',
+      'wedding_bands': 'WB',
+      'couple rings': 'CR',
+      'couple_rings': 'CR',
+      'cocktail party rings': 'CPR',
+      'cocktail_party_rings': 'CPR',
+      'daily wear rings': 'DWR',
+      'daily_wear_rings': 'DWR',
+      'mens rings': 'MR',
+      'mens_rings': 'MR'
+    },
+    'necklaces': {
+      'chains': 'CHN',
+      'chokers': 'CH',
+      'lockets': 'LK',
+      'beaded necklaces': 'BD',
+      'beaded_necklaces': 'BD',
+      'collars': 'COL',
+      'long necklaces opera chains': 'LON',
+      'long_necklaces_opera_chains': 'LON',
+      'multi layered necklaces': 'MLN',
+      'multi_layered_necklaces': 'MLN'
+    },
+    'earrings': {
+      'studs': 'ST',
+      'hoops': 'HP',
+      'drops danglers': 'DR',
+      'drops_danglers': 'DR',
+      'chandbalis': 'CHB',
+      'jhumkas': 'JK',
+      'ear cuffs': 'EC',
+      'ear_cuffs': 'EC',
+      'kids earrings': 'KER',
+      'kids_earrings': 'KER'
+    },
+    'bracelets': {
+      'cuff': 'CF',
+      'tennis': 'TN',
+      'charm': 'CM',
+      'chain': 'CHN',
+      'beaded': 'BD',
+      'link': 'LK',
+      'bolo': 'BL',
+      'leather': 'LTH',
+      'diamond': 'DM',
+      'gemstone': 'GS',
+      'pearl': 'PRL',
+      'bridal': 'BDL',
+      'minimalist': 'MIN',
+      'traditional': 'TRD'
+    },
+    'bangles': {
+      'classic': 'CL',
+      'kada': 'KD',
+      'cuff': 'CF',
+      'openable': 'OP',
+      'adjustable': 'ADJ',
+      'charm': 'CM',
+      'diamond': 'DM',
+      'gemstone': 'GS',
+      'pearl': 'PRL',
+      'bridal': 'BDL',
+      'minimalist': 'MIN',
+      'traditional': 'TRD',
+      'temple': 'TMP',
+      'kundan': 'KND',
+      'polki': 'PLK',
+      'navratna': 'NVR'
+    },
+    'pendants': {
+      'solitaire': 'SOL',
+      'halo': 'HL',
+      'cluster': 'CLT',
+      'heart': 'HRT',
+      'cross': 'CRS',
+      'initial': 'INI',
+      'diamond': 'DM',
+      'gemstone': 'GS',
+      'pearl': 'PRL',
+      'bridal': 'BDL',
+      'minimalist': 'MIN',
+      'traditional': 'TRD'
+    },
+    'mangalsutra': {
+      'traditional mangalsutra': 'TMS',
+      'traditional_mangalsutra': 'TMS',
+      'modern mangalsutra': 'MMS',
+      'modern_mangalsutra': 'MMS',
+      'thali thirumangalyam chains': 'TTC',
+      'thali_thirumangalyam_chains': 'TTC'
+    },
+    'mangalsutra & thali chains': {
+      'traditional mangalsutra': 'TMS',
+      'traditional_mangalsutra': 'TMS',
+      'modern mangalsutra': 'MMS',
+      'modern_mangalsutra': 'MMS',
+      'thali thirumangalyam chains': 'TTC',
+      'thali_thirumangalyam_chains': 'TTC'
+    },
+    'nose jewellery': {
+      'nose pins': 'NP',
+      'nose_pins': 'NP',
+      'nose rings nath': 'NR',
+      'nose_rings_nath': 'NR',
+      'septum rings': 'SR',
+      'septum_rings': 'SR'
+    },
+    'anklets & toe rings': {
+      'silver anklets': 'SA',
+      'silver_anklets': 'SA',
+      'beaded anklets': 'BA',
+      'beaded_anklets': 'BA',
+      'bridal toe rings': 'BTR',
+      'bridal_toe_rings': 'BTR',
+      'daily wear toe rings': 'DTR',
+      'daily_wear_toe_rings': 'DTR'
+    },
+    'brooches & pins': {
+      'saree pins': 'SP',
+      'saree_pins': 'SP',
+      'suit brooches': 'SB',
+      'suit_brooches': 'SB',
+      'bridal brooches': 'BB',
+      'bridal_brooches': 'BB',
+      'cufflinks': 'CLF',
+      'tie pins': 'TP',
+      'tie_pins': 'TP'
+    },
+    'kids jewellery': {
+      'baby bangles': 'BBG',
+      'baby_bangles': 'BBG',
+      'nazariya bracelets': 'NZB',
+      'nazariya_bracelets': 'NZB',
+      'kids earrings': 'KER',
+      'kids_earrings': 'KER',
+      'kids chains': 'KCH',
+      'kids_chains': 'KCH',
+      'kids rings': 'KRG',
+      'kids_rings': 'KRG'
+    },
+    'bridal & special collections': {
+      'bridal sets': 'BDS',
+      'bridal_sets': 'BDS',
+      'temple jewellery sets': 'TJS',
+      'temple_jewellery_sets': 'TJS',
+      'antique jewellery collections': 'AJC',
+      'antique_jewellery_collections': 'AJC',
+      'custom made jewellery': 'CMJ',
+      'custom_made_jewellery': 'CMJ'
+    },
+    'shop by material / gemstone': {
+      'gold jewellery 22k 18k 14k': 'GLD',
+      'gold_jewellery_22k_18k_14k': 'GLD',
+      'silver jewellery sterling oxidized': 'SLV',
+      'silver_jewellery_sterling_oxidized': 'SLV',
+      'platinum jewellery': 'PLT',
+      'platinum_jewellery': 'PLT',
+      'diamond jewellery': 'DMJ',
+      'diamond_jewellery': 'DMJ',
+      'gemstone jewellery': 'GSJ',
+      'gemstone_jewellery': 'GSJ',
+      'pearl jewellery': 'PRJ',
+      'pearl_jewellery': 'PRJ',
+      'fashion artificial jewellery': 'FAJ',
+      'fashion_artificial_jewellery': 'FAJ'
+    },
+    'material': {
+      'gold jewellery 22k 18k 14k': 'GLD',
+      'gold_jewellery_22k_18k_14k': 'GLD',
+      'silver jewellery sterling oxidized': 'SLV',
+      'silver_jewellery_sterling_oxidized': 'SLV',
+      'platinum jewellery': 'PLT',
+      'platinum_jewellery': 'PLT',
+      'diamond jewellery': 'DMJ',
+      'diamond_jewellery': 'DMJ',
+      'gemstone jewellery': 'GSJ',
+      'gemstone_jewellery': 'GSJ',
+      'pearl jewellery': 'PRJ',
+      'pearl_jewellery': 'PRJ',
+      'fashion artificial jewellery': 'FAJ',
+      'fashion_artificial_jewellery': 'FAJ'
+    }
+  };
+  
+  const categoryMapping = subCategoryMappings[categoryKey];
+  if (categoryMapping && categoryMapping[subCategoryKey]) {
+    return categoryMapping[subCategoryKey];
   }
   
-  return abbreviations[category.toLowerCase()] || 'GN'; // GN for General
+  // Fallback: create abbreviation from subcategory name
+  return subCategory
+    .replace(/[^a-zA-Z\s]/g, '')
+    .split(' ')
+    .map(word => word.substring(0, 3).toUpperCase())
+    .join('')
+    .substring(0, 4);
 }
 
 export function formatProductDataForBarcode(data: ProductBarcodeData): string {
