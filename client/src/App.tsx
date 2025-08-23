@@ -25,7 +25,10 @@ function Router() {
       <Route path="/estimates" component={EstimatesPage} />
       {/* Material-based routes */}
       <Route path="/collections/gold" component={() => <CollectionsPage material="GOLD" />} />
+      <Route path="/collections/gold-18k" component={() => <CollectionsPage material="GOLD_18K" />} />
+      <Route path="/collections/gold-22k" component={() => <CollectionsPage material="GOLD_22K" />} />
       <Route path="/collections/silver" component={() => <CollectionsPage material="SILVER" />} />
+      <Route path="/collections/silver-925" component={() => <CollectionsPage material="SILVER_925" />} />
       <Route path="/collections/diamond" component={() => <CollectionsPage material="DIAMOND" />} />
       <Route path="/collections/gold-plated-silver" component={() => <CollectionsPage material="GOLD_PLATED_SILVER" />} />
       <Route path="/collections/platinum" component={() => <CollectionsPage material="PLATINUM" />} />

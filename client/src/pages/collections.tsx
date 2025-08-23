@@ -250,8 +250,14 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
       filtered = filtered.filter(product => {
         if (filters.material === 'GOLD') {
           return product.material?.includes('GOLD');
+        } else if (filters.material === 'GOLD_18K') {
+          return product.material === 'GOLD_18K';
+        } else if (filters.material === 'GOLD_22K') {
+          return product.material === 'GOLD_22K';
         } else if (filters.material === 'SILVER') {
           return product.material?.includes('SILVER');
+        } else if (filters.material === 'SILVER_925') {
+          return product.material === 'SILVER_925';
         } else if (filters.material === 'DIAMOND') {
           return product.material?.includes('DIAMOND');
         } else if (filters.material === 'GOLD_PLATED_SILVER') {
