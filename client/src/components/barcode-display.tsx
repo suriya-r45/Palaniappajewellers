@@ -70,6 +70,17 @@ Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}`;
                 text-align: center; 
                 background: white;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                position: relative;
+              }
+              .hole-dot {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 20px;
+                height: 20px;
+                background-color: #000;
+                border-radius: 50%;
+                z-index: 10;
               }
               .store-name { 
                 font-size: 20px; 
@@ -111,6 +122,7 @@ Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}`;
           </head>
           <body>
             <div class="barcode-container">
+              <div class="hole-dot"></div>
               <div class="store-name">PALANIAPPA JEWELLERS</div>
               <div class="product-code-large">${product.productCode}</div>
               <div class="product-info">
@@ -166,9 +178,12 @@ Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}\`;
         {/* Barcode Display matching the image style */}
         <div 
           ref={printableRef}
-          className="border-2 border-black rounded-xl p-6 bg-white text-center max-w-sm mx-auto"
+          className="border-2 border-black rounded-xl p-6 bg-white text-center max-w-sm mx-auto relative"
           style={{ fontFamily: 'Arial, sans-serif' }}
         >
+          {/* Black dot for hanging hole */}
+          <div className="absolute top-3 right-3 w-5 h-5 bg-black rounded-full"></div>
+          
           {/* Store Name */}
           <div className="text-lg font-bold mb-3 tracking-wide">
             PALANIAPPA JEWELLERS
