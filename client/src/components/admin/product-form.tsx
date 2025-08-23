@@ -223,8 +223,9 @@ function ProductForm({ currency }: ProductFormProps) {
     if (material.includes('GOLD') && !material.includes('PLATED')) return 'GOLD';
     if (material.includes('SILVER') || material.includes('GOLD_PLATED_SILVER')) return 'SILVER';
     if (material.includes('DIAMOND')) return 'DIAMOND';
-    if (material.includes('PLATINUM')) return 'OTHER';
-    if (material.includes('PEARL') || material.includes('GEMSTONE')) return 'OTHER';
+    if (material.includes('PEARL')) return 'PEARL';
+    if (material.includes('PLATINUM')) return 'PLATINUM';
+    if (material.includes('GEMSTONE')) return 'GEMSTONE';
     return 'OTHER';
   };
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);

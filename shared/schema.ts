@@ -447,8 +447,9 @@ export const insertProductSchema = z.object({
   images: z.array(z.string()).default([]),
   isActive: z.coerce.boolean().default(true),
   isFeatured: z.coerce.boolean().default(false),
+  isNewArrival: z.coerce.boolean().default(false),
   // New fields for enhanced pricing calculation
-  metalType: z.enum(["GOLD", "SILVER", "DIAMOND", "OTHER"]).default("GOLD"),
+  metalType: z.enum(["GOLD", "SILVER", "DIAMOND", "PEARL", "PLATINUM", "GEMSTONE", "OTHER"]).default("GOLD"),
   isMetalPriceBased: z.coerce.boolean().default(false),
   makingChargesPercentage: z.coerce.number().default(15),
   customPriceInr: z.coerce.number().optional(),
