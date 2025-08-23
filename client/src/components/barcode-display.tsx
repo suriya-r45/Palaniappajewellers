@@ -45,141 +45,170 @@ Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}`;
   const productType = product.name.split(' ')[0].toUpperCase();
   const grossWeight = `${product.grossWeight} g`;
 
-  const handlePrint = () => {
-    const printWindow = window.open('', '_blank');
-    if (printWindow) {
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Product Barcode - ${product.name}</title>
-            <style>
-              body { 
-                font-family: Arial, sans-serif; 
-                margin: 0; 
-                padding: 20px; 
-                display: flex; 
-                justify-content: center; 
-                align-items: center; 
-                min-height: 100vh;
-              }
-              .barcode-container { 
-                border: 3px solid #000; 
-                border-radius: 15px; 
-                padding: 30px; 
-                width: 400px; 
-                text-align: center; 
-                background: white;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                position: relative;
-              }
-              .hole-dot {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                width: 20px;
-                height: 20px;
-                background-color: #000;
-                border-radius: 50%;
-                z-index: 10;
-              }
-              .store-name { 
-                font-size: 20px; 
-                font-weight: bold; 
-                margin-bottom: 15px; 
-                letter-spacing: 1px;
-              }
-              .product-code-large { 
-                font-size: 28px; 
-                font-weight: bold; 
-                margin-bottom: 15px; 
-                font-family: monospace;
-              }
-              .product-info { 
-                font-size: 18px; 
-                font-weight: bold; 
-                margin-bottom: 15px; 
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              }
-              .weight-info { 
-                font-size: 16px; 
-                font-weight: bold; 
-                margin-bottom: 20px; 
-              }
-              .barcode-area { 
-                margin: 20px 0; 
-                display: flex;
-                justify-content: center;
-              }
-              .product-code-bottom { 
-                font-size: 18px; 
-                font-weight: bold; 
-                margin-top: 15px; 
-                font-family: monospace;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="barcode-container">
-              <div class="hole-dot"></div>
-              <div class="store-name">PALANIAPPA JEWELLERS</div>
-              <div class="product-code-large">${product.productCode}</div>
-              <div class="product-info">
-                <span>${productType}</span>
-                <span>${product.purity || '22K'}</span>
-              </div>
-              <div class="weight-info">Gross Weight : ${grossWeight}</div>
-              <div class="barcode-area">
-                <canvas id="print-qrcode" style="width: 150px; height: 150px;"></canvas>
-              </div>
-              <div class="product-code-bottom">${product.productCode}</div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-            <script>
-              function generateQRCode() {
-                const qrData = \`Product Code: ${product.productCode}
+  const handlePrint = async () => {
+    // Generate QR code data URL in the current window first
+    const qrData = `Product Code: ${product.productCode}
 Product Name: ${product.name}
 Purity: ${product.purity || '22K'}
 Gross Weight: ${grossWeight}
 Net Weight: ${product.netWeight} g
 Stone: ${product.stones || 'None'}
 Gold Rate: ${product.goldRateAtCreation ? `₹${product.goldRateAtCreation}/g` : 'N/A'}
-Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}\`;
-                
-                if (window.QRCode && document.getElementById("print-qrcode")) {
-                  QRCode.toCanvas(document.getElementById("print-qrcode"), qrData, {
-                    width: 150,
-                    margin: 2,
-                    color: {
-                      dark: '#000000',
-                      light: '#FFFFFF'
-                    }
-                  }, function(error) {
-                    if (error) console.error('QR Code generation failed:', error);
-                    // Print after QR code is ready
-                    setTimeout(() => {
-                      window.print();
-                      window.close();
-                    }, 100);
-                  });
-                } else {
-                  // Retry if QRCode library or element not ready
-                  setTimeout(generateQRCode, 100);
+Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}`;
+
+    try {
+      const qrCodeDataURL = await QRCode.toDataURL(qrData, {
+        width: 150,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Product Barcode - ${product.name}</title>
+              <style>
+                body { 
+                  font-family: Arial, sans-serif; 
+                  margin: 0; 
+                  padding: 20px; 
+                  display: flex; 
+                  justify-content: center; 
+                  align-items: center; 
+                  min-height: 100vh;
                 }
-              }
-              
-              // Wait for DOM and script to load
-              if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', generateQRCode);
-              } else {
-                generateQRCode();
-              }
-            </script>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
+                .barcode-container { 
+                  border: 3px solid #000; 
+                  border-radius: 15px; 
+                  padding: 30px; 
+                  width: 400px; 
+                  text-align: center; 
+                  background: white;
+                  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                  position: relative;
+                }
+                .hole-dot {
+                  position: absolute;
+                  top: 15px;
+                  right: 15px;
+                  width: 20px;
+                  height: 20px;
+                  background-color: #000;
+                  border-radius: 50%;
+                  z-index: 10;
+                }
+                .store-name { 
+                  font-size: 20px; 
+                  font-weight: bold; 
+                  margin-bottom: 15px; 
+                  letter-spacing: 1px;
+                }
+                .product-code-large { 
+                  font-size: 28px; 
+                  font-weight: bold; 
+                  margin-bottom: 15px; 
+                  font-family: monospace;
+                }
+                .product-info { 
+                  font-size: 18px; 
+                  font-weight: bold; 
+                  margin-bottom: 15px; 
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                }
+                .weight-info { 
+                  font-size: 16px; 
+                  font-weight: bold; 
+                  margin-bottom: 20px; 
+                }
+                .barcode-area { 
+                  margin: 20px 0; 
+                  display: flex;
+                  justify-content: center;
+                }
+                .qr-image {
+                  width: 150px;
+                  height: 150px;
+                }
+                .product-code-bottom { 
+                  font-size: 18px; 
+                  font-weight: bold; 
+                  margin-top: 15px; 
+                  font-family: monospace;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="barcode-container">
+                <div class="hole-dot"></div>
+                <div class="store-name">PALANIAPPA JEWELLERS</div>
+                <div class="product-code-large">${product.productCode}</div>
+                <div class="product-info">
+                  <span>${productType}</span>
+                  <span>${product.purity || '22K'}</span>
+                </div>
+                <div class="weight-info">Gross Weight : ${grossWeight}</div>
+                <div class="barcode-area">
+                  <img src="${qrCodeDataURL}" alt="QR Code" class="qr-image" />
+                </div>
+                <div class="product-code-bottom">${product.productCode}</div>
+              </div>
+              <script>
+                // Print after a short delay to ensure image loads
+                setTimeout(() => {
+                  window.print();
+                  window.close();
+                }, 500);
+              </script>
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+      }
+    } catch (error) {
+      console.error('Error generating QR code for print:', error);
+      // Fallback: print without QR code
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Product Barcode - ${product.name}</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+                .barcode-container { border: 3px solid #000; border-radius: 15px; padding: 30px; width: 400px; text-align: center; background: white; position: relative; }
+                .hole-dot { position: absolute; top: 15px; right: 15px; width: 20px; height: 20px; background-color: #000; border-radius: 50%; }
+                .store-name { font-size: 20px; font-weight: bold; margin-bottom: 15px; }
+                .product-code-large { font-size: 28px; font-weight: bold; margin-bottom: 15px; font-family: monospace; }
+                .product-info { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
+                .weight-info { font-size: 16px; font-weight: bold; margin-bottom: 20px; }
+                .product-code-bottom { font-size: 18px; font-weight: bold; margin-top: 15px; font-family: monospace; }
+              </style>
+            </head>
+            <body>
+              <div class="barcode-container">
+                <div class="hole-dot"></div>
+                <div class="store-name">PALANIAPPA JEWELLERS</div>
+                <div class="product-code-large">${product.productCode}</div>
+                <div class="product-info">
+                  <span>${productType}</span>
+                  <span>${product.purity || '22K'}</span>
+                </div>
+                <div class="weight-info">Gross Weight : ${grossWeight}</div>
+                <div class="product-code-bottom">${product.productCode}</div>
+              </div>
+              <script>setTimeout(() => { window.print(); window.close(); }, 300);</script>
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+      }
     }
   };
 
