@@ -328,16 +328,16 @@ export default function Home() {
               </div>
             </div>
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden bg-gray-50"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('pendants')}
               data-testid="category-card-pendants"
             >
               <div 
-                className="h-24 md:h-32"
+                className="aspect-square"
                 style={{
                   backgroundImage: `url(${pendantsImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
+                  backgroundSize: '120%',
+                  backgroundPosition: 'center 40%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
