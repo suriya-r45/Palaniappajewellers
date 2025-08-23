@@ -29,7 +29,8 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
   return (
     <>
-
+      {/* Live Gold Rates Ticker */}
+      <GoldRatesTicker />
 
       {/* Main Header */}
       <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
