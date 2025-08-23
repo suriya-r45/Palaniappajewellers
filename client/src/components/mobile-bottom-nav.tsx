@@ -281,6 +281,7 @@ export function MobileBottomNav({
   currentMainCategory
 }: MobileBottomNavProps) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
 
   // Get categories to show based on current context
   const getCategoriesToShow = () => {
@@ -393,7 +394,7 @@ export function MobileBottomNav({
           </Sheet>
 
           {/* Filter */}
-          <Sheet>
+          <Sheet open={isFilterSheetOpen} onOpenChange={setIsFilterSheetOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -471,6 +472,7 @@ export function MobileBottomNav({
                   style={{ backgroundColor: '#881337' }}
                   onClick={() => {
                     onFilterChange?.(selectedFilters);
+                    setIsFilterSheetOpen(false);
                     // Show a quick feedback that filters were applied
                     if (selectedFilters.length > 0) {
                       // Create a temporary toast-like message
