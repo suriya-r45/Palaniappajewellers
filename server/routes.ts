@@ -11,6 +11,7 @@ import PDFDocument from "pdfkit";
 import Stripe from "stripe";
 import { MetalRatesService } from "./services/testmetalRatesService.js";
 import twilio from "twilio";
+import { generateProductCode, generateBarcode, generateQRCode, ProductBarcodeData } from "./utils/barcode";
 
 // Initialize Stripe only if key is provided
 let stripe: Stripe | undefined;
@@ -411,9 +412,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      // Generate product code
+      const productCode = generateProductCode(productData.category);
+
+      // Get current gold rate if it's a gold product
+      let goldRateAtCreation = null;
+      if (productData.metalType === 'GOLD') {
+        try {
+          // Use a default gold rate for now - can be enhanced with actual API later
+          goldRateAtCreation = 5652; // Default 22K gold rate in INR
+        } catch (error) {
+          console.warn('Could not fetch gold rates:', error);
+        }
+      }
+
+      // Generate barcode data
+      const barcodeData: ProductBarcodeData = {
+        productCode,
+        productName: productData.name,
+        purity: productData.purity || '22K',
+        grossWeight: `${productData.grossWeight} g`,
+        netWeight: `${productData.netWeight} g`,
+        stones: productData.stones || 'None',
+        goldRate: goldRateAtCreation ? `₹${goldRateAtCreation} / g` : 'N/A',
+        approxPrice: `₹${productData.priceInr.toLocaleString('en-IN')} (excluding charges)`
+      };
+
+      // Generate barcode and QR code
+      let barcodeImageUrl = '';
+      try {
+        const { barcode, imagePath } = await generateBarcode(JSON.stringify(barcodeData), productCode);
+        barcodeImageUrl = imagePath;
+      } catch (error) {
+        console.warn('Could not generate barcode:', error);
+      }
+
       const product = await storage.createProduct({
         ...productData,
         images: imageUrls,
+        productCode,
+        goldRateAtCreation: goldRateAtCreation || undefined,
+        barcode: productCode,
+        barcodeImageUrl,
         isActive: productData.isActive ?? true
       });
 

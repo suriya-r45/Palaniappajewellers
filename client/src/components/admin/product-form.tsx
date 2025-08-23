@@ -225,6 +225,8 @@ function ProductForm({ currency }: ProductFormProps) {
     priceBhd: '',
     grossWeight: '',
     netWeight: '',
+    purity: '22K',
+    stones: 'None',
     stock: '',
     isNewArrival: false
   });
@@ -344,6 +346,8 @@ function ProductForm({ currency }: ProductFormProps) {
       priceBhd: '',
       grossWeight: '',
       netWeight: '',
+      purity: '22K',
+      stones: 'None',
       stock: '',
       isNewArrival: false
     });
@@ -532,6 +536,41 @@ function ProductForm({ currency }: ProductFormProps) {
               </div>
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="purity">Purity</Label>
+                <Select 
+                  value={formData.purity} 
+                  onValueChange={(value) => setFormData({ ...formData, purity: value })}
+                >
+                  <SelectTrigger data-testid="select-purity">
+                    <SelectValue placeholder="Select Purity" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="24K">24K Gold</SelectItem>
+                    <SelectItem value="22K">22K Gold</SelectItem>
+                    <SelectItem value="18K">18K Gold</SelectItem>
+                    <SelectItem value="14K">14K Gold</SelectItem>
+                    <SelectItem value="925">925 Silver</SelectItem>
+                    <SelectItem value="999">999 Silver</SelectItem>
+                    <SelectItem value="PT950">PT950 Platinum</SelectItem>
+                    <SelectItem value="PT900">PT900 Platinum</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div>
+                <Label htmlFor="stones">Stones/Gems</Label>
+                <Input
+                  id="stones"
+                  value={formData.stones}
+                  onChange={(e) => setFormData({ ...formData, stones: e.target.value })}
+                  placeholder="None, Diamond, Ruby, etc."
+                  data-testid="input-stones"
+                />
+              </div>
+            </div>
+
 
             <div>
               <Label htmlFor="stock">Stock Quantity</Label>
@@ -640,10 +679,20 @@ function ProductForm({ currency }: ProductFormProps) {
                             Stock: {product.stock}
                           </Badge>
                           <Badge variant="outline">{product.category}</Badge>
+                          {product.productCode && (
+                            <Badge variant="secondary" className="font-mono text-xs">
+                              {product.productCode}
+                            </Badge>
+                          )}
                         </div>
                         <p className="text-sm text-gray-600">
                           ₹{parseInt(product.priceInr).toLocaleString('en-IN')} | BD {parseFloat(product.priceBhd).toFixed(3)}
                         </p>
+                        {product.purity && (
+                          <p className="text-xs text-gray-500">
+                            {product.purity} • {product.grossWeight}g • {product.stones || 'No stones'}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">

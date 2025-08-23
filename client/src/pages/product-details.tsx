@@ -13,6 +13,7 @@ import { Currency } from '@/lib/currency';
 import { useCart } from '@/lib/cart';
 import { sendProductWhatsAppMessage } from '@/lib/whatsapp';
 import { useToast } from '@/hooks/use-toast';
+import BarcodeDisplay from '@/components/barcode-display';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -437,6 +438,11 @@ export default function ProductDetails() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Barcode Section */}
+        <div className="mt-12">
+          <BarcodeDisplay product={product} className="max-w-md mx-auto" />
         </div>
 
         {/* Back Button */}

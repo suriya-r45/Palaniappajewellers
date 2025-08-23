@@ -49,6 +49,12 @@ export const products = pgTable("products", {
   makingChargesPercentage: decimal("making_charges_percentage", { precision: 5, scale: 2 }).default("15.00"),
   customPriceInr: decimal("custom_price_inr", { precision: 10, scale: 2 }),
   customPriceBhd: decimal("custom_price_bhd", { precision: 10, scale: 3 }),
+  // New fields for barcode functionality
+  productCode: text("product_code").unique(), // Auto-generated code like PJ-NP-2025-001
+  stones: text("stones").default("None"), // Stone information (None, Diamond, Ruby, etc.)
+  goldRateAtCreation: decimal("gold_rate_at_creation", { precision: 10, scale: 2 }), // Gold rate when product was created
+  barcode: text("barcode"), // Generated barcode string
+  barcodeImageUrl: text("barcode_image_url"), // Path to barcode image
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -447,6 +453,9 @@ export const insertProductSchema = z.object({
   makingChargesPercentage: z.coerce.number().default(15),
   customPriceInr: z.coerce.number().optional(),
   customPriceBhd: z.coerce.number().optional(),
+  // New fields for barcode functionality
+  stones: z.string().optional().default("None"),
+  goldRateAtCreation: z.coerce.number().optional(),
 });
 
 // Estimates schema
