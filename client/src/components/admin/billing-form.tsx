@@ -75,8 +75,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
           makingCharges: makingChargesPercentage,
           gst: gstPercentage,
           vat: vatPercentage,
-          amountInr: billData.currency === 'INR' ? billData.total : '0.00',
-          amountBhd: billData.currency === 'BHD' ? billData.total : '0.00',
+          amountInr: billData.currency === 'INR' ? billData.subtotal : '0.00',
+          amountBhd: billData.currency === 'BHD' ? billData.subtotal : '0.00',
         });
 
         // Populate selected products from bill items
