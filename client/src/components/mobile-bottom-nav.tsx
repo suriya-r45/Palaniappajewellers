@@ -134,6 +134,51 @@ const HOME_CATEGORIES = {
       "Kids' Earrings",
       "Kids' Bracelets"
     ]
+  },
+  'materials': {
+    name: 'Materials',
+    subcategories: [
+      'Gold 22K',
+      'Gold 18K', 
+      'Silver 925',
+      'Diamond',
+      'Pearl',
+      'Gemstone',
+      'Platinum'
+    ]
+  },
+  'custom': {
+    name: 'Custom Jewellery',
+    subcategories: [
+      'Engagement Rings',
+      'Wedding Sets',
+      'Anniversary Bands',
+      'Custom Designs',
+      'Personalized'
+    ]
+  },
+  'collections': {
+    name: 'Collections',
+    subcategories: [
+      'Bridal Collection',
+      'Traditional Collection',
+      'Modern Collection',
+      'Vintage Collection',
+      'Designer Collection'
+    ]
+  },
+  'gold_coins': {
+    name: 'Gold Coins',
+    subcategories: [
+      'Investment',
+      'Religious',
+      'Customized',
+      'Occasion',
+      'Corporate Gifting',
+      'Collectible',
+      'Plain',
+      'Hallmarked'
+    ]
   }
 };
 
@@ -158,6 +203,14 @@ const getCategoryIcon = (categoryKey: string) => {
       return '👨';
     case 'CHILDREN':
       return '🧒';
+    case 'MATERIALS':
+      return '⚡';
+    case 'CUSTOM':
+      return '🔨';
+    case 'COLLECTIONS':
+      return '🎁';
+    case 'GOLD_COINS':
+      return '🪙';
     default:
       return '💎';
   }
