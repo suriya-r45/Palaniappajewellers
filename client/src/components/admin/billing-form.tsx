@@ -59,8 +59,11 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
         
         // Calculate percentages (reverse engineering from bill amounts)
         const makingChargesPercentage = subtotal > 0 ? ((makingChargesAmount / subtotal) * 100).toFixed(1) : '12.0';
-        const gstPercentage = subtotal > 0 ? ((gstAmount / subtotal) * 100).toFixed(1) : '3.0';
-        const vatPercentage = subtotal > 0 ? ((vatAmount / subtotal) * 100).toFixed(1) : '10.0';
+        
+        // For GST/VAT, we need to calculate based on (subtotal + making charges) not just subtotal
+        const taxBase = subtotal + makingChargesAmount;
+        const gstPercentage = taxBase > 0 ? ((gstAmount / taxBase) * 100).toFixed(1) : '3.0';
+        const vatPercentage = taxBase > 0 ? ((vatAmount / taxBase) * 100).toFixed(1) : '10.0';
         
         // Populate customer data
         setCustomerData({
