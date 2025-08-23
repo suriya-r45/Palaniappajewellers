@@ -14,7 +14,7 @@ import { EstimatesList } from '@/components/admin/estimates-list';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product, Bill } from '@shared/schema';
 import { Currency } from '@/lib/currency';
-import { Package, FileText, TrendingUp, Users, Calculator, DollarSign, Edit, QrCode, Printer } from 'lucide-react';
+import { Package, FileText, TrendingUp, Users, Calculator, DollarSign, Edit, QrCode, Printer, Search } from 'lucide-react';
 import BarcodeDisplay from '@/components/barcode-display';
 import { useToast } from '@/hooks/use-toast';
 
@@ -33,6 +33,7 @@ export default function AdminDashboard() {
     return 'products';
   });
   const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
+  const [productSearchTerm, setProductSearchTerm] = useState('');
 
   useEffect(() => {
     if (!isAdmin && !token) {
@@ -387,8 +388,24 @@ export default function AdminDashboard() {
                         Products with QR Codes: <span className="font-semibold">{products.filter(p => p.productCode).length}</span>
                       </div>
                       
+                      {/* Search Products by Name */}
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                        <input
+                          type="text"
+                          placeholder="Search products by name..."
+                          value={productSearchTerm}
+                          onChange={(e) => setProductSearchTerm(e.target.value)}
+                          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                      
                       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                        {products.map((product) => (
+                        {products
+                          .filter(product => 
+                            product.name.toLowerCase().includes(productSearchTerm.toLowerCase())
+                          )
+                          .map((product) => (
                           <div key={product.id} className="bg-white border rounded-lg shadow-sm">
                             <div className="p-4">
                               <div className="flex items-start gap-3 mb-4">
