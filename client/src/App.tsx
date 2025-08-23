@@ -27,6 +27,9 @@ function Router() {
       <Route path="/collections/gold" component={() => <CollectionsPage material="GOLD" />} />
       <Route path="/collections/silver" component={() => <CollectionsPage material="SILVER" />} />
       <Route path="/collections/diamond" component={() => <CollectionsPage material="DIAMOND" />} />
+      <Route path="/collections/gold-plated-silver" component={() => <CollectionsPage material="GOLD_PLATED_SILVER" />} />
+      <Route path="/collections/platinum" component={() => <CollectionsPage material="PLATINUM" />} />
+      <Route path="/collections/pearl" component={() => <CollectionsPage material="PEARL" />} />
       {/* Category-based routes */}
       <Route path="/collections/rings" component={() => <CollectionsPage category="rings" />} />
       <Route path="/collections/necklaces" component={() => <CollectionsPage category="necklaces" />} />
