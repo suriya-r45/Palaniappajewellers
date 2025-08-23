@@ -258,8 +258,8 @@ export class MetalRatesService {
     const data = await response.json();
     console.log('🏆 GoldAPI Gold Data:', data);
     
-    // GoldAPI returns price per troy ounce
-    const goldPriceUSD = data.price || 2525;
+    // GoldAPI already provides per-gram prices! Use price_gram_22k directly
+    const goldPricePerGramUSD = data.price_gram_22k || 99.38;
     
     // Also fetch silver
     const silverResponse = await fetch('https://www.goldapi.io/api/XAG/USD', {
@@ -269,16 +269,18 @@ export class MetalRatesService {
       }
     });
     
-    let silverPriceUSD = 29;
+    let silverPricePerGramUSD = 1.0; // Default silver per gram
     if (silverResponse.ok) {
       const silverData = await silverResponse.json();
       console.log('🥈 GoldAPI Silver Data:', silverData);
-      silverPriceUSD = silverData.price || 29;
+      // Convert silver troy ounce to per gram if needed
+      silverPricePerGramUSD = silverData.price ? (silverData.price / 31.1035) : 1.0;
     }
     
+    // Return per troy ounce prices for compatibility with existing conversion logic
     return {
-      goldUSD: goldPriceUSD,
-      silverUSD: silverPriceUSD
+      goldUSD: goldPricePerGramUSD * 31.1035, // Convert back to per ounce for existing logic
+      silverUSD: silverPricePerGramUSD * 31.1035
     };
   }
   
