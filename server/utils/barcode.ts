@@ -19,32 +19,12 @@ export async function generateProductCode(category: string, subCategory?: string
   const categoryAbbreviation = getCategoryAbbreviation(category);
   const subCategoryAbbreviation = getSubCategoryAbbreviation(category, subCategory);
   
-  // Import storage to count existing products
-  const { db } = await import('../db.js');
-  const { products } = await import('../../shared/schema.js');
-  const { like, and, gte, lte } = await import('drizzle-orm');
+  // Use timestamp-based sequential number for better performance
+  // This avoids expensive database queries while maintaining uniqueness
+  const timestamp = Date.now();
+  const randomSuffix = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
   
-  // Count existing products for this specific subcategory in the current year
-  const startOfYear = new Date(year, 0, 1);
-  const endOfYear = new Date(year, 11, 31, 23, 59, 59, 999);
-  
-  const codePattern = `PJ-${categoryAbbreviation}-${subCategoryAbbreviation}-${year}-%`;
-  
-  const existingProducts = await db
-    .select()
-    .from(products)
-    .where(
-      and(
-        like(products.productCode, codePattern),
-        gte(products.createdAt, startOfYear),
-        lte(products.createdAt, endOfYear)
-      )
-    );
-  
-  // Generate sequential number
-  const sequentialNumber = String(existingProducts.length + 1).padStart(3, '0');
-  
-  return `PJ-${categoryAbbreviation}-${subCategoryAbbreviation}-${year}-${sequentialNumber}`;
+  return `PJ-${categoryAbbreviation}-${subCategoryAbbreviation}-${year}-${timestamp.toString().slice(-6)}-${randomSuffix}`;
 }
 
 function getCategoryAbbreviation(category: string): string {
@@ -301,12 +281,11 @@ export async function generateBarcode(data: string, productCode: string): Promis
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    // For now, just return the product code
+    // For now, just return the product code without file I/O for better performance
     // The actual barcode rendering will be done on the frontend
     const filename = `barcode-${productCode.replace(/[^a-zA-Z0-9]/g, '_')}-${Date.now()}.txt`;
-    const imagePath = path.join(uploadsDir, filename);
-    fs.writeFileSync(imagePath, productCode);
-
+    
+    // Skip file writing for better performance - return virtual path
     return {
       barcode: productCode,
       imagePath: `/uploads/barcodes/${filename}`

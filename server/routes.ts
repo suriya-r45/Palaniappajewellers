@@ -401,30 +401,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const productData = insertProductSchema.parse(req.body);
 
-      // Handle uploaded images
+      // Handle uploaded images asynchronously
       const imageUrls: string[] = [];
       if (req.files && Array.isArray(req.files)) {
-        for (const file of req.files) {
-          const filename = `${Date.now()}-${file.originalname}`;
+        await Promise.all(req.files.map(async (file, index) => {
+          const filename = `${Date.now()}-${index}-${file.originalname}`;
           const filepath = path.join(uploadsDir, filename);
-          fs.renameSync(file.path, filepath);
+          await fs.promises.rename(file.path, filepath);
           imageUrls.push(`/uploads/${filename}`);
-        }
+        }));
       }
 
-      // Generate product code
-      const productCode = await generateProductCode(productData.category, productData.subCategory);
-
-      // Get current gold rate if it's a gold product
-      let goldRateAtCreation = null;
-      if (productData.metalType === 'GOLD') {
-        try {
-          // Use a default gold rate for now - can be enhanced with actual API later
-          goldRateAtCreation = 5652; // Default 22K gold rate in INR
-        } catch (error) {
-          console.warn('Could not fetch gold rates:', error);
-        }
-      }
+      // Generate product code and handle barcode generation in parallel
+      const [productCode, goldRateResult] = await Promise.all([
+        generateProductCode(productData.category, productData.subCategory),
+        // Get current gold rate if it's a gold product
+        productData.metalType === 'GOLD' ? Promise.resolve(5652) : Promise.resolve(null)
+      ]);
+      
+      const goldRateAtCreation = goldRateResult;
 
       // Generate barcode data
       const barcodeData: ProductBarcodeData = {
@@ -438,10 +433,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         approxPrice: `₹${productData.priceInr.toLocaleString('en-IN')} (excluding charges)`
       };
 
-      // Generate barcode and QR code
+      // Generate barcode (optimized for speed)
       let barcodeImageUrl = '';
       try {
-        const { barcode, imagePath } = await generateBarcode(JSON.stringify(barcodeData), productCode);
+        const { imagePath } = await generateBarcode(JSON.stringify(barcodeData), productCode);
         barcodeImageUrl = imagePath;
       } catch (error) {
         console.warn('Could not generate barcode:', error);
@@ -472,12 +467,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let updateData = { ...productData };
       if (req.files && Array.isArray(req.files) && req.files.length > 0) {
         const imageUrls: string[] = [];
-        for (const file of req.files) {
-          const filename = `${Date.now()}-${file.originalname}`;
+        await Promise.all(req.files.map(async (file, index) => {
+          const filename = `${Date.now()}-${index}-${file.originalname}`;
           const filepath = path.join(uploadsDir, filename);
-          fs.renameSync(file.path, filepath);
+          await fs.promises.rename(file.path, filepath);
           imageUrls.push(`/uploads/${filename}`);
-        }
+        }));
         updateData.images = imageUrls;
       }
 

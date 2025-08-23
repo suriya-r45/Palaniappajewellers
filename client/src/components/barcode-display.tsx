@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { QrCode, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
-import QRCodeGenerator from 'qrcode';
+import QRCode from 'qrcode';
 
 interface BarcodeDisplayProps {
   product: Product;
@@ -28,7 +28,7 @@ Stone: ${product.stones || 'None'}
 Gold Rate: ${product.goldRateAtCreation ? `₹${product.goldRateAtCreation}/g` : 'N/A'}
 Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}`;
 
-        QRCodeGenerator.toCanvas(qrCodeRef.current, qrData, {
+        QRCode.toCanvas(qrCodeRef.current, qrData, {
           width: 200,
           margin: 2,
           color: {
