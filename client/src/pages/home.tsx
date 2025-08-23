@@ -185,7 +185,7 @@ export default function Home() {
         'gold_coins': 'GOLD_COINS'
       };
       const dbCategory = categoryMapping[category.toLowerCase()] || category.toUpperCase();
-      return product.category === dbCategory;
+      return product.category.toLowerCase() === dbCategory.toLowerCase();
     }).length;
   };
 

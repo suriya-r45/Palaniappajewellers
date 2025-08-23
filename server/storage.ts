@@ -47,8 +47,10 @@ export interface IStorage {
   // Bill operations (for admin billing)
   getAllBills(): Promise<Bill[]>;
   getBill(id: string): Promise<Bill | undefined>;
+  getBillById(id: string): Promise<Bill | undefined>;
   getBillByNumber(billNumber: string): Promise<Bill | undefined>;
   createBill(bill: InsertBill): Promise<Bill>;
+  updateBill(id: string, bill: Partial<InsertBill>): Promise<Bill | undefined>;
   searchBills(query: string): Promise<Bill[]>;
   getBillsByDateRange(startDate: Date, endDate: Date): Promise<Bill[]>;
 
@@ -264,6 +266,30 @@ export class DatabaseStorage implements IStorage {
       .from(bills)
       .where(eq(bills.id, id));
     return bill;
+  }
+
+  async getBillById(id: string): Promise<Bill | undefined> {
+    const [bill] = await db
+      .select()
+      .from(bills)
+      .where(eq(bills.id, id));
+    return bill;
+  }
+
+  async updateBill(id: string, billData: Partial<InsertBill>): Promise<Bill | undefined> {
+    const total = Number(billData.subtotal || 0) + Number(billData.makingCharges || 0) + Number(billData.gst || 0) - Number(billData.discount || 0);
+    
+    const [updatedBill] = await db
+      .update(bills)
+      .set({
+        ...billData,
+        total,
+        updatedAt: new Date(),
+      })
+      .where(eq(bills.id, id))
+      .returning();
+    
+    return updatedBill;
   }
 
 

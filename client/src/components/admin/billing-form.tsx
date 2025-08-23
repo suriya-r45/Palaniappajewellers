@@ -43,6 +43,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
   const [selectedProducts, setSelectedProducts] = useState<Map<string, { product: Product; quantity: number }>>(new Map());
   const [searchQuery, setSearchQuery] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
+  const [editBillId, setEditBillId] = useState<string | null>(null);
 
   // Check for edit bill data in localStorage
   useEffect(() => {
@@ -95,6 +96,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
         }
 
         setIsEditMode(true);
+        setEditBillId(billData.id);
         
         // Clear the edit data from localStorage after loading
         localStorage.removeItem('editBill');
@@ -121,6 +123,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
         description: "Bill created successfully!",
       });
       resetForm();
+      setIsEditMode(false);
+      setEditBillId(null);
       // Force navigation to bills history tab
       window.location.href = '/admin?tab=bills';
     },
@@ -128,6 +132,31 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       toast({
         title: "Error",
         description: "Failed to create bill.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const updateBillMutation = useMutation({
+    mutationFn: async ({ id, billData }: { id: string; billData: any }) => {
+      return apiRequest('PUT', `/api/bills/${id}`, billData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/bills'] });
+      toast({
+        title: "Success",
+        description: "Bill updated successfully!",
+      });
+      resetForm();
+      setIsEditMode(false);
+      setEditBillId(null);
+      // Force navigation to bills history tab
+      window.location.href = '/admin?tab=bills';
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to update bill.",
         variant: "destructive",
       });
     },
@@ -280,7 +309,11 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       items: billItems,
     };
     
-    createBillMutation.mutate(billData);
+    if (isEditMode && editBillId) {
+      updateBillMutation.mutate({ id: editBillId, billData });
+    } else {
+      createBillMutation.mutate(billData);
+    }
   };
 
   const resetForm = () => {
@@ -297,6 +330,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       amountBhd: '0.00',
     });
     setSelectedProducts(new Map());
+    setIsEditMode(false);
+    setEditBillId(null);
   };
 
   const totals = calculateBillTotals();

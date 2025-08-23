@@ -625,6 +625,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update existing bill
+  app.put("/api/bills/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const billData = insertBillSchema.parse(req.body);
+
+      // Get existing bill to preserve bill number
+      const existingBill = await storage.getBillById(id);
+      if (!existingBill) {
+        return res.status(404).json({ message: "Bill not found" });
+      }
+
+      const updatedBill = await storage.updateBill(id, {
+        ...billData,
+        billNumber: existingBill.billNumber // Keep original bill number
+      } as any);
+
+      res.status(200).json(updatedBill);
+    } catch (error: any) {
+      console.error("Bill update error:", error.errors || error);
+      res.status(400).json({
+        message: "Failed to update bill",
+        details: error.errors || error.message
+      });
+    }
+  });
+
   // Send bill to WhatsApp
   app.post("/api/bills/:id/send-whatsapp", authenticateToken, requireAdmin, async (req, res) => {
     try {
