@@ -71,8 +71,8 @@ app.use("/attached_assets", express.static(path.join(__dirname, "../attached_ass
   }
 
   // Initialize metal rates service
-  //await MetalRatesService.initializeRates();
-  //MetalRatesService.startScheduledUpdates();
+  await MetalRatesService.initializeRates();
+  MetalRatesService.startScheduledUpdates();
 
   // Start server
   const port = parseInt(process.env.PORT || '5000', 10);
