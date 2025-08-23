@@ -289,6 +289,10 @@ export default function ProductDetails() {
                   </h4>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
+                      <span className="text-gray-600">Product Code:</span>
+                      <span className="font-medium" data-testid="text-product-code">{product.productCode || 'N/A'}</span>
+                    </div>
+                    <div className="flex justify-between">
                       <span className="text-gray-600">Category:</span>
                       <span className="font-medium">{product.category}</span>
                     </div>

@@ -16,6 +16,7 @@ interface EstimateFormData {
   customerEmail: string;
   productName: string;
   category: string;
+  subCategory: string;
   purity: string;
   grossWeight: string;
   netWeight: string;
@@ -38,6 +39,168 @@ interface EstimateFormData {
   currency: string;
 }
 
+// Categories structure for estimates
+const HOME_CATEGORIES = {
+  'rings': {
+    name: 'Rings 💍',
+    subcategories: [
+      'Engagement Rings',
+      'Wedding Bands',
+      'Couple Rings',
+      'Cocktail Party Rings',
+      'Daily Wear Rings',
+      'Mens Rings'
+    ]
+  },
+  'necklaces': {
+    name: 'Necklaces 📿',
+    subcategories: [
+      'Chains',
+      'Chokers',
+      'Lockets',
+      'Beaded Necklaces',
+      'Collars',
+      'Long Necklaces Opera Chains',
+      'Multi Layered Necklaces'
+    ]
+  },
+  'earrings': { 
+    name: 'Earrings 🌸',
+    subcategories: [
+      'Studs',
+      'Hoops',
+      'Drops Danglers',
+      'Chandbalis',
+      'Jhumkas',
+      'Ear Cuffs',
+      'Kids Earrings'
+    ]
+  },
+  'bracelets': {
+    name: 'Bracelets 🔗',
+    subcategories: [
+      'Cuff',
+      'Tennis',
+      'Charm',
+      'Chain',
+      'Beaded',
+      'Link',
+      'Bolo',
+      'Leather',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
+    ]
+  },
+  'bangles': {
+    name: 'Bangles 💫',
+    subcategories: [
+      'Classic',
+      'Kada',
+      'Cuff',
+      'Openable',
+      'Adjustable',
+      'Charm',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional',
+      'Temple',
+      'Kundan',
+      'Polki',
+      'Navratna'
+    ]
+  },
+  'pendants': {
+    name: 'Pendants ✨',
+    subcategories: [
+      'Solitaire',
+      'Halo',
+      'Cluster',
+      'Heart',
+      'Cross',
+      'Initial',
+      'Diamond',
+      'Gemstone',
+      'Pearl',
+      'Bridal',
+      'Minimalist',
+      'Traditional'
+    ]
+  },
+  'mangalsutra': {
+    name: 'Mangalsutra & Thali Chains 🖤',
+    subcategories: [
+      'Traditional Mangalsutra',
+      'Modern Mangalsutra',
+      'Thali Thirumangalyam Chains'
+    ]
+  },
+  'nose jewellery': {
+    name: 'Nose Jewellery 👃',
+    subcategories: [
+      'Nose Pins',
+      'Nose Rings Nath',
+      'Septum Rings'
+    ]
+  },
+  'anklets & toe rings': {
+    name: 'Anklets & Toe Rings 👣',
+    subcategories: [
+      'Silver Anklets',
+      'Beaded Anklets',
+      'Bridal Toe Rings',
+      'Daily Wear Toe Rings'
+    ]
+  },
+  'brooches & pins': {
+    name: 'Brooches & Pins 🎀',
+    subcategories: [
+      'Saree Pins',
+      'Suit Brooches',
+      'Bridal Brooches',
+      'Cufflinks',
+      'Tie Pins'
+    ]
+  },
+  'kids jewellery': {
+    name: 'Kids Jewellery 🧒',
+    subcategories: [
+      'Baby Bangles',
+      'Nazariya Bracelets',
+      'Kids Earrings',
+      'Kids Chains',
+      'Kids Rings'
+    ]
+  },
+  'bridal & special collections': {
+    name: 'Bridal & Special Collections 👰',
+    subcategories: [
+      'Bridal Sets',
+      'Temple Jewellery Sets',
+      'Antique Jewellery Collections',
+      'Custom Made Jewellery'
+    ]
+  },
+  'shop by material / gemstone': {
+    name: 'Shop by Material / Gemstone 💎',
+    subcategories: [
+      'Gold Jewellery 22K 18K 14K',
+      'Silver Jewellery Sterling Oxidized',
+      'Platinum Jewellery',
+      'Diamond Jewellery',
+      'Gemstone Jewellery',
+      'Pearl Jewellery',
+      'Fashion Artificial Jewellery'
+    ]
+  }
+};
+
 export function EstimateForm() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -52,6 +215,7 @@ export function EstimateForm() {
     customerEmail: "",
     productName: "",
     category: "",
+    subCategory: "",
     purity: "22K",
     grossWeight: "",
     netWeight: "",
@@ -87,6 +251,7 @@ export function EstimateForm() {
           customerEmail: estimateData.customerEmail || "",
           productName: estimateData.productName || "",
           category: estimateData.category || "",
+          subCategory: estimateData.subCategory || "",
           purity: estimateData.purity || "22K",
           grossWeight: estimateData.grossWeight || "",
           netWeight: estimateData.netWeight || "",
@@ -125,6 +290,113 @@ export function EstimateForm() {
       }
     }
   }, []);
+
+  // Auto-generate product code when category and subcategory are selected
+  useEffect(() => {
+    if (formData.category && formData.subCategory) {
+      generateProductCodeForEstimate();
+    } else {
+      setFormData(prev => ({ ...prev, productCode: "" }));
+    }
+  }, [formData.category, formData.subCategory]);
+
+  const generateProductCodeForEstimate = async () => {
+    if (!formData.category || !formData.subCategory) return;
+    
+    try {
+      // Generate product code on frontend for estimates (similar to backend logic)
+      const getCategoryAbbreviation = (category: string): string => {
+        const categoryMappings: { [key: string]: string } = {
+          'rings': 'RN',
+          'necklaces': 'NK', 
+          'earrings': 'ER',
+          'bracelets': 'BR',
+          'bangles': 'BG',
+          'pendants': 'PD',
+          'mangalsutra': 'MS',
+          'nose jewellery': 'NJ',
+          'anklets & toe rings': 'AN',
+          'brooches & pins': 'BP',
+          'kids jewellery': 'KJ',
+          'bridal & special collections': 'SC',
+          'shop by material / gemstone': 'MT'
+        };
+        return categoryMappings[category.toLowerCase()] || 'GN';
+      };
+
+      const getSubCategoryAbbreviation = (category: string, subCategory: string): string => {
+        const categoryKey = category.toLowerCase();
+        const subCategoryKey = subCategory.toLowerCase();
+        
+        const subCategoryMappings: { [category: string]: { [subCategory: string]: string } } = {
+          'rings': {
+            'engagement rings': 'ENG', 'wedding bands': 'WB', 'couple rings': 'CR',
+            'cocktail party rings': 'CPR', 'daily wear rings': 'DWR', 'mens rings': 'MR'
+          },
+          'necklaces': {
+            'chains': 'CHN', 'chokers': 'CH', 'lockets': 'LK', 'beaded necklaces': 'BD',
+            'collars': 'COL', 'long necklaces opera chains': 'LON', 'multi layered necklaces': 'MLN'
+          },
+          'earrings': {
+            'studs': 'ST', 'hoops': 'HP', 'drops danglers': 'DR', 'chandbalis': 'CHB',
+            'jhumkas': 'JK', 'ear cuffs': 'EC', 'kids earrings': 'KER'
+          },
+          'bracelets': {
+            'cuff': 'CF', 'tennis': 'TN', 'charm': 'CM', 'chain': 'CHN', 'beaded': 'BD',
+            'link': 'LK', 'bolo': 'BL', 'leather': 'LTH', 'diamond': 'DM', 'gemstone': 'GS',
+            'pearl': 'PRL', 'bridal': 'BDL', 'minimalist': 'MIN', 'traditional': 'TRD'
+          },
+          'bangles': {
+            'classic': 'CL', 'kada': 'KD', 'cuff': 'CF', 'openable': 'OP', 'adjustable': 'ADJ',
+            'charm': 'CM', 'diamond': 'DM', 'gemstone': 'GS', 'pearl': 'PRL', 'bridal': 'BDL',
+            'minimalist': 'MIN', 'traditional': 'TRD', 'temple': 'TMP', 'kundan': 'KND',
+            'polki': 'PLK', 'navratna': 'NVR'
+          },
+          'pendants': {
+            'solitaire': 'SOL', 'halo': 'HL', 'cluster': 'CLT', 'heart': 'HRT', 'cross': 'CRS',
+            'initial': 'INI', 'diamond': 'DM', 'gemstone': 'GS', 'pearl': 'PRL', 'bridal': 'BDL',
+            'minimalist': 'MIN', 'traditional': 'TRD'
+          },
+          'mangalsutra': {
+            'traditional mangalsutra': 'TMS', 'modern mangalsutra': 'MMS', 'thali thirumangalyam chains': 'TTC'
+          },
+          'nose jewellery': {
+            'nose pins': 'NP', 'nose rings nath': 'NR', 'septum rings': 'SR'
+          },
+          'anklets & toe rings': {
+            'silver anklets': 'SA', 'beaded anklets': 'BA', 'bridal toe rings': 'BTR', 'daily wear toe rings': 'DTR'
+          },
+          'brooches & pins': {
+            'saree pins': 'SP', 'suit brooches': 'SB', 'bridal brooches': 'BB', 'cufflinks': 'CLF', 'tie pins': 'TP'
+          },
+          'kids jewellery': {
+            'baby bangles': 'BBG', 'nazariya bracelets': 'NZB', 'kids earrings': 'KER', 'kids chains': 'KCH', 'kids rings': 'KRG'
+          },
+          'bridal & special collections': {
+            'bridal sets': 'BDS', 'temple jewellery sets': 'TJS', 'antique jewellery collections': 'AJC', 'custom made jewellery': 'CMJ'
+          },
+          'shop by material / gemstone': {
+            'gold jewellery 22k 18k 14k': 'GLD', 'silver jewellery sterling oxidized': 'SLV', 'platinum jewellery': 'PLT',
+            'diamond jewellery': 'DMJ', 'gemstone jewellery': 'GSJ', 'pearl jewellery': 'PRJ', 'fashion artificial jewellery': 'FAJ'
+          }
+        };
+        
+        const categoryMapping = subCategoryMappings[categoryKey];
+        return categoryMapping?.[subCategoryKey] || 'GN';
+      };
+
+      const categoryAbbr = getCategoryAbbreviation(formData.category);
+      const subCategoryAbbr = getSubCategoryAbbreviation(formData.category, formData.subCategory);
+      const year = new Date().getFullYear();
+      const sequence = Math.floor(Math.random() * 999) + 1; // Random for estimates
+      
+      const generatedCode = `PJ-${categoryAbbr}-${subCategoryAbbr}-${year}-${String(sequence).padStart(3, '0')}`;
+      
+      setFormData(prev => ({ ...prev, productCode: generatedCode }));
+    } catch (error) {
+      console.error('Error generating product code:', error);
+    }
+  };
 
   const createEstimateMutation = useMutation({
     mutationFn: async (data: EstimateFormData) => {
@@ -171,6 +443,7 @@ export function EstimateForm() {
         customerEmail: "",
         productName: "",
         category: "",
+        subCategory: "",
         purity: "22K",
         grossWeight: "",
         netWeight: "",
@@ -260,6 +533,7 @@ export function EstimateForm() {
       customerEmail: "",
       productName: "",
       category: "",
+      subCategory: "",
       purity: "22K",
       grossWeight: "",
       netWeight: "",
@@ -413,24 +687,37 @@ export function EstimateForm() {
                 </div>
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
+                  <Select value={formData.category} onValueChange={(value) => {
+                    handleInputChange("category", value);
+                    // Reset subcategory when category changes
+                    setFormData(prev => ({ ...prev, subCategory: "", productCode: "" }));
+                  }}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="rings">Rings</SelectItem>
-                      <SelectItem value="necklaces">Necklaces</SelectItem>
-                      <SelectItem value="pendants">Pendants</SelectItem>
-                      <SelectItem value="earrings">Earrings</SelectItem>
-                      <SelectItem value="bracelets">Bracelets</SelectItem>
-                      <SelectItem value="bangles">Bangles</SelectItem>
-                      <SelectItem value="watches">Watches</SelectItem>
-                      <SelectItem value="mens">Men's Jewellery</SelectItem>
-                      <SelectItem value="children">Children's Jewellery</SelectItem>
-                      <SelectItem value="materials">Materials</SelectItem>
-                      <SelectItem value="custom">Custom Jewellery</SelectItem>
-                      <SelectItem value="collections">Collections</SelectItem>
-                      <SelectItem value="gold_coins">Gold Coins</SelectItem>
+                      {Object.entries(HOME_CATEGORIES).map(([key, category]) => (
+                        <SelectItem key={key} value={key}>{category.name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="subCategory">Sub Category</Label>
+                  <Select 
+                    value={formData.subCategory} 
+                    onValueChange={(value) => handleInputChange("subCategory", value)}
+                    disabled={!formData.category}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={formData.category ? "Select Sub Category" : "Select Category First"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {formData.category && HOME_CATEGORIES[formData.category as keyof typeof HOME_CATEGORIES]?.subcategories.map((subCat) => (
+                        <SelectItem key={subCat} value={subCat}>
+                          {subCat}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -450,12 +737,13 @@ export function EstimateForm() {
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="productCode">Product Code</Label>
+                  <Label htmlFor="productCode">Product Code (Auto-Generated)</Label>
                   <Input
                     id="productCode"
                     value={formData.productCode}
-                    onChange={(e) => handleInputChange("productCode", e.target.value)}
-                    placeholder="Enter product code"
+                    placeholder="Select category and subcategory to auto-generate"
+                    readOnly
+                    className="bg-gray-50 cursor-not-allowed"
                   />
                 </div>
                 <div>
