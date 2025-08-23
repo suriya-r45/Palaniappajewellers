@@ -292,6 +292,8 @@ export function MobileBottomNav({
 }: MobileBottomNavProps) {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const [isSortSheetOpen, setIsSortSheetOpen] = useState(false);
+  const [isCategorySheetOpen, setIsCategorySheetOpen] = useState(false);
 
   // Get categories to show based on current context
   const getCategoriesToShow = () => {
@@ -339,7 +341,7 @@ export function MobileBottomNav({
           }}
         >
           {/* Categories */}
-          <Sheet>
+          <Sheet open={isCategorySheetOpen} onOpenChange={setIsCategorySheetOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -359,7 +361,10 @@ export function MobileBottomNav({
                     key={category.id}
                     variant="outline"
                     className="h-16 flex flex-col items-center gap-2 border-rose-200 hover:bg-rose-50 hover:border-rose-300"
-                    onClick={() => onCategorySelect?.(category.id)}
+                    onClick={() => {
+                      onCategorySelect?.(category.id);
+                      setIsCategorySheetOpen(false);
+                    }}
                   >
                     <span className="text-lg">{category.icon}</span>
                     <span className="text-xs text-center leading-tight">{category.name}</span>
@@ -370,7 +375,7 @@ export function MobileBottomNav({
           </Sheet>
 
           {/* Sort */}
-          <Sheet>
+          <Sheet open={isSortSheetOpen} onOpenChange={setIsSortSheetOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -394,7 +399,10 @@ export function MobileBottomNav({
                         ? 'bg-rose-100 text-rose-900 border border-rose-300' 
                         : 'text-gray-700 hover:bg-rose-50'
                     }`}
-                    onClick={() => onSortChange?.(option.value)}
+                    onClick={() => {
+                      onSortChange?.(option.value);
+                      setIsSortSheetOpen(false);
+                    }}
                   >
                     {option.label}
                   </Button>
