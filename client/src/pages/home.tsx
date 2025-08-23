@@ -473,8 +473,8 @@ export default function Home() {
                 className="aspect-square"
                 style={{
                   backgroundImage: `url(${customJewelryImage})`,
-                  backgroundSize: '120%',
-                  backgroundPosition: 'center 50%',
+                  backgroundSize: '140%',
+                  backgroundPosition: 'center 45%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
@@ -492,8 +492,8 @@ export default function Home() {
                 className="aspect-square"
                 style={{
                   backgroundImage: `url(${collectionsImage})`,
-                  backgroundSize: '130%',
-                  backgroundPosition: 'center 50%',
+                  backgroundSize: '150%',
+                  backgroundPosition: 'center 45%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
