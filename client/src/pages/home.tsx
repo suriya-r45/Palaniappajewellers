@@ -295,10 +295,10 @@ export default function Home() {
               data-testid="category-card-rings"
             >
               <div 
-                className="h-24 md:h-32"
+                className="aspect-square"
                 style={{
                   backgroundImage: `url(${ringsImage})`,
-                  backgroundSize: 'cover',
+                  backgroundSize: 'contain',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat'
                 }}
