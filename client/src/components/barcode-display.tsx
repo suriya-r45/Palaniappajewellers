@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { QrCode, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
-import JsBarcode from 'jsbarcode';
+import QRCodeGenerator from 'qrcode';
 
 interface BarcodeDisplayProps {
   product: Product;
@@ -11,27 +11,36 @@ interface BarcodeDisplayProps {
 }
 
 export function BarcodeDisplay({ product, className }: BarcodeDisplayProps) {
-  const barcodeRef = useRef<HTMLCanvasElement>(null);
+  const qrCodeRef = useRef<HTMLCanvasElement>(null);
   const printableRef = useRef<HTMLDivElement>(null);
 
-  // Generate barcode when component mounts
+  // Generate QR code when component mounts
   useEffect(() => {
-    if (barcodeRef.current && product.productCode) {
+    if (qrCodeRef.current && product.productCode) {
       try {
-        JsBarcode(barcodeRef.current, product.productCode, {
-          format: "CODE128",
-          width: 2,
-          height: 60,
-          displayValue: false,
-          margin: 0,
-          background: "#ffffff",
-          lineColor: "#000000"
+        // Create QR code data with all product information
+        const qrData = `Product Code: ${product.productCode}
+Product Name: ${product.name}
+Purity: ${product.purity || '22K'}
+Gross Weight: ${product.grossWeight} g
+Net Weight: ${product.netWeight} g
+Stone: ${product.stones || 'None'}
+Gold Rate: ${product.goldRateAtCreation ? `₹${product.goldRateAtCreation}/g` : 'N/A'}
+Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}`;
+
+        QRCodeGenerator.toCanvas(qrCodeRef.current, qrData, {
+          width: 200,
+          margin: 2,
+          color: {
+            dark: '#000000',
+            light: '#FFFFFF'
+          }
         });
       } catch (error) {
-        console.error('Error generating barcode:', error);
+        console.error('Error generating QR code:', error);
       }
     }
-  }, [product.productCode]);
+  }, [product.productCode, product.name, product.purity, product.grossWeight, product.netWeight, product.stones, product.goldRateAtCreation, product.priceInr]);
 
   const productType = product.name.split(' ')[0].toUpperCase();
   const grossWeight = `${product.grossWeight} g`;
@@ -109,21 +118,29 @@ export function BarcodeDisplay({ product, className }: BarcodeDisplayProps) {
                 <span>${product.purity || '22K'}</span>
               </div>
               <div class="weight-info">Gross Weight : ${grossWeight}</div>
-              <div class="barcode-area">
-                <canvas id="print-barcode" style="max-width: 300px;"></canvas>
+              <div class="qr-area">
+                <canvas id="print-qrcode" style="width: 150px; height: 150px;"></canvas>
               </div>
               <div class="product-code-bottom">${product.productCode}</div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
             <script>
-              JsBarcode("#print-barcode", "${product.productCode}", {
-                format: "CODE128",
-                width: 2,
-                height: 60,
-                displayValue: false,
-                margin: 0,
-                background: "#ffffff",
-                lineColor: "#000000"
+              const qrData = \`Product Code: ${product.productCode}
+Product Name: ${product.name}
+Purity: ${product.purity || '22K'}
+Gross Weight: ${grossWeight}
+Net Weight: ${product.netWeight} g
+Stone: ${product.stones || 'None'}
+Gold Rate: ${product.goldRateAtCreation ? `₹${product.goldRateAtCreation}/g` : 'N/A'}
+Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}\`;
+              
+              QRCode.toCanvas(document.getElementById("print-qrcode"), qrData, {
+                width: 150,
+                margin: 2,
+                color: {
+                  dark: '#000000',
+                  light: '#FFFFFF'
+                }
               });
               setTimeout(() => {
                 window.print();
@@ -142,7 +159,7 @@ export function BarcodeDisplay({ product, className }: BarcodeDisplayProps) {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <QrCode className="h-5 w-5" />
-          Product Barcode
+          Product QR Code
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -173,9 +190,9 @@ export function BarcodeDisplay({ product, className }: BarcodeDisplayProps) {
             Gross Weight : {grossWeight}
           </div>
           
-          {/* Barcode */}
+          {/* QR Code */}
           <div className="flex justify-center mb-4">
-            <canvas ref={barcodeRef} style={{ maxWidth: '250px' }}></canvas>
+            <canvas ref={qrCodeRef} style={{ width: '150px', height: '150px' }}></canvas>
           </div>
           
           {/* Product Code (Bottom) */}

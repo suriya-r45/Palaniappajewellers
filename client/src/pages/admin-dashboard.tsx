@@ -227,7 +227,7 @@ export default function AdminDashboard() {
               <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Customer Estimates</TabsTrigger>
               <TabsTrigger value="categories" data-testid="tab-categories" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Categories</TabsTrigger>
               <TabsTrigger value="pricing" data-testid="tab-pricing" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Pricing</TabsTrigger>
-              <TabsTrigger value="barcodes" data-testid="tab-barcodes" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Barcodes</TabsTrigger>
+              <TabsTrigger value="barcodes" data-testid="tab-barcodes" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">QR Codes</TabsTrigger>
             </TabsList>
           </div>
 
@@ -365,7 +365,7 @@ export default function AdminDashboard() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <QrCode className="h-5 w-5" />
-                  Product Barcode Management
+                  Product QR Code Management
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -374,17 +374,17 @@ export default function AdminDashboard() {
                     <div className="text-center py-8">
                       <QrCode className="h-16 w-16 mx-auto text-gray-400 mb-4" />
                       <p className="text-gray-500" data-testid="message-no-products">
-                        No products available for barcode generation.
+                        No products available for QR code generation.
                       </p>
                       <p className="text-sm text-gray-400">
-                        Add products first to generate barcodes.
+                        Add products first to generate QR codes.
                       </p>
                     </div>
                   ) : (
                     <div className="space-y-6">
                       <div className="text-sm text-gray-600 mb-4">
                         Total Products: <span className="font-semibold">{products.length}</span> | 
-                        Products with Barcodes: <span className="font-semibold">{products.filter(p => p.productCode).length}</span>
+                        Products with QR Codes: <span className="font-semibold">{products.filter(p => p.productCode).length}</span>
                       </div>
                       
                       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -459,10 +459,10 @@ export default function AdminDashboard() {
                                 <div className="text-center py-4 bg-gray-50 rounded-lg">
                                   <QrCode className="h-8 w-8 mx-auto text-gray-400 mb-2" />
                                   <p className="text-sm text-gray-500">
-                                    No barcode available
+                                    No QR code available
                                   </p>
                                   <p className="text-xs text-gray-400">
-                                    Edit product to generate barcode
+                                    Edit product to generate QR code
                                   </p>
                                 </div>
                               )}
@@ -493,7 +493,7 @@ export default function AdminDashboard() {
                                         </div>
                                         <div style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">Gross Weight : ${product.grossWeight} g</div>
                                         <div style="margin: 20px 0; display: flex; justify-content: center;">
-                                          <canvas id="barcode-${product.id}" style="max-width: 300px;"></canvas>
+                                          <canvas id="qrcode-${product.id}" style="width: 150px; height: 150px;"></canvas>
                                         </div>
                                         <div style="font-size: 18px; font-weight: bold; margin-top: 15px; font-family: monospace;">${product.productCode}</div>
                                       </div>
@@ -504,21 +504,29 @@ export default function AdminDashboard() {
                                 printWindow.document.write(`
                                   <html>
                                     <head>
-                                      <title>All Product Barcodes</title>
-                                      <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+                                      <title>All Product QR Codes</title>
+                                      <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
                                     </head>
                                     <body>
                                       ${barcodesHTML}
                                       <script>
                                         ${productsWithBarcodes.map(product => `
-                                          JsBarcode("#barcode-${product.id}", "${product.productCode}", {
-                                            format: "CODE128",
-                                            width: 2,
-                                            height: 60,
-                                            displayValue: false,
-                                            margin: 0,
-                                            background: "#ffffff",
-                                            lineColor: "#000000"
+                                          const qrData${product.id} = \`Product Code: ${product.productCode}
+Product Name: ${product.name}
+Purity: ${product.purity || '22K'}
+Gross Weight: ${product.grossWeight} g
+Net Weight: ${product.netWeight} g
+Stone: ${product.stones || 'None'}
+Gold Rate: ${product.goldRateAtCreation ? `₹${product.goldRateAtCreation}/g` : 'N/A'}
+Approx Price: ₹${parseInt(product.priceInr).toLocaleString('en-IN')}\`;
+                                          
+                                          QRCode.toCanvas(document.getElementById("qrcode-${product.id}"), qrData${product.id}, {
+                                            width: 150,
+                                            margin: 2,
+                                            color: {
+                                              dark: '#000000',
+                                              light: '#FFFFFF'
+                                            }
                                           });
                                         `).join('')}
                                         setTimeout(() => {
@@ -535,7 +543,7 @@ export default function AdminDashboard() {
                             disabled={products.filter(p => p.productCode).length === 0}
                           >
                             <Printer className="h-4 w-4 mr-2" />
-                            Print All Barcodes ({products.filter(p => p.productCode).length})
+                            Print All QR Codes ({products.filter(p => p.productCode).length})
                           </Button>
                           
                           <div className="text-sm text-gray-500 flex items-center">
