@@ -38,12 +38,16 @@ const HOME_CATEGORIES = {
 };
 
 export default function CollectionsPage({ material, category }: CollectionsPageProps) {
+  console.log(`[DEBUG] CollectionsPage props - material: ${material}, category: ${category}`);
+  
   const [location, setLocation] = useLocation();
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
   const [filters, setFilters] = useState<IProductFilters>({
     material: material, // Set initial filter based on material
     category: category // Set initial filter based on category
   });
+  
+  console.log(`[DEBUG] Initial filters:`, filters);
   const [sortBy, setSortBy] = useState<string>('latest');
   const [selectedMobileFilters, setSelectedMobileFilters] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -247,16 +251,29 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
 
     // Apply material filter
     if (filters.material) {
+      console.log(`[DEBUG] Filtering by material: ${filters.material}`);
+      console.log(`[DEBUG] All products:`, allProducts.map(p => ({ name: p.name, material: p.material })));
+      
       filtered = filtered.filter(product => {
         if (filters.material === 'GOLD') {
-          return product.material?.includes('GOLD');
+          const matches = product.material?.includes('GOLD');
+          console.log(`[DEBUG] Product "${product.name}" (${product.material}) matches GOLD filter: ${matches}`);
+          return matches;
         } else if (filters.material === 'SILVER') {
-          return product.material?.includes('SILVER');
+          const matches = product.material?.includes('SILVER');
+          console.log(`[DEBUG] Product "${product.name}" (${product.material}) matches SILVER filter: ${matches}`);
+          return matches;
         } else if (filters.material === 'DIAMOND') {
-          return product.material?.includes('DIAMOND');
+          const matches = product.material?.includes('DIAMOND');
+          console.log(`[DEBUG] Product "${product.name}" (${product.material}) matches DIAMOND filter: ${matches}`);
+          return matches;
         }
-        return product.material === filters.material;
+        const matches = product.material === filters.material;
+        console.log(`[DEBUG] Product "${product.name}" (${product.material}) matches exact filter ${filters.material}: ${matches}`);
+        return matches;
       });
+      
+      console.log(`[DEBUG] Filtered products after material filter:`, filtered.map(p => ({ name: p.name, material: p.material })));
     }
 
     // Apply price range filter
