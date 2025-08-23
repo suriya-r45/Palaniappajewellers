@@ -684,16 +684,6 @@ export function EstimateForm() {
               <h3 className="text-lg font-semibold text-gray-800 mb-4">Product Details</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="productName">Product Name *</Label>
-                  <Input
-                    id="productName"
-                    value={formData.productName}
-                    onChange={(e) => handleInputChange("productName", e.target.value)}
-                    placeholder="Enter product name"
-                    required
-                  />
-                </div>
-                <div>
                   <Label htmlFor="category">Category</Label>
                   <Select value={formData.category} onValueChange={(value) => {
                     handleInputChange("category", value);
@@ -743,6 +733,16 @@ export function EstimateForm() {
                       <SelectItem value="999">999 Silver</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+                <div>
+                  <Label htmlFor="productName">Product Name *</Label>
+                  <Input
+                    id="productName"
+                    value={formData.productName}
+                    onChange={(e) => handleInputChange("productName", e.target.value)}
+                    placeholder="Enter product name"
+                    required
+                  />
                 </div>
                 <div>
                   <Label htmlFor="productCode">Product Code (Auto-Generated)</Label>

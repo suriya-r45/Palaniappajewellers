@@ -372,18 +372,6 @@ function ProductForm({ currency }: ProductFormProps) {
           <form onSubmit={handleSubmit} className="space-y-4" data-testid="form-add-product">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="name">Product Name</Label>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Enter product name"
-                  required
-                  data-testid="input-product-name"
-                />
-              </div>
-              
-              <div>
                 <Label htmlFor="category">Category</Label>
                 <Select 
                   value={formData.category} 
@@ -453,6 +441,18 @@ function ProductForm({ currency }: ProductFormProps) {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+              
+              <div>
+                <Label htmlFor="name">Product Name</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Enter product name"
+                  required
+                  data-testid="input-product-name"
+                />
               </div>
             </div>
 
