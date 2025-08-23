@@ -164,9 +164,9 @@ export class MetalRatesService {
   
   static async tryMultipleGoldAPIs() {
     const apis = [
+      () => this.fetchFromCoinGecko(), // Your GoldAPI.io with the provided key - highest priority
       () => this.fetchFromMetalsAPI(),
       () => this.fetchFromGoldAPI(), 
-      () => this.fetchFromCoinGecko(),
       () => this.fetchFromAlternativeAPI()
     ];
     
@@ -237,16 +237,18 @@ export class MetalRatesService {
       
       throw new Error('Invalid MetalPrice API response');
     } catch (error) {
-      console.warn('MetalPrice API failed:', error.message);
+      console.warn('MetalPrice API failed:', error instanceof Error ? error.message : 'Unknown error');
       throw new Error('MetalPrice API failed');
     }
   }
   
   static async fetchFromCoinGecko() {
-    // GoldAPI.io - Free gold and silver prices
+    // GoldAPI.io - Live gold and silver prices for India and Bahrain
+    const apiKey = 'goldapi-3cx4ssmeog5b5i-io';
+    
     const response = await fetch('https://www.goldapi.io/api/XAU/USD', {
       headers: {
-        'x-access-token': process.env.GOLDAPI_KEY || 'demo-key',
+        'x-access-token': apiKey,
         'Content-Type': 'application/json'
       }
     });
@@ -254,7 +256,7 @@ export class MetalRatesService {
     if (!response.ok) throw new Error(`GoldAPI returned ${response.status}`);
     
     const data = await response.json();
-    console.log('🏆 GoldAPI Data:', data);
+    console.log('🏆 GoldAPI Gold Data:', data);
     
     // GoldAPI returns price per troy ounce
     const goldPriceUSD = data.price || 2525;
@@ -262,7 +264,7 @@ export class MetalRatesService {
     // Also fetch silver
     const silverResponse = await fetch('https://www.goldapi.io/api/XAG/USD', {
       headers: {
-        'x-access-token': process.env.GOLDAPI_KEY || 'demo-key',
+        'x-access-token': apiKey,
         'Content-Type': 'application/json'
       }
     });
@@ -270,6 +272,7 @@ export class MetalRatesService {
     let silverPriceUSD = 29;
     if (silverResponse.ok) {
       const silverData = await silverResponse.json();
+      console.log('🥈 GoldAPI Silver Data:', silverData);
       silverPriceUSD = silverData.price || 29;
     }
     
@@ -311,7 +314,7 @@ export class MetalRatesService {
       
       throw new Error('Invalid GoldPriceZ response');
     } catch (error) {
-      console.warn('GoldPriceZ API failed:', error.message);
+      console.warn('GoldPriceZ API failed:', error instanceof Error ? error.message : 'Unknown error');
       
       // Final reliable fallback with today's real market approximation
       const today = new Date();
