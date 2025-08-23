@@ -298,8 +298,8 @@ export default function Home() {
                 className="aspect-square"
                 style={{
                   backgroundImage: `url(${ringsImage})`,
-                  backgroundSize: 'contain',
-                  backgroundPosition: 'center',
+                  backgroundSize: '150%',
+                  backgroundPosition: 'center 45%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
