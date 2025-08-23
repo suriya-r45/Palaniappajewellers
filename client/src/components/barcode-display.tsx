@@ -1,38 +1,40 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { QrCode, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
+import JsBarcode from 'jsbarcode';
 
 interface BarcodeDisplayProps {
   product: Product;
   className?: string;
 }
 
-interface ProductBarcodeData {
-  productCode: string;
-  productName: string;
-  purity: string;
-  grossWeight: string;
-  netWeight: string;
-  stones: string;
-  goldRate: string;
-  approxPrice: string;
-}
-
 export function BarcodeDisplay({ product, className }: BarcodeDisplayProps) {
-  // Extract barcode data from product
-  const barcodeData: ProductBarcodeData = {
-    productCode: product.productCode || 'N/A',
-    productName: product.name,
-    purity: product.purity || '22K',
-    grossWeight: `${product.grossWeight} g`,
-    netWeight: `${product.netWeight} g`,
-    stones: product.stones || 'None',
-    goldRate: product.goldRateAtCreation ? `₹${product.goldRateAtCreation} / g` : 'N/A',
-    approxPrice: `₹${parseInt(product.priceInr).toLocaleString('en-IN')} (excluding charges)`
-  };
+  const barcodeRef = useRef<HTMLCanvasElement>(null);
+  const printableRef = useRef<HTMLDivElement>(null);
+
+  // Generate barcode when component mounts
+  useEffect(() => {
+    if (barcodeRef.current && product.productCode) {
+      try {
+        JsBarcode(barcodeRef.current, product.productCode, {
+          format: "CODE128",
+          width: 2,
+          height: 60,
+          displayValue: false,
+          margin: 0,
+          background: "#ffffff",
+          lineColor: "#000000"
+        });
+      } catch (error) {
+        console.error('Error generating barcode:', error);
+      }
+    }
+  }, [product.productCode]);
+
+  const productType = product.name.split(' ')[0].toUpperCase();
+  const grossWeight = `${product.grossWeight} g`;
 
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
@@ -42,27 +44,92 @@ export function BarcodeDisplay({ product, className }: BarcodeDisplayProps) {
           <head>
             <title>Product Barcode - ${product.name}</title>
             <style>
-              body { font-family: Arial, sans-serif; padding: 20px; }
-              .barcode-container { text-align: center; border: 2px solid #000; padding: 20px; max-width: 400px; margin: 0 auto; }
-              .product-code { font-size: 24px; font-weight: bold; margin: 10px 0; }
-              .detail-row { display: flex; justify-content: space-between; margin: 5px 0; }
-              .label { font-weight: bold; }
-              .barcode-text { font-family: monospace; font-size: 18px; margin: 15px 0; padding: 10px; background: #f0f0f0; }
+              body { 
+                font-family: Arial, sans-serif; 
+                margin: 0; 
+                padding: 20px; 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                min-height: 100vh;
+              }
+              .barcode-container { 
+                border: 3px solid #000; 
+                border-radius: 15px; 
+                padding: 30px; 
+                width: 400px; 
+                text-align: center; 
+                background: white;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+              }
+              .store-name { 
+                font-size: 20px; 
+                font-weight: bold; 
+                margin-bottom: 15px; 
+                letter-spacing: 1px;
+              }
+              .product-code-large { 
+                font-size: 28px; 
+                font-weight: bold; 
+                margin-bottom: 15px; 
+                font-family: monospace;
+              }
+              .product-info { 
+                font-size: 18px; 
+                font-weight: bold; 
+                margin-bottom: 15px; 
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              }
+              .weight-info { 
+                font-size: 16px; 
+                font-weight: bold; 
+                margin-bottom: 20px; 
+              }
+              .barcode-area { 
+                margin: 20px 0; 
+                display: flex;
+                justify-content: center;
+              }
+              .product-code-bottom { 
+                font-size: 18px; 
+                font-weight: bold; 
+                margin-top: 15px; 
+                font-family: monospace;
+              }
             </style>
           </head>
           <body>
             <div class="barcode-container">
-              <div class="product-code">${barcodeData.productCode}</div>
-              <div class="barcode-text">||||| ${barcodeData.productCode} |||||</div>
-              <div class="detail-row"><span class="label">Product Name:</span> <span>${barcodeData.productName}</span></div>
-              <div class="detail-row"><span class="label">Purity:</span> <span>${barcodeData.purity}</span></div>
-              <div class="detail-row"><span class="label">Gross Weight:</span> <span>${barcodeData.grossWeight}</span></div>
-              <div class="detail-row"><span class="label">Net Weight:</span> <span>${barcodeData.netWeight}</span></div>
-              <div class="detail-row"><span class="label">Stone:</span> <span>${barcodeData.stones}</span></div>
-              <div class="detail-row"><span class="label">Gold Rate:</span> <span>${barcodeData.goldRate}</span></div>
-              <div class="detail-row"><span class="label">Approx Price:</span> <span>${barcodeData.approxPrice}</span></div>
+              <div class="store-name">PALANIAPPA JEWELLERS</div>
+              <div class="product-code-large">${product.productCode}</div>
+              <div class="product-info">
+                <span>${productType}</span>
+                <span>${product.purity || '22K'}</span>
+              </div>
+              <div class="weight-info">Gross Weight : ${grossWeight}</div>
+              <div class="barcode-area">
+                <canvas id="print-barcode" style="max-width: 300px;"></canvas>
+              </div>
+              <div class="product-code-bottom">${product.productCode}</div>
             </div>
-            <script>window.print(); window.close();</script>
+            <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+            <script>
+              JsBarcode("#print-barcode", "${product.productCode}", {
+                format: "CODE128",
+                width: 2,
+                height: 60,
+                displayValue: false,
+                margin: 0,
+                background: "#ffffff",
+                lineColor: "#000000"
+              });
+              setTimeout(() => {
+                window.print();
+                window.close();
+              }, 500);
+            </script>
           </body>
         </html>
       `);
@@ -79,50 +146,41 @@ export function BarcodeDisplay({ product, className }: BarcodeDisplayProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Product Code */}
-        <div className="text-center">
-          <Badge variant="outline" className="text-lg font-mono px-4 py-2">
-            {barcodeData.productCode}
-          </Badge>
-        </div>
-
-        {/* Barcode representation */}
-        <div className="bg-gray-50 p-4 rounded-lg text-center">
-          <div className="font-mono text-2xl tracking-wider mb-2">
-            ||||| {barcodeData.productCode} |||||
+        {/* Barcode Display matching the image style */}
+        <div 
+          ref={printableRef}
+          className="border-2 border-black rounded-xl p-6 bg-white text-center max-w-sm mx-auto"
+          style={{ fontFamily: 'Arial, sans-serif' }}
+        >
+          {/* Store Name */}
+          <div className="text-lg font-bold mb-3 tracking-wide">
+            PALANIAPPA JEWELLERS
           </div>
-          <div className="text-sm text-gray-600">Scannable Barcode</div>
-        </div>
-
-        {/* Product Details */}
-        <div className="space-y-2 text-sm">
-          <div className="flex justify-between">
-            <span className="font-medium">Product Name:</span>
-            <span className="text-right">{barcodeData.productName}</span>
+          
+          {/* Product Code (Large) */}
+          <div className="text-2xl font-bold mb-3 font-mono">
+            {product.productCode}
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium">Purity:</span>
-            <span>{barcodeData.purity}</span>
+          
+          {/* Product Type and Purity */}
+          <div className="text-lg font-bold mb-3 flex justify-between items-center">
+            <span>{productType}</span>
+            <span>{product.purity || '22K'}</span>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium">Gross Weight:</span>
-            <span>{barcodeData.grossWeight}</span>
+          
+          {/* Weight */}
+          <div className="text-base font-bold mb-4">
+            Gross Weight : {grossWeight}
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium">Net Weight:</span>
-            <span>{barcodeData.netWeight}</span>
+          
+          {/* Barcode */}
+          <div className="flex justify-center mb-4">
+            <canvas ref={barcodeRef} style={{ maxWidth: '250px' }}></canvas>
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium">Stone:</span>
-            <span>{barcodeData.stones}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="font-medium">Gold Rate:</span>
-            <span>{barcodeData.goldRate}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="font-medium">Approx Price:</span>
-            <span className="text-right">{barcodeData.approxPrice}</span>
+          
+          {/* Product Code (Bottom) */}
+          <div className="text-lg font-bold font-mono">
+            {product.productCode}
           </div>
         </div>
 

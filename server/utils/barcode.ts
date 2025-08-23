@@ -72,18 +72,8 @@ export async function generateBarcode(data: string, productCode: string): Promis
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    // Generate barcode as data URL first
-    const barcodeDataUrl = JsBarcode(undefined, productCode, {
-      format: "CODE128",
-      width: 2,
-      height: 80,
-      displayValue: true,
-      fontSize: 12,
-      textMargin: 5,
-      margin: 10
-    });
-
-    // Save barcode as simple text for now and return the product code
+    // For now, just return the product code
+    // The actual barcode rendering will be done on the frontend
     const filename = `barcode-${productCode.replace(/[^a-zA-Z0-9]/g, '_')}-${Date.now()}.txt`;
     const imagePath = path.join(uploadsDir, filename);
     fs.writeFileSync(imagePath, productCode);

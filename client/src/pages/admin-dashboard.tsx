@@ -14,7 +14,8 @@ import { EstimatesList } from '@/components/admin/estimates-list';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product, Bill } from '@shared/schema';
 import { Currency } from '@/lib/currency';
-import { Package, FileText, TrendingUp, Users, Calculator, DollarSign, Edit } from 'lucide-react';
+import { Package, FileText, TrendingUp, Users, Calculator, DollarSign, Edit, QrCode, Printer } from 'lucide-react';
+import BarcodeDisplay from '@/components/barcode-display';
 import { useToast } from '@/hooks/use-toast';
 
 export default function AdminDashboard() {
@@ -26,7 +27,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
-    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates' || tabParam === 'categories' || tabParam === 'pricing') {
+    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates' || tabParam === 'categories' || tabParam === 'pricing' || tabParam === 'barcodes') {
       return tabParam;
     }
     return 'products';
@@ -43,7 +44,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
-    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates' || tabParam === 'categories' || tabParam === 'pricing') {
+    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates' || tabParam === 'categories' || tabParam === 'pricing' || tabParam === 'barcodes') {
       setActiveTab(tabParam);
     }
   }, []);
@@ -66,7 +67,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
-    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates' || tabParam === 'categories' || tabParam === 'pricing') {
+    if (tabParam === 'products' || tabParam === 'billing' || tabParam === 'bills' || tabParam === 'estimates' || tabParam === 'categories' || tabParam === 'pricing' || tabParam === 'barcodes') {
       setActiveTab(tabParam);
     }
   }, [location]);
@@ -219,13 +220,14 @@ export default function AdminDashboard() {
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6" data-testid="tabs-admin">
           <div className="relative">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-6 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-sm h-auto p-1">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-7 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-sm h-auto p-1">
               <TabsTrigger value="products" data-testid="tab-products" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Products</TabsTrigger>
               <TabsTrigger value="billing" data-testid="tab-billing" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Billing</TabsTrigger>
               <TabsTrigger value="bills" data-testid="tab-bills" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Bills History</TabsTrigger>
               <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Customer Estimates</TabsTrigger>
               <TabsTrigger value="categories" data-testid="tab-categories" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Categories</TabsTrigger>
               <TabsTrigger value="pricing" data-testid="tab-pricing" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Pricing</TabsTrigger>
+              <TabsTrigger value="barcodes" data-testid="tab-barcodes" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Barcodes</TabsTrigger>
             </TabsList>
           </div>
 
@@ -356,6 +358,197 @@ export default function AdminDashboard() {
 
           <TabsContent value="pricing" className="space-y-6">
             <PriceManagement />
+          </TabsContent>
+
+          <TabsContent value="barcodes" className="space-y-6">
+            <Card data-testid="card-barcode-management">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <QrCode className="h-5 w-5" />
+                  Product Barcode Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {products.length === 0 ? (
+                    <div className="text-center py-8">
+                      <QrCode className="h-16 w-16 mx-auto text-gray-400 mb-4" />
+                      <p className="text-gray-500" data-testid="message-no-products">
+                        No products available for barcode generation.
+                      </p>
+                      <p className="text-sm text-gray-400">
+                        Add products first to generate barcodes.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      <div className="text-sm text-gray-600 mb-4">
+                        Total Products: <span className="font-semibold">{products.length}</span> | 
+                        Products with Barcodes: <span className="font-semibold">{products.filter(p => p.productCode).length}</span>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {products.map((product) => (
+                          <div key={product.id} className="bg-white border rounded-lg shadow-sm">
+                            <div className="p-4">
+                              <div className="flex items-start gap-3 mb-4">
+                                <img
+                                  src={product.images?.[0] || '/placeholder-jewelry.jpg'}
+                                  alt={product.name}
+                                  className="w-16 h-16 rounded-lg object-cover border"
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <h3 className="font-semibold text-gray-900 truncate">
+                                    {product.name}
+                                  </h3>
+                                  <p className="text-sm text-gray-600">
+                                    {product.category.replace(/_/g, ' ')}
+                                  </p>
+                                  {product.productCode && (
+                                    <div className="flex items-center gap-2 mt-1">
+                                      <span className="text-xs font-mono bg-gray-100 px-2 py-1 rounded">
+                                        {product.productCode}
+                                      </span>
+                                      <span className={`text-xs px-2 py-1 rounded ${
+                                        product.stock > 10 
+                                          ? 'bg-green-100 text-green-800' 
+                                          : product.stock > 0 
+                                          ? 'bg-yellow-100 text-yellow-800' 
+                                          : 'bg-red-100 text-red-800'
+                                      }`}>
+                                        Stock: {product.stock}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              <div className="space-y-2 text-sm text-gray-600 mb-4">
+                                <div className="flex justify-between">
+                                  <span>Price:</span>
+                                  <span className="font-medium">
+                                    ₹{parseInt(product.priceInr).toLocaleString('en-IN')}
+                                  </span>
+                                </div>
+                                {product.purity && (
+                                  <div className="flex justify-between">
+                                    <span>Purity:</span>
+                                    <span>{product.purity}</span>
+                                  </div>
+                                )}
+                                {product.grossWeight && (
+                                  <div className="flex justify-between">
+                                    <span>Weight:</span>
+                                    <span>{product.grossWeight}g</span>
+                                  </div>
+                                )}
+                                {product.stones && (
+                                  <div className="flex justify-between">
+                                    <span>Stones:</span>
+                                    <span>{product.stones}</span>
+                                  </div>
+                                )}
+                              </div>
+                              
+                              {product.productCode ? (
+                                <BarcodeDisplay 
+                                  product={product} 
+                                  className="border-0 shadow-none bg-gray-50"
+                                />
+                              ) : (
+                                <div className="text-center py-4 bg-gray-50 rounded-lg">
+                                  <QrCode className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                                  <p className="text-sm text-gray-500">
+                                    No barcode available
+                                  </p>
+                                  <p className="text-xs text-gray-400">
+                                    Edit product to generate barcode
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Bulk Actions */}
+                      <div className="border-t pt-6">
+                        <div className="flex flex-wrap gap-3">
+                          <Button 
+                            variant="outline"
+                            onClick={() => {
+                              const printWindow = window.open('', '_blank');
+                              if (printWindow) {
+                                const productsWithBarcodes = products.filter(p => p.productCode);
+                                const barcodesHTML = productsWithBarcodes.map(product => {
+                                  const productType = product.name.split(' ')[0].toUpperCase();
+                                  return `
+                                    <div style="page-break-after: always; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px;">
+                                      <div style="border: 3px solid #000; border-radius: 15px; padding: 30px; width: 400px; text-align: center; background: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); font-family: Arial, sans-serif;">
+                                        <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px; letter-spacing: 1px;">PALANIAPPA JEWELLERS</div>
+                                        <div style="font-size: 28px; font-weight: bold; margin-bottom: 15px; font-family: monospace;">${product.productCode}</div>
+                                        <div style="font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                                          <span>${productType}</span>
+                                          <span>${product.purity || '22K'}</span>
+                                        </div>
+                                        <div style="font-size: 16px; font-weight: bold; margin-bottom: 20px;">Gross Weight : ${product.grossWeight} g</div>
+                                        <div style="margin: 20px 0; display: flex; justify-content: center;">
+                                          <canvas id="barcode-${product.id}" style="max-width: 300px;"></canvas>
+                                        </div>
+                                        <div style="font-size: 18px; font-weight: bold; margin-top: 15px; font-family: monospace;">${product.productCode}</div>
+                                      </div>
+                                    </div>
+                                  `;
+                                }).join('');
+                                
+                                printWindow.document.write(`
+                                  <html>
+                                    <head>
+                                      <title>All Product Barcodes</title>
+                                      <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+                                    </head>
+                                    <body>
+                                      ${barcodesHTML}
+                                      <script>
+                                        ${productsWithBarcodes.map(product => `
+                                          JsBarcode("#barcode-${product.id}", "${product.productCode}", {
+                                            format: "CODE128",
+                                            width: 2,
+                                            height: 60,
+                                            displayValue: false,
+                                            margin: 0,
+                                            background: "#ffffff",
+                                            lineColor: "#000000"
+                                          });
+                                        `).join('')}
+                                        setTimeout(() => {
+                                          window.print();
+                                          window.close();
+                                        }, 1000);
+                                      </script>
+                                    </body>
+                                  </html>
+                                `);
+                                printWindow.document.close();
+                              }
+                            }}
+                            disabled={products.filter(p => p.productCode).length === 0}
+                          >
+                            <Printer className="h-4 w-4 mr-2" />
+                            Print All Barcodes ({products.filter(p => p.productCode).length})
+                          </Button>
+                          
+                          <div className="text-sm text-gray-500 flex items-center">
+                            <QrCode className="h-4 w-4 mr-1" />
+                            Only products with generated codes can be printed
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
         </Tabs>
