@@ -7,7 +7,6 @@ import { User, LogOut, Search, MapPin, Heart, ShoppingCart, Menu, Phone } from '
 import { useAuth } from '@/lib/auth';
 import { Currency, CURRENCY_NAMES } from '@/lib/currency';
 import CartButton from '@/components/cart/cart-button';
-import GoldRatesTicker from '@/components/gold-rates-ticker';
 import MobileMenu from '@/components/mobile-menu';
 import logoPath from '@assets/1000284180_1755240849891_1755886428742.jpg';
 
@@ -29,8 +28,6 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
 
   return (
     <>
-      {/* Live Gold Rates Ticker */}
-      <GoldRatesTicker />
 
       {/* Main Header */}
       <header className="bg-gradient-to-r from-rose-900 to-red-900 shadow-lg sticky top-0 z-50" data-testid="header-main">
