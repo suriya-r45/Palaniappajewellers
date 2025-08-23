@@ -644,9 +644,42 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
                 </div>
               ) : (
                 <>
+                  {/* Active Filters Display */}
+                  {selectedMobileFilters.length > 0 && (
+                    <div className="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Filter className="h-4 w-4 text-rose-600" />
+                          <span className="text-sm font-medium text-rose-700">Active Filters:</span>
+                          <div className="flex flex-wrap gap-1">
+                            {selectedMobileFilters.map((filter, index) => (
+                              <Badge key={index} variant="outline" className="text-xs bg-rose-100 text-rose-700 border-rose-300">
+                                {filter}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => {
+                            setSelectedMobileFilters([]);
+                            setCurrentPage(1);
+                          }}
+                          className="text-rose-600 hover:text-rose-700 text-xs"
+                        >
+                          Clear All
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex justify-between items-center mb-6">
                     <p className="text-gray-600">
                       Showing {((currentPage - 1) * itemsPerPage) + 1}-{Math.min(currentPage * itemsPerPage, filteredProducts.length)} of {filteredProducts.length} products
+                      {selectedMobileFilters.length > 0 && (
+                        <span className="text-rose-600 font-medium"> (filtered)</span>
+                      )}
                     </p>
                     <p className="text-gray-600">
                       Page {currentPage} of {totalPages}

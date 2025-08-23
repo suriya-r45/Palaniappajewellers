@@ -416,7 +416,18 @@ export function MobileBottomNav({
                 <Button
                   className="flex-1 text-white"
                   style={{ backgroundColor: '#881337' }}
-                  onClick={() => onFilterChange?.(selectedFilters)}
+                  onClick={() => {
+                    onFilterChange?.(selectedFilters);
+                    // Show a quick feedback that filters were applied
+                    if (selectedFilters.length > 0) {
+                      // Create a temporary toast-like message
+                      const message = document.createElement('div');
+                      message.textContent = `${selectedFilters.length} filter(s) applied!`;
+                      message.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-rose-600 text-white px-4 py-2 rounded-lg shadow-lg z-50 text-sm font-medium';
+                      document.body.appendChild(message);
+                      setTimeout(() => document.body.removeChild(message), 2000);
+                    }
+                  }}
                 >
                   APPLY FILTERS ({selectedFilters.length})
                 </Button>
