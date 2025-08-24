@@ -57,11 +57,11 @@ export default function Home() {
     },
   });
 
-  // Fetch custom home sections
+  // Fetch custom home sections (public endpoint)
   const { data: homeSections = [] } = useQuery<HomeSectionWithItems[]>({
-    queryKey: ['/api/home-sections'],
+    queryKey: ['/api/home-sections/public'],
     queryFn: async () => {
-      const response = await fetch('/api/home-sections');
+      const response = await fetch('/api/home-sections/public');
       if (!response.ok) throw new Error('Failed to fetch home sections');
       return response.json();
     },
@@ -952,8 +952,6 @@ export default function Home() {
                     product={item.product}
                     currency={selectedCurrency}
                     showActions={true}
-                    customName={item.displayName}
-                    customPrice={item.displayPrice}
                   />
                 </div>
               ))}

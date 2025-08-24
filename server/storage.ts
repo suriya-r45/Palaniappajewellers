@@ -74,6 +74,7 @@ export interface IStorage {
 
   // Home Section operations
   getAllHomeSections(): Promise<HomeSectionWithItems[]>;
+  getAllHomeSectionsForAdmin(): Promise<HomeSectionWithItems[]>;
   getHomeSection(id: string): Promise<HomeSectionWithItems | undefined>;
   createHomeSection(section: InsertHomeSection): Promise<HomeSection>;
   updateHomeSection(id: string, section: Partial<InsertHomeSection>): Promise<HomeSection | undefined>;
@@ -553,6 +554,25 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(homeSections)
       .where(eq(homeSections.isActive, true))
+      .orderBy(homeSections.displayOrder, homeSections.createdAt);
+
+    const sectionsWithItems: HomeSectionWithItems[] = [];
+    
+    for (const section of sections) {
+      const items = await this.getHomeSectionItems(section.id);
+      sectionsWithItems.push({
+        ...section,
+        items
+      });
+    }
+
+    return sectionsWithItems;
+  }
+
+  async getAllHomeSectionsForAdmin(): Promise<HomeSectionWithItems[]> {
+    const sections = await db
+      .select()
+      .from(homeSections)
       .orderBy(homeSections.displayOrder, homeSections.createdAt);
 
     const sectionsWithItems: HomeSectionWithItems[] = [];

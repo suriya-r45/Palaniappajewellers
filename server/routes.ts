@@ -1528,8 +1528,24 @@ For any queries, please contact us.`;
   // HOME SECTIONS MANAGEMENT API
   // ==============================
 
-  // Get all home sections with items
-  app.get("/api/home-sections", async (req, res) => {
+  // Get all home sections with items (admin gets all, public gets only active)
+  app.get("/api/home-sections", authenticateToken, async (req, res) => {
+    try {
+      // Check if user is admin - if so, show all sections (active and inactive)
+      // If not admin or not authenticated, show only active sections
+      const isAdmin = (req as any).user?.role === 'admin';
+      const sections = isAdmin 
+        ? await storage.getAllHomeSectionsForAdmin()
+        : await storage.getAllHomeSections();
+      res.json(sections);
+    } catch (error) {
+      console.error('Error fetching home sections:', error);
+      res.status(500).json({ error: 'Failed to fetch home sections' });
+    }
+  });
+
+  // Get all active home sections for public (no auth required)
+  app.get("/api/home-sections/public", async (req, res) => {
     try {
       const sections = await storage.getAllHomeSections();
       res.json(sections);
