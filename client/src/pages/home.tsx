@@ -25,6 +25,11 @@ import goldCollectionImage from '@assets/gold_collection_luxury.png';
 import silverCollectionImage from '@assets/silver_collection_luxury.png';
 import diamondCollectionImage from '@assets/diamond_collection_luxury.png';
 import goldCoinsImage from '@assets/gold_coins_luxury.png';
+import mangalsutraImage from '@assets/mangalsutra_luxury.png';
+import noseJewelryImage from '@assets/nose_jewelry_luxury.png';
+import ankletsImage from '@assets/anklets_luxury.png';
+import broochesImage from '@assets/brooches_luxury.png';
+import bridalCollectionsImage from '@assets/bridal_collections_luxury.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -286,7 +291,7 @@ export default function Home() {
             <p className="text-xl text-black mt-4">Discover jewelry for every occasion</p>
           </div>
           
-          {/* 3x5 Grid Layout on Mobile, 4x4 on Desktop */}
+          {/* 3x5 Grid Layout on Mobile, 4x5 on Desktop */}
           <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
             {/* Row 1 */}
             <div 
@@ -503,6 +508,103 @@ export default function Home() {
               </div>
             </div>
             {/* Row 4 */}
+            <div 
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
+              onClick={() => handleViewAllClick('mangalsutra')}
+              data-testid="category-card-mangalsutra"
+            >
+              <div 
+                className="aspect-square"
+                style={{
+                  backgroundImage: `url(${mangalsutraImage})`,
+                  backgroundSize: '120%',
+                  backgroundPosition: 'center 50%',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
+              <div className="p-2 text-center bg-white">
+                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Mangalsutra</h3>
+                <p className="text-xs text-gray-600">{getCategoryCount('mangalsutra')} items</p>
+              </div>
+            </div>
+            <div 
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
+              onClick={() => handleViewAllClick('nose jewellery')}
+              data-testid="category-card-nose-jewellery"
+            >
+              <div 
+                className="aspect-square"
+                style={{
+                  backgroundImage: `url(${noseJewelryImage})`,
+                  backgroundSize: '120%',
+                  backgroundPosition: 'center 50%',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
+              <div className="p-2 text-center bg-white">
+                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Nose Jewelry</h3>
+                <p className="text-xs text-gray-600">{getCategoryCount('nose jewellery')} items</p>
+              </div>
+            </div>
+            <div 
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
+              onClick={() => handleViewAllClick('anklets & toe rings')}
+              data-testid="category-card-anklets"
+            >
+              <div 
+                className="aspect-square"
+                style={{
+                  backgroundImage: `url(${ankletsImage})`,
+                  backgroundSize: '120%',
+                  backgroundPosition: 'center 50%',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
+              <div className="p-2 text-center bg-white">
+                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Anklets & Toe Rings</h3>
+                <p className="text-xs text-gray-600">{getCategoryCount('anklets & toe rings')} items</p>
+              </div>
+            </div>
+            <div 
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
+              onClick={() => handleViewAllClick('brooches & pins')}
+              data-testid="category-card-brooches"
+            >
+              <div 
+                className="aspect-square"
+                style={{
+                  backgroundImage: `url(${broochesImage})`,
+                  backgroundSize: '120%',
+                  backgroundPosition: 'center 50%',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
+              <div className="p-2 text-center bg-white">
+                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Brooches & Pins</h3>
+                <p className="text-xs text-gray-600">{getCategoryCount('brooches & pins')} items</p>
+              </div>
+            </div>
+
+            {/* Row 5 */}
+            <div 
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
+              onClick={() => handleViewAllClick('bridal & special collections')}
+              data-testid="category-card-bridal-collections"
+            >
+              <div 
+                className="aspect-square"
+                style={{
+                  backgroundImage: `url(${bridalCollectionsImage})`,
+                  backgroundSize: '120%',
+                  backgroundPosition: 'center 50%',
+                  backgroundRepeat: 'no-repeat'
+                }}
+              />
+              <div className="p-2 text-center bg-white">
+                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Bridal Collections</h3>
+                <p className="text-xs text-gray-600">{getCategoryCount('bridal & special collections')} items</p>
+              </div>
+            </div>
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('gold_coins')}
