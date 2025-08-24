@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, ShoppingCart, Share2, Heart, Ruler, Weight, Package, Star, Info } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, ShoppingCart, Share2, Heart, Ruler, Weight, Package, Star, Info } from 'lucide-react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import WhatsAppFloat from '@/components/whatsapp-float';
@@ -106,6 +106,14 @@ export default function ProductDetails() {
     }
   };
 
+  const handlePreviousImage = () => {
+    setSelectedImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1);
+  };
+
+  const handleNextImage = () => {
+    setSelectedImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50" data-testid="page-product-details">
       <Header selectedCurrency={selectedCurrency} onCurrencyChange={setSelectedCurrency} />
@@ -128,6 +136,34 @@ export default function ProductDetails() {
                 className="w-full h-full object-cover"
                 data-testid="img-product-main"
               />
+              
+              {/* Image Navigation Arrows - Only show if multiple images */}
+              {images.length > 1 && (
+                <>
+                  {/* Left Arrow */}
+                  <Button
+                    onClick={handlePreviousImage}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-all"
+                    data-testid="button-previous-image"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </Button>
+                  
+                  {/* Right Arrow */}
+                  <Button
+                    onClick={handleNextImage}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-all"
+                    data-testid="button-next-image"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </Button>
+                  
+                  {/* Image Counter */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-sm opacity-0 group-hover:opacity-100 transition-all">
+                    {selectedImageIndex + 1} / {images.length}
+                  </div>
+                </>
+              )}
               
               {/* WhatsApp Enquiry Button on Main Image */}
               <Button
