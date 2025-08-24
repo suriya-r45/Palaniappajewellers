@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertProductSchema, insertBillSchema, loginSchema, insertUserSchema, insertEstimateSchema, insertCategorySchema, updateCategorySchema } from "@shared/schema";
+import { insertProductSchema, insertBillSchema, loginSchema, insertUserSchema, insertEstimateSchema, insertCategorySchema, updateCategorySchema, insertHomeSectionSchema, insertHomeSectionItemSchema } from "@shared/schema";
 import { z } from "zod";
 import multer from "multer";
 import path from "path";
@@ -1523,6 +1523,166 @@ For any queries, please contact us.`;
   });
 
   // === END CATEGORY MANAGEMENT ROUTES ===
+
+  // ==============================
+  // HOME SECTIONS MANAGEMENT API
+  // ==============================
+
+  // Get all home sections with items
+  app.get("/api/home-sections", async (req, res) => {
+    try {
+      const sections = await storage.getAllHomeSections();
+      res.json(sections);
+    } catch (error) {
+      console.error('Error fetching home sections:', error);
+      res.status(500).json({ error: 'Failed to fetch home sections' });
+    }
+  });
+
+  // Get single home section with items
+  app.get("/api/home-sections/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const section = await storage.getHomeSection(id);
+      if (!section) {
+        return res.status(404).json({ error: 'Home section not found' });
+      }
+      res.json(section);
+    } catch (error) {
+      console.error('Error fetching home section:', error);
+      res.status(500).json({ error: 'Failed to fetch home section' });
+    }
+  });
+
+  // Create new home section (Admin only)
+  app.post("/api/home-sections", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const sectionData = insertHomeSectionSchema.parse(req.body);
+      const section = await storage.createHomeSection(sectionData);
+      res.status(201).json(section);
+    } catch (error) {
+      console.error('Error creating home section:', error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid home section data', details: error.errors });
+      }
+      res.status(500).json({ error: 'Failed to create home section' });
+    }
+  });
+
+  // Update home section (Admin only)
+  app.put("/api/home-sections/:id", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updateData = req.body;
+      const section = await storage.updateHomeSection(id, updateData);
+      if (!section) {
+        return res.status(404).json({ error: 'Home section not found' });
+      }
+      res.json(section);
+    } catch (error) {
+      console.error('Error updating home section:', error);
+      res.status(500).json({ error: 'Failed to update home section' });
+    }
+  });
+
+  // Delete home section (Admin only)
+  app.delete("/api/home-sections/:id", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleted = await storage.deleteHomeSection(id);
+      if (!deleted) {
+        return res.status(404).json({ error: 'Home section not found' });
+      }
+      res.json({ message: 'Home section deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting home section:', error);
+      res.status(500).json({ error: 'Failed to delete home section' });
+    }
+  });
+
+  // Get items for a specific home section
+  app.get("/api/home-sections/:id/items", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const items = await storage.getHomeSectionItems(id);
+      res.json(items);
+    } catch (error) {
+      console.error('Error fetching home section items:', error);
+      res.status(500).json({ error: 'Failed to fetch home section items' });
+    }
+  });
+
+  // Add item to home section (Admin only)
+  app.post("/api/home-sections/:id/items", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const itemData = insertHomeSectionItemSchema.parse({
+        ...req.body,
+        sectionId: id
+      });
+      const item = await storage.addHomeSectionItem(itemData);
+      res.status(201).json(item);
+    } catch (error) {
+      console.error('Error adding home section item:', error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: 'Invalid home section item data', details: error.errors });
+      }
+      res.status(500).json({ error: 'Failed to add home section item' });
+    }
+  });
+
+  // Update home section item (Admin only)
+  app.put("/api/home-sections/:id/items/:itemId", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { itemId } = req.params;
+      const updateData = req.body;
+      const item = await storage.updateHomeSectionItem(itemId, updateData);
+      if (!item) {
+        return res.status(404).json({ error: 'Home section item not found' });
+      }
+      res.json(item);
+    } catch (error) {
+      console.error('Error updating home section item:', error);
+      res.status(500).json({ error: 'Failed to update home section item' });
+    }
+  });
+
+  // Remove item from home section (Admin only)
+  app.delete("/api/home-sections/:id/items/:itemId", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { itemId } = req.params;
+      const deleted = await storage.deleteHomeSectionItem(itemId);
+      if (!deleted) {
+        return res.status(404).json({ error: 'Home section item not found' });
+      }
+      res.json({ message: 'Home section item removed successfully' });
+    } catch (error) {
+      console.error('Error removing home section item:', error);
+      res.status(500).json({ error: 'Failed to remove home section item' });
+    }
+  });
+
+  // Reorder home sections (Admin only)
+  app.post("/api/home-sections/reorder", authenticateToken, requireAdmin, async (req, res) => {
+    try {
+      const { sectionOrders } = req.body; // Array of { id, displayOrder }
+      
+      if (!Array.isArray(sectionOrders)) {
+        return res.status(400).json({ error: 'sectionOrders must be an array' });
+      }
+
+      for (const { id, displayOrder } of sectionOrders) {
+        await storage.updateHomeSection(id, { displayOrder });
+      }
+      
+      res.json({ message: 'Home sections reordered successfully' });
+    } catch (error) {
+      console.error('Error reordering home sections:', error);
+      res.status(500).json({ error: 'Failed to reorder home sections' });
+    }
+  });
+
+  // === END HOME SECTIONS MANAGEMENT ROUTES ===
 
   // Static file serving for uploads
   app.use('/uploads', (req, res, next) => {

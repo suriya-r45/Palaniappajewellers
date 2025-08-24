@@ -602,8 +602,65 @@ export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type InsertBill = z.infer<typeof insertBillSchema>;
 export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
+// Custom Home Page Sections Table
+export const homeSections = pgTable("home_sections", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  subtitle: text("subtitle"),
+  description: text("description"),
+  layoutType: text("layout_type").notNull().default("grid"), // 'grid', 'featured', 'mixed'
+  isActive: boolean("is_active").notNull().default(true),
+  displayOrder: integer("display_order").default(0),
+  backgroundColor: text("background_color").default("#fff8e1"),
+  textColor: text("text_color").default("#8b4513"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Home Section Items (products within a section)
+export const homeSectionItems = pgTable("home_section_items", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  sectionId: varchar("section_id").notNull(),
+  productId: varchar("product_id").notNull(),
+  displayName: text("display_name"), // Custom name for this showcase
+  displayPrice: text("display_price"), // Custom price text like "Starting from ₹ 32,400"
+  position: integer("position").notNull().default(0), // Position in layout
+  size: text("size").default("normal"), // 'small', 'normal', 'large' for different grid sizes
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Relations for home sections
+export const homeSectionsRelations = relations(homeSections, ({ many }) => ({
+  items: many(homeSectionItems),
+}));
+
+export const homeSectionItemsRelations = relations(homeSectionItems, ({ one }) => ({
+  section: one(homeSections, {
+    fields: [homeSectionItems.sectionId],
+    references: [homeSections.id],
+  }),
+  product: one(products, {
+    fields: [homeSectionItems.productId],
+    references: [products.id],
+  }),
+}));
+
+// Home Section Schemas
+export const insertHomeSectionSchema = createInsertSchema(homeSections).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertHomeSectionItemSchema = createInsertSchema(homeSectionItems).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type UpdateCategory = z.infer<typeof updateCategorySchema>;
+export type InsertHomeSection = z.infer<typeof insertHomeSectionSchema>;
+export type InsertHomeSectionItem = z.infer<typeof insertHomeSectionItemSchema>;
 export type LoginRequest = z.infer<typeof loginSchema>;
 
 export type User = typeof users.$inferSelect;
@@ -611,4 +668,6 @@ export type Product = typeof products.$inferSelect;
 export type Bill = typeof bills.$inferSelect;
 export type Order = typeof orders.$inferSelect;
 export type Category = typeof categories.$inferSelect;
+export type HomeSection = typeof homeSections.$inferSelect;
+export type HomeSectionItem = typeof homeSectionItems.$inferSelect;
 export type CartItemRow = typeof cartItems.$inferSelect;

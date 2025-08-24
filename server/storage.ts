@@ -1,4 +1,4 @@
-import { users, products, bills, cartItems, orders, estimates, categories, type User, type InsertUser, type Product, type InsertProduct, type Bill, type InsertBill, type CartItemRow, type InsertCartItem, type Order, type InsertOrder, type CartItem, type Estimate, type InsertEstimate, type Category, type InsertCategory } from "@shared/schema";
+import { users, products, bills, cartItems, orders, estimates, categories, homeSections, homeSectionItems, type User, type InsertUser, type Product, type InsertProduct, type Bill, type InsertBill, type CartItemRow, type InsertCartItem, type Order, type InsertOrder, type CartItem, type Estimate, type InsertEstimate, type Category, type InsertCategory, type HomeSection, type InsertHomeSection, type HomeSectionItem, type InsertHomeSectionItem } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, like, and, gte, lte, isNull, or } from "drizzle-orm";
 import bcrypt from "bcryptjs";
@@ -71,10 +71,31 @@ export interface IStorage {
   updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined>;
   deleteCategory(id: string): Promise<boolean>;
   reorderCategories(categoryIds: string[]): Promise<boolean>;
+
+  // Home Section operations
+  getAllHomeSections(): Promise<HomeSectionWithItems[]>;
+  getHomeSection(id: string): Promise<HomeSectionWithItems | undefined>;
+  createHomeSection(section: InsertHomeSection): Promise<HomeSection>;
+  updateHomeSection(id: string, section: Partial<InsertHomeSection>): Promise<HomeSection | undefined>;
+  deleteHomeSection(id: string): Promise<boolean>;
+  
+  // Home Section Item operations
+  getHomeSectionItems(sectionId: string): Promise<HomeSectionItemWithProduct[]>;
+  addHomeSectionItem(item: InsertHomeSectionItem): Promise<HomeSectionItem>;
+  updateHomeSectionItem(itemId: string, item: Partial<InsertHomeSectionItem>): Promise<HomeSectionItem | undefined>;
+  deleteHomeSectionItem(itemId: string): Promise<boolean>;
 }
 
 export interface CategoryWithChildren extends Category {
   children?: Category[];
+}
+
+export interface HomeSectionWithItems extends HomeSection {
+  items: HomeSectionItemWithProduct[];
+}
+
+export interface HomeSectionItemWithProduct extends HomeSectionItem {
+  product: Product;
 }
 
 export interface ProductFilters {
@@ -521,6 +542,124 @@ export class DatabaseStorage implements IStorage {
       console.error('Error reordering categories:', error);
       return false;
     }
+  }
+
+  // ==============================
+  // HOME SECTION OPERATIONS
+  // ==============================
+
+  async getAllHomeSections(): Promise<HomeSectionWithItems[]> {
+    const sections = await db
+      .select()
+      .from(homeSections)
+      .where(eq(homeSections.isActive, true))
+      .orderBy(homeSections.displayOrder, homeSections.createdAt);
+
+    const sectionsWithItems: HomeSectionWithItems[] = [];
+    
+    for (const section of sections) {
+      const items = await this.getHomeSectionItems(section.id);
+      sectionsWithItems.push({
+        ...section,
+        items
+      });
+    }
+
+    return sectionsWithItems;
+  }
+
+  async getHomeSection(id: string): Promise<HomeSectionWithItems | undefined> {
+    const [section] = await db
+      .select()
+      .from(homeSections)
+      .where(eq(homeSections.id, id));
+
+    if (!section) return undefined;
+
+    const items = await this.getHomeSectionItems(id);
+    return {
+      ...section,
+      items
+    };
+  }
+
+  async createHomeSection(sectionData: InsertHomeSection): Promise<HomeSection> {
+    const [section] = await db
+      .insert(homeSections)
+      .values({
+        ...sectionData,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      })
+      .returning();
+    return section;
+  }
+
+  async updateHomeSection(id: string, updateData: Partial<InsertHomeSection>): Promise<HomeSection | undefined> {
+    const [section] = await db
+      .update(homeSections)
+      .set({
+        ...updateData,
+        updatedAt: new Date()
+      })
+      .where(eq(homeSections.id, id))
+      .returning();
+    return section || undefined;
+  }
+
+  async deleteHomeSection(id: string): Promise<boolean> {
+    // First delete all items in the section
+    await db.delete(homeSectionItems).where(eq(homeSectionItems.sectionId, id));
+    
+    // Then delete the section
+    const result = await db.delete(homeSections).where(eq(homeSections.id, id));
+    return (result.rowCount || 0) > 0;
+  }
+
+  async getHomeSectionItems(sectionId: string): Promise<HomeSectionItemWithProduct[]> {
+    const items = await db
+      .select({
+        id: homeSectionItems.id,
+        sectionId: homeSectionItems.sectionId,
+        productId: homeSectionItems.productId,
+        displayName: homeSectionItems.displayName,
+        displayPrice: homeSectionItems.displayPrice,
+        position: homeSectionItems.position,
+        size: homeSectionItems.size,
+        createdAt: homeSectionItems.createdAt,
+        product: products
+      })
+      .from(homeSectionItems)
+      .innerJoin(products, eq(homeSectionItems.productId, products.id))
+      .where(eq(homeSectionItems.sectionId, sectionId))
+      .orderBy(homeSectionItems.position);
+
+    return items;
+  }
+
+  async addHomeSectionItem(itemData: InsertHomeSectionItem): Promise<HomeSectionItem> {
+    const [item] = await db
+      .insert(homeSectionItems)
+      .values({
+        ...itemData,
+        createdAt: new Date()
+      })
+      .returning();
+    return item;
+  }
+
+  async updateHomeSectionItem(itemId: string, updateData: Partial<InsertHomeSectionItem>): Promise<HomeSectionItem | undefined> {
+    const [item] = await db
+      .update(homeSectionItems)
+      .set(updateData)
+      .where(eq(homeSectionItems.id, itemId))
+      .returning();
+    return item || undefined;
+  }
+
+  async deleteHomeSectionItem(itemId: string): Promise<boolean> {
+    const result = await db.delete(homeSectionItems).where(eq(homeSectionItems.id, itemId));
+    return (result.rowCount || 0) > 0;
   }
 }
 
