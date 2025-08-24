@@ -304,11 +304,16 @@ function ProductForm({ currency }: ProductFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('🟦 CLIENT: formData before submit:', formData);
+    console.log('🟦 CLIENT: isNewArrival value:', formData.isNewArrival, 'Type:', typeof formData.isNewArrival);
+    
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       // Handle boolean values properly
       if (typeof value === 'boolean') {
-        data.append(key, value ? 'true' : 'false');
+        const stringValue = value ? 'true' : 'false';
+        data.append(key, stringValue);
+        console.log(`🟦 CLIENT: Setting ${key} = ${stringValue} (original: ${value})`);
       } else {
         data.append(key, String(value));
       }
@@ -590,8 +595,13 @@ function ProductForm({ currency }: ProductFormProps) {
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="isNewArrival"
-                checked={formData.isNewArrival}
-                onCheckedChange={(checked) => setFormData({ ...formData, isNewArrival: !!checked })}
+                checked={formData.isNewArrival === true}
+                onCheckedChange={(checked) => {
+                  console.log('🟦 CLIENT: Checkbox changed to:', checked, 'Type:', typeof checked);
+                  const boolValue = checked === true;
+                  console.log('🟦 CLIENT: Setting isNewArrival to:', boolValue);
+                  setFormData({ ...formData, isNewArrival: boolValue });
+                }}
                 data-testid="checkbox-new-arrival"
               />
               <Label htmlFor="isNewArrival" className="text-sm font-medium">

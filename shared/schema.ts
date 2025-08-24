@@ -445,9 +445,21 @@ export const insertProductSchema = z.object({
   occasion: z.string().optional(),
   stock: z.coerce.number(),
   images: z.array(z.string()).default([]),
-  isActive: z.coerce.boolean().default(true),
-  isFeatured: z.coerce.boolean().default(false),
-  isNewArrival: z.coerce.boolean().default(false),
+  isActive: z.preprocess((val) => {
+    if (val === 'true') return true;
+    if (val === 'false') return false;
+    return Boolean(val);
+  }, z.boolean()).default(true),
+  isFeatured: z.preprocess((val) => {
+    if (val === 'true') return true;
+    if (val === 'false') return false;
+    return Boolean(val);
+  }, z.boolean()).default(false),
+  isNewArrival: z.preprocess((val) => {
+    if (val === 'true') return true;
+    if (val === 'false') return false;
+    return Boolean(val);
+  }, z.boolean()).default(false),
   // New fields for enhanced pricing calculation
   metalType: z.enum(["GOLD", "SILVER", "DIAMOND", "PEARL", "PLATINUM", "GEMSTONE", "OTHER"]).default("GOLD"),
   isMetalPriceBased: z.coerce.boolean().default(false),

@@ -399,7 +399,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/products", authenticateToken, requireAdmin, upload.array('images', 5), async (req, res) => {
     try {
+      console.log('🔍 RAW FORM DATA:', req.body);
+      console.log('🔍 isNewArrival RAW:', req.body.isNewArrival, 'Type:', typeof req.body.isNewArrival);
+      
       const productData = insertProductSchema.parse(req.body);
+      console.log('🔍 PARSED DATA isNewArrival:', productData.isNewArrival, 'Type:', typeof productData.isNewArrival);
 
       // Handle uploaded images asynchronously
       const imageUrls: string[] = [];
