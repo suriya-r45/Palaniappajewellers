@@ -73,12 +73,7 @@ export function HomeSectionsManagement() {
   // Mutations
   const createSectionMutation = useMutation({
     mutationFn: async (data: CreateHomeSectionData) => {
-      const response = await fetch("/api/home-sections", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error('Failed to create section');
+      const response = await apiRequest("POST", "/api/home-sections", data);
       return response.json();
     },
     onSuccess: () => {
@@ -92,12 +87,7 @@ export function HomeSectionsManagement() {
 
   const updateSectionMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<CreateHomeSectionData> }) => {
-      const response = await fetch(`/api/home-sections/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error('Failed to update section');
+      const response = await apiRequest("PUT", `/api/home-sections/${id}`, data);
       return response.json();
     },
     onSuccess: () => {
@@ -112,10 +102,7 @@ export function HomeSectionsManagement() {
 
   const deleteSectionMutation = useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/home-sections/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error('Failed to delete section');
+      const response = await apiRequest("DELETE", `/api/home-sections/${id}`);
       return response.json();
     },
     onSuccess: () => {
@@ -129,18 +116,13 @@ export function HomeSectionsManagement() {
 
   const addItemMutation = useMutation({
     mutationFn: async ({ sectionId, data }: { sectionId: string; data: AddSectionItemData }) => {
-      const response = await fetch(`/api/home-sections/${sectionId}/items`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error('Failed to add item');
+      const response = await apiRequest("POST", `/api/home-sections/${sectionId}/items`, data);
       return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["home-sections"] });
       toast({ title: "Success", description: "Product added to section successfully" });
-      setAddingItemToSection(null);
+      setAddingItemToSection("");
     },
     onError: () => {
       toast({ title: "Error", description: "Failed to add product to section" });
@@ -149,10 +131,7 @@ export function HomeSectionsManagement() {
 
   const removeItemMutation = useMutation({
     mutationFn: async ({ sectionId, itemId }: { sectionId: string; itemId: string }) => {
-      const response = await fetch(`/api/home-sections/${sectionId}/items/${itemId}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error('Failed to remove item');
+      const response = await apiRequest("DELETE", `/api/home-sections/${sectionId}/items/${itemId}`);
       return response.json();
     },
     onSuccess: () => {
@@ -249,7 +228,7 @@ export function HomeSectionsManagement() {
                     {section.items.map((item: HomeSectionItemWithProduct, index: number) => (
                       <div
                         key={item.id}
-                        className={`rounded-lg bg-background/10 p-4 ${getSizeClasses(item.size)}`}
+                        className={`rounded-lg bg-background/10 p-4 ${getSizeClasses(item.size || 'normal')}`}
                       >
                         <div className="aspect-square bg-background/20 rounded-lg mb-3 flex items-center justify-center">
                           <ImageIcon className="h-8 w-8 opacity-50" />
