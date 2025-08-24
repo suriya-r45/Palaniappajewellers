@@ -304,16 +304,11 @@ function ProductForm({ currency }: ProductFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    console.log('🟦 CLIENT: formData before submit:', formData);
-    console.log('🟦 CLIENT: isNewArrival value:', formData.isNewArrival, 'Type:', typeof formData.isNewArrival);
-    
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
       // Handle boolean values properly
       if (typeof value === 'boolean') {
-        const stringValue = value ? 'true' : 'false';
-        data.append(key, stringValue);
-        console.log(`🟦 CLIENT: Setting ${key} = ${stringValue} (original: ${value})`);
+        data.append(key, value ? 'true' : 'false');
       } else {
         data.append(key, String(value));
       }
@@ -562,6 +557,12 @@ function ProductForm({ currency }: ProductFormProps) {
                     <SelectItem value="999">999 Silver</SelectItem>
                     <SelectItem value="PT950">PT950 Platinum</SelectItem>
                     <SelectItem value="PT900">PT900 Platinum</SelectItem>
+                    <SelectItem value="VS1">VS1 Diamond</SelectItem>
+                    <SelectItem value="VS2">VS2 Diamond</SelectItem>
+                    <SelectItem value="VVS1">VVS1 Diamond</SelectItem>
+                    <SelectItem value="VVS2">VVS2 Diamond</SelectItem>
+                    <SelectItem value="FL">FL (Flawless) Diamond</SelectItem>
+                    <SelectItem value="IF">IF (Internally Flawless) Diamond</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -596,12 +597,7 @@ function ProductForm({ currency }: ProductFormProps) {
               <Checkbox
                 id="isNewArrival"
                 checked={formData.isNewArrival === true}
-                onCheckedChange={(checked) => {
-                  console.log('🟦 CLIENT: Checkbox changed to:', checked, 'Type:', typeof checked);
-                  const boolValue = checked === true;
-                  console.log('🟦 CLIENT: Setting isNewArrival to:', boolValue);
-                  setFormData({ ...formData, isNewArrival: boolValue });
-                }}
+                onCheckedChange={(checked) => setFormData({ ...formData, isNewArrival: checked === true })}
                 data-testid="checkbox-new-arrival"
               />
               <Label htmlFor="isNewArrival" className="text-sm font-medium">
