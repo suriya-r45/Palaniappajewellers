@@ -761,7 +761,7 @@ Premium quality, timeless beauty.`;
       // Add company logo (centered at top)
       try {
         const logoSize = 60;
-        doc.image('./attached_assets/Royal_gold_jewelry_collection_e293857a.png', 
+        doc.image('./attached_assets/generated_images/Palaniappa_Jewellers_company_logo_71a02664.png', 
                  (pageWidth - logoSize) / 2, currentY, { width: logoSize, height: logoSize });
         currentY += logoSize + 20;
       } catch (error) {

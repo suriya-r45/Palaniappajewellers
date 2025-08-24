@@ -244,7 +244,7 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       
       return {
         productId: product.id,
-        productName: product.name,
+        productName: `${product.name} (${product.productCode || product.barcode || 'N/A'})`,
         quantity,
         priceInr: product.priceInr,
         priceBhd: product.priceBhd,
