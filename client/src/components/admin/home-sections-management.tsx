@@ -54,21 +54,15 @@ export function HomeSectionsManagement() {
 
   // Queries
   const { data: homeSections, isLoading: sectionsLoading } = useQuery<HomeSectionWithItems[]>({
-    queryKey: ["home-sections"],
-    queryFn: async () => {
-      const response = await fetch("/api/home-sections");
-      if (!response.ok) throw new Error('Failed to fetch home sections');
-      return response.json();
-    },
+    queryKey: ["/api/home-sections"],
+    staleTime: 0,
+    refetchOnWindowFocus: true,
   });
 
   const { data: products, isLoading: productsLoading } = useQuery<Product[]>({
-    queryKey: ["products", "all"],
-    queryFn: async () => {
-      const response = await fetch("/api/products");
-      if (!response.ok) throw new Error('Failed to fetch products');
-      return response.json();
-    },
+    queryKey: ["/api/products"],
+    staleTime: 0, // Always refetch to get latest products
+    refetchOnWindowFocus: true,
   });
 
   // Mutations
@@ -78,7 +72,8 @@ export function HomeSectionsManagement() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["home-sections"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/home-sections"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/products"] }); // Refresh products too
       toast({ title: "Success", description: "Home section created successfully" });
     },
     onError: () => {
@@ -92,7 +87,7 @@ export function HomeSectionsManagement() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["home-sections"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/home-sections"] });
       toast({ title: "Success", description: "Home section updated successfully" });
       setEditingSectionId(null);
     },
@@ -107,7 +102,7 @@ export function HomeSectionsManagement() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["home-sections"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/home-sections"] });
       toast({ title: "Success", description: "Home section deleted successfully" });
     },
     onError: () => {
@@ -121,7 +116,7 @@ export function HomeSectionsManagement() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["home-sections"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/home-sections"] });
       toast({ title: "Success", description: "Product added to section successfully" });
       setAddingItemToSection("");
     },
@@ -136,7 +131,7 @@ export function HomeSectionsManagement() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["home-sections"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/home-sections"] });
       toast({ title: "Success", description: "Product removed from section successfully" });
     },
     onError: () => {
