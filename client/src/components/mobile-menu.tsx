@@ -218,7 +218,7 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
               <div className="flex space-x-3">
                 <Link href="/login" className="flex-1">
                   <Button
-                    className="w-full bg-pink-600 hover:bg-pink-700 text-white font-medium py-3 rounded-lg"
+                    className="w-full bg-gradient-to-r from-rose-800 to-red-800 hover:from-rose-900 hover:to-red-900 text-white font-medium py-3 rounded-lg shadow-md transition-all duration-200"
                     onClick={() => {
                       resetMenu();
                       onToggle();
@@ -229,7 +229,7 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
                 </Link>
                 <Link href="/login" className="flex-1">
                   <Button
-                    className="w-full bg-pink-600 hover:bg-pink-700 text-white font-medium py-3 rounded-lg"
+                    className="w-full bg-gradient-to-r from-rose-800 to-red-800 hover:from-rose-900 hover:to-red-900 text-white font-medium py-3 rounded-lg shadow-md transition-all duration-200"
                     onClick={() => {
                       resetMenu();
                       onToggle();
