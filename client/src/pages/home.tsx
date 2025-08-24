@@ -300,7 +300,7 @@ export default function Home() {
       />
 
       {/* 1. Explore Our Collections */}
-      <section className="py-16" data-testid="section-categories" style={{ background: 'linear-gradient(135deg, #f3e5ab 0%, #fef9c3 100%)' }}>
+      <section className="py-16" data-testid="section-categories" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Explore Our Collections</h2>
@@ -628,7 +628,7 @@ export default function Home() {
       {/* 2. Gold Platted Silver Jewellery Section */}
       {goldPlattedSilverProducts.length > 0 && (
         <>
-          <section className="py-16" data-testid="section-gold-platted-silver" style={{ background: 'linear-gradient(135deg, #e4d4b7 0%, #f0e6d2 100%)' }}>
+          <section className="py-16" data-testid="section-gold-platted-silver" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
                 <div className="flex items-center justify-center mb-6">
@@ -671,7 +671,7 @@ export default function Home() {
       {/* 3. New Arrivals Section */}
       {newArrivalProducts.length > 0 && (
         <>
-          <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%)' }}>
+          <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
                 <div className="flex items-center justify-center mb-6">
@@ -748,7 +748,7 @@ export default function Home() {
 
       {/* 5. Silver Collection Section */}
       {silverProducts.length > 0 && (
-        <section className="py-16" data-testid="section-silver" style={{ background: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)' }}>
+        <section className="py-16" data-testid="section-silver" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-4">
@@ -783,7 +783,7 @@ export default function Home() {
 
       {/* 6. Diamond Collection Section */}
       {diamondProducts.length > 0 && (
-        <section className="py-16" data-testid="section-diamond" style={{ background: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)' }}>
+        <section className="py-16" data-testid="section-diamond" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-4">
@@ -818,7 +818,7 @@ export default function Home() {
 
       {/* 7. Platinum Collection Section */}
       {platinumProducts.length > 0 && (
-        <section className="py-16" data-testid="section-platinum" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)' }}>
+        <section className="py-16" data-testid="section-platinum" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-4">
@@ -853,7 +853,7 @@ export default function Home() {
 
       {/* 8. Gemstone Collection Section */}
       {gemstoneProducts.length > 0 && (
-        <section className="py-16" data-testid="section-gemstone" style={{ background: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)' }}>
+        <section className="py-16" data-testid="section-gemstone" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-4">
@@ -888,7 +888,7 @@ export default function Home() {
 
       {/* 9. Pearl Collection Section */}
       {pearlProducts.length > 0 && (
-        <section className="py-16" data-testid="section-pearl" style={{ background: 'linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%)' }}>
+        <section className="py-16" data-testid="section-pearl" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-4">
