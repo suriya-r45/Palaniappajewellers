@@ -154,33 +154,37 @@ export default function CollectionsPage({ material, category }: CollectionsPageP
 
     // Apply category filter from URL parameter or mobile nav
     if (filters.category && filters.category !== 'ALL_CATEGORIES') {
-      // Map display category names to database category names
+      // Map display category names to database category names (case-insensitive)
       const categoryMapping: { [key: string]: string } = {
-        'rings': 'RINGS',
-        'necklaces': 'NECKLACES', 
-        'pendants': 'PENDANTS',
-        'earrings': 'EARRINGS',
-        'bracelets': 'BRACELETS',
-        'bangles': 'BANGLES',
-        'watches': 'WATCHES',
-        'mens_jewellery': 'MENS_JEWELLERY',
-        'mens': 'MENS_JEWELLERY',
-        'children_jewellery': 'CHILDRENS_JEWELLERY',
-        'children': 'CHILDRENS_JEWELLERY',
-        'materials': 'MATERIALS',
-        'collections': 'COLLECTIONS',
-        'custom_jewellery': 'CUSTOM_JEWELLERY',
-        'custom': 'CUSTOM_JEWELLERY',
-        'new_arrivals': 'NEW_ARRIVALS',
-        'new-arrivals': 'NEW_ARRIVALS',
-        'gold_coins': 'GOLD_COINS'
+        'rings': 'rings',
+        'necklaces': 'necklaces', 
+        'pendants': 'pendants',
+        'earrings': 'earrings',
+        'bracelets': 'bracelets',
+        'bangles': 'bangles',
+        'watches': 'watches',
+        'mens_jewellery': 'mens_jewellery',
+        'mens': 'mens_jewellery',
+        'children_jewellery': 'children_jewellery',
+        'children': 'children_jewellery',
+        'materials': 'materials',
+        'collections': 'collections',
+        'custom_jewellery': 'custom_jewellery',
+        'custom': 'custom_jewellery',
+        'new_arrivals': 'new_arrivals',
+        'new-arrivals': 'new_arrivals',
+        'gold_coins': 'gold_coins',
+        'mangalsutra': 'mangalsutra',
+        'nose jewellery': 'nose jewellery',
+        'anklets & toe rings': 'anklets & toe rings',
+        'anklets': 'anklets & toe rings'
       };
       
-      const dbCategory = categoryMapping[filters.category.toLowerCase()] || filters.category.toUpperCase();
+      const dbCategory = categoryMapping[filters.category.toLowerCase()] || filters.category.toLowerCase();
       
-      // Filter by main category
+      // Filter by main category (case-insensitive)
       filtered = filtered.filter(product => 
-        product.category === dbCategory
+        product.category.toLowerCase() === dbCategory.toLowerCase()
       );
     }
 
