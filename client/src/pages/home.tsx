@@ -6,11 +6,19 @@ import ProductCard from '@/components/product-card';
 import ProductFilters from '@/components/product-filters';
 import WhatsAppFloat from '@/components/whatsapp-float';
 import { Button } from '@/components/ui/button';
-import { Product } from '@shared/schema';
+import { Product, HomeSection, HomeSectionItem } from '@shared/schema';
 import { Currency } from '@/lib/currency';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
 import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench } from "lucide-react";
 import ringsImage from '@assets/rings_luxury.png';
+
+interface HomeSectionWithItems extends HomeSection {
+  items: HomeSectionItemWithProduct[];
+}
+
+interface HomeSectionItemWithProduct extends HomeSectionItem {
+  product: Product;
+}
 import pendantsImage from '@assets/pendants_luxury.png';
 import earringsImage from '@assets/earrings_luxury.png';
 import braceletsImage from '@assets/bracelets_luxury.png';
@@ -45,6 +53,16 @@ export default function Home() {
     queryFn: async () => {
       const response = await fetch('/api/products');
       if (!response.ok) throw new Error('Failed to fetch products');
+      return response.json();
+    },
+  });
+
+  // Fetch custom home sections
+  const { data: homeSections = [] } = useQuery<HomeSectionWithItems[]>({
+    queryKey: ['/api/home-sections'],
+    queryFn: async () => {
+      const response = await fetch('/api/home-sections');
+      if (!response.ok) throw new Error('Failed to fetch home sections');
       return response.json();
     },
   });
@@ -903,8 +921,74 @@ export default function Home() {
         </section>
       )}
 
+      {/* Custom Home Sections */}
+      {homeSections.filter(section => section.isActive).map((section) => (
+        <section 
+          key={section.id} 
+          className="py-16"
+          style={{
+            backgroundColor: section.backgroundColor || '#fff8e1',
+            color: section.textColor || '#8b4513'
+          }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-4">{section.title}</h2>
+              {section.subtitle && <p className="text-xl mb-2">{section.subtitle}</p>}
+              {section.description && <p className="text-lg opacity-80">{section.description}</p>}
+            </div>
+
+            <div className={`grid gap-6 mb-8 ${getLayoutClasses(section.layoutType, section.items.length)}`}>
+              {section.items.map((item) => (
+                <div
+                  key={item.id}
+                  className={`rounded-lg p-6 bg-white/10 backdrop-blur-sm ${getSizeClasses(item.size || 'normal')}`}
+                  style={{
+                    backgroundColor: 'rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(10px)',
+                  }}
+                >
+                  <ProductCard
+                    product={item.product}
+                    currency={selectedCurrency}
+                    showActions={true}
+                    customName={item.displayName}
+                    customPrice={item.displayPrice}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
+
       <Footer />
       <WhatsAppFloat />
     </div>
   );
+}
+
+// Layout helper functions
+function getLayoutClasses(layoutType: string, itemCount: number): string {
+  switch (layoutType) {
+    case 'grid':
+      return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
+    case 'featured':
+      return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+    case 'mixed':
+      return 'grid-cols-2 md:grid-cols-4';
+    default:
+      return 'grid-cols-2 md:grid-cols-3';
+  }
+}
+
+function getSizeClasses(size: string): string {
+  switch (size) {
+    case 'small':
+      return 'col-span-1';
+    case 'large':
+      return 'col-span-2';
+    default:
+      return 'col-span-1';
+  }
 }
