@@ -25,9 +25,9 @@ import goldCollectionImage from '@assets/gold_collection_luxury.png';
 import silverCollectionImage from '@assets/silver_collection_luxury.png';
 import diamondCollectionImage from '@assets/diamond_collection_luxury.png';
 import mangalsutraImage from '@assets/mangalsutra_hero.png';
-import noseJewelryImage from '@assets/nose_jewelry_luxury.png';
+import noseJewelryImage from '@assets/nose_jewelry_hero.png';
 import ankletsImage from '@assets/anklets_hero.png';
-import broochesImage from '@assets/brooches_luxury.png';
+import broochesImage from '@assets/brooches_hero.png';
 import bridalCollectionsImage from '@assets/bridal_hero.png';
 
 export default function Home() {
@@ -534,8 +534,8 @@ export default function Home() {
                 className="aspect-square"
                 style={{
                   backgroundImage: `url(${noseJewelryImage})`,
-                  backgroundSize: '120%',
-                  backgroundPosition: 'center 50%',
+                  backgroundSize: '115%',
+                  backgroundPosition: 'center 45%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
@@ -572,8 +572,8 @@ export default function Home() {
                 className="aspect-square"
                 style={{
                   backgroundImage: `url(${broochesImage})`,
-                  backgroundSize: '120%',
-                  backgroundPosition: 'center 50%',
+                  backgroundSize: '110%',
+                  backgroundPosition: 'center 45%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
