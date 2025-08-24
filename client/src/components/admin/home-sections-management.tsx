@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -568,6 +569,8 @@ function AddProductDialog({
   const [displayName, setDisplayName] = useState("");
   const [displayPrice, setDisplayPrice] = useState("");
   const [size, setSize] = useState<'small' | 'normal' | 'large'>('normal');
+  const [addToDefaultLayout, setAddToDefaultLayout] = useState(false);
+  const [customizeLayout, setCustomizeLayout] = useState(false);
 
   const existingProductIds = existingItems.map(item => item.productId);
   const availableProducts = products.filter(p => !existingProductIds.includes(p.id));
@@ -588,6 +591,8 @@ function AddProductDialog({
     setDisplayName("");
     setDisplayPrice("");
     setSize('normal');
+    setAddToDefaultLayout(false);
+    setCustomizeLayout(false);
     onOpenChange(false);
   };
 
@@ -652,6 +657,41 @@ function AddProductDialog({
                 <SelectItem value="large">Large (Featured)</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Layout Options */}
+          <div className="space-y-3 pt-4 border-t">
+            <Label className="text-sm font-medium">Layout Options</Label>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="addToDefaultLayout"
+                  checked={addToDefaultLayout}
+                  onCheckedChange={(checked) => setAddToDefaultLayout(checked === true)}
+                  data-testid="checkbox-add-to-default"
+                />
+                <Label 
+                  htmlFor="addToDefaultLayout"
+                  className="text-sm font-normal cursor-pointer"
+                >
+                  Add to default layout
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="customizeLayout"
+                  checked={customizeLayout}
+                  onCheckedChange={(checked) => setCustomizeLayout(checked === true)}
+                  data-testid="checkbox-customize-layout"
+                />
+                <Label 
+                  htmlFor="customizeLayout"
+                  className="text-sm font-normal cursor-pointer"
+                >
+                  Customize layout
+                </Label>
+              </div>
+            </div>
           </div>
         </div>
 
