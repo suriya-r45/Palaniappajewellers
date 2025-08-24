@@ -88,8 +88,23 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
       window.location.href = category.path;
       onToggle();
     } else {
-      // Navigate to collections page for this category
-      window.location.href = `/collections/${category.name.toLowerCase().replace(/\s+/g, '-')}`;
+      // Navigate to collections page for this category with proper routing
+      let categoryPath = category.name.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+      
+      // Handle special cases for routing
+      if (category.name === "Men's Jewellery") {
+        categoryPath = "mens";
+      } else if (category.name === "Children's Jewellery") {
+        categoryPath = "children";
+      } else if (category.name === "Gold Coins") {
+        categoryPath = "gold-coins";
+      } else if (category.name === "New Arrivals") {
+        categoryPath = "new-arrivals";
+      } else if (category.name === "Custom Jewellery") {
+        categoryPath = "custom-jewellery";
+      }
+      
+      window.location.href = `/collections/${categoryPath}`;
       onToggle();
     }
   };
@@ -164,7 +179,7 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
           </div>
           
           {/* Categories List */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)]">
             <div className="py-2">
               {currentView === 'main' ? (
                 categories.map((category, index) => (
