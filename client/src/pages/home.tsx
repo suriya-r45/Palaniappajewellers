@@ -25,7 +25,7 @@ import goldCollectionImage from '@assets/gold_collection_luxury.png';
 import silverCollectionImage from '@assets/silver_collection_luxury.png';
 import diamondCollectionImage from '@assets/diamond_collection_luxury.png';
 import goldCoinsImage from '@assets/gold_coins_luxury.png';
-import mangalsutraImage from '@assets/mangalsutra_luxury.png';
+import mangalsutraImage from '@assets/mangalsutra_hero.png';
 import noseJewelryImage from '@assets/nose_jewelry_luxury.png';
 import ankletsImage from '@assets/anklets_luxury.png';
 import broochesImage from '@assets/brooches_luxury.png';
@@ -517,8 +517,8 @@ export default function Home() {
                 className="aspect-square"
                 style={{
                   backgroundImage: `url(${mangalsutraImage})`,
-                  backgroundSize: '120%',
-                  backgroundPosition: 'center 50%',
+                  backgroundSize: '110%',
+                  backgroundPosition: 'center 45%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
