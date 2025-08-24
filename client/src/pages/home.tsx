@@ -24,12 +24,11 @@ import collectionsImage from '@assets/collections_luxury.png';
 import goldCollectionImage from '@assets/gold_collection_luxury.png';
 import silverCollectionImage from '@assets/silver_collection_luxury.png';
 import diamondCollectionImage from '@assets/diamond_collection_luxury.png';
-import goldCoinsImage from '@assets/gold_coins_luxury.png';
 import mangalsutraImage from '@assets/mangalsutra_hero.png';
 import noseJewelryImage from '@assets/nose_jewelry_luxury.png';
 import ankletsImage from '@assets/anklets_hero.png';
 import broochesImage from '@assets/brooches_luxury.png';
-import bridalCollectionsImage from '@assets/bridal_collections_luxury.png';
+import bridalCollectionsImage from '@assets/bridal_hero.png';
 
 export default function Home() {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>('BHD');
@@ -187,7 +186,6 @@ export default function Home() {
         'custom_jewellery': 'custom_jewellery',
         'custom': 'custom_jewellery',
         'new_arrivals': 'new_arrivals',
-        'gold_coins': 'gold_coins',
         'anklets': 'anklets & toe rings' // Handle compound category names
       };
       const mappedCategory = categoryMapping[category.toLowerCase()] || category.toLowerCase();
@@ -595,33 +593,14 @@ export default function Home() {
                 className="aspect-square"
                 style={{
                   backgroundImage: `url(${bridalCollectionsImage})`,
-                  backgroundSize: '120%',
-                  backgroundPosition: 'center 50%',
+                  backgroundSize: '105%',
+                  backgroundPosition: 'center 45%',
                   backgroundRepeat: 'no-repeat'
                 }}
               />
               <div className="p-2 text-center bg-white">
                 <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Bridal Collections</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('bridal & special collections')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('gold_coins')}
-              data-testid="category-card-gold-coins"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${goldCoinsImage})`,
-                  backgroundSize: '110%',
-                  backgroundPosition: 'center 50%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Gold Coins</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('gold_coins')} items</p>
               </div>
             </div>
           </div>
