@@ -193,11 +193,10 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
       />
       
       {/* Menu Panel */}
-      <div className="fixed inset-y-0 left-0 w-80 bg-gradient-to-b from-white via-rose-50/30 to-white shadow-2xl border-r border-rose-100">
+      <div className="fixed inset-y-0 left-0 w-80 bg-white shadow-xl border-r border-gray-200">
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="relative bg-gradient-to-r from-rose-800 to-red-800 text-white p-6 shadow-lg">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-400 to-red-400"></div>
+          <div className="bg-white border-b border-gray-100 px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 {currentView === 'subcategory' && (
@@ -205,17 +204,14 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
                     variant="ghost"
                     size="sm"
                     onClick={handleBackClick}
-                    className="p-2 mr-3 text-white hover:bg-white/20 rounded-full transition-all duration-200"
+                    className="p-2 mr-2 hover:bg-gray-100 rounded-full"
                   >
-                    <ChevronLeft className="h-5 w-5" />
+                    <ChevronLeft className="h-5 w-5 text-gray-600" />
                   </Button>
                 )}
-                <div className="flex items-center">
-                  <Sparkles className="h-6 w-6 mr-3 text-rose-200" />
-                  <h2 className="text-xl font-bold text-white">
-                    {currentView === 'main' ? 'Jewelry Categories' : selectedCategory?.name}
-                  </h2>
-                </div>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  {currentView === 'main' ? 'Categories' : selectedCategory?.name}
+                </h2>
               </div>
               <Button
                 variant="ghost"
@@ -224,16 +220,16 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
                   resetMenu();
                   onToggle();
                 }}
-                className="p-2 text-white hover:bg-white/20 rounded-full transition-all duration-200"
+                className="p-2 hover:bg-gray-100 rounded-full"
               >
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5 text-gray-600" />
               </Button>
             </div>
           </div>
           
           {/* Categories List */}
-          <div className="flex-1 overflow-y-auto max-h-[calc(100vh-280px)] bg-gradient-to-b from-transparent to-rose-50/20">
-            <div className="py-3">
+          <div className="flex-1 overflow-y-auto max-h-[calc(100vh-200px)]">
+            <div className="py-2">
               {currentView === 'main' ? (
                 categories.map((category, index) => {
                   const IconComponent = getCategoryIcon(category.name);
@@ -241,17 +237,17 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
                     <button
                       key={index}
                       onClick={() => handleCategoryClick(category)}
-                      className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-gradient-to-r hover:from-rose-50 hover:to-red-50 transition-all duration-300 border-b border-rose-100/50 group hover:shadow-sm"
+                      className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-100 group"
                     >
                       <div className="flex items-center">
-                        <div className="bg-gradient-to-br from-rose-100 to-red-100 p-2.5 rounded-full mr-4 group-hover:shadow-md transition-all duration-300 group-hover:scale-110">
-                          <IconComponent className="h-5 w-5 text-rose-700" />
+                        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
+                          <IconComponent className="h-5 w-5 text-gray-600" />
                         </div>
-                        <span className="text-base font-semibold text-gray-800 group-hover:text-rose-800 transition-colors duration-200">
+                        <span className="text-base font-medium text-gray-900">
                           {category.name}
                         </span>
                       </div>
-                      <ChevronRight className="h-5 w-5 text-rose-400 group-hover:text-rose-600 transition-all duration-200 group-hover:translate-x-1" />
+                      <ChevronRight className="h-5 w-5 text-gray-400" />
                     </button>
                   );
                 })
@@ -260,15 +256,15 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
                   <button
                     key={index}
                     onClick={() => handleSubcategoryClick(subcategory)}
-                    className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-gradient-to-r hover:from-rose-50 hover:to-red-50 transition-all duration-300 border-b border-rose-100/50 group hover:shadow-sm"
+                    className="w-full flex items-center justify-between px-6 py-3 text-left hover:bg-gray-50 transition-colors border-b border-gray-100"
                   >
                     <div className="flex items-center">
-                      <div className="w-3 h-3 bg-gradient-to-br from-rose-400 to-red-400 rounded-full mr-4 group-hover:shadow-sm transition-all duration-300"></div>
-                      <span className="text-base font-medium text-gray-800 group-hover:text-rose-800 transition-colors duration-200">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full mr-4"></div>
+                      <span className="text-base font-medium text-gray-800">
                         {subcategory}
                       </span>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-rose-400 group-hover:text-rose-600 transition-all duration-200 group-hover:translate-x-1" />
+                    <ChevronRight className="h-4 w-4 text-gray-400" />
                   </button>
                 ))
               )}
@@ -276,21 +272,15 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
           </div>
           
           {/* Login/Sign Up Buttons */}
-          <div className="relative p-6 border-t border-rose-200 bg-gradient-to-r from-rose-50 to-red-50">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-200 to-red-200"></div>
+          <div className="p-4 border-t border-gray-200 bg-gray-50">
             {user ? (
               <div className="text-center">
-                <div className="bg-white/80 rounded-lg p-4 mb-3 shadow-sm">
-                  <div className="flex items-center justify-center mb-2">
-                    <Crown className="h-5 w-5 text-rose-600 mr-2" />
-                    <p className="text-sm font-semibold text-rose-800">
-                      Welcome, {user.name}!
-                    </p>
-                  </div>
-                </div>
+                <p className="text-sm text-gray-600 mb-3">
+                  Welcome, {user.name}!
+                </p>
                 <Button
                   variant="outline"
-                  className="w-full border-rose-300 text-rose-800 hover:bg-white/70 font-medium py-3 rounded-lg shadow-sm transition-all duration-200"
+                  className="w-full"
                   onClick={() => {
                     resetMenu();
                     onToggle();
@@ -300,34 +290,27 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
                 </Button>
               </div>
             ) : (
-              <div className="space-y-3">
-                <div className="text-center mb-4">
-                  <div className="flex items-center justify-center">
-                    <Diamond className="h-5 w-5 text-rose-600 mr-2" />
-                    <p className="text-sm font-medium text-rose-800">Access Your Account</p>
-                  </div>
-                </div>
-                <Link href="/login" className="block">
+              <div className="flex space-x-3">
+                <Link href="/login" className="flex-1">
                   <Button
-                    className="w-full bg-gradient-to-r from-rose-800 to-red-800 hover:from-rose-900 hover:to-red-900 text-white font-semibold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                    className="w-full bg-rose-800 hover:bg-rose-900 text-white font-medium py-2.5 rounded-lg transition-colors"
                     onClick={() => {
                       resetMenu();
                       onToggle();
                     }}
                   >
-                    <Crown className="h-4 w-4 mr-2" />
                     Login
                   </Button>
                 </Link>
-                <Link href="/login" className="block">
+                <Link href="/login" className="flex-1">
                   <Button
-                    className="w-full bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-700 hover:to-red-700 text-white font-semibold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                    variant="outline"
+                    className="w-full border-rose-800 text-rose-800 hover:bg-rose-50 font-medium py-2.5 rounded-lg transition-colors"
                     onClick={() => {
                       resetMenu();
                       onToggle();
                     }}
                   >
-                    <Star className="h-4 w-4 mr-2" />
                     Sign Up
                   </Button>
                 </Link>
