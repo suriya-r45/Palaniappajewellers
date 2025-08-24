@@ -151,8 +151,8 @@ export default function AdminDashboard() {
         onCurrencyChange={setSelectedCurrency} 
       />
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 md:mb-8 gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-rose-900">Admin Dashboard</h1>
           </div>
@@ -166,52 +166,68 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card data-testid="card-total-products">
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <Package className="h-8 w-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Products</p>
-                  <p className="text-2xl font-bold text-gray-900">{totalProducts}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+          <Card data-testid="card-total-products" className="bg-white shadow-lg border-0 hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="bg-blue-50 p-3 rounded-lg">
+                    <Package className="h-6 w-6 md:h-8 md:w-8 text-blue-600" />
+                  </div>
+                  <div className="ml-3 md:ml-4">
+                    <p className="text-xs md:text-sm font-medium text-gray-600">Total Products</p>
+                    <p className="text-xl md:text-2xl font-bold text-gray-900">{totalProducts}</p>
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card data-testid="card-total-bills">
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <FileText className="h-8 w-8 text-green-600" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Bills</p>
-                  <p className="text-2xl font-bold text-gray-900">{bills.length}</p>
+          <Card data-testid="card-total-bills" className="bg-white shadow-lg border-0 hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="bg-green-50 p-3 rounded-lg">
+                    <FileText className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
+                  </div>
+                  <div className="ml-3 md:ml-4">
+                    <p className="text-xs md:text-sm font-medium text-gray-600">Total Bills</p>
+                    <p className="text-xl md:text-2xl font-bold text-gray-900">{bills.length}</p>
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card data-testid="card-total-revenue">
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <TrendingUp className="h-8 w-8 text-gold" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {selectedCurrency === 'INR' ? '₹' : 'BD'} {totalRevenue.toLocaleString()}
-                  </p>
+          <Card data-testid="card-total-revenue" className="bg-white shadow-lg border-0 hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="bg-yellow-50 p-3 rounded-lg">
+                    <TrendingUp className="h-6 w-6 md:h-8 md:w-8 text-yellow-600" />
+                  </div>
+                  <div className="ml-3 md:ml-4">
+                    <p className="text-xs md:text-sm font-medium text-gray-600">Total Revenue</p>
+                    <p className="text-lg md:text-2xl font-bold text-gray-900">
+                      {selectedCurrency === 'INR' ? '₹' : 'BD'} {totalRevenue.toLocaleString()}
+                    </p>
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card data-testid="card-low-stock">
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <Users className="h-8 w-8 text-red-600" />
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Low Stock Items</p>
-                  <p className="text-2xl font-bold text-gray-900">{lowStockProducts}</p>
+          <Card data-testid="card-low-stock" className="bg-white shadow-lg border-0 hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="bg-red-50 p-3 rounded-lg">
+                    <Users className="h-6 w-6 md:h-8 md:w-8 text-red-600" />
+                  </div>
+                  <div className="ml-3 md:ml-4">
+                    <p className="text-xs md:text-sm font-medium text-gray-600">Low Stock Items</p>
+                    <p className="text-xl md:text-2xl font-bold text-gray-900">{lowStockProducts}</p>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -221,7 +237,24 @@ export default function AdminDashboard() {
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6" data-testid="tabs-admin">
           <div className="relative">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-7 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-sm h-auto p-1">
+            {/* Mobile: 2-column grid for main tabs, then additional buttons */}
+            <div className="md:hidden space-y-4">
+              <TabsList className="grid w-full grid-cols-2 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-md h-auto p-2 rounded-xl">
+                <TabsTrigger value="products" data-testid="tab-products" className="text-sm font-semibold text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 px-4 py-3 mx-1 rounded-lg min-h-[48px] flex items-center justify-center">Products</TabsTrigger>
+                <TabsTrigger value="billing" data-testid="tab-billing" className="text-sm font-semibold text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 px-4 py-3 mx-1 rounded-lg min-h-[48px] flex items-center justify-center">Billing</TabsTrigger>
+              </TabsList>
+              
+              <div className="grid grid-cols-2 gap-3">
+                <TabsTrigger value="bills" data-testid="tab-bills" className="text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 px-3 py-3 rounded-lg min-h-[48px] flex items-center justify-center bg-rose-50 border border-rose-200">Bills History</TabsTrigger>
+                <TabsTrigger value="estimates" data-testid="tab-estimates" className="text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 px-3 py-3 rounded-lg min-h-[48px] flex items-center justify-center bg-rose-50 border border-rose-200">Customer Estimates</TabsTrigger>
+                <TabsTrigger value="categories" data-testid="tab-categories" className="text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 px-3 py-3 rounded-lg min-h-[48px] flex items-center justify-center bg-rose-50 border border-rose-200">Categories</TabsTrigger>
+                <TabsTrigger value="pricing" data-testid="tab-pricing" className="text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 px-3 py-3 rounded-lg min-h-[48px] flex items-center justify-center bg-rose-50 border border-rose-200">Pricing</TabsTrigger>
+                <TabsTrigger value="barcodes" data-testid="tab-barcodes" className="text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 px-3 py-3 rounded-lg min-h-[48px] flex items-center justify-center bg-rose-50 border border-rose-200 col-span-2">QR Codes</TabsTrigger>
+              </div>
+            </div>
+            
+            {/* Desktop: Original horizontal layout */}
+            <TabsList className="hidden md:grid w-full grid-cols-7 bg-gradient-to-r from-rose-50 to-red-50 border border-rose-200 shadow-sm h-auto p-1">
               <TabsTrigger value="products" data-testid="tab-products" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Products</TabsTrigger>
               <TabsTrigger value="billing" data-testid="tab-billing" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Billing</TabsTrigger>
               <TabsTrigger value="bills" data-testid="tab-bills" className="text-xs md:text-sm font-medium text-rose-700 hover:text-rose-900 hover:bg-rose-100 data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-800 data-[state=active]:to-red-800 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200 px-1 py-2 mx-0.5 rounded-md min-h-[40px] flex items-center justify-center">Bills History</TabsTrigger>
