@@ -48,6 +48,10 @@ function Router() {
       <Route path="/collections/custom-jewellery" component={() => <CollectionsPage category="custom-jewellery" />} />
       <Route path="/collections/gold-coins" component={() => <CollectionsPage category="gold-coins" />} />
       <Route path="/collections/new-arrivals" component={() => <CollectionsPage category="new-arrivals" />} />
+      <Route path="/collections/mangalsutra" component={() => <CollectionsPage category="mangalsutra" />} />
+      <Route path="/collections/nose-jewelry" component={() => <CollectionsPage category="nose-jewelry" />} />
+      <Route path="/collections/anklets-toe-rings" component={() => <CollectionsPage category="anklets-toe-rings" />} />
+      <Route path="/collections/bridal-collections" component={() => <CollectionsPage category="bridal-collections" />} />
       {/* Subcategory routes - catch all subcategory combinations */}
       <Route path="/collections/:subcategory" component={({ params }) => <CollectionsPage category={params.subcategory} />} />
       {/* Generic collections route */}

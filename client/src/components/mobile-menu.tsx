@@ -72,6 +72,22 @@ const categories: Category[] = [
   {
     name: 'Gold Coins',
     subcategories: ['Investment', 'Religious', 'Customized', 'Occasion', 'Corporate Gifting', 'Collectible', 'Plain', 'Hallmarked']
+  },
+  {
+    name: 'Mangalsutra',
+    subcategories: ['Traditional', 'Contemporary', 'Diamond', 'Gold', 'Long Chain', 'Short Chain', 'Pendant Style', 'Beaded']
+  },
+  {
+    name: 'Nose Jewelry',
+    subcategories: ['Nose Rings', 'Nose Studs', 'Septum Rings', 'Traditional', 'Contemporary', 'Diamond', 'Gold', 'Silver']
+  },
+  {
+    name: 'Anklets & Toe Rings',
+    subcategories: ['Anklets', 'Toe Rings', 'Chain Anklets', 'Charm Anklets', 'Traditional', 'Contemporary', 'Gold', 'Silver']
+  },
+  {
+    name: 'Bridal Collections',
+    subcategories: ['Bridal Sets', 'Wedding Jewelry', 'Engagement Jewelry', 'Traditional Bridal', 'Contemporary Bridal', 'Complete Sets']
   }
 ];
 
@@ -102,6 +118,12 @@ export default function MobileMenu({ isOpen, onToggle }: MobileMenuProps) {
         categoryPath = "new-arrivals";
       } else if (category.name === "Custom Jewellery") {
         categoryPath = "custom-jewellery";
+      } else if (category.name === "Anklets & Toe Rings") {
+        categoryPath = "anklets-toe-rings";
+      } else if (category.name === "Bridal Collections") {
+        categoryPath = "bridal-collections";
+      } else if (category.name === "Nose Jewelry") {
+        categoryPath = "nose-jewelry";
       }
       
       window.location.href = `/collections/${categoryPath}`;
