@@ -264,11 +264,16 @@ function ProductForm({ currency }: ProductFormProps) {
       return response.json();
     },
     onSuccess: () => {
+      // Invalidate and refetch all product queries immediately
       queryClient.invalidateQueries({ queryKey: ['/api/products'] });
       queryClient.invalidateQueries({ queryKey: ['/api/categories'] });
+      
+      // Force immediate refetch for home page
+      queryClient.refetchQueries({ queryKey: ['/api/products'] });
+      
       toast({
         title: "Success",
-        description: "Product added successfully!",
+        description: "Product added successfully! Home page will refresh automatically.",
       });
       resetForm();
     },
