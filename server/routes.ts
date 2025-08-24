@@ -1183,7 +1183,7 @@ Premium quality, timeless beauty.`;
   });
 
   // Estimates routes
-  app.get('/api/estimates', authenticateToken, async (req, res) => {
+  app.get('/api/estimates', authenticateToken, requireAdmin, async (req, res) => {
     try {
       const estimatesList = await storage.getAllEstimates();
       res.json(estimatesList);
@@ -1193,7 +1193,7 @@ Premium quality, timeless beauty.`;
     }
   });
 
-  app.post('/api/estimates', authenticateToken, async (req, res) => {
+  app.post('/api/estimates', authenticateToken, requireAdmin, async (req, res) => {
     try {
       const estimate = await storage.createEstimate(req.body);
       res.status(201).json(estimate);
@@ -1203,7 +1203,7 @@ Premium quality, timeless beauty.`;
     }
   });
 
-  app.get('/api/estimates/:id', authenticateToken, async (req, res) => {
+  app.get('/api/estimates/:id', authenticateToken, requireAdmin, async (req, res) => {
     try {
       const estimateId = req.params.id;
       const estimate = await storage.getEstimate(estimateId);
@@ -1219,7 +1219,7 @@ Premium quality, timeless beauty.`;
     }
   });
 
-  app.put('/api/estimates/:id', authenticateToken, async (req, res) => {
+  app.put('/api/estimates/:id', authenticateToken, requireAdmin, async (req, res) => {
     try {
       const estimateId = req.params.id;
       const estimate = await storage.updateEstimate(estimateId, req.body);
@@ -1231,7 +1231,7 @@ Premium quality, timeless beauty.`;
   });
 
   // Send estimate to WhatsApp
-  app.post('/api/estimates/:id/send-whatsapp', authenticateToken, async (req, res) => {
+  app.post('/api/estimates/:id/send-whatsapp', authenticateToken, requireAdmin, async (req, res) => {
     try {
       const estimateId = req.params.id;
       const estimate = await storage.getEstimate(estimateId);
