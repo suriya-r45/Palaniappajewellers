@@ -55,6 +55,10 @@ export function HomeSectionsManagement() {
   // Queries
   const { data: homeSections, isLoading: sectionsLoading } = useQuery<HomeSectionWithItems[]>({
     queryKey: ["/api/home-sections"],
+    queryFn: async () => {
+      const response = await apiRequest("GET", "/api/home-sections");
+      return response.json();
+    },
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
