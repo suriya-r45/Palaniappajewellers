@@ -738,6 +738,10 @@ export default function Home() {
               </div>
             </div>
           </section>
+
+          {/* Section Separator */}
+          <div className="h-px bg-black"></div>
+        </>
       )}
 
       {/* 4. Gold Collection Section */}

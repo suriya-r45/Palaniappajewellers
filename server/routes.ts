@@ -761,8 +761,8 @@ Premium quality, timeless beauty.`;
       // Add company logo (centered at top)
       try {
         const logoSize = 60;
-        doc.image('./attached_assets/generated_images/Palaniappa_Jewellers_company_logo_71a02664.png', 
-                 (pageWidth - logoSize) / 2, currentY, { width: logoSize, height: logoSize });
+        doc.image('./attached_assets/image_1756056986230.png', 
+                 (pageWidth - logoSize) / 2, currentY, { width: logoSize * 2, height: logoSize });
         currentY += logoSize + 20;
       } catch (error) {
         // If no logo, add company name
