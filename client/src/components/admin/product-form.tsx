@@ -306,7 +306,12 @@ function ProductForm({ currency }: ProductFormProps) {
     
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      data.append(key, String(value));
+      // Handle boolean values properly
+      if (typeof value === 'boolean') {
+        data.append(key, value ? 'true' : 'false');
+      } else {
+        data.append(key, String(value));
+      }
     });
     
     selectedFiles.forEach(file => {
