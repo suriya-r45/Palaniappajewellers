@@ -308,8 +308,8 @@ export default function Home() {
             <p className="text-xl text-black mt-4">Discover jewelry for every occasion</p>
           </div>
           
-          {/* 3x5 Grid Layout on Mobile, 4x5 on Desktop */}
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
+          {/* 4x4 Grid Layout on Mobile, 4x5 on Desktop */}
+          <div className="grid grid-cols-4 gap-2 md:gap-4">
             {/* Row 1 */}
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
@@ -602,9 +602,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Row 5 */}
+            {/* Row 5 - Hidden on mobile for 4x4 grid */}
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden hidden md:block"
               onClick={() => handleViewAllClick('bridal & special collections')}
               data-testid="category-card-bridal-collections"
             >
