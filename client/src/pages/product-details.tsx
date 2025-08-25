@@ -88,8 +88,7 @@ export default function ProductDetails() {
             return item.displayPriceInr ? parseFloat(item.displayPriceInr) : 
                    item.displayPrice ? parseFloat(item.displayPrice) : null;
           } else {
-            return item.displayPriceBhd ? parseFloat(item.displayPriceBhd) : 
-                   item.displayPrice ? parseFloat(item.displayPrice) / 300 : null;
+            return item.displayPriceBhd ? parseFloat(item.displayPriceBhd) : null;
           }
         }
       }
