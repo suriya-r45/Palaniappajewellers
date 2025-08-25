@@ -644,6 +644,8 @@ export class DatabaseStorage implements IStorage {
         productId: homeSectionItems.productId,
         displayName: homeSectionItems.displayName,
         displayPrice: homeSectionItems.displayPrice,
+        displayPriceInr: homeSectionItems.displayPriceInr,
+        displayPriceBhd: homeSectionItems.displayPriceBhd,
         position: homeSectionItems.position,
         size: homeSectionItems.size,
         createdAt: homeSectionItems.createdAt,
