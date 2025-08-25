@@ -125,8 +125,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       resetForm();
       setIsEditMode(false);
       setEditBillId(null);
-      // Force navigation to bills history tab
-      window.location.href = '/admin?tab=bills';
+      // Navigate to bills history tab using wouter
+      setLocation('/admin?tab=bills');
     },
     onError: () => {
       toast({
@@ -150,8 +150,8 @@ export default function BillingForm({ currency, products }: BillingFormProps) {
       resetForm();
       setIsEditMode(false);
       setEditBillId(null);
-      // Force navigation to bills history tab
-      window.location.href = '/admin?tab=bills';
+      // Navigate to bills history tab using wouter
+      setLocation('/admin?tab=bills');
     },
     onError: () => {
       toast({
