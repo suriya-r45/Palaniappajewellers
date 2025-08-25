@@ -564,7 +564,7 @@ export const insertBillSchema = createInsertSchema(bills).omit({
 });
 
 export const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.string().min(1), // Changed from email() to accept both email and mobile number
   password: z.string().min(1),
 });
 
