@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Bill } from '@shared/schema';
 import { useAuth } from '@/lib/auth';
-import logoPath from '@assets/palaniappa_logo.png';
 
 interface BillPreviewProps {
   bill: Bill;
@@ -87,9 +86,9 @@ export default function BillPreview({ bill, onClose }: BillPreviewProps) {
           <div className="text-center mb-6">
             <div className="flex justify-center items-center mb-4">
               <img
-                src={logoPath}
+                src="/company-logo.jpg"
                 alt="Palaniappa Jewellers Logo"
-                className="w-32 h-16 object-contain mr-4"
+                className="w-20 h-20 object-contain"
               />
             </div>
             <div className="text-right text-xs text-gray-600" data-testid="customer-copy-info">

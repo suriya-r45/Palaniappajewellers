@@ -764,16 +764,19 @@ Premium quality, timeless beauty.`;
 
       // Add company logo (centered at top)
       try {
-        const logoSize = 60;
-        doc.image('./attached_assets/image_1756056986230.png', 
-                 (pageWidth - logoSize) / 2, currentY, { width: logoSize * 2, height: logoSize });
+        const logoSize = 80;
+        doc.image('./client/public/company-logo.jpg', 
+                 (pageWidth - logoSize) / 2, currentY, { width: logoSize, height: logoSize });
         currentY += logoSize + 20;
       } catch (error) {
         // If no logo, add company name
         doc.fontSize(16)
            .font('Helvetica-Bold')
-           .text('PALANIAPPA', 0, currentY, { align: 'center', width: pageWidth });
-        currentY += 25;
+           .text('PALANIAPPA JEWELLERS', 0, currentY, { align: 'center', width: pageWidth });
+        doc.fontSize(12)
+           .font('Helvetica')
+           .text('Since 2025', 0, currentY + 20, { align: 'center', width: pageWidth });
+        currentY += 45;
       }
 
       // Customer copy header (top right)
