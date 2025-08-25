@@ -64,7 +64,6 @@ export default function Home() {
       const response = await fetch('/api/home-sections/public');
       if (!response.ok) throw new Error('Failed to fetch home sections');
       const data = await response.json();
-      console.log('Home sections data:', data);
       return data;
     },
   });
@@ -660,8 +659,8 @@ export default function Home() {
                     showActions={true}
                     customDisplayPrice={
                       selectedCurrency === 'INR' 
-                        ? (item.displayPriceInr || item.displayPrice || undefined) 
-                        : (item.displayPriceBhd || item.displayPrice || undefined)
+                        ? (item.displayPriceInr ? `₹ ${parseFloat(item.displayPriceInr).toLocaleString('en-IN')}` : undefined)
+                        : (item.displayPriceBhd ? `BD ${parseFloat(item.displayPriceBhd).toFixed(3)}` : undefined)
                     }
                   />
                 </div>
