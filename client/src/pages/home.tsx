@@ -217,9 +217,9 @@ export default function Home() {
       />
 
       {/* 1. Explore Our Collections - New Carousel Design */}
-      <section className="py-16" data-testid="section-categories" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
+      <section className="pt-6 pb-8" data-testid="section-categories" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-6">
             <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Explore Our Collections</h2>
           </div>
           
@@ -362,15 +362,15 @@ export default function Home() {
 
       {/* Silver Collection */}
       {silverProducts.length > 0 && (
-        <section className="py-16" data-testid="section-silver-collection" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
+        <section className="py-16" data-testid="section-silver-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Sparkles className="h-8 w-8 mr-4" style={{ color: '#64748b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#475569' }}>Silver Collection</h2>
-                <Sparkles className="h-8 w-8 ml-4" style={{ color: '#64748b' }} />
+                <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Silver Collection</h2>
+                <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-gray-700">Elegant silver jewelry for every occasion</p>
+              <p className="text-xl text-black">Elegant silver jewelry for every occasion</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {silverProducts.map((product) => (
@@ -386,9 +386,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#64748b', color: '#475569' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#64748b'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#475569'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?material=silver'}
               >
                 View All Silver <ArrowRight className="ml-2 h-5 w-5" />
@@ -400,15 +400,15 @@ export default function Home() {
 
       {/* Diamond Collection */}
       {diamondProducts.length > 0 && (
-        <section className="py-16" data-testid="section-diamond-collection" style={{ background: 'linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%)' }}>
+        <section className="py-16" data-testid="section-diamond-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Gem className="h-8 w-8 mr-4" style={{ color: '#a855f7' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#7c3aed' }}>Diamond Collection</h2>
-                <Gem className="h-8 w-8 ml-4" style={{ color: '#a855f7' }} />
+                <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Diamond Collection</h2>
+                <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-purple-700">Brilliant diamonds for life's special moments</p>
+              <p className="text-xl text-black">Brilliant diamonds for life's special moments</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {diamondProducts.map((product) => (
@@ -424,9 +424,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#a855f7', color: '#7c3aed' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#a855f7'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#7c3aed'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?material=diamond'}
               >
                 View All Diamonds <ArrowRight className="ml-2 h-5 w-5" />
@@ -438,15 +438,15 @@ export default function Home() {
 
       {/* Platinum Collection */}
       {platinumProducts.length > 0 && (
-        <section className="py-16" data-testid="section-platinum-collection" style={{ background: 'linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%)' }}>
+        <section className="py-16" data-testid="section-platinum-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Crown className="h-8 w-8 mr-4" style={{ color: '#64748b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#334155' }}>Platinum Collection</h2>
-                <Crown className="h-8 w-8 ml-4" style={{ color: '#64748b' }} />
+                <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Platinum Collection</h2>
+                <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-slate-700">Premium platinum jewelry for discerning taste</p>
+              <p className="text-xl text-black">Premium platinum jewelry for discerning taste</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {platinumProducts.map((product) => (
@@ -462,9 +462,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#64748b', color: '#334155' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#64748b'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#334155'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?material=platinum'}
               >
                 View All Platinum <ArrowRight className="ml-2 h-5 w-5" />
@@ -476,15 +476,15 @@ export default function Home() {
 
       {/* Gemstone Collection */}
       {gemstoneProducts.length > 0 && (
-        <section className="py-16" data-testid="section-gemstone-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%)' }}>
+        <section className="py-16" data-testid="section-gemstone-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Gem className="h-8 w-8 mr-4" style={{ color: '#d97706' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#92400e' }}>Gemstone Collection</h2>
-                <Gem className="h-8 w-8 ml-4" style={{ color: '#d97706' }} />
+                <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gemstone Collection</h2>
+                <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-amber-700">Colorful gemstones for vibrant elegance</p>
+              <p className="text-xl text-black">Colorful gemstones for vibrant elegance</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {gemstoneProducts.map((product) => (
@@ -500,9 +500,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#d97706', color: '#92400e' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#d97706'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#92400e'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?material=gemstone'}
               >
                 View All Gemstones <ArrowRight className="ml-2 h-5 w-5" />
@@ -514,15 +514,15 @@ export default function Home() {
 
       {/* Pearl Collection */}
       {pearlProducts.length > 0 && (
-        <section className="py-16" data-testid="section-pearl-collection" style={{ background: 'linear-gradient(135deg, #fefce8 0%, #fef3c7 100%)' }}>
+        <section className="py-16" data-testid="section-pearl-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Sparkles className="h-8 w-8 mr-4" style={{ color: '#eab308' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#a16207' }}>Pearl Collection</h2>
-                <Sparkles className="h-8 w-8 ml-4" style={{ color: '#eab308' }} />
+                <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Pearl Collection</h2>
+                <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-yellow-700">Timeless pearls for classic beauty</p>
+              <p className="text-xl text-black">Timeless pearls for classic beauty</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {pearlProducts.map((product) => (
@@ -538,9 +538,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#eab308', color: '#a16207' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#eab308'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#a16207'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?material=pearl'}
               >
                 View All Pearls <ArrowRight className="ml-2 h-5 w-5" />
@@ -552,15 +552,15 @@ export default function Home() {
 
       {/* Gold Plated Silver Collection */}
       {goldPlatedSilverProducts.length > 0 && (
-        <section className="py-16" data-testid="section-gold-plated-silver-collection" style={{ background: 'linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%)' }}>
+        <section className="py-16" data-testid="section-gold-plated-silver-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Crown className="h-8 w-8 mr-4" style={{ color: '#ea580c' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#c2410c' }}>Gold Plated Silver Collection</h2>
-                <Crown className="h-8 w-8 ml-4" style={{ color: '#ea580c' }} />
+                <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Plated Silver Collection</h2>
+                <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-orange-700">Affordable luxury with gold plated silver</p>
+              <p className="text-xl text-black">Affordable luxury with gold plated silver</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {goldPlatedSilverProducts.map((product) => (
@@ -576,9 +576,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#ea580c', color: '#c2410c' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#ea580c'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#c2410c'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?material=gold-plated-silver'}
               >
                 View All Gold Plated Silver <ArrowRight className="ml-2 h-5 w-5" />
@@ -590,15 +590,15 @@ export default function Home() {
 
       {/* Other Materials Collection */}
       {otherProducts.length > 0 && (
-        <section className="py-16" data-testid="section-other-collection" style={{ background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)' }}>
+        <section className="py-16" data-testid="section-other-collection" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Palette className="h-8 w-8 mr-4" style={{ color: '#6b7280' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#374151' }}>Other Materials Collection</h2>
-                <Palette className="h-8 w-8 ml-4" style={{ color: '#6b7280' }} />
+                <Palette className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Other Materials Collection</h2>
+                <Palette className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-gray-700">Unique materials for distinctive styles</p>
+              <p className="text-xl text-black">Unique materials for distinctive styles</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {otherProducts.map((product) => (
@@ -614,9 +614,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#6b7280', color: '#374151' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#6b7280'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#374151'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?material=other'}
               >
                 View All <ArrowRight className="ml-2 h-5 w-5" />
@@ -628,15 +628,15 @@ export default function Home() {
 
       {/* New Arrivals */}
       {newArrivalProducts.length > 0 && (
-        <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)' }}>
+        <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
-                <Heart className="h-8 w-8 mr-4" style={{ color: '#10b981' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#059669' }}>New Arrivals</h2>
-                <Heart className="h-8 w-8 ml-4" style={{ color: '#10b981' }} />
+                <Heart className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
+                <Heart className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-green-700">Latest additions to our exclusive collection</p>
+              <p className="text-xl text-black">Latest additions to our exclusive collection</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
               {newArrivalProducts.map((product) => (
@@ -652,9 +652,9 @@ export default function Home() {
               <Button 
                 variant="outline" 
                 className="border-2 px-8 py-3 text-lg" 
-                style={{ borderColor: '#10b981', color: '#059669' }} 
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#10b981'; e.currentTarget.style.color = 'white'; }} 
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#059669'; }}
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
                 onClick={() => window.location.href = '/collections?category=new-arrivals'}
               >
                 View All New Arrivals <ArrowRight className="ml-2 h-5 w-5" />
