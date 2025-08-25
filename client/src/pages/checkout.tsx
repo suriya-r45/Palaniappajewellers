@@ -34,7 +34,12 @@ function CheckoutForm() {
     name: '',
     email: '',
     phone: '',
-    address: ''
+    address: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: '',
+    deliveryInstructions: ''
   });
   
   // Auto-detect Indian user based on phone number
@@ -49,10 +54,12 @@ function CheckoutForm() {
     e.preventDefault();
 
     // Validate customer information
-    if (!customerInfo.name || !customerInfo.email || !customerInfo.phone || !customerInfo.address) {
+    if (!customerInfo.name || !customerInfo.email || !customerInfo.phone || 
+        !customerInfo.address || !customerInfo.city || !customerInfo.state || 
+        !customerInfo.postalCode || !customerInfo.country) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all customer details",
+        description: "Please fill in all required delivery details",
         variant: "destructive",
       });
       return;
@@ -265,51 +272,144 @@ function CheckoutForm() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Customer Information */}
                   <div className="space-y-4">
-                    <h3 className="font-semibold">Customer Information</h3>
+                    <h3 className="font-semibold text-lg">Customer Information</h3>
                     
-                    <div>
-                      <Label htmlFor="name">Full Name</Label>
-                      <Input
-                        id="name"
-                        value={customerInfo.name}
-                        onChange={(e) => setCustomerInfo(prev => ({ ...prev, name: e.target.value }))}
-                        required
-                        data-testid="input-customer-name"
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="name">Full Name *</Label>
+                        <Input
+                          id="name"
+                          placeholder="Enter your full name"
+                          value={customerInfo.name}
+                          onChange={(e) => setCustomerInfo(prev => ({ ...prev, name: e.target.value }))}
+                          required
+                          data-testid="input-customer-name"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="email">Email Address *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="your.email@example.com"
+                          value={customerInfo.email}
+                          onChange={(e) => setCustomerInfo(prev => ({ ...prev, email: e.target.value }))}
+                          required
+                          data-testid="input-customer-email"
+                        />
+                      </div>
                     </div>
                     
                     <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={customerInfo.email}
-                        onChange={(e) => setCustomerInfo(prev => ({ ...prev, email: e.target.value }))}
-                        required
-                        data-testid="input-customer-email"
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="phone">Phone</Label>
+                      <Label htmlFor="phone">Phone Number *</Label>
                       <Input
                         id="phone"
+                        placeholder="+91 9876543210 or +973 XXXXXXXX"
                         value={customerInfo.phone}
                         onChange={(e) => setCustomerInfo(prev => ({ ...prev, phone: e.target.value }))}
                         required
                         data-testid="input-customer-phone"
                       />
                     </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Shipping Information */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg flex items-center gap-2">
+                      🚚 Delivery Details
+                    </h3>
                     
                     <div>
-                      <Label htmlFor="address">Address</Label>
+                      <Label htmlFor="address">Street Address *</Label>
                       <Input
                         id="address"
+                        placeholder="House number, street name, area"
                         value={customerInfo.address}
                         onChange={(e) => setCustomerInfo(prev => ({ ...prev, address: e.target.value }))}
                         required
                         data-testid="input-customer-address"
                       />
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="city">City *</Label>
+                        <Input
+                          id="city"
+                          placeholder="City name"
+                          value={customerInfo.city}
+                          onChange={(e) => setCustomerInfo(prev => ({ ...prev, city: e.target.value }))}
+                          required
+                          data-testid="input-customer-city"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="state">State/Region *</Label>
+                        <Input
+                          id="state"
+                          placeholder="State or Region"
+                          value={customerInfo.state}
+                          onChange={(e) => setCustomerInfo(prev => ({ ...prev, state: e.target.value }))}
+                          required
+                          data-testid="input-customer-state"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="postalCode">Postal Code *</Label>
+                        <Input
+                          id="postalCode"
+                          placeholder="PIN/ZIP Code"
+                          value={customerInfo.postalCode}
+                          onChange={(e) => setCustomerInfo(prev => ({ ...prev, postalCode: e.target.value }))}
+                          required
+                          data-testid="input-customer-postal"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="country">Country *</Label>
+                        <Input
+                          id="country"
+                          placeholder="India / Bahrain / Other"
+                          value={customerInfo.country}
+                          onChange={(e) => setCustomerInfo(prev => ({ ...prev, country: e.target.value }))}
+                          required
+                          data-testid="input-customer-country"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="deliveryInstructions">Delivery Instructions (Optional)</Label>
+                      <Input
+                        id="deliveryInstructions"
+                        placeholder="Any special delivery instructions, landmarks, preferred time, etc."
+                        value={customerInfo.deliveryInstructions}
+                        onChange={(e) => setCustomerInfo(prev => ({ ...prev, deliveryInstructions: e.target.value }))}
+                        data-testid="input-delivery-instructions"
+                      />
+                    </div>
+
+                    <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                      <div className="flex items-start gap-3">
+                        <div className="text-blue-600 text-lg">📦</div>
+                        <div>
+                          <p className="text-sm font-medium text-blue-900 mb-1">Delivery Information</p>
+                          <ul className="text-sm text-blue-800 space-y-1">
+                            <li>• Free delivery within Bahrain (2-3 business days)</li>
+                            <li>• International shipping to India available (5-7 business days)</li>
+                            <li>• All jewelry items are insured during transit</li>
+                            <li>• Signature required upon delivery for security</li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
