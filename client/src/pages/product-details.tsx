@@ -31,6 +31,16 @@ export default function ProductDetails() {
     enabled: !!id,
   });
 
+  // Fetch custom pricing from home sections
+  const { data: homeSections } = useQuery({
+    queryKey: ['/api/home-sections/public'],
+    queryFn: async () => {
+      const response = await fetch('/api/home-sections/public');
+      if (!response.ok) throw new Error('Failed to fetch home sections');
+      return response.json();
+    },
+  });
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -68,7 +78,28 @@ export default function ProductDetails() {
     );
   }
 
-  const price = selectedCurrency === 'INR' ? parseFloat(product.priceInr) : parseFloat(product.priceBhd);
+  // Check for custom display pricing from home sections
+  const getCustomPrice = () => {
+    if (homeSections && product) {
+      for (const section of homeSections) {
+        const item = section.items?.find((item: any) => item.productId === product.id);
+        if (item) {
+          if (selectedCurrency === 'INR') {
+            return item.displayPriceInr ? parseFloat(item.displayPriceInr) : 
+                   item.displayPrice ? parseFloat(item.displayPrice) : null;
+          } else {
+            return item.displayPriceBhd ? parseFloat(item.displayPriceBhd) : 
+                   item.displayPrice ? parseFloat(item.displayPrice) / 300 : null;
+          }
+        }
+      }
+    }
+    return null;
+  };
+
+  const customPrice = getCustomPrice();
+  const price = customPrice !== null ? customPrice : 
+    (selectedCurrency === 'INR' ? parseFloat(product.priceInr) : parseFloat(product.priceBhd));
   const currencySymbol = selectedCurrency === 'INR' ? '₹' : 'BD';
   const category = JEWELRY_CATEGORIES[product.category as keyof typeof JEWELRY_CATEGORIES];
   const images = product.images || ['/placeholder-jewelry.jpg'];
