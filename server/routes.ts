@@ -36,8 +36,8 @@ if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
 
 // Admin credentials
 const ADMIN_CREDENTIALS = {
-  email: "jewelerypalaniappa@gmail.com",
-  password: "P@lani@ppA@321"
+  email: "raveena",
+  password: "zxcvbnm"
 };
 
 // WhatsApp messaging function
