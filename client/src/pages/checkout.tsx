@@ -29,8 +29,6 @@ function CheckoutForm() {
   const [paymentMethod, setPaymentMethod] = useState(stripePromise ? 'stripe' : 'gpay');
   const [isIndianUser, setIsIndianUser] = useState(true); // Detect based on phone or location
   
-  console.log('Checkout - Cart items:', items, 'Total amount:', totalAmount);
-  
   // Redirect to cart if no items
   useEffect(() => {
     if (items.length === 0) {
@@ -570,36 +568,10 @@ function CheckoutForm() {
 
 export default function Checkout() {
   const { items } = useCart();
-  const [clientSecret, setClientSecret] = useState("skip-payment");
   const [, setLocation] = useLocation();
   
-  console.log('Checkout component rendering, items:', items.length);
-  
-  // Calculate total amount based on INR (since checkout uses INR)
-  const totalAmount = items.reduce((sum, item) => {
-    const price = parseFloat(item.product.priceInr);
-    return sum + (price * item.quantity);
-  }, 0);
-
-  useEffect(() => {
-    console.log('Checkout useEffect running, items length:', items.length);
-    
-    // Always set a client secret to allow rendering
-    if (items.length === 0) {
-      console.log('Setting empty-cart client secret');
-      setClientSecret("empty-cart");
-      return;
-    }
-
-    console.log('Setting skip-payment client secret');
-    setClientSecret("skip-payment");
-  }, [items, totalAmount]);
-
-  console.log('Checkout render conditions - items:', items.length, 'clientSecret:', clientSecret);
-
   // Handle empty cart
   if (items.length === 0) {
-    console.log('Rendering empty cart state');
     return (
       <div className="min-h-screen bg-white py-8" style={{ backgroundColor: '#ffffff' }}>
         <div className="container mx-auto px-4">
@@ -622,19 +594,6 @@ export default function Checkout() {
     );
   }
 
-  if (!clientSecret || clientSecret === "") {
-    console.log('Rendering loading state');
-    return (
-      <div className="h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" aria-label="Loading"/>
-          <p>Loading checkout...</p>
-        </div>
-      </div>
-    );
-  }
-
-  console.log('Rendering CheckoutForm');
-  // Always show checkout form since we're not using Stripe
+  // Show checkout form with items
   return <CheckoutForm />;
 }
