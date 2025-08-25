@@ -244,7 +244,7 @@ function CheckoutForm() {
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Shipping:</span>
-                      <span className="text-green-600 font-medium">FREE</span>
+                      <span className="text-gray-600">Calculated at delivery</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Tax:</span>
@@ -403,10 +403,11 @@ function CheckoutForm() {
                         <div>
                           <p className="text-sm font-medium text-blue-900 mb-1">Delivery Information</p>
                           <ul className="text-sm text-blue-800 space-y-1">
-                            <li>• Free delivery within Bahrain (2-3 business days)</li>
+                            <li>• Delivery within Bahrain (2-3 business days)</li>
                             <li>• International shipping to India available (5-7 business days)</li>
                             <li>• All jewelry items are insured during transit</li>
                             <li>• Signature required upon delivery for security</li>
+                            <li>• Delivery charges calculated based on location</li>
                           </ul>
                         </div>
                       </div>

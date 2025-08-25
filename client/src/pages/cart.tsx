@@ -254,7 +254,7 @@ export default function Cart() {
                         
                         <div className="flex justify-between">
                           <span>Shipping</span>
-                          <span className="text-green-600">FREE</span>
+                          <span className="text-gray-600">To be calculated</span>
                         </div>
                         
                         <Separator />
