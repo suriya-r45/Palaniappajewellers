@@ -656,6 +656,11 @@ export default function Home() {
                     product={item.product}
                     currency={selectedCurrency}
                     showActions={true}
+                    customDisplayPrice={
+                      selectedCurrency === 'INR' 
+                        ? (item.displayPriceInr || item.displayPrice || undefined) 
+                        : (item.displayPriceBhd || item.displayPrice || undefined)
+                    }
                   />
                 </div>
               ))}

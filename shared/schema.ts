@@ -623,7 +623,9 @@ export const homeSectionItems = pgTable("home_section_items", {
   sectionId: varchar("section_id").notNull(),
   productId: varchar("product_id").notNull(),
   displayName: text("display_name"), // Custom name for this showcase
-  displayPrice: text("display_price"), // Custom price text like "Starting from ₹ 32,400"
+  displayPrice: text("display_price"), // Legacy field for backward compatibility
+  displayPriceInr: text("display_price_inr"), // Custom price text for INR
+  displayPriceBhd: text("display_price_bhd"), // Custom price text for BHD
   position: integer("position").notNull().default(0), // Position in layout
   size: text("size").default("normal"), // 'small', 'normal', 'large' for different grid sizes
   createdAt: timestamp("created_at").defaultNow(),

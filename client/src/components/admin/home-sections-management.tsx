@@ -41,6 +41,8 @@ interface AddSectionItemData {
   productId: string;
   displayName?: string;
   displayPrice?: string;
+  displayPriceInr?: string;
+  displayPriceBhd?: string;
   position: number;
   size: 'small' | 'normal' | 'large';
 }
@@ -500,15 +502,32 @@ function SectionCard({
               {section.items.map((item: HomeSectionItemWithProduct) => (
                 <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded bg-muted flex items-center justify-center">
-                      <ImageIcon className="h-5 w-5" />
+                    <div className="h-10 w-10 rounded bg-muted overflow-hidden">
+                      {item.product.images && item.product.images.length > 0 ? (
+                        <img 
+                          src={item.product.images[0]} 
+                          alt={item.product.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Fallback to placeholder if image fails to load
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const parent = target.parentElement as HTMLElement;
+                            parent.innerHTML = '<div class="h-full w-full flex items-center justify-center"><svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>';
+                          }}
+                        />
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center">
+                          <ImageIcon className="h-5 w-5 text-gray-400" />
+                        </div>
+                      )}
                     </div>
                     <div>
                       <p className="font-medium text-sm">
                         {item.displayName || item.product.name}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {item.displayPrice || `₹${item.product.priceInr}`}
+                        {item.displayPriceInr || item.displayPrice || `₹${item.product.priceInr}`}
                       </p>
                     </div>
                   </div>
@@ -566,7 +585,8 @@ function AddProductDialog({
 }) {
   const [selectedProductId, setSelectedProductId] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [displayPrice, setDisplayPrice] = useState("");
+  const [displayPriceInr, setDisplayPriceInr] = useState("");
+  const [displayPriceBhd, setDisplayPriceBhd] = useState("");
   const [size, setSize] = useState<'small' | 'normal' | 'large'>('normal');
   const [addToDefaultLayout, setAddToDefaultLayout] = useState(false);
   const [customizeLayout, setCustomizeLayout] = useState(false);
@@ -580,7 +600,9 @@ function AddProductDialog({
     onAdd({
       productId: selectedProductId,
       displayName: displayName || undefined,
-      displayPrice: displayPrice || undefined,
+      displayPrice: displayPriceInr || undefined, // Keep for backward compatibility
+      displayPriceInr: displayPriceInr || undefined,
+      displayPriceBhd: displayPriceBhd || undefined,
       position: existingItems.length,
       size
     });
@@ -588,7 +610,8 @@ function AddProductDialog({
     // Reset form
     setSelectedProductId("");
     setDisplayName("");
-    setDisplayPrice("");
+    setDisplayPriceInr("");
+    setDisplayPriceBhd("");
     setSize('normal');
     setAddToDefaultLayout(false);
     setCustomizeLayout(false);
@@ -633,15 +656,26 @@ function AddProductDialog({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="displayPrice">Custom Display Price</Label>
+              <Label htmlFor="displayPriceInr">Custom Display Price (INR)</Label>
               <Input
-                id="displayPrice"
-                value={displayPrice}
-                onChange={(e) => setDisplayPrice(e.target.value)}
-                placeholder="e.g., Starting from ₹32,400"
-                data-testid="input-display-price"
+                id="displayPriceInr"
+                value={displayPriceInr}
+                onChange={(e) => setDisplayPriceInr(e.target.value)}
+                placeholder="e.g., ₹ 1,23,456"
+                data-testid="input-display-price-inr"
               />
             </div>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="displayPriceBhd">Custom Display Price (BHD)</Label>
+            <Input
+              id="displayPriceBhd"
+              value={displayPriceBhd}
+              onChange={(e) => setDisplayPriceBhd(e.target.value)}
+              placeholder="e.g., BHD 500.750"
+              data-testid="input-display-price-bhd"
+            />
           </div>
 
           <div className="space-y-2">

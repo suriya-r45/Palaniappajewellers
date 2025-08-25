@@ -13,9 +13,10 @@ interface ProductCardProps {
   product: Product;
   currency: 'INR' | 'BHD';
   showActions?: boolean;
+  customDisplayPrice?: string; // Custom price override for home sections
 }
 
-export default function ProductCard({ product, currency, showActions = true }: ProductCardProps) {
+export default function ProductCard({ product, currency, showActions = true, customDisplayPrice }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
   const { addToCart, isInCart, getItemQuantity } = useCart();
@@ -176,7 +177,7 @@ Could you please provide more details?`;
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <p className="text-sm md:text-lg font-bold text-primary" data-testid={`product-price-${product.id}`}>
-                {formatPrice(price, currency)}
+                {customDisplayPrice || formatPrice(price, currency)}
               </p>
               {product.stock > 0 && product.stock <= 5 && (
                 <p className="text-xs text-amber-600">
