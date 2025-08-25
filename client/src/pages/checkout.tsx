@@ -20,8 +20,9 @@ const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY
   : null;
 
 function CheckoutForm() {
-  const stripe = useStripe();
-  const elements = useElements();
+  // Only use Stripe hooks if Stripe is available
+  const stripe = stripePromise ? useStripe() : null;
+  const elements = stripePromise ? useElements() : null;
   const { items, totalAmount, clearCart } = useCart();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
@@ -509,7 +510,7 @@ function CheckoutForm() {
                       {paymentMethod === 'stripe' ? 'Payment Information' : 'Payment Details'}
                     </h3>
                     
-                    {paymentMethod === 'stripe' && stripePromise ? (
+                    {paymentMethod === 'stripe' && stripePromise && elements ? (
                       <div className="space-y-4">
                         <PaymentElement options={{
                           layout: {
@@ -631,5 +632,15 @@ export default function Checkout() {
   }
 
   // Show checkout form with items
+  // Wrap with Stripe Elements provider if Stripe is available
+  if (stripePromise) {
+    return (
+      <Elements stripe={stripePromise}>
+        <CheckoutForm />
+      </Elements>
+    );
+  }
+  
+  // Return CheckoutForm without Stripe wrapper if Stripe is not available
   return <CheckoutForm />;
 }
