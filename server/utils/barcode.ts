@@ -2,6 +2,8 @@ import JsBarcode from 'jsbarcode';
 import QRCode from 'qrcode';
 import fs from 'fs';
 import path from 'path';
+import { db } from '../db.js';
+import { products } from '../../shared/schema.js';
 
 export interface ProductBarcodeData {
   productCode: string;
@@ -19,12 +21,12 @@ export async function generateProductCode(category: string, subCategory?: string
   const categoryAbbreviation = getCategoryAbbreviation(category);
   const subCategoryAbbreviation = getSubCategoryAbbreviation(category, subCategory);
   
-  // Use timestamp-based sequential number for better performance
-  // This avoids expensive database queries while maintaining uniqueness
-  const timestamp = Date.now();
-  const randomSuffix = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  // Get count of existing products to generate sequential number
+  const existingProducts = await db.select().from(products);
+  const productCount = existingProducts.length;
+  const sequentialNumber = String(productCount + 1).padStart(3, '0');
   
-  return `PJ-${categoryAbbreviation}-${subCategoryAbbreviation}-${year}-${timestamp.toString().slice(-6)}-${randomSuffix}`;
+  return `PJ-${categoryAbbreviation}-${subCategoryAbbreviation}-${year}-${sequentialNumber}`;
 }
 
 function getCategoryAbbreviation(category: string): string {
