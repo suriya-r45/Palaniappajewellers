@@ -63,7 +63,9 @@ export default function Home() {
     queryFn: async () => {
       const response = await fetch('/api/home-sections/public');
       if (!response.ok) throw new Error('Failed to fetch home sections');
-      return response.json();
+      const data = await response.json();
+      console.log('Home sections data:', data);
+      return data;
     },
   });
 
