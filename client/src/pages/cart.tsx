@@ -13,10 +13,16 @@ import WhatsAppFloat from '@/components/whatsapp-float';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Cart() {
-  const { items, totalItems, totalAmount, updateQuantity, removeFromCart, clearCart } = useCart();
+  const { items, totalItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [currency, setCurrency] = useState<'INR' | 'BHD'>('BHD');
+
+  // Calculate total amount based on selected currency
+  const totalAmount = items.reduce((sum, item) => {
+    const price = parseFloat(currency === 'INR' ? item.product.priceInr : item.product.priceBhd);
+    return sum + (price * item.quantity);
+  }, 0);
 
   const handleProceedToCheckout = () => {
     if (items.length === 0) {

@@ -243,8 +243,12 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               
               <Button
                 onClick={handleCheckout}
-                className="w-full"
-                variant="outline"
+                className="w-full font-bold text-white border-2"
+                style={{ 
+                  backgroundColor: '#8b4513', 
+                  borderColor: '#8b4513',
+                  color: 'white'
+                }}
                 data-testid="button-checkout"
               >
                 <CreditCard className="h-4 w-4 mr-2" />
