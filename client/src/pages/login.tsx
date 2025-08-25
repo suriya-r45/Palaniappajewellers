@@ -139,16 +139,17 @@ export default function Login() {
                 <form onSubmit={handleLogin} className="space-y-6">
                   <div>
                     <Label htmlFor="email" className="text-base font-medium text-gray-700 mb-2 block">
-                      Email Address*
+                      Email Address / Mobile Number*
                     </Label>
                     <Input
                       id="email"
-                      type="email"
+                      type="text"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       className="h-14 text-base border-gray-300 rounded-lg focus:border-rose-900 focus:ring-rose-900"
                       data-testid="input-email"
+                      placeholder="Enter email or mobile number"
                     />
                   </div>
                   

@@ -37,6 +37,7 @@ if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN) {
 // Admin credentials
 const ADMIN_CREDENTIALS = {
   email: "raveena",
+  mobile: "9597201554",
   password: "zxcvbnm"
 };
 
@@ -166,15 +167,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { email, password } = loginSchema.parse(req.body);
 
-      // Check for admin credentials
-      if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
+      // Check for admin credentials (email or mobile)
+      if ((email === ADMIN_CREDENTIALS.email || email === ADMIN_CREDENTIALS.mobile) && password === ADMIN_CREDENTIALS.password) {
         const token = jwt.sign(
-          { id: "admin", email, role: "admin", name: "Admin" },
+          { id: "admin", email: ADMIN_CREDENTIALS.email, role: "admin", name: "Admin" },
           JWT_SECRET,
           { expiresIn: '24h' }
         );
         return res.json({
-          user: { id: "admin", email, role: "admin", name: "Admin" },
+          user: { id: "admin", email: ADMIN_CREDENTIALS.email, role: "admin", name: "Admin" },
           token
         });
       }
