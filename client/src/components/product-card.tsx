@@ -165,7 +165,7 @@ Could you please provide more details?`;
             </h3>
           </div>
 
-          <div className="flex items-center gap-1 text-[10px] sm:text-xs text-gray-600">
+          <div className="hidden sm:flex items-center gap-1 text-[10px] sm:text-xs text-gray-600">
             <Badge variant="outline" className="text-[8px] sm:text-[10px] md:text-xs px-1 py-0">
               {product.category}
             </Badge>
@@ -180,7 +180,7 @@ Could you please provide more details?`;
                 {customDisplayPrice || formatPrice(price, currency)}
               </p>
               {product.stock > 0 && product.stock <= 5 && (
-                <p className="text-[10px] sm:text-xs text-amber-600">
+                <p className="hidden sm:block text-[10px] sm:text-xs text-amber-600">
                   Only {product.stock} left
                 </p>
               )}
@@ -188,9 +188,9 @@ Could you please provide more details?`;
           </div>
         </div>
 
-        {/* Action Buttons - Only show if showActions is true */}
+        {/* Action Buttons - Only show on desktop if showActions is true */}
         {showActions && (
-          <div className="mt-2 sm:mt-4 space-y-1 sm:space-y-2">
+          <div className="hidden sm:block mt-2 sm:mt-4 space-y-1 sm:space-y-2">
             {/* Add to Cart Button */}
             {isInCartAlready ? (
               <div className="flex items-center justify-between">
