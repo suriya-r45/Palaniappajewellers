@@ -165,7 +165,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
   app.post("/api/auth/login", async (req, res) => {
     try {
+      console.log('Login request body:', req.body);
       const { email, password } = loginSchema.parse(req.body);
+      console.log('Parsed email:', email, 'password length:', password?.length);
 
       // Check for admin credentials (email or mobile)
       if ((email === ADMIN_CREDENTIALS.email || email === ADMIN_CREDENTIALS.mobile) && password === ADMIN_CREDENTIALS.password) {
@@ -194,6 +196,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({ user: { id: user.id, email: user.email, role: user.role, name: user.name }, token });
     } catch (error) {
+      console.log('Login validation error:', error);
       res.status(400).json({ message: "Invalid request data" });
     }
   });
