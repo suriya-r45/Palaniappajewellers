@@ -81,7 +81,10 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
             WebkitBackdropFilter: 'none'
           }}
         >
-          <h2 className="text-lg font-semibold flex items-center gap-2">
+          <h2 
+            className="text-lg font-bold flex items-center gap-2" 
+            style={{ color: '#2d3748' }}
+          >
             <ShoppingBag className="h-5 w-5" />
             Shopping Cart ({totalItems})
           </h2>
@@ -143,25 +146,38 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   />
                   
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-sm truncate" data-testid={`cart-item-name-${item.product.id}`}>
+                    <h3 
+                      className="font-bold text-base truncate" 
+                      style={{ color: '#2d3748' }}
+                      data-testid={`cart-item-name-${item.product.id}`}
+                    >
                       {item.product.name}
                     </h3>
-                    <p className="text-sm text-gray-500" data-testid={`cart-item-price-${item.product.id}`}>
+                    <p 
+                      className="text-sm font-semibold bg-amber-100 px-2 py-1 rounded inline-block" 
+                      style={{ color: '#8b4513' }}
+                      data-testid={`cart-item-price-${item.product.id}`}
+                    >
                       {formatPrice(parseFloat(item.product.priceInr), 'INR')}
                     </p>
                   </div>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 bg-gray-50 p-2 rounded-lg">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                       data-testid={`button-decrease-cart-${item.product.id}`}
+                      className="border-gray-400 hover:bg-gray-200"
                     >
-                      <Minus className="h-3 w-3" />
+                      <Minus className="h-4 w-4" />
                     </Button>
                     
-                    <span className="w-8 text-center text-sm font-medium" data-testid={`cart-quantity-${item.product.id}`}>
+                    <span 
+                      className="w-8 text-center text-lg font-bold bg-white px-2 py-1 rounded border border-gray-300" 
+                      style={{ color: '#2d3748' }}
+                      data-testid={`cart-quantity-${item.product.id}`}
+                    >
                       {item.quantity}
                     </span>
                     
@@ -171,18 +187,19 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                       disabled={item.quantity >= item.product.stock}
                       data-testid={`button-increase-cart-${item.product.id}`}
+                      className="border-gray-400 hover:bg-gray-200"
                     >
-                      <Plus className="h-3 w-3" />
+                      <Plus className="h-4 w-4" />
                     </Button>
                     
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       size="sm"
                       onClick={() => removeFromCart(item.product.id)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-600 hover:text-red-700 border-red-300 hover:bg-red-50 ml-2"
                       data-testid={`button-remove-cart-${item.product.id}`}
                     >
-                      <X className="h-3 w-3" />
+                      <X className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
@@ -204,7 +221,10 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               WebkitBackdropFilter: 'none'
             }}
           >
-            <div className="flex justify-between items-center text-lg font-semibold">
+            <div 
+              className="flex justify-between items-center text-xl font-bold bg-green-50 p-3 rounded-lg border border-green-200"
+              style={{ color: '#059669' }}
+            >
               <span>Total:</span>
               <span data-testid="cart-total">
                 {formatPrice(totalAmount, 'INR')}
