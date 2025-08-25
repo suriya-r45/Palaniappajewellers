@@ -583,9 +583,31 @@ function CheckoutForm() {
 export default function Checkout() {
   const { items } = useCart();
   const [, setLocation] = useLocation();
+  const [cartLoaded, setCartLoaded] = useState(false);
   
-  // Handle empty cart
-  if (items.length === 0) {
+  // Wait for cart to load from localStorage
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCartLoaded(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  // Show loading while cart is loading
+  if (!cartLoaded) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-900 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading checkout...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  // Handle empty cart (only after cart is loaded)
+  if (cartLoaded && items.length === 0) {
     return (
       <div className="min-h-screen bg-white py-8" style={{ backgroundColor: '#ffffff' }}>
         <div className="container mx-auto px-4">
