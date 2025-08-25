@@ -434,6 +434,44 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Products Section - Show all recent products */}
+      {allProducts.length > 0 && (
+        <section className="py-16" data-testid="section-featured-products" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center mb-6">
+                <Star className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
+                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Featured Products</h2>
+                <Star className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
+              </div>
+              <p className="text-xl text-black">Discover our latest jewelry collection</p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+              {allProducts.slice(0, 8).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  currency={selectedCurrency}
+                  showActions={true}
+                />
+              ))}
+            </div>
+            <div className="text-center">
+              <Button 
+                variant="outline" 
+                className="border-2 px-8 py-3 text-lg" 
+                style={{ borderColor: '#b8860b', color: '#8b4513' }} 
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
+                onClick={() => window.location.href = '/collections'}
+              >
+                View All Products <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </section>
+      )}
+
       <Footer />
       <WhatsAppFloat />
     </div>

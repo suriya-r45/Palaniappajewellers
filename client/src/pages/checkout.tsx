@@ -29,9 +29,21 @@ function CheckoutForm() {
   const [paymentMethod, setPaymentMethod] = useState(stripePromise ? 'stripe' : 'gpay');
   const [isIndianUser, setIsIndianUser] = useState(true); // Detect based on phone or location
   
-  // Redirect to cart if no items
+  // State to track if cart has been loaded from localStorage
+  const [cartLoaded, setCartLoaded] = useState(false);
+  
+  // Wait for cart to load from localStorage before redirecting
   useEffect(() => {
-    if (items.length === 0) {
+    const timer = setTimeout(() => {
+      setCartLoaded(true);
+    }, 100); // Small delay to ensure cart is loaded from localStorage
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  // Redirect to cart if no items (only after cart is loaded)
+  useEffect(() => {
+    if (cartLoaded && items.length === 0) {
       toast({
         title: "Cart is empty",
         description: "Please add items to your cart before proceeding to checkout.",
@@ -39,7 +51,7 @@ function CheckoutForm() {
       });
       setLocation('/cart');
     }
-  }, [items.length, setLocation, toast]);
+  }, [cartLoaded, items.length, setLocation, toast]);
   
   // Customer information
   const [customerInfo, setCustomerInfo] = useState({
@@ -195,12 +207,14 @@ function CheckoutForm() {
   };
 
   // Show loading while cart is initializing
-  if (items.length === 0) {
+  if (!cartLoaded || (cartLoaded && items.length === 0)) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-900 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading checkout...</p>
+          <p className="text-gray-600">
+            {!cartLoaded ? 'Loading checkout...' : 'Redirecting to cart...'}
+          </p>
         </div>
       </div>
     );
