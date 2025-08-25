@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Product, HomeSection, HomeSectionItem } from '@shared/schema';
 import { Currency } from '@/lib/currency';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
-import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench } from "lucide-react";
+import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench, ChevronLeft, ChevronRight } from "lucide-react";
 import ringsImage from '@assets/rings_luxury.png';
 
 interface HomeSectionWithItems extends HomeSection {
@@ -46,7 +46,35 @@ export default function Home() {
     const materialPath = material.toLowerCase();
     window.location.href = `/collections/${materialPath}`;
   };
+
+  // Category carousel data
+  const categories = [
+    { name: 'Rings', image: ringsImage, key: 'rings' },
+    { name: 'Earrings', image: earringsImage, key: 'earrings' },
+    { name: 'Pendants', image: pendantsImage, key: 'pendants' },
+    { name: 'Necklaces', image: necklacesImage, key: 'necklaces' },
+    { name: 'Bangles & Bracelets', image: banglesImage, key: 'bangles' },
+    { name: 'Chains', image: necklacesImage, key: 'necklaces' }, // Using necklaces image for chains
+    { name: 'Nosepins', image: noseJewelryImage, key: 'nose jewelry' }
+  ];
+
+  // Category carousel scroll functions
+  const scrollCategoryLeft = () => {
+    const container = document.getElementById('category-carousel');
+    if (container) {
+      container.scrollBy({ left: -200, behavior: 'smooth' });
+    }
+  };
+
+  const scrollCategoryRight = () => {
+    const container = document.getElementById('category-carousel');
+    if (container) {
+      container.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+  };
+
   const [filters, setFilters] = useState<IProductFilters>({});
+  const [categoryScrollPosition, setCategoryScrollPosition] = useState(0);
 
   const { data: allProducts = [], isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
@@ -124,12 +152,13 @@ export default function Home() {
 
     // Apply discount filter
     if (filters.discount) {
-      filtered = filtered.filter(product => product.name.toLowerCase().includes('sale') || product.name.toLowerCase().includes('discount'));
-    }
-
-    // Apply premium filter
-    if (filters.premium) {
-      filtered = filtered.filter(product => parseFloat(selectedCurrency === 'INR' ? product.priceInr : product.priceBhd) > 50000);
+      // Enhanced filtering for discounted items
+      filtered = filtered.filter(product => 
+        product.name.toLowerCase().includes('sale') ||
+        product.name.toLowerCase().includes('discount') ||
+        product.description?.toLowerCase().includes('sale') ||
+        product.description?.toLowerCase().includes('discount')
+      );
     }
 
     // Apply new arrivals filter (last 30 days)
@@ -292,6 +321,28 @@ export default function Home() {
       .slice(0, 9);
   }, [allProducts]);
 
+  // Layout classes for home sections
+  const getLayoutClasses = (layoutType: string, itemCount: number) => {
+    switch (layoutType) {
+      case 'featured':
+        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+      case 'mixed':
+        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
+      default:
+        return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
+    }
+  };
+
+  const getSizeClasses = (size: string) => {
+    switch (size) {
+      case 'small':
+        return 'col-span-1';
+      case 'large':
+        return 'col-span-2 row-span-2';
+      default:
+        return 'col-span-1';
+    }
+  };
 
   return (
     <div className="min-h-screen" data-testid="page-home" style={{ background: 'linear-gradient(135deg, #fdfbf7 0%, #fff9e6 100%)' }}>
@@ -300,7 +351,7 @@ export default function Home() {
         onCurrencyChange={setSelectedCurrency}
       />
 
-      {/* 1. Explore Our Collections */}
+      {/* 1. Explore Our Collections - New Carousel Design */}
       <section className="py-16" data-testid="section-categories" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -308,681 +359,68 @@ export default function Home() {
             <p className="text-xl text-black mt-4">Discover jewelry for every occasion</p>
           </div>
           
-          {/* 4x4 Grid Layout on Mobile, 4x5 on Desktop */}
-          <div className="grid grid-cols-4 gap-1 md:gap-4">
-            {/* Row 1 */}
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('rings')}
-              data-testid="category-card-rings"
+          {/* Category Carousel */}
+          <div className="relative">
+            {/* Left Arrow */}
+            <button 
+              onClick={scrollCategoryLeft}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+              data-testid="category-scroll-left"
             >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${ringsImage})`,
-                  backgroundSize: '150%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Rings</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('rings')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('necklaces')}
-              data-testid="category-card-necklaces"
+              <ChevronLeft className="h-6 w-6 text-gray-700" />
+            </button>
+            
+            {/* Right Arrow */}
+            <button 
+              onClick={scrollCategoryRight}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
+              data-testid="category-scroll-right"
             >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${necklacesImage})`,
-                  backgroundSize: '125%',
-                  backgroundPosition: 'center 50%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Necklaces</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('necklaces')} items</p>
-              </div>
-            </div>
+              <ChevronRight className="h-6 w-6 text-gray-700" />
+            </button>
+            
+            {/* Category Items Container */}
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('pendants')}
-              data-testid="category-card-pendants"
+              id="category-carousel"
+              className="flex overflow-x-auto scrollbar-hide gap-4 px-12 py-4"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${pendantsImage})`,
-                  backgroundSize: '120%',
-                  backgroundPosition: 'center 40%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Pendants</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('pendants')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('earrings')}
-              data-testid="category-card-earrings"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${earringsImage})`,
-                  backgroundSize: '130%',
-                  backgroundPosition: 'center 50%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Earrings</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('earrings')} items</p>
-              </div>
-            </div>
-
-            {/* Row 2 */}
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('bracelets')}
-              data-testid="category-card-bracelets"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${braceletsImage})`,
-                  backgroundSize: '120%',
-                  backgroundPosition: 'center 50%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Bracelets</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('bracelets')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('bangles')}
-              data-testid="category-card-bangles"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${banglesImage})`,
-                  backgroundSize: '125%',
-                  backgroundPosition: 'center 50%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Bangles</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('bangles')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('watches')}
-              data-testid="category-card-watches"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${watchesImage})`,
-                  backgroundSize: '110%',
-                  backgroundPosition: 'center 50%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Watches</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('watches')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('mens')}
-              data-testid="category-card-mens"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${mensJewelryImage})`,
-                  backgroundSize: '140%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Men's Jewellery</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('mens')} items</p>
-              </div>
-            </div>
-
-            {/* Row 3 */}
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('children')}
-              data-testid="category-card-children"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${childrenJewelryImage})`,
-                  backgroundSize: '130%',
-                  backgroundPosition: 'center 50%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Children's Jewellery</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('children')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('custom')}
-              data-testid="category-card-custom"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${customJewelryImage})`,
-                  backgroundSize: '140%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Custom Jewellery</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('custom')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('collections')}
-              data-testid="category-card-collections"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${collectionsImage})`,
-                  backgroundSize: '150%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Collections</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('collections')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('mangalsutra')}
-              data-testid="category-card-mangalsutra"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${mangalsutraImage})`,
-                  backgroundSize: '110%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Mangalsutra</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('mangalsutra')} items</p>
-              </div>
-            </div>
-
-            {/* Row 4 */}
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('nose jewellery')}
-              data-testid="category-card-nose-jewellery"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${noseJewelryImage})`,
-                  backgroundSize: '115%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Nose Jewelry</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('nose jewellery')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('anklets & toe rings')}
-              data-testid="category-card-anklets"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${ankletsImage})`,
-                  backgroundSize: '110%',
-                  backgroundPosition: 'center 40%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Anklets & Toe Rings</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('anklets & toe rings')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('brooches & pins')}
-              data-testid="category-card-brooches"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${broochesImage})`,
-                  backgroundSize: '110%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Brooches & Pins</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('brooches & pins')} items</p>
-              </div>
-            </div>
-            <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
-              onClick={() => handleViewAllClick('bridal & special collections')}
-              data-testid="category-card-bridal-collections"
-            >
-              <div 
-                className="aspect-square"
-                style={{
-                  backgroundImage: `url(${bridalCollectionsImage})`,
-                  backgroundSize: '105%',
-                  backgroundPosition: 'center 45%',
-                  backgroundRepeat: 'no-repeat'
-                }}
-              />
-              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
-                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Bridal Collections</h3>
-                <p className="text-xs text-gray-600">{getCategoryCount('bridal & special collections')} items</p>
-              </div>
+              {categories.map((category, index) => (
+                <div 
+                  key={category.key}
+                  className="flex-shrink-0 cursor-pointer hover:transform hover:scale-105 transition-transform duration-200"
+                  onClick={() => handleViewAllClick(category.key)}
+                  data-testid={`category-card-${category.key}`}
+                >
+                  <div className="flex flex-col items-center">
+                    {/* Category Image */}
+                    <div 
+                      className="w-24 h-24 md:w-32 md:h-32 rounded-lg shadow-lg overflow-hidden mb-3"
+                      style={{
+                        backgroundImage: `url(${category.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat'
+                      }}
+                    />
+                    
+                    {/* Category Name */}
+                    <h3 
+                      className="text-sm md:text-base font-semibold text-center max-w-[100px] leading-tight" 
+                      style={{ color: '#8b4513' }}
+                    >
+                      {category.name}
+                    </h3>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Custom Home Sections */}
-      {homeSections.filter(section => section.isActive).map((section) => (
-        <section 
-          key={section.id} 
-          className="py-16"
-          style={{
-            backgroundColor: section.backgroundColor || '#fff8e1',
-            color: section.textColor || '#8b4513'
-          }}
-        >
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4">{section.title}</h2>
-              {section.subtitle && <p className="text-xl mb-2">{section.subtitle}</p>}
-              {section.description && <p className="text-lg opacity-80">{section.description}</p>}
-            </div>
-
-            <div className={`grid gap-6 mb-8 ${getLayoutClasses(section.layoutType, section.items.length)}`}>
-              {section.items.map((item) => (
-                <div
-                  key={item.id}
-                  className={`rounded-lg p-6 bg-white/10 backdrop-blur-sm ${getSizeClasses(item.size || 'normal')}`}
-                  style={{
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  <ProductCard
-                    product={item.product}
-                    currency={selectedCurrency}
-                    showActions={true}
-                    customDisplayPrice={
-                      selectedCurrency === 'INR' 
-                        ? (item.displayPriceInr ? `₹ ${parseFloat(item.displayPriceInr).toLocaleString('en-IN')}` : 
-                           item.displayPrice ? `₹ ${parseFloat(item.displayPrice).toLocaleString('en-IN')}` : undefined)
-                        : (item.displayPriceBhd ? `BD ${parseFloat(item.displayPriceBhd).toFixed(3)}` : undefined)
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
-      {/* 2. Gold Platted Silver Jewellery Section */}
-      {goldPlattedSilverProducts.length > 0 && (
-        <section className="py-16" data-testid="section-gold-platted-silver" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Platted Silver Jewellery</h2>
-                  <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Elegant silver jewelry with luxurious gold finish</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
-                {goldPlattedSilverProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('gold-plated-silver')}
-                >
-                  View All Gold Platted Silver <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-          </section>
-      )}
-
-      {/* 3. New Arrivals Section */}
-      {newArrivalProducts.length > 0 && (
-          <section className="py-16" data-testid="section-new-arrivals" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <div className="flex items-center justify-center mb-6">
-                  <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
-                  <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
-                </div>
-                <p className="text-xl text-black">Discover our latest jewelry additions</p>
-              </div>
-              <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
-                {newArrivalProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={selectedCurrency}
-                    showActions={false}
-                  />
-                ))}
-              </div>
-              <div className="text-center">
-                <Button 
-                  variant="outline" 
-                  className="border-2 px-8 py-3 text-lg" 
-                  style={{ borderColor: '#b8860b', color: '#8b4513' }} 
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#b8860b'; e.currentTarget.style.color = 'white'; }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#8b4513'; }}
-                  onClick={() => handleViewAllClick('new-arrivals')}
-                >
-                  View All New Arrivals <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-          </section>
-      )}
-
-      {/* 4. Gold Collection Section */}
-      {goldProducts.length > 0 && (
-        <section className="py-16" data-testid="section-gold" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-4">
-                <Crown className="h-8 w-8 text-yellow-600 mr-3" />
-                <h2 className="text-4xl font-bold text-black">Gold Collection</h2>
-                <Crown className="h-8 w-8 text-yellow-600 ml-3" />
-              </div>
-              <p className="text-xl text-gray-600">22K & 18K gold jewelry with intricate designs</p>
-            </div>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
-              {goldProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  currency={selectedCurrency}
-                  showActions={false}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <Button 
-                variant="outline" 
-                className="border-yellow-600 text-yellow-600 hover:bg-yellow-50"
-                onClick={() => handleViewAllClick('GOLD')}
-              >
-                View All Gold Jewelry <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 5. Silver Collection Section */}
-      {silverProducts.length > 0 && (
-        <section className="py-16" data-testid="section-silver" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-4">
-                <Star className="h-8 w-8 text-gray-600 mr-3" />
-                <h2 className="text-4xl font-bold text-black">Silver Collection</h2>
-                <Star className="h-8 w-8 text-gray-600 ml-3" />
-              </div>
-              <p className="text-xl text-gray-600">Sterling silver jewelry with contemporary elegance</p>
-            </div>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
-              {silverProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  currency={selectedCurrency}
-                  showActions={false}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <Button 
-                variant="outline" 
-                className="border-gray-600 text-gray-600 hover:bg-gray-50"
-                onClick={() => handleViewAllClick('SILVER')}
-              >
-                View All Silver Jewelry <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 6. Diamond Collection Section */}
-      {diamondProducts.length > 0 && (
-        <section className="py-16" data-testid="section-diamond" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-4">
-                <Gem className="h-8 w-8 text-blue-600 mr-3" />
-                <h2 className="text-4xl font-bold text-black">Diamond Collection</h2>
-                <Gem className="h-8 w-8 text-blue-600 ml-3" />
-              </div>
-              <p className="text-xl text-gray-600">Brilliant diamonds for life's precious moments</p>
-            </div>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
-              {diamondProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  currency={selectedCurrency}
-                  showActions={false}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <Button 
-                variant="outline" 
-                className="border-blue-600 text-blue-600 hover:bg-blue-50"
-                onClick={() => handleViewAllClick('DIAMOND')}
-              >
-                View All Diamond Jewelry <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 7. Platinum Collection Section */}
-      {platinumProducts.length > 0 && (
-        <section className="py-16" data-testid="section-platinum" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-4">
-                <Crown className="h-8 w-8 text-slate-600 mr-3" />
-                <h2 className="text-4xl font-bold text-black">Platinum Collection</h2>
-                <Crown className="h-8 w-8 text-slate-600 ml-3" />
-              </div>
-              <p className="text-xl text-gray-600">Rare and precious platinum jewelry for discerning taste</p>
-            </div>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
-              {platinumProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  currency={selectedCurrency}
-                  showActions={false}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <Button 
-                variant="outline" 
-                className="border-slate-600 text-slate-600 hover:bg-slate-50"
-                onClick={() => handleViewAllClick('PLATINUM')}
-              >
-                View All Platinum Jewelry <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 8. Gemstone Collection Section */}
-      {gemstoneProducts.length > 0 && (
-        <section className="py-16" data-testid="section-gemstone" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-4">
-                <Gem className="h-8 w-8 text-purple-600 mr-3" />
-                <h2 className="text-4xl font-bold text-black">Gemstone Collection</h2>
-                <Gem className="h-8 w-8 text-purple-600 ml-3" />
-              </div>
-              <p className="text-xl text-gray-600">Vibrant gemstones for colorful expressions</p>
-            </div>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
-              {gemstoneProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  currency={selectedCurrency}
-                  showActions={false}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <Button 
-                variant="outline" 
-                className="border-purple-600 text-purple-600 hover:bg-purple-50"
-                onClick={() => handleViewAllClick('GEMSTONE')}
-              >
-                View All Gemstone Jewelry <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 9. Pearl Collection Section */}
-      {pearlProducts.length > 0 && (
-        <section className="py-16" data-testid="section-pearl" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <div className="flex items-center justify-center mb-4">
-                <Heart className="h-8 w-8 text-rose-600 mr-3" />
-                <h2 className="text-4xl font-bold text-black">Pearl Collection</h2>
-                <Heart className="h-8 w-8 text-rose-600 ml-3" />
-              </div>
-              <p className="text-xl text-gray-600">Timeless pearls for elegant sophistication</p>
-            </div>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
-              {pearlProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  currency={selectedCurrency}
-                  showActions={false}
-                />
-              ))}
-            </div>
-            <div className="text-center">
-              <Button 
-                variant="outline" 
-                className="border-rose-600 text-rose-600 hover:bg-rose-50"
-                onClick={() => handleViewAllClick('PEARL')}
-              >
-                View All Pearl Jewelry <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
-
       <Footer />
       <WhatsAppFloat />
     </div>
   );
-}
-
-// Layout helper functions
-function getLayoutClasses(layoutType: string, itemCount: number): string {
-  switch (layoutType) {
-    case 'grid':
-      return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4';
-    case 'featured':
-      return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
-    case 'mixed':
-      return 'grid-cols-2 md:grid-cols-4';
-    default:
-      return 'grid-cols-2 md:grid-cols-3';
-  }
-}
-
-function getSizeClasses(size: string): string {
-  switch (size) {
-    case 'small':
-      return 'col-span-1';
-    case 'large':
-      return 'col-span-2';
-    default:
-      return 'col-span-1';
-  }
 }

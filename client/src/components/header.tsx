@@ -26,6 +26,18 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
     window.location.href = '/';
   };
 
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      window.location.href = `/collections?search=${encodeURIComponent(searchQuery)}`;
+    }
+  };
+
+  const handleSearchKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <>
 
@@ -60,6 +72,22 @@ export default function Header({ selectedCurrency, onCurrencyChange }: HeaderPro
                   <p className="text-xs text-rose-100 font-medium">Since 2025</p>
                 </div>
               </Link>
+            </div>
+
+            {/* Desktop Search Bar */}
+            <div className="hidden md:flex flex-1 max-w-md mx-8">
+              <div className="relative w-full">
+                <Input
+                  type="text"
+                  placeholder="Search jewelry..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyPress={handleSearchKeyPress}
+                  className="w-full bg-white/90 border-white/50 text-gray-800 placeholder-gray-500 focus:bg-white focus:ring-2 focus:ring-rose-300"
+                  data-testid="search-input"
+                />
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              </div>
             </div>
 
             {/* Right Section Icons */}
