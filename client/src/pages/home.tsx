@@ -524,7 +524,6 @@ export default function Home() {
                 <p className="text-xs text-gray-600">{getCategoryCount('collections')} items</p>
               </div>
             </div>
-            {/* Row 4 */}
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('mangalsutra')}
@@ -544,6 +543,8 @@ export default function Home() {
                 <p className="text-xs text-gray-600">{getCategoryCount('mangalsutra')} items</p>
               </div>
             </div>
+
+            {/* Row 4 */}
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('nose jewellery')}
@@ -601,10 +602,8 @@ export default function Home() {
                 <p className="text-xs text-gray-600">{getCategoryCount('brooches & pins')} items</p>
               </div>
             </div>
-
-            {/* Row 5 - Hidden on mobile for 4x4 grid */}
             <div 
-              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden hidden md:block"
+              className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
               onClick={() => handleViewAllClick('bridal & special collections')}
               data-testid="category-card-bridal-collections"
             >
