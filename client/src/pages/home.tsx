@@ -54,22 +54,37 @@ export default function Home() {
     { name: 'Pendants', image: pendantsImage, key: 'pendants' },
     { name: 'Necklaces', image: necklacesImage, key: 'necklaces' },
     { name: 'Bangles & Bracelets', image: banglesImage, key: 'bangles' },
-    { name: 'Chains', image: necklacesImage, key: 'necklaces' }, // Using necklaces image for chains
-    { name: 'Nosepins', image: noseJewelryImage, key: 'nose jewelry' }
+    { name: 'Chains', image: necklacesImage, key: 'chains' },
+    { name: 'Nosepins', image: noseJewelryImage, key: 'nose-jewelry' },
+    { name: 'Bracelets', image: braceletsImage, key: 'bracelets' },
+    { name: 'Watches', image: watchesImage, key: 'watches' },
+    { name: "Men's Jewelry", image: mensJewelryImage, key: 'mens' },
+    { name: "Children's Jewelry", image: childrenJewelryImage, key: 'children' },
+    { name: 'Custom Jewelry', image: customJewelryImage, key: 'custom' },
+    { name: 'Collections', image: collectionsImage, key: 'collections' },
+    { name: 'Gold Collection', image: goldCollectionImage, key: 'gold' },
+    { name: 'Silver Collection', image: silverCollectionImage, key: 'silver' },
+    { name: 'Diamond Collection', image: diamondCollectionImage, key: 'diamond' },
+    { name: 'Mangalsutra', image: mangalsutraImage, key: 'mangalsutra' },
+    { name: 'Anklets & Toe Rings', image: ankletsImage, key: 'anklets' },
+    { name: 'Brooches & Pins', image: broochesImage, key: 'brooches' },
+    { name: 'Bridal Collections', image: bridalCollectionsImage, key: 'bridal-collections' }
   ];
 
   // Category carousel scroll functions
   const scrollCategoryLeft = () => {
     const container = document.getElementById('category-carousel');
     if (container) {
-      container.scrollBy({ left: -200, behavior: 'smooth' });
+      const scrollAmount = container.clientWidth * 0.5; // Scroll half the container width
+      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     }
   };
 
   const scrollCategoryRight = () => {
     const container = document.getElementById('category-carousel');
     if (container) {
-      container.scrollBy({ left: 200, behavior: 'smooth' });
+      const scrollAmount = container.clientWidth * 0.5; // Scroll half the container width
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
