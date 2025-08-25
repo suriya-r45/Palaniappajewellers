@@ -220,7 +220,7 @@ export default function Home() {
       <section className="pt-6 pb-8" data-testid="section-categories" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)' }}>
         <div className="container mx-auto px-4">
           <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Explore Our Collections</h2>
+            <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Explore Our Collections</h2>
           </div>
           
           {/* Category Carousel */}
@@ -283,13 +283,13 @@ export default function Home() {
               <div className="text-center mb-12">
                 <div className="flex items-center justify-center mb-6">
                   <Star className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                  <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>
+                  <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>
                     {section.title}
                   </h2>
                   <Star className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
                 </div>
                 {section.description && (
-                  <p className="text-xl text-black">{section.description}</p>
+                  <p className="text-sm sm:text-xl text-black">{section.description}</p>
                 )}
               </div>
               <div className={`grid gap-3 md:gap-6 mb-8 ${getLayoutClasses(section.layoutType, section.items.length)}`}>
@@ -327,12 +327,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Heart className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>New Arrivals</h2>
                 <Heart className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Latest additions to our exclusive collection</p>
+              <p className="text-sm sm:text-xl text-black">Latest additions to our exclusive collection</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {newArrivalProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -367,12 +367,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Collection</h2>
                 <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Exquisite gold jewelry crafted to perfection</p>
+              <p className="text-sm sm:text-xl text-black">Exquisite gold jewelry crafted to perfection</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {goldProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -405,12 +405,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Silver Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Silver Collection</h2>
                 <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Elegant silver jewelry for every occasion</p>
+              <p className="text-sm sm:text-xl text-black">Elegant silver jewelry for every occasion</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {silverProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -443,12 +443,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Diamond Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Diamond Collection</h2>
                 <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Brilliant diamonds for life's special moments</p>
+              <p className="text-sm sm:text-xl text-black">Brilliant diamonds for life's special moments</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {diamondProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -481,12 +481,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Platinum Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Platinum Collection</h2>
                 <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Premium platinum jewelry for discerning taste</p>
+              <p className="text-sm sm:text-xl text-black">Premium platinum jewelry for discerning taste</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {platinumProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -519,12 +519,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Gem className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gemstone Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gemstone Collection</h2>
                 <Gem className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Colorful gemstones for vibrant elegance</p>
+              <p className="text-sm sm:text-xl text-black">Colorful gemstones for vibrant elegance</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {gemstoneProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -557,12 +557,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Sparkles className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Pearl Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Pearl Collection</h2>
                 <Sparkles className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Timeless pearls for classic beauty</p>
+              <p className="text-sm sm:text-xl text-black">Timeless pearls for classic beauty</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {pearlProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -595,12 +595,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Crown className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Plated Silver Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Gold Plated Silver Collection</h2>
                 <Crown className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Affordable luxury with gold plated silver</p>
+              <p className="text-sm sm:text-xl text-black">Affordable luxury with gold plated silver</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {goldPlatedSilverProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -633,12 +633,12 @@ export default function Home() {
             <div className="text-center mb-12">
               <div className="flex items-center justify-center mb-6">
                 <Palette className="h-8 w-8 mr-4" style={{ color: '#b8860b' }} />
-                <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Other Materials Collection</h2>
+                <h2 className="text-lg sm:text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Other Materials Collection</h2>
                 <Palette className="h-8 w-8 ml-4" style={{ color: '#b8860b' }} />
               </div>
-              <p className="text-xl text-black">Unique materials for distinctive styles</p>
+              <p className="text-sm sm:text-xl text-black">Unique materials for distinctive styles</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 mb-8">
               {otherProducts.map((product) => (
                 <ProductCard
                   key={product.id}
