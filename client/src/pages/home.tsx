@@ -309,7 +309,7 @@ export default function Home() {
           </div>
           
           {/* 4x4 Grid Layout on Mobile, 4x5 on Desktop */}
-          <div className="grid grid-cols-4 gap-2 md:gap-4">
+          <div className="grid grid-cols-4 gap-1 md:gap-4">
             {/* Row 1 */}
             <div 
               className="rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow relative overflow-hidden"
@@ -325,8 +325,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Rings</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Rings</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('rings')} items</p>
               </div>
             </div>
@@ -344,8 +344,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Necklaces</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Necklaces</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('necklaces')} items</p>
               </div>
             </div>
@@ -363,8 +363,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Pendants</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Pendants</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('pendants')} items</p>
               </div>
             </div>
@@ -382,8 +382,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Earrings</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Earrings</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('earrings')} items</p>
               </div>
             </div>
@@ -403,8 +403,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Bracelets</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Bracelets</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('bracelets')} items</p>
               </div>
             </div>
@@ -422,8 +422,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Bangles</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Bangles</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('bangles')} items</p>
               </div>
             </div>
@@ -441,8 +441,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Watches</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Watches</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('watches')} items</p>
               </div>
             </div>
@@ -460,8 +460,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Men's Jewellery</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Men's Jewellery</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('mens')} items</p>
               </div>
             </div>
@@ -481,8 +481,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Children's Jewellery</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Children's Jewellery</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('children')} items</p>
               </div>
             </div>
@@ -500,8 +500,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Custom Jewellery</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Custom Jewellery</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('custom')} items</p>
               </div>
             </div>
@@ -519,8 +519,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Collections</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Collections</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('collections')} items</p>
               </div>
             </div>
@@ -538,8 +538,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Mangalsutra</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Mangalsutra</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('mangalsutra')} items</p>
               </div>
             </div>
@@ -559,8 +559,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Nose Jewelry</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Nose Jewelry</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('nose jewellery')} items</p>
               </div>
             </div>
@@ -578,8 +578,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Anklets & Toe Rings</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Anklets & Toe Rings</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('anklets & toe rings')} items</p>
               </div>
             </div>
@@ -597,8 +597,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Brooches & Pins</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Brooches & Pins</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('brooches & pins')} items</p>
               </div>
             </div>
@@ -616,8 +616,8 @@ export default function Home() {
                   backgroundRepeat: 'no-repeat'
                 }}
               />
-              <div className="p-2 text-center bg-white">
-                <h3 className="font-bold text-xs md:text-sm" style={{ color: '#8b4513' }}>Bridal Collections</h3>
+              <div className="p-1.5 text-center bg-white min-h-[60px] flex flex-col justify-center">
+                <h3 className="font-bold text-xs md:text-sm leading-tight" style={{ color: '#8b4513' }}>Bridal Collections</h3>
                 <p className="text-xs text-gray-600">{getCategoryCount('bridal & special collections')} items</p>
               </div>
             </div>
