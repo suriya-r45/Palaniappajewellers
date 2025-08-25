@@ -543,17 +543,26 @@ function CheckoutForm() {
 }
 
 export default function Checkout() {
-  const { items, totalAmount } = useCart();
+  const { items } = useCart();
   const [clientSecret, setClientSecret] = useState("");
   const [, setLocation] = useLocation();
+  
+  // Calculate total amount based on INR (since checkout uses INR)
+  const totalAmount = items.reduce((sum, item) => {
+    const price = parseFloat(item.product.priceInr);
+    return sum + (price * item.quantity);
+  }, 0);
 
   useEffect(() => {
-    // Don't redirect if cart is empty, show empty state instead
+    // Always set a client secret to allow rendering
     if (items.length === 0) {
       setClientSecret("empty-cart");
       return;
     }
 
+    // Skip payment intent creation when Stripe is not configured
+    setClientSecret("skip-payment");
+    
     // Only create PaymentIntent if Stripe is available
     if (stripePromise) {
       apiRequest("POST", "/api/create-payment-intent", { 
@@ -573,9 +582,6 @@ export default function Checkout() {
           console.error('Error creating payment intent:', error);
           setClientSecret("skip-payment");
         });
-    } else {
-      // Skip payment intent creation when Stripe is not configured
-      setClientSecret("skip-payment");
     }
   }, [items, totalAmount]);
 
