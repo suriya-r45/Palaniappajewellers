@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Product, HomeSection, HomeSectionItem } from '@shared/schema';
 import { Currency } from '@/lib/currency';
 import { ProductFilters as IProductFilters } from '@shared/cart-schema';
-import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Star, Sparkles, Crown, Gem, Heart, Watch, Users, Baby, Palette, Wrench } from "lucide-react";
 import ringsImage from '@assets/rings_luxury.png';
 
 interface HomeSectionWithItems extends HomeSection {
@@ -71,22 +71,6 @@ export default function Home() {
     { name: 'Bridal Collections', image: bridalCollectionsImage, key: 'bridal-collections' }
   ];
 
-  // Category carousel scroll functions
-  const scrollCategoryLeft = () => {
-    const container = document.getElementById('category-carousel');
-    if (container) {
-      const scrollAmount = container.clientWidth * 0.5; // Scroll half the container width
-      container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    }
-  };
-
-  const scrollCategoryRight = () => {
-    const container = document.getElementById('category-carousel');
-    if (container) {
-      const scrollAmount = container.clientWidth * 0.5; // Scroll half the container width
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
 
   // Fetch all products for display
   const { data: allProducts = [] } = useQuery<Product[]>({
@@ -253,33 +237,15 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold" style={{ color: '#8b4513' }}>Explore Our Collections</h2>
-            <p className="text-xl text-black mt-4">Discover jewelry for every occasion</p>
           </div>
           
           {/* Category Carousel */}
           <div className="relative">
-            {/* Left Arrow */}
-            <button 
-              onClick={scrollCategoryLeft}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
-              data-testid="category-scroll-left"
-            >
-              <ChevronLeft className="h-6 w-6 text-gray-700" />
-            </button>
-            
-            {/* Right Arrow */}
-            <button 
-              onClick={scrollCategoryRight}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all duration-200"
-              data-testid="category-scroll-right"
-            >
-              <ChevronRight className="h-6 w-6 text-gray-700" />
-            </button>
             
             {/* Category Items Container */}
             <div 
               id="category-carousel"
-              className="flex overflow-x-auto scrollbar-hide gap-4 px-12 py-4"
+              className="flex overflow-x-auto scrollbar-hide gap-4 px-2 py-4"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {categories.map((category, index) => (
@@ -344,7 +310,7 @@ export default function Home() {
               </div>
               <div className={`grid gap-3 md:gap-6 mb-8 ${getLayoutClasses(section.layoutType, section.items.length)}`}>
                 {section.items.map((item) => (
-                  <div key={item.id} className={getSizeClasses(item.size)}>
+                  <div key={item.id} className={getSizeClasses(item.size || 'normal')}>
                     <ProductCard
                       product={item.product}
                       currency={selectedCurrency}
