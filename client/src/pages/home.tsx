@@ -659,8 +659,10 @@ export default function Home() {
                     showActions={true}
                     customDisplayPrice={
                       selectedCurrency === 'INR' 
-                        ? (item.displayPriceInr ? `₹ ${parseFloat(item.displayPriceInr).toLocaleString('en-IN')}` : undefined)
-                        : (item.displayPriceBhd ? `BD ${parseFloat(item.displayPriceBhd).toFixed(3)}` : undefined)
+                        ? (item.displayPriceInr ? `₹ ${parseFloat(item.displayPriceInr).toLocaleString('en-IN')}` : 
+                           item.displayPrice ? `₹ ${parseFloat(item.displayPrice).toLocaleString('en-IN')}` : undefined)
+                        : (item.displayPriceBhd ? `BD ${parseFloat(item.displayPriceBhd).toFixed(3)}` : 
+                           item.displayPrice ? `BD ${(parseFloat(item.displayPrice) / 300).toFixed(3)}` : undefined)
                     }
                   />
                 </div>
