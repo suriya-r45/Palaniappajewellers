@@ -5,7 +5,6 @@ import { dirname } from "path";
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import { MetalRatesService } from "./services/testmetalRatesService.js";
 
 // Recreate __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -70,7 +69,8 @@ app.use("/attached_assets", express.static(path.join(__dirname, "../attached_ass
     serveStatic(app);
   }
 
-  // Initialize metal rates service
+  // Initialize static metal rates
+  const { MetalRatesService } = await import("./services/testmetalRatesService.js");
   await MetalRatesService.initializeRates();
   MetalRatesService.startScheduledUpdates();
 
