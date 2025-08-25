@@ -119,23 +119,23 @@ export default function Cart() {
 
                             {/* Product Info */}
                             <div className="flex-1 space-y-2">
-                              <h3 className="font-semibold text-lg text-gray-900">
+                              <h3 className="font-semibold text-lg text-gray-900" style={{ color: '#2d3748' }}>
                                 {item.product.name}
                               </h3>
                               <div className="flex flex-wrap gap-2">
-                                <Badge variant="secondary">{item.product.category}</Badge>
-                                <Badge variant="outline">{item.product.material}</Badge>
+                                <Badge variant="secondary" className="bg-blue-100 text-blue-800 font-medium">{item.product.category}</Badge>
+                                <Badge variant="outline" className="border-gray-300 text-gray-700 bg-gray-50">{item.product.material}</Badge>
                               </div>
-                              <div className="flex items-center gap-4 text-sm text-gray-600">
-                                <span>Weight: {item.product.grossWeight}g</span>
-                                <span>Stock: {item.product.stock} available</span>
+                              <div className="flex items-center gap-4 text-sm text-gray-700 font-medium">
+                                <span className="bg-gray-100 px-2 py-1 rounded">Weight: {item.product.grossWeight}g</span>
+                                <span className="bg-green-100 text-green-700 px-2 py-1 rounded">Stock: {item.product.stock} available</span>
                               </div>
                               
                               {/* Price */}
-                              <div className="space-y-1">
+                              <div className="space-y-1 bg-amber-50 p-2 rounded-lg border border-amber-200">
                                 <div className="text-lg font-bold" style={{ color: '#8b4513' }}>
                                   {formatPrice(parseFloat(currency === 'INR' ? item.product.priceInr : item.product.priceBhd), currency)}
-                                  <span className="text-sm font-normal text-gray-500 ml-2">per item</span>
+                                  <span className="text-sm font-medium text-gray-600 ml-2">per item</span>
                                 </div>
                               </div>
                             </div>
@@ -143,18 +143,23 @@ export default function Cart() {
                             {/* Quantity Controls & Total */}
                             <div className="flex flex-col md:items-end space-y-3">
                               {/* Quantity Controls */}
-                              <div className="flex items-center gap-3">
+                              <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-2">
                                 <Button
                                   variant="outline"
                                   size="sm"
                                   onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                                   disabled={item.quantity <= 1}
                                   data-testid={`button-decrease-${item.product.id}`}
+                                  className="border-gray-300 hover:bg-gray-100"
                                 >
                                   <Minus className="h-4 w-4" />
                                 </Button>
                                 
-                                <span className="font-medium w-8 text-center" data-testid={`quantity-${item.product.id}`}>
+                                <span 
+                                  className="font-bold text-lg w-8 text-center bg-white px-2 py-1 rounded border" 
+                                  data-testid={`quantity-${item.product.id}`}
+                                  style={{ color: '#2d3748' }}
+                                >
                                   {item.quantity}
                                 </span>
                                 
@@ -164,30 +169,31 @@ export default function Cart() {
                                   onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                                   disabled={item.quantity >= item.product.stock}
                                   data-testid={`button-increase-${item.product.id}`}
+                                  className="border-gray-300 hover:bg-gray-100"
                                 >
                                   <Plus className="h-4 w-4" />
                                 </Button>
                               </div>
                               
                               {/* Item Total */}
-                              <div className="text-right">
-                                <div className="text-lg font-bold" style={{ color: '#8b4513' }}>
+                              <div className="text-right bg-green-50 p-3 rounded-lg border border-green-200">
+                                <div className="text-xl font-bold" style={{ color: '#059669' }}>
                                   {formatPrice(
                                     parseFloat(currency === 'INR' ? item.product.priceInr : item.product.priceBhd) * item.quantity, 
                                     currency
                                   )}
                                 </div>
-                                <div className="text-sm text-gray-500">
+                                <div className="text-sm text-gray-700 font-medium">
                                   {item.quantity} × {formatPrice(parseFloat(currency === 'INR' ? item.product.priceInr : item.product.priceBhd), currency)}
                                 </div>
                               </div>
                               
                               {/* Remove Button */}
                               <Button
-                                variant="ghost"
+                                variant="outline"
                                 size="sm"
                                 onClick={() => removeFromCart(item.product.id)}
-                                className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                className="text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 font-medium"
                                 data-testid={`button-remove-${item.product.id}`}
                               >
                                 <Trash2 className="h-4 w-4 mr-1" />
